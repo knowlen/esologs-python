@@ -1,4 +1,5 @@
 # eso-builds
+Probably requires Python >= 3.6. Tested on MacOS, but should work on any operating system. 
 
 
 # Quickstart
