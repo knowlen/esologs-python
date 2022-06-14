@@ -146,5 +146,4 @@ if __name__ == "__main__":
     for patch in patches:
         for spec in specs:
             for class_name in classes:
-                print("here")
                 run(api_key, update_num=patch, spec_name=spec, class_name=class_name,  n=1, dps_cutoff=min_dps)
