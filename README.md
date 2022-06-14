@@ -18,7 +18,7 @@ cd ./scripts
 python pull_data.py --target-spec stamina --target-class nightblade --target-patch 34 --output-directory ./test --api-key my_esologs_api_key
 ```
 ### pull_data.py
-```Bash
+```Man
 usage: pull_data.py [-h] [--api-key API_KEY] -s TARGET_SPEC -c TARGET_CLASS [-p TARGET_PATCH] [-o OUTPUT_DIRECTORY] [-n NUM_PAGES] [-d MIN_DPS]
 
 optional arguments:
