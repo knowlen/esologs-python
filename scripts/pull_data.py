@@ -18,7 +18,7 @@ def get_args():
                         help="api key allocated by esologs.com")
 
     parser.add_argument('-s', "--target-spec", type=str, required=True,
-                        help="target spec: tank, magicka, stamina, werewolf, healer, or all")
+                        help="target spec: tank, magicka, stamina, werewolf, healer, dps, or all")
     parser.add_argument('-c', "--target-class", type=str, required=True,
                         help="target class: dragonknight, nightblade, necromancer, sorcerer, templar, warden, or all")
     parser.add_argument('-p', "--target-patch", type=str, default='all',
@@ -92,17 +92,21 @@ def execute_query(query, output_fp, dps_cutoff=80000.0):
 
     update_num, spec_name, class_name = output_fp.stem.split('-')
     dps_cutoff = str(int(dps_cutoff / 1000.0)) + 'k'
-    n_valid = str(len(valid_characters))
+    n_valid = len(valid_characters)
 
     print("[update " + str(update_num) + '] ' + spec_name + ' ' + class_name)
-    print(" * found " + n_valid +  " parses over " + str(dps_cutoff) + " dps")
+    print(" * found " + str(n_valid) +  " parses over " + str(dps_cutoff) + " dps")
     print(" * query: " + str(query))
+    if n_valid > 0:
+        output_data = json.dumps(valid_characters, indent=4)
 
-    output_data = json.dumps(valid_characters, indent=4)
+        with open(output_fp, 'w') as f:
+            print(output_data, file=f)
 
-    with open(output_fp, 'w') as f:
-        print(output_data, file=f)
-
+def run(api_key, update_num=34, spec_name='magicka', class_name='nightblade',  n=1, dps_cutoff=80000):
+    query, fname = build_query(api_key, update_num=update_num, spec_name=spec_name, class_name=class_name,  n=n)
+    output_fp = outdir / fname 
+    execute_query(query, output_fp, dps_cutoff=dps_cutoff)
 
 if __name__ == "__main__":
     args = get_args().parse_args()
@@ -120,9 +124,27 @@ if __name__ == "__main__":
 
     if not api_key:
         print("Please specify an esologs v1 api key. These are allocated by esologs.com")
+    
+    specs = [tgt_spec]
+    classses = [tgt_class]
+    patches = [tgt_patch]
 
-    query, fname = build_query(api_key, update_num=tgt_patch, spec_name=tgt_spec, class_name=tgt_class,  n=1)
+    if tgt_spec == "all":
+        specs=['tank', 'magicka', 'stamina', 'werewolf', 'healer']
+    elif tgt_spec == 'dps':
+        specs=['magicka', 'stamina', 'werewolf']
 
-    output_fp = outdir / fname 
- 
-    execute_query(query, output_fp, dps_cutoff=min_dps)
+    if tgt_class == 'all':
+        classes=['dragonknight', 'nightblade', 'necromancer', 'sorcerer', 'templar', 'warden']
+
+    if tgt_patch == 'all':
+        patches = [22 + i for i in range(13)]
+        
+    print(patches)
+    print(specs)
+    print(classes)
+    for patch in patches:
+        for spec in specs:
+            for class_name in classes:
+                print("here")
+                run(api_key, update_num=patch, spec_name=spec, class_name=class_name,  n=1, dps_cutoff=min_dps)
