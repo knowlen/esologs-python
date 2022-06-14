@@ -4,8 +4,8 @@
 # Quickstart
 ---
 ## Install
-1. Clone the repo
-2. Create a virtual environment
+1. Clone this repo
+2. Create a virtual environment (optional)
 3. Install dependencies 
 ```Bash
 pip install --upgrade pip
