@@ -81,7 +81,14 @@ def execute_query(query, output_fp, dps_cutoff=80000.0):
     response = requests.get(query)
     data = response.json()
     characters = [k for k in data['rankings']]
-    valid_characters = [c for c in characters if float(c['total']) > dps_cutoff]
+    
+    valid_characters = []
+    seen = set()
+    
+    for c in characters:
+        if c['name'] not in seen and float(c['total']) > dps_cutoff:
+            seen.add(c['name'])
+            valid_characters.append(c)
 
     update_num, spec_name, class_name = output_fp.stem.split('-')
     dps_cutoff = str(int(dps_cutoff / 1000.0)) + 'k'
