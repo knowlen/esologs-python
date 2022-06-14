@@ -126,7 +126,7 @@ if __name__ == "__main__":
         print("Please specify an esologs v1 api key. These are allocated by esologs.com")
     
     specs = [tgt_spec]
-    classses = [tgt_class]
+    classes = [tgt_class]
     patches = [tgt_patch]
 
     if tgt_spec == "all":
