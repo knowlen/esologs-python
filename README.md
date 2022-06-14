@@ -18,7 +18,7 @@ Example
 $ cd ./scripts
 $ python pull_data.py --target-spec stamina --target-class nightblade --target-patch 34 --output-directory ./test --api-key my_esologs_api_key
 ```
-Stdout >>
+Output:
 ```Text
 [update 34] stamina nightblade
  * found 6 parses over 40k dps
