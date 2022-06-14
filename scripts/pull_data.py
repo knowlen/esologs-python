@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -75,6 +74,8 @@ def build_query(api_key, update_num=34, spec_name='magicka', class_name='nightbl
 
 def execute_query(query, output_fp, dps_cutoff=80000.0):
     """
+    query (str): esologs v1 web query
+    output_fp (pathlib.Path): path to output json data
     cutoff (float): drop builds that do not achieve at least this ammount of DPS 
     """
     response = requests.get(query)
@@ -82,7 +83,7 @@ def execute_query(query, output_fp, dps_cutoff=80000.0):
     characters = [k for k in data['rankings']]
     valid_characters = [c for c in characters if float(c['total']) > dps_cutoff]
 
-    update_num, spec_name, class_name = output_fp.split('/')[-1][:-5].split('-')
+    update_num, spec_name, class_name = output_fp.stem.split('-')
     dps_cutoff = str(int(dps_cutoff / 1000.0)) + 'k'
     n_valid = str(len(valid_characters))
 
@@ -91,7 +92,6 @@ def execute_query(query, output_fp, dps_cutoff=80000.0):
     print(" * query: " + str(query))
 
     output_data = json.dumps(valid_characters, indent=4)
-    #output_data = valid_characters
 
     with open(output_fp, 'w') as f:
         print(output_data, file=f)
@@ -106,16 +106,16 @@ if __name__ == "__main__":
     min_dps = args.min_dps
     n = args.num_pages
 
-    outdir = args.output_directory
+    outdir = Path(args.output_directory)
+    outdir.mkdir(exist_ok=True, parents=True)
+
     api_key = args.api_key or Config.API_KEY 
 
     if not api_key:
         print("Please specify an esologs v1 api key. These are allocated by esologs.com")
 
-    os.makedirs(outdir, exist_ok=True)
-
     query, fname = build_query(api_key, update_num=tgt_patch, spec_name=tgt_spec, class_name=tgt_class,  n=1)
 
-    output_fp = os.path.join(outdir, fname) 
-    
+    output_fp = outdir / fname 
+ 
     execute_query(query, output_fp, dps_cutoff=min_dps)
