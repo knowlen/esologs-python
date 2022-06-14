@@ -12,6 +12,9 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+## esologs.com API Key
+Set your V1 Client name and generate a key in the Web API section at the bottom of ![this page](https://www.esologs.com/profile).
+
 ## Download Data
 Example
 ```Bash
