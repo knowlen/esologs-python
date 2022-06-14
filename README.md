@@ -1,9 +1,9 @@
 # eso-builds
 
 
-## Quickstart
+# Quickstart
 ---
-### Install
+## Install
 1. Clone the repo
 2. Create a virtual environment
 3. Install dependencies 
@@ -12,13 +12,12 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Download Data
----
+## Download Data
 ```Bash
 cd ./scripts
 python pull_data.py --target-spec stamina --target-class nightblade --target-patch 34 --output-directory ./test --api-key my_esologs_api_key
 ```
-#### pull_data.py
+### pull_data.py
 ```Bash
 usage: pull_data.py [-h] [--api-key API_KEY] -s TARGET_SPEC -c TARGET_CLASS [-p TARGET_PATCH] [-o OUTPUT_DIRECTORY] [-n NUM_PAGES] [-d MIN_DPS]
 
