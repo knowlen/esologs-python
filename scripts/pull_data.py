@@ -1,10 +1,14 @@
 import os
 import sys
-sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), "./.."))
+from pathlib import Path
+
+_root_dir = Path(__file__).resolve().parents[1]
+sys.path.append(str(_root_dir))
 
 import requests
 import argparse
 import json
+
 
 from config import Config
 
