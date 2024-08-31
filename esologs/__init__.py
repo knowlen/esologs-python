@@ -57,12 +57,14 @@ from .get_character_reports import (
     GetCharacterReportsCharacterDataCharacterRecentReportsDataZone,
 )
 from .get_class import GetClass, GetClassGameData, GetClassGameDataClass
+from .get_classes import GetClasses, GetClassesGameData, GetClassesGameDataClasses
 from .get_encounters_by_zone import (
     GetEncountersByZone,
     GetEncountersByZoneWorldData,
     GetEncountersByZoneWorldDataZone,
     GetEncountersByZoneWorldDataZoneEncounters,
 )
+from .get_factions import GetFactions, GetFactionsGameData, GetFactionsGameDataFactions
 from .get_guild_by_id import (
     GetGuildById,
     GetGuildByIdGuildData,
@@ -72,6 +74,34 @@ from .get_guild_by_id import (
     GetGuildByIdGuildDataGuildServerRegion,
     GetGuildByIdGuildDataGuildTags,
 )
+from .get_item import GetItem, GetItemGameData, GetItemGameDataItem
+from .get_item_set import GetItemSet, GetItemSetGameData, GetItemSetGameDataItemSet
+from .get_item_sets import (
+    GetItemSets,
+    GetItemSetsGameData,
+    GetItemSetsGameDataItemSets,
+    GetItemSetsGameDataItemSetsData,
+)
+from .get_items import (
+    GetItems,
+    GetItemsGameData,
+    GetItemsGameDataItems,
+    GetItemsGameDataItemsData,
+)
+from .get_map import GetMap, GetMapGameData, GetMapGameDataMap
+from .get_maps import (
+    GetMaps,
+    GetMapsGameData,
+    GetMapsGameDataMaps,
+    GetMapsGameDataMapsData,
+)
+from .get_np_cs import (
+    GetNPCs,
+    GetNPCsGameData,
+    GetNPCsGameDataNpcs,
+    GetNPCsGameDataNpcsData,
+)
+from .get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
 from .get_regions import (
     GetRegions,
     GetRegionsWorldData,
@@ -149,10 +179,16 @@ __all__ = [
     "GetClass",
     "GetClassGameData",
     "GetClassGameDataClass",
+    "GetClasses",
+    "GetClassesGameData",
+    "GetClassesGameDataClasses",
     "GetEncountersByZone",
     "GetEncountersByZoneWorldData",
     "GetEncountersByZoneWorldDataZone",
     "GetEncountersByZoneWorldDataZoneEncounters",
+    "GetFactions",
+    "GetFactionsGameData",
+    "GetFactionsGameDataFactions",
     "GetGuildById",
     "GetGuildByIdGuildData",
     "GetGuildByIdGuildDataGuild",
@@ -160,6 +196,34 @@ __all__ = [
     "GetGuildByIdGuildDataGuildServer",
     "GetGuildByIdGuildDataGuildServerRegion",
     "GetGuildByIdGuildDataGuildTags",
+    "GetItem",
+    "GetItemGameData",
+    "GetItemGameDataItem",
+    "GetItemSet",
+    "GetItemSetGameData",
+    "GetItemSetGameDataItemSet",
+    "GetItemSets",
+    "GetItemSetsGameData",
+    "GetItemSetsGameDataItemSets",
+    "GetItemSetsGameDataItemSetsData",
+    "GetItems",
+    "GetItemsGameData",
+    "GetItemsGameDataItems",
+    "GetItemsGameDataItemsData",
+    "GetMap",
+    "GetMapGameData",
+    "GetMapGameDataMap",
+    "GetMaps",
+    "GetMapsGameData",
+    "GetMapsGameDataMaps",
+    "GetMapsGameDataMapsData",
+    "GetNPC",
+    "GetNPCGameData",
+    "GetNPCGameDataNpc",
+    "GetNPCs",
+    "GetNPCsGameData",
+    "GetNPCsGameDataNpcs",
+    "GetNPCsGameDataNpcsData",
     "GetRegions",
     "GetRegionsWorldData",
     "GetRegionsWorldDataRegions",

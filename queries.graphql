@@ -278,3 +278,137 @@ query getZones {
     }
   }
 }
+
+query getClasses($faction_id: Int, $zone_id: Int) {
+  gameData {
+    classes(faction_id: $faction_id, zone_id: $zone_id) {
+      id
+      name
+      slug
+    }
+  }
+}
+
+query getFactions {
+  gameData {
+    factions {
+      id
+      name
+    }
+  }
+}
+
+query getItem($id: Int!) {
+  gameData {
+    item(id: $id) {
+      id
+      name
+      icon
+    }
+  }
+}
+
+query getItemSet($id: Int!) {
+  gameData {
+    item_set(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+
+query getItemSets($limit: Int, $page: Int) {
+  gameData {
+    item_sets(limit: $limit, page: $page) {
+      data {
+        id
+        name
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getItems($limit: Int, $page: Int) {
+  gameData {
+    items(limit: $limit, page: $page) {
+      data {
+        id
+        name
+        icon
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getMap($id: Int!) {
+  gameData {
+    map(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+query getMaps($limit: Int, $page: Int) {
+  gameData {
+    maps(limit: $limit, page: $page) {
+      data {
+        id
+        name
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+
+query getNPC($id: Int!) {
+  gameData {
+    npc(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+
+
+query getNPCs($limit: Int, $page: Int) {
+  gameData {
+    npcs(limit: $limit, page: $page) {
+      data {
+        id
+        name
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+

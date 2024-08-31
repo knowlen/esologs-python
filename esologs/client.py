@@ -11,8 +11,18 @@ from .get_character_by_id import GetCharacterById
 from .get_character_encounter_ranking import GetCharacterEncounterRanking
 from .get_character_reports import GetCharacterReports
 from .get_class import GetClass
+from .get_classes import GetClasses
 from .get_encounters_by_zone import GetEncountersByZone
+from .get_factions import GetFactions
 from .get_guild_by_id import GetGuildById
+from .get_item import GetItem
+from .get_item_set import GetItemSet
+from .get_item_sets import GetItemSets
+from .get_items import GetItems
+from .get_map import GetMap
+from .get_maps import GetMaps
+from .get_np_cs import GetNPCs
+from .get_npc import GetNPC
 from .get_regions import GetRegions
 from .get_report_by_code import GetReportByCode
 from .get_world_data import GetWorldData
@@ -462,3 +472,267 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetZones.model_validate(data)
+
+    async def get_classes(
+        self,
+        faction_id: Union[Optional[int], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetClasses:
+        query = gql(
+            """
+            query getClasses($faction_id: Int, $zone_id: Int) {
+              gameData {
+                classes(faction_id: $faction_id, zone_id: $zone_id) {
+                  id
+                  name
+                  slug
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"faction_id": faction_id, "zone_id": zone_id}
+        response = await self.execute(
+            query=query, operation_name="getClasses", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetClasses.model_validate(data)
+
+    async def get_factions(self, **kwargs: Any) -> GetFactions:
+        query = gql(
+            """
+            query getFactions {
+              gameData {
+                factions {
+                  id
+                  name
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {}
+        response = await self.execute(
+            query=query, operation_name="getFactions", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetFactions.model_validate(data)
+
+    async def get_item(self, id: int, **kwargs: Any) -> GetItem:
+        query = gql(
+            """
+            query getItem($id: Int!) {
+              gameData {
+                item(id: $id) {
+                  id
+                  name
+                  icon
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"id": id}
+        response = await self.execute(
+            query=query, operation_name="getItem", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetItem.model_validate(data)
+
+    async def get_item_set(self, id: int, **kwargs: Any) -> GetItemSet:
+        query = gql(
+            """
+            query getItemSet($id: Int!) {
+              gameData {
+                item_set(id: $id) {
+                  id
+                  name
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"id": id}
+        response = await self.execute(
+            query=query, operation_name="getItemSet", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetItemSet.model_validate(data)
+
+    async def get_item_sets(
+        self,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetItemSets:
+        query = gql(
+            """
+            query getItemSets($limit: Int, $page: Int) {
+              gameData {
+                item_sets(limit: $limit, page: $page) {
+                  data {
+                    id
+                    name
+                  }
+                  total
+                  per_page
+                  current_page
+                  from
+                  to
+                  last_page
+                  has_more_pages
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"limit": limit, "page": page}
+        response = await self.execute(
+            query=query, operation_name="getItemSets", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetItemSets.model_validate(data)
+
+    async def get_items(
+        self,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetItems:
+        query = gql(
+            """
+            query getItems($limit: Int, $page: Int) {
+              gameData {
+                items(limit: $limit, page: $page) {
+                  data {
+                    id
+                    name
+                    icon
+                  }
+                  total
+                  per_page
+                  current_page
+                  from
+                  to
+                  last_page
+                  has_more_pages
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"limit": limit, "page": page}
+        response = await self.execute(
+            query=query, operation_name="getItems", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetItems.model_validate(data)
+
+    async def get_map(self, id: int, **kwargs: Any) -> GetMap:
+        query = gql(
+            """
+            query getMap($id: Int!) {
+              gameData {
+                map(id: $id) {
+                  id
+                  name
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"id": id}
+        response = await self.execute(
+            query=query, operation_name="getMap", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetMap.model_validate(data)
+
+    async def get_maps(
+        self,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetMaps:
+        query = gql(
+            """
+            query getMaps($limit: Int, $page: Int) {
+              gameData {
+                maps(limit: $limit, page: $page) {
+                  data {
+                    id
+                    name
+                  }
+                  total
+                  per_page
+                  current_page
+                  from
+                  to
+                  last_page
+                  has_more_pages
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"limit": limit, "page": page}
+        response = await self.execute(
+            query=query, operation_name="getMaps", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetMaps.model_validate(data)
+
+    async def get_npc(self, id: int, **kwargs: Any) -> GetNPC:
+        query = gql(
+            """
+            query getNPC($id: Int!) {
+              gameData {
+                npc(id: $id) {
+                  id
+                  name
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"id": id}
+        response = await self.execute(
+            query=query, operation_name="getNPC", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetNPC.model_validate(data)
+
+    async def get_np_cs(
+        self,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetNPCs:
+        query = gql(
+            """
+            query getNPCs($limit: Int, $page: Int) {
+              gameData {
+                npcs(limit: $limit, page: $page) {
+                  data {
+                    id
+                    name
+                  }
+                  total
+                  per_page
+                  current_page
+                  from
+                  to
+                  last_page
+                  has_more_pages
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"limit": limit, "page": page}
+        response = await self.execute(
+            query=query, operation_name="getNPCs", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetNPCs.model_validate(data)

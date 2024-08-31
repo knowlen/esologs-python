@@ -1,4 +1,3 @@
-
 import asyncio
 from esologs.client import Client
 from access_token import get_access_token
@@ -31,6 +30,80 @@ async def test_queries():
             print("Get Class Response:", class_response)
         except Exception as e:
             print(f"An error occurred during get_class: {e}")
+
+        try:
+            # Test getClasses
+            classes_response = await client.get_classes()
+            print("Get Classes Response:", classes_response)
+        except Exception as e:
+            print(f"An error occurred during get_classes: {e}")
+
+        try:
+            # Test getFactions
+            factions_response = await client.get_factions()
+            print("Get Factions Response:", factions_response)
+        except Exception as e:
+            print(f"An error occurred during get_factions: {e}")
+
+        try:
+            # Test getItem with a specific ID
+            item_id = 1  # Replace with a valid item ID
+            item_response = await client.get_item(id=item_id)
+            print("Get Item Response:", item_response)
+        except Exception as e:
+            print(f"An error occurred during get_item: {e}")
+
+        try:
+            # Test getItemSet with a specific ID
+            item_set_id = 1  # Replace with a valid item set ID
+            item_set_response = await client.get_item_set(id=item_set_id)
+            print("Get Item Set Response:", item_set_response)
+        except Exception as e:
+            print(f"An error occurred during get_item_set: {e}")
+
+        try:
+            # Test getItemSets
+            item_sets_response = await client.get_item_sets(limit=100, page=1)
+            print("Get Item Sets Response:", item_sets_response)
+        except Exception as e:
+            print(f"An error occurred during get_item_sets: {e}")
+
+        try:
+            # Test getItems
+            items_response = await client.get_items(limit=100, page=1)
+            print("Get Items Response:", items_response)
+        except Exception as e:
+            print(f"An error occurred during get_items: {e}")
+
+        try:
+            # Test getMap with a specific ID
+            map_id = 1  # Replace with a valid map ID
+            map_response = await client.get_map(id=map_id)
+            print("Get Map Response:", map_response)
+        except Exception as e:
+            print(f"An error occurred during get_map: {e}")
+
+        try:
+            # Test getMaps
+            maps_response = await client.get_maps(limit=100, page=1)
+            print("Get Maps Response:", maps_response)
+        except Exception as e:
+            print(f"An error occurred during get_maps: {e}")
+
+        try:
+            # Test getNPC with a specific ID
+            npc_id = 1  # Replace with a valid NPC ID
+            npc_response = await client.get_npc(id=npc_id)
+            print("Get NPC Response:", npc_response)
+        except Exception as e:
+            print(f"An error occurred during get_npc: {e}")
+
+        try:
+            # Test getNPCs
+            npcs_response = await client.get_npcs(limit=100, page=1)
+            print("Get NPCs Response:", npcs_response)
+        except Exception as e:
+            print(f"An error occurred during get_npcs: {e}")
 
         try:
             # Test getZones (replacing get_world_data)
@@ -96,6 +169,5 @@ async def test_queries():
 
 # Run the async test function
 if __name__ == "__main__":
-
     asyncio.run(test_queries())
 
