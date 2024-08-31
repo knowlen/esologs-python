@@ -10,7 +10,7 @@ async def test_queries():
 
         try:
             # Test getAbility with a specific ID
-            ability_id = 1  # Replace with a valid ability ID
+            ability_id = 1084 
             ability_response = await client.get_ability(id=ability_id)
             print("Get Ability Response:", ability_response)
         except Exception as e:
@@ -25,7 +25,7 @@ async def test_queries():
 
         try:
             # Test getClass with a specific ID
-            class_id = 1  # Replace with a valid class ID
+            class_id = 1   
             class_response = await client.get_class(id=class_id)
             print("Get Class Response:", class_response)
         except Exception as e:
@@ -47,7 +47,7 @@ async def test_queries():
 
         try:
             # Test getItem with a specific ID
-            item_id = 1  # Replace with a valid item ID
+            item_id = 19  
             item_response = await client.get_item(id=item_id)
             print("Get Item Response:", item_response)
         except Exception as e:
@@ -55,7 +55,7 @@ async def test_queries():
 
         try:
             # Test getItemSet with a specific ID
-            item_set_id = 1  # Replace with a valid item set ID
+            item_set_id = 19 
             item_set_response = await client.get_item_set(id=item_set_id)
             print("Get Item Set Response:", item_set_response)
         except Exception as e:
@@ -77,7 +77,7 @@ async def test_queries():
 
         try:
             # Test getMap with a specific ID
-            map_id = 1  # Replace with a valid map ID
+            map_id = 1  
             map_response = await client.get_map(id=map_id)
             print("Get Map Response:", map_response)
         except Exception as e:
@@ -92,7 +92,7 @@ async def test_queries():
 
         try:
             # Test getNPC with a specific ID
-            npc_id = 1  # Replace with a valid NPC ID
+            npc_id = 1  
             npc_response = await client.get_npc(id=npc_id)
             print("Get NPC Response:", npc_response)
         except Exception as e:
@@ -100,7 +100,7 @@ async def test_queries():
 
         try:
             # Test getNPCs
-            npcs_response = await client.get_npcs(limit=100, page=1)
+            npcs_response = await client.get_np_cs(limit=100, page=1)
             print("Get NPCs Response:", npcs_response)
         except Exception as e:
             print(f"An error occurred during get_npcs: {e}")
@@ -114,7 +114,7 @@ async def test_queries():
 
         try:
             # Test getCharacterById
-            character_id = 1  # Replace with a valid character ID
+            character_id = 34663  
             character_response = await client.get_character_by_id(id=character_id)
             print("Get Character By ID Response:", character_response)
         except Exception as e:
@@ -122,7 +122,7 @@ async def test_queries():
 
         try:
             # Test getCharacterEncounterRanking
-            encounter_id = 1  # Replace with a valid encounter ID
+            encounter_id = 27  
             character_ranking_response = await client.get_character_encounter_ranking(
                 character_id=character_id, encounter_id=encounter_id)
             print("Get Character Encounter Ranking Response:", character_ranking_response)
@@ -138,7 +138,7 @@ async def test_queries():
 
         try:
             # Test getEncountersByZone
-            zone_id = 1  # Replace with a valid zone ID
+            zone_id = 1  
             encounters_response = await client.get_encounters_by_zone(zone_id=zone_id)
             print("Get Encounters By Zone Response:", encounters_response)
         except Exception as e:
@@ -146,7 +146,7 @@ async def test_queries():
 
         try:
             # Test getGuildById
-            guild_id = 1  # Replace with a valid guild ID
+            guild_id = 3660  
             guild_response = await client.get_guild_by_id(guild_id=guild_id)
             print("Get Guild By ID Response:", guild_response)
         except Exception as e:
@@ -161,11 +161,18 @@ async def test_queries():
 
         try:
             # Test getReportByCode
-            report_code = "abc123"  # Replace with a valid report code
+            report_code = "VfxqaX47HGC98rAp"  
             report_response = await client.get_report_by_code(code=report_code)
             print("Get Report By Code Response:", report_response)
         except Exception as e:
             print(f"An error occurred during get_report_by_code: {e}")
+
+        try:
+            # Test getRateLimitData
+            rate_limit_response = await client.get_rate_limit_data()
+            print("Get Rate Limit Data Response:", rate_limit_response)
+        except Exception as e:
+            print(f"An error occurred during get_rate_limit_data: {e}")
 
 # Run the async test function
 if __name__ == "__main__":

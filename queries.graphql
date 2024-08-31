@@ -412,3 +412,11 @@ query getNPCs($limit: Int, $page: Int) {
   }
 }
 
+query getRateLimitData {
+  rateLimitData {
+    limitPerHour
+    pointsSpentThisHour
+    pointsResetIn
+  }
+}
+

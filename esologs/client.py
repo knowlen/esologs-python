@@ -23,6 +23,7 @@ from .get_map import GetMap
 from .get_maps import GetMaps
 from .get_np_cs import GetNPCs
 from .get_npc import GetNPC
+from .get_rate_limit_data import GetRateLimitData
 from .get_regions import GetRegions
 from .get_report_by_code import GetReportByCode
 from .get_world_data import GetWorldData
@@ -736,3 +737,25 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetNPCs.model_validate(data)
+
+    async def get_rate_limit_data(self, **kwargs: Any) -> GetRateLimitData:
+        query = gql(
+            """
+            query getRateLimitData {
+              rateLimitData {
+                limitPerHour
+                pointsSpentThisHour
+                pointsResetIn
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {}
+        response = await self.execute(
+            query=query,
+            operation_name="getRateLimitData",
+            variables=variables,
+            **kwargs
+        )
+        data = self.get_data(response)
+        return GetRateLimitData.model_validate(data)
