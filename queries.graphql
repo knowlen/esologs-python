@@ -1,0 +1,280 @@
+query getAbility($id: Int!) {
+  gameData {
+    ability(id: $id) {
+      id
+      name
+      icon
+      description
+    }
+  }
+}
+
+query getAbilities($limit: Int, $page: Int) {
+  gameData {
+    abilities(limit: $limit, page: $page) {
+      data {
+        id
+        name
+        icon
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getClass($id: Int!) {
+  gameData {
+    class(id: $id) {
+      id
+      name
+      slug
+    }
+  }
+}
+
+query getWorldData {
+  worldData {
+    encounter {
+      id
+      name
+    }
+    expansion {
+      id
+      name
+    }
+    expansions {
+      id
+      name
+    }
+    region {
+      id
+      name
+    }
+    regions {
+      id
+      name
+    }
+    server {
+      id
+      name
+    }
+    subregion {
+      id
+      name
+    }
+    zone {
+      id
+      name
+      frozen
+      expansion {
+        id
+        name
+      }
+      difficulties {
+        id
+        name
+        sizes
+      }
+      encounters {
+        id
+        name
+      }
+      partitions {
+        id
+        name
+        compactName
+        default
+      }
+    }
+    zones {
+      id
+      name
+      frozen
+      expansion {
+        id
+        name
+      }
+      brackets {
+        min
+        max
+        bucket
+        type
+      }
+      difficulties {
+        id
+        name
+        sizes
+      }
+      encounters {
+        id
+        name
+      }
+      partitions {
+        id
+        name
+        compactName
+        default
+      }
+    }
+  }
+}
+
+query getCharacterById($id: Int!) {
+  characterData {
+    character(id: $id) {
+      id
+      name
+      classID
+      raceID
+      guildRank
+      hidden
+      server {
+        name
+        region {
+          name
+        }
+      }
+    }
+  }
+}
+
+query getCharacterReports($characterId: Int!, $limit: Int = 10) {
+  characterData {
+    character(id: $characterId) {
+      recentReports(limit: $limit) {
+        data {
+          code
+          startTime
+          endTime
+          zone {
+            name
+          }
+        }
+        total
+        per_page
+        current_page
+        from
+        to
+        last_page
+        has_more_pages
+      }
+    }
+  }
+}
+
+query getGuildById($guildId: Int!) {
+  guildData {
+    guild(id: $guildId) {
+      id
+      name
+      description
+      faction {
+        name
+      }
+      server {
+        name
+        region {
+          name
+        }
+      }
+      tags {
+        id
+        name
+      }
+    }
+  }
+}
+
+query getEncountersByZone($zoneId: Int!) {
+  worldData {
+    zone(id: $zoneId) {
+      id
+      name
+      encounters {
+        id
+        name
+      }
+    }
+  }
+}
+
+
+query getRegions {
+  worldData {
+    regions {
+      id
+      name
+      subregions {
+        id
+        name
+      }
+    }
+  }
+}
+
+query getReportByCode($code: String!) {
+  reportData {
+    report(code: $code) {
+      code
+      startTime
+      endTime
+      title
+      visibility
+      zone {
+        name
+      }
+      fights {
+        id
+        name
+        difficulty
+        startTime
+        endTime
+      }
+    }
+  }
+}
+
+
+query getCharacterEncounterRanking($characterId: Int!, $encounterId: Int!) {
+  characterData {
+    character(id: $characterId) {
+      encounterRankings(encounterID: $encounterId)
+    }
+  }
+}
+
+
+query getZones {
+  worldData {
+    zones {
+      id
+      name
+      frozen
+      brackets {
+        type
+        min
+        max
+        bucket
+      }
+      encounters {
+        id
+        name
+      }
+      difficulties {
+        id
+        name
+        sizes
+      }
+      expansion {
+        id
+        name
+      }
+    }
+  }
+}

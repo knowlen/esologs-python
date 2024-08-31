@@ -1,0 +1,101 @@
+
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
+API_ENDPOINT = "https://www.esologs.com/api/v2/client"
+ACCESS_TOKEN = get_access_token()
+
+async def test_queries():
+    async with Client(url=API_ENDPOINT, headers={"Authorization": f"Bearer {ACCESS_TOKEN}"}) as client:
+
+        try:
+            # Test getAbility with a specific ID
+            ability_id = 1  # Replace with a valid ability ID
+            ability_response = await client.get_ability(id=ability_id)
+            print("Get Ability Response:", ability_response)
+        except Exception as e:
+            print(f"An error occurred during get_ability: {e}")
+
+        try:
+            # Test getAbilities
+            abilities_response = await client.get_abilities(limit=100, page=1)
+            print("Get Abilities Response:", abilities_response)
+        except Exception as e:
+            print(f"An error occurred during get_abilities: {e}")
+
+        try:
+            # Test getClass with a specific ID
+            class_id = 1  # Replace with a valid class ID
+            class_response = await client.get_class(id=class_id)
+            print("Get Class Response:", class_response)
+        except Exception as e:
+            print(f"An error occurred during get_class: {e}")
+
+        try:
+            # Test getZones (replacing get_world_data)
+            zones_response = await client.get_zones()
+            print("Get Zones Response:", zones_response)
+        except Exception as e:
+            print(f"An error occurred during get_zones: {e}")
+
+        try:
+            # Test getCharacterById
+            character_id = 1  # Replace with a valid character ID
+            character_response = await client.get_character_by_id(id=character_id)
+            print("Get Character By ID Response:", character_response)
+        except Exception as e:
+            print(f"An error occurred during get_character_by_id: {e}")
+
+        try:
+            # Test getCharacterEncounterRanking
+            encounter_id = 1  # Replace with a valid encounter ID
+            character_ranking_response = await client.get_character_encounter_ranking(
+                character_id=character_id, encounter_id=encounter_id)
+            print("Get Character Encounter Ranking Response:", character_ranking_response)
+        except Exception as e:
+            print(f"An error occurred during get_character_encounter_ranking: {e}")
+
+        try:
+            # Test getCharacterReports
+            character_reports_response = await client.get_character_reports(character_id=character_id, limit=10)
+            print("Get Character Reports Response:", character_reports_response)
+        except Exception as e:
+            print(f"An error occurred during get_character_reports: {e}")
+
+        try:
+            # Test getEncountersByZone
+            zone_id = 1  # Replace with a valid zone ID
+            encounters_response = await client.get_encounters_by_zone(zone_id=zone_id)
+            print("Get Encounters By Zone Response:", encounters_response)
+        except Exception as e:
+            print(f"An error occurred during get_encounters_by_zone: {e}")
+
+        try:
+            # Test getGuildById
+            guild_id = 1  # Replace with a valid guild ID
+            guild_response = await client.get_guild_by_id(guild_id=guild_id)
+            print("Get Guild By ID Response:", guild_response)
+        except Exception as e:
+            print(f"An error occurred during get_guild_by_id: {e}")
+
+        try:
+            # Test getRegions
+            regions_response = await client.get_regions()
+            print("Get Regions Response:", regions_response)
+        except Exception as e:
+            print(f"An error occurred during get_regions: {e}")
+
+        try:
+            # Test getReportByCode
+            report_code = "abc123"  # Replace with a valid report code
+            report_response = await client.get_report_by_code(code=report_code)
+            print("Get Report By Code Response:", report_response)
+        except Exception as e:
+            print(f"An error occurred during get_report_by_code: {e}")
+
+# Run the async test function
+if __name__ == "__main__":
+
+    asyncio.run(test_queries())
+
