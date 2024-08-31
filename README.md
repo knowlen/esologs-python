@@ -19,5 +19,5 @@ pip install -r requirements.txt
 
 ## Obtain API Key
 1. Create a v2 client at ![this page](https://www.esologs.com/api/clients/).
-2. Export your Client Id and Client Secret as __ESOLOGS_ID__ and __ESOLOGS_SECRET__
+2. Export your Client Id and Client Secret as __ESOLOGS_ID__ and __ESOLOGS_SECRET__ environment variables
 3. Client code should now connect to the API
