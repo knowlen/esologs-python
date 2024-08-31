@@ -2,3 +2,4 @@
 schema_path = "schema.graphql"
 queries_path = "queries.graphql"
 target_package_name = "esologs"
+include_comments = "none"
