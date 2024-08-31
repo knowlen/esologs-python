@@ -1,7 +1,7 @@
 # python-esologs
 A Python frontend for the ![https://www.esologs.com/](esologs) API. 
 
-Note: This project is early. Currently only contains a basic Python script to pull slices of data from a subset of filters.
+Note: This project is early. Eventually should have full converage of the ![v2 API schema](https://www.esologs.com/v2-api-docs/eso/)
 
 Requires at least Python >= 3.6. Tested on MacOS, but should work on all platforms.
 
