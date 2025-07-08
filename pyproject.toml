@@ -9,7 +9,7 @@ description = "A Python client library for the ESO Logs API v2"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Nathan Knowles", email = "nathan@example.com"},
+    {name = "Nick Knowles", email = ""},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -59,7 +59,7 @@ all = [
 Homepage = "https://github.com/knowlen/python-esologs"
 Repository = "https://github.com/knowlen/python-esologs"
 Issues = "https://github.com/knowlen/python-esologs/issues"
-Documentation = "https://python-esologs.readthedocs.io"
+Documentation = "https://github.com/knowlen/python-esologs"
 
 [tool.setuptools.packages.find]
 where = ["."]
