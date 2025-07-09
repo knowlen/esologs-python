@@ -9,7 +9,7 @@ description = "A Python client library for the ESO Logs API v2"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Nick Knowles", email = ""},
+    {name = "Nick Knowles"},
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -193,6 +193,6 @@ exclude_lines = [
     "raise NotImplementedError",
     "if 0:",
     "if __name__ == .__main__.:",
-    "class .*\bProtocol\):",
-    "@(abc\.)?abstractmethod",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
 ]
