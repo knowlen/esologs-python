@@ -143,3 +143,27 @@ Thumbs.db
 # Project specific
 schema.json
 CLAUDE.local.md
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.py,cover
+
+# pytest
+.pytest_cache/
+.cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ruff
+.ruff_cache/
+
+# Development
+.env.local
+.env.*.local

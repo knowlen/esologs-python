@@ -1,16 +1,36 @@
 import os
 import requests
 import base64
-import requests
+import logging
+from typing import Optional
 
-def get_access_token(client_id: str = None, client_secret: str = None) -> str:
+def get_access_token(client_id: Optional[str] = None, client_secret: Optional[str] = None) -> str:
+    """Get OAuth2 access token for ESO Logs API.
+    
+    Args:
+        client_id: ESO Logs client ID (optional, will use ESOLOGS_ID env var if not provided)
+        client_secret: ESO Logs client secret (optional, will use ESOLOGS_SECRET env var if not provided)
+        
+    Returns:
+        Access token string
+        
+    Raises:
+        ValueError: If credentials are missing
+        Exception: If OAuth request fails
+    """
     endpoint = 'https://www.esologs.com/oauth/token'
+    
     if not client_id:
         client_id = os.environ.get('ESOLOGS_ID')
-        print(client_id)
+        if not client_id:
+            raise ValueError("Client ID not provided and ESOLOGS_ID environment variable not set")
+            
     if not client_secret:
         client_secret = os.environ.get('ESOLOGS_SECRET')
-        print(client_secret)
+        if not client_secret:
+            raise ValueError("Client secret not provided and ESOLOGS_SECRET environment variable not set")
+    
+    logging.debug("Requesting OAuth token from ESO Logs API")
 
     auth_str = f'{client_id}:{client_secret}'
     auth_bytes = auth_str.encode('utf-8')
@@ -27,11 +47,27 @@ def get_access_token(client_id: str = None, client_secret: str = None) -> str:
     )
 
     if response.status_code == 200:
-        return response.json().get('access_token')
+        token_data = response.json()
+        access_token = token_data.get('access_token')
+        if not access_token:
+            raise Exception("Access token not found in response")
+        logging.debug("Successfully obtained access token")
+        return access_token
     else:
-        raise Exception(f'Response was not OK: {response.text}')
+        logging.error(f"OAuth request failed with status {response.status_code}")
+        raise Exception(f'OAuth request failed with status {response.status_code}: {response.text}')
 
-def download_remote_schema(url: str, headers: dict):
+def download_remote_schema(url: str, headers: dict, output_file: str = 'schema.json') -> None:
+    """Download GraphQL schema using introspection query.
+    
+    Args:
+        url: GraphQL endpoint URL
+        headers: Request headers including authorization
+        output_file: Output file path for schema
+        
+    Raises:
+        Exception: If schema download fails
+    """
     # Define the GraphQL introspection query to fetch the schema
     introspection_query = {
         "query": """
@@ -57,20 +93,23 @@ def download_remote_schema(url: str, headers: dict):
     response = requests.post(url, json=introspection_query, headers=headers)
     
     if response.status_code == 200:
-        # Assuming you want to save the schema to a file
-        with open('schema.json', 'w') as file:
+        with open(output_file, 'w') as file:
             file.write(response.text)
-        print("Schema downloaded and saved to 'schema.json'")
+        logging.info(f"Schema downloaded and saved to '{output_file}'")
     else:
-        raise Exception(f'Failed to download schema: {response.text}')
+        logging.error(f"Failed to download schema: {response.status_code}")
+        raise Exception(f'Failed to download schema: {response.status_code} - {response.text}')
 
-def download_eso_logs_schema(client_id: str, client_secret: str):
+def download_eso_logs_schema(client_id: str, client_secret: str, output_file: str = 'schema.json') -> None:
+    """Download ESO Logs GraphQL schema.
+    
+    Args:
+        client_id: ESO Logs client ID
+        client_secret: ESO Logs client secret
+        output_file: Output file path for schema
+    """
     # Step 1: Get the access token
-    access_token = get_access_token(
-        'https://www.esologs.com/oauth/token',
-        client_id,
-        client_secret
-    )
+    access_token = get_access_token(client_id, client_secret)
 
     # Step 2: Download the schema with a GraphQL query
     download_remote_schema(
@@ -78,15 +117,19 @@ def download_eso_logs_schema(client_id: str, client_secret: str):
         headers={
             'Authorization': f'Bearer {access_token}',
             'Content-Type': 'application/json',
-        }
+        },
+        output_file=output_file
     )
 
 if __name__ == "__main__":
-    credentials = {
-        'clientId': '',
-        'clientSecret': ''  
-        }
-    access_token = get_access_token(client_id=credentials['clientId'], client_secret=credentials['clientSecret'])
-    #access_token = get_access_token()
-    print(access_token)
+    # Configure logging
+    logging.basicConfig(level=logging.INFO)
+    
+    try:
+        # Get access token using environment variables
+        access_token = get_access_token()
+        print("Access token obtained successfully")
+    except Exception as e:
+        print(f"Error: {e}")
+        exit(1)
 
