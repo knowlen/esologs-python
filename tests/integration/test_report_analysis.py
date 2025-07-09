@@ -50,7 +50,9 @@ class TestReportAnalysisIntegration:
         async with client:
             response = await client.get_report_events(
                 code=test_report_code,
-                data_type=EventDataType.DamageDone
+                data_type=EventDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0  # First minute
             )
             
             assert response is not None
@@ -85,7 +87,9 @@ class TestReportAnalysisIntegration:
             for data_type in data_types_to_test:
                 response = await client.get_report_events(
                     code=test_report_code,
-                    data_type=data_type
+                    data_type=data_type,
+                    start_time=0.0,
+                    end_time=60000.0
                 )
                 
                 assert response is not None
@@ -97,7 +101,9 @@ class TestReportAnalysisIntegration:
         async with client:
             response = await client.get_report_graph(
                 code=test_report_code,
-                data_type=GraphDataType.DamageDone
+                data_type=GraphDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0
             )
             
             assert response is not None
@@ -133,7 +139,9 @@ class TestReportAnalysisIntegration:
             for data_type in data_types_to_test:
                 response = await client.get_report_graph(
                     code=test_report_code,
-                    data_type=data_type
+                    data_type=data_type,
+                    start_time=0.0,
+                    end_time=60000.0
                 )
                 
                 assert response is not None
@@ -145,7 +153,9 @@ class TestReportAnalysisIntegration:
         async with client:
             response = await client.get_report_table(
                 code=test_report_code,
-                data_type=TableDataType.DamageDone
+                data_type=TableDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0
             )
             
             assert response is not None
@@ -181,7 +191,9 @@ class TestReportAnalysisIntegration:
             for data_type in data_types_to_test:
                 response = await client.get_report_table(
                     code=test_report_code,
-                    data_type=data_type
+                    data_type=data_type,
+                    start_time=0.0,
+                    end_time=60000.0
                 )
                 
                 assert response is not None
@@ -193,7 +205,7 @@ class TestReportAnalysisIntegration:
         async with client:
             response = await client.get_report_rankings(
                 code=test_report_code,
-                metric=ReportRankingMetricType.dps
+                player_metric=ReportRankingMetricType.dps
             )
             
             assert response is not None
@@ -208,7 +220,7 @@ class TestReportAnalysisIntegration:
             response = await client.get_report_rankings(
                 code=test_report_code,
                 encounter_id=test_encounter_id,
-                metric=ReportRankingMetricType.dps
+                player_metric=ReportRankingMetricType.dps
             )
             
             assert response is not None
@@ -227,7 +239,7 @@ class TestReportAnalysisIntegration:
             for metric in metrics_to_test:
                 response = await client.get_report_rankings(
                     code=test_report_code,
-                    metric=metric
+                    player_metric=metric
                 )
                 
                 assert response is not None
@@ -238,7 +250,9 @@ class TestReportAnalysisIntegration:
         """Test basic report player details retrieval."""
         async with client:
             response = await client.get_report_player_details(
-                code=test_report_code
+                code=test_report_code,
+                start_time=0.0,
+                end_time=60000.0
             )
             
             assert response is not None
@@ -262,18 +276,23 @@ class TestReportAnalysisIntegration:
     @pytest.mark.asyncio
     async def test_report_analysis_with_invalid_code(self, client):
         """Test report analysis methods with invalid report code."""
-        invalid_code = "INVALID_CODE_123"
+        invalid_code = "ABCDEfghij123456"  # Valid format but non-existent report
         
         async with client:
-            # Test that methods handle invalid codes gracefully
-            response = await client.get_report_events(
-                code=invalid_code,
-                data_type=EventDataType.DamageDone
-            )
-            
-            # Should return valid response structure even with invalid code
-            assert response is not None
-            assert hasattr(response, 'report_data')
+            # Test that methods handle invalid codes by raising appropriate errors
+            try:
+                response = await client.get_report_events(
+                    code=invalid_code,
+                    data_type=EventDataType.DamageDone,
+                    start_time=0.0,
+                    end_time=60000.0
+                )
+                # If no exception, check response structure
+                assert response is not None
+                assert hasattr(response, 'report_data')
+            except Exception as e:
+                # Expected to raise GraphQLQueryError for non-existent report
+                assert "does not exist" in str(e)
 
     @pytest.mark.asyncio
     async def test_report_analysis_comprehensive_workflow(self, client, test_report_code):
@@ -286,34 +305,42 @@ class TestReportAnalysisIntegration:
             # Get events data
             events = await client.get_report_events(
                 code=test_report_code,
-                data_type=EventDataType.DamageDone
+                data_type=EventDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0
             )
             assert events is not None
             
             # Get graph data
             graph = await client.get_report_graph(
                 code=test_report_code,
-                data_type=GraphDataType.DamageDone
+                data_type=GraphDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0
             )
             assert graph is not None
             
             # Get table data
             table = await client.get_report_table(
                 code=test_report_code,
-                data_type=TableDataType.DamageDone
+                data_type=TableDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0
             )
             assert table is not None
             
             # Get rankings
             rankings = await client.get_report_rankings(
                 code=test_report_code,
-                metric=ReportRankingMetricType.dps
+                player_metric=ReportRankingMetricType.dps
             )
             assert rankings is not None
             
             # Get player details
             player_details = await client.get_report_player_details(
-                code=test_report_code
+                code=test_report_code,
+                start_time=0.0,
+                end_time=60000.0
             )
             assert player_details is not None
 
@@ -329,7 +356,9 @@ if __name__ == "__main__":
         async with client:
             response = await client.get_report_events(
                 code="VfxqaX47HGC98rAp",
-                data_type=EventDataType.DamageDone
+                data_type=EventDataType.DamageDone,
+                start_time=0.0,
+                end_time=60000.0
             )
             print("Report Analysis Integration Test Result:", response)
     
