@@ -1,14 +1,18 @@
 import asyncio
-from esologs.client import Client
+
 from access_token import get_access_token
+from esologs.client import Client
 
 API_ENDPOINT = "https://www.esologs.com/api/v2/client"
 ACCESS_TOKEN = get_access_token()
 
-separator = "\n" + "="*50 + "\n"
+separator = "\n" + "=" * 50 + "\n"
+
 
 async def test_queries():
-    async with Client(url=API_ENDPOINT, headers={"Authorization": f"Bearer {ACCESS_TOKEN}"}) as client:
+    async with Client(
+        url=API_ENDPOINT, headers={"Authorization": f"Bearer {ACCESS_TOKEN}"}
+    ) as client:
 
         try:
             # Test getAbility with a specific ID
@@ -140,16 +144,22 @@ async def test_queries():
         try:
             # Test getCharacterEncounterRanking
             encounter_id = 27
+            zone_id = 8
             character_ranking_response = await client.get_character_encounter_ranking(
-                character_id=character_id, encounter_id=encounter_id)
-            print("Get Character Encounter Ranking Response:", character_ranking_response)
+                character_id=character_id, encounter_id=encounter_id
+            )
+            print(
+                "Get Character Encounter Ranking Response:", character_ranking_response
+            )
         except Exception as e:
             print(f"An error occurred during get_character_encounter_ranking: {e}")
         print(separator)
 
         try:
             # Test getCharacterReports
-            character_reports_response = await client.get_character_reports(character_id=character_id, limit=10)
+            character_reports_response = await client.get_character_reports(
+                character_id=character_id, limit=10
+            )
             print("Get Character Reports Response:", character_reports_response)
         except Exception as e:
             print(f"An error occurred during get_character_reports: {e}")
@@ -158,12 +168,16 @@ async def test_queries():
         try:
             # Test getCharacterEncounterRankings (new method)
             from esologs.enums import CharacterRankingMetricType
+
             encounter_rankings_response = await client.get_character_encounter_rankings(
-                character_id=character_id, 
+                character_id=character_id,
                 encounter_id=encounter_id,
-                metric=CharacterRankingMetricType.dps
+                metric=CharacterRankingMetricType.dps,
             )
-            print("Get Character Encounter Rankings Response:", encounter_rankings_response)
+            print(
+                "Get Character Encounter Rankings Response:",
+                encounter_rankings_response,
+            )
         except Exception as e:
             print(f"An error occurred during get_character_encounter_rankings: {e}")
         print(separator)
@@ -173,7 +187,7 @@ async def test_queries():
             zone_rankings_response = await client.get_character_zone_rankings(
                 character_id=character_id,
                 zone_id=zone_id,
-                metric=CharacterRankingMetricType.playerscore
+                metric=CharacterRankingMetricType.playerscore,
             )
             print("Get Character Zone Rankings Response:", zone_rankings_response)
         except Exception as e:
@@ -223,7 +237,7 @@ async def test_queries():
             print(f"An error occurred during get_rate_limit_data: {e}")
         print(separator)
 
+
 # Run the async test function
 if __name__ == "__main__":
     asyncio.run(test_queries())
-

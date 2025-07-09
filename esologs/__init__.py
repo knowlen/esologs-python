@@ -124,6 +124,32 @@ from .get_report_by_code import (
     GetReportByCodeReportDataReportFights,
     GetReportByCodeReportDataReportZone,
 )
+from .get_report_events import (
+    GetReportEvents,
+    GetReportEventsReportData,
+    GetReportEventsReportDataReport,
+    GetReportEventsReportDataReportEvents,
+)
+from .get_report_graph import (
+    GetReportGraph,
+    GetReportGraphReportData,
+    GetReportGraphReportDataReport,
+)
+from .get_report_player_details import (
+    GetReportPlayerDetails,
+    GetReportPlayerDetailsReportData,
+    GetReportPlayerDetailsReportDataReport,
+)
+from .get_report_rankings import (
+    GetReportRankings,
+    GetReportRankingsReportData,
+    GetReportRankingsReportDataReport,
+)
+from .get_report_table import (
+    GetReportTable,
+    GetReportTableReportData,
+    GetReportTableReportDataReport,
+)
 from .get_world_data import (
     GetWorldData,
     GetWorldDataWorldData,
@@ -250,6 +276,22 @@ __all__ = [
     "GetReportByCodeReportDataReport",
     "GetReportByCodeReportDataReportFights",
     "GetReportByCodeReportDataReportZone",
+    "GetReportEvents",
+    "GetReportEventsReportData",
+    "GetReportEventsReportDataReport",
+    "GetReportEventsReportDataReportEvents",
+    "GetReportGraph",
+    "GetReportGraphReportData",
+    "GetReportGraphReportDataReport",
+    "GetReportPlayerDetails",
+    "GetReportPlayerDetailsReportData",
+    "GetReportPlayerDetailsReportDataReport",
+    "GetReportRankings",
+    "GetReportRankingsReportData",
+    "GetReportRankingsReportDataReport",
+    "GetReportTable",
+    "GetReportTableReportData",
+    "GetReportTableReportDataReport",
     "GetWorldData",
     "GetWorldDataWorldData",
     "GetWorldDataWorldDataEncounter",

@@ -492,3 +492,245 @@ query getRateLimitData {
   }
 }
 
+query getReportEvents(
+  $code: String!
+  $abilityID: Float
+  $dataType: EventDataType
+  $death: Int
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $filterExpression: String
+  $hostilityType: HostilityType
+  $includeResources: Boolean
+  $killType: KillType
+  $limit: Int
+  $sourceAurasAbsent: String
+  $sourceAurasPresent: String
+  $sourceClass: String
+  $sourceID: Int
+  $sourceInstanceID: Int
+  $startTime: Float
+  $targetAurasAbsent: String
+  $targetAurasPresent: String
+  $targetClass: String
+  $targetID: Int
+  $targetInstanceID: Int
+  $translate: Boolean
+  $useAbilityIDs: Boolean
+  $useActorIDs: Boolean
+  $viewOptions: Int
+  $wipeCutoff: Int
+) {
+  reportData {
+    report(code: $code) {
+      events(
+        abilityID: $abilityID
+        dataType: $dataType
+        death: $death
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        filterExpression: $filterExpression
+        hostilityType: $hostilityType
+        includeResources: $includeResources
+        killType: $killType
+        limit: $limit
+        sourceAurasAbsent: $sourceAurasAbsent
+        sourceAurasPresent: $sourceAurasPresent
+        sourceClass: $sourceClass
+        sourceID: $sourceID
+        sourceInstanceID: $sourceInstanceID
+        startTime: $startTime
+        targetAurasAbsent: $targetAurasAbsent
+        targetAurasPresent: $targetAurasPresent
+        targetClass: $targetClass
+        targetID: $targetID
+        targetInstanceID: $targetInstanceID
+        translate: $translate
+        useAbilityIDs: $useAbilityIDs
+        useActorIDs: $useActorIDs
+        viewOptions: $viewOptions
+        wipeCutoff: $wipeCutoff
+      ) {
+        data
+        nextPageTimestamp
+      }
+    }
+  }
+}
+
+query getReportGraph(
+  $code: String!
+  $abilityID: Float
+  $dataType: GraphDataType
+  $death: Int
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $filterExpression: String
+  $hostilityType: HostilityType
+  $killType: KillType
+  $sourceAurasAbsent: String
+  $sourceAurasPresent: String
+  $sourceClass: String
+  $sourceID: Int
+  $sourceInstanceID: Int
+  $startTime: Float
+  $targetAurasAbsent: String
+  $targetAurasPresent: String
+  $targetClass: String
+  $targetID: Int
+  $targetInstanceID: Int
+  $translate: Boolean
+  $viewOptions: Int
+  $viewBy: ViewType
+  $wipeCutoff: Int
+) {
+  reportData {
+    report(code: $code) {
+      graph(
+        abilityID: $abilityID
+        dataType: $dataType
+        death: $death
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        filterExpression: $filterExpression
+        hostilityType: $hostilityType
+        killType: $killType
+        sourceAurasAbsent: $sourceAurasAbsent
+        sourceAurasPresent: $sourceAurasPresent
+        sourceClass: $sourceClass
+        sourceID: $sourceID
+        sourceInstanceID: $sourceInstanceID
+        startTime: $startTime
+        targetAurasAbsent: $targetAurasAbsent
+        targetAurasPresent: $targetAurasPresent
+        targetClass: $targetClass
+        targetID: $targetID
+        targetInstanceID: $targetInstanceID
+        translate: $translate
+        viewOptions: $viewOptions
+        viewBy: $viewBy
+        wipeCutoff: $wipeCutoff
+      )
+    }
+  }
+}
+
+query getReportTable(
+  $code: String!
+  $abilityID: Float
+  $dataType: TableDataType
+  $death: Int
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $filterExpression: String
+  $hostilityType: HostilityType
+  $killType: KillType
+  $sourceAurasAbsent: String
+  $sourceAurasPresent: String
+  $sourceClass: String
+  $sourceID: Int
+  $sourceInstanceID: Int
+  $startTime: Float
+  $targetAurasAbsent: String
+  $targetAurasPresent: String
+  $targetClass: String
+  $targetID: Int
+  $targetInstanceID: Int
+  $translate: Boolean
+  $viewOptions: Int
+  $viewBy: ViewType
+  $wipeCutoff: Int
+) {
+  reportData {
+    report(code: $code) {
+      table(
+        abilityID: $abilityID
+        dataType: $dataType
+        death: $death
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        filterExpression: $filterExpression
+        hostilityType: $hostilityType
+        killType: $killType
+        sourceAurasAbsent: $sourceAurasAbsent
+        sourceAurasPresent: $sourceAurasPresent
+        sourceClass: $sourceClass
+        sourceID: $sourceID
+        sourceInstanceID: $sourceInstanceID
+        startTime: $startTime
+        targetAurasAbsent: $targetAurasAbsent
+        targetAurasPresent: $targetAurasPresent
+        targetClass: $targetClass
+        targetID: $targetID
+        targetInstanceID: $targetInstanceID
+        translate: $translate
+        viewOptions: $viewOptions
+        viewBy: $viewBy
+        wipeCutoff: $wipeCutoff
+      )
+    }
+  }
+}
+
+query getReportRankings(
+  $code: String!
+  $compare: RankingCompareType
+  $difficulty: Int
+  $encounterID: Int
+  $fightIDs: [Int]
+  $playerMetric: ReportRankingMetricType
+  $timeframe: RankingTimeframeType
+) {
+  reportData {
+    report(code: $code) {
+      rankings(
+        compare: $compare
+        difficulty: $difficulty
+        encounterID: $encounterID
+        fightIDs: $fightIDs
+        playerMetric: $playerMetric
+        timeframe: $timeframe
+      )
+    }
+  }
+}
+
+query getReportPlayerDetails(
+  $code: String!
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $killType: KillType
+  $startTime: Float
+  $translate: Boolean
+  $includeCombatantInfo: Boolean
+) {
+  reportData {
+    report(code: $code) {
+      playerDetails(
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        killType: $killType
+        startTime: $startTime
+        translate: $translate
+        includeCombatantInfo: $includeCombatantInfo
+      )
+    }
+  }
+}
+

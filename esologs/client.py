@@ -1,12 +1,19 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from .async_base_client import AsyncBaseClient
 from .base_model import UNSET, UnsetType
 from .enums import (
     CharacterRankingMetricType,
+    EventDataType,
+    GraphDataType,
+    HostilityType,
+    KillType,
     RankingCompareType,
     RankingTimeframeType,
+    ReportRankingMetricType,
     RoleType,
+    TableDataType,
+    ViewType,
 )
 from .get_abilities import GetAbilities
 from .get_ability import GetAbility
@@ -31,6 +38,11 @@ from .get_npc import GetNPC
 from .get_rate_limit_data import GetRateLimitData
 from .get_regions import GetRegions
 from .get_report_by_code import GetReportByCode
+from .get_report_events import GetReportEvents
+from .get_report_graph import GetReportGraph
+from .get_report_player_details import GetReportPlayerDetails
+from .get_report_rankings import GetReportRankings
+from .get_report_table import GetReportTable
 from .get_world_data import GetWorldData
 from .get_zones import GetZones
 
@@ -66,7 +78,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetAbilities:
         query = gql(
             """
@@ -244,7 +256,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterById",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterById.model_validate(data)
@@ -253,7 +265,7 @@ class Client(AsyncBaseClient):
         self,
         character_id: int,
         limit: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetCharacterReports:
         query = gql(
             """
@@ -287,7 +299,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterReports",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterReports.model_validate(data)
@@ -350,7 +362,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getEncountersByZone",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetEncountersByZone.model_validate(data)
@@ -434,7 +446,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterEncounterRanking",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterEncounterRanking.model_validate(data)
@@ -455,7 +467,7 @@ class Client(AsyncBaseClient):
         size: Union[Optional[int], UnsetType] = UNSET,
         spec_name: Union[Optional[str], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetCharacterEncounterRankings:
         query = gql(
             """
@@ -502,7 +514,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterEncounterRankings",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterEncounterRankings.model_validate(data)
@@ -522,7 +534,7 @@ class Client(AsyncBaseClient):
         size: Union[Optional[int], UnsetType] = UNSET,
         spec_name: Union[Optional[str], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetCharacterZoneRankings:
         query = gql(
             """
@@ -567,7 +579,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterZoneRankings",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterZoneRankings.model_validate(data)
@@ -616,7 +628,7 @@ class Client(AsyncBaseClient):
         self,
         faction_id: Union[Optional[int], UnsetType] = UNSET,
         zone_id: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetClasses:
         query = gql(
             """
@@ -703,7 +715,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetItemSets:
         query = gql(
             """
@@ -737,7 +749,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetItems:
         query = gql(
             """
@@ -792,7 +804,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetMaps:
         query = gql(
             """
@@ -846,7 +858,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetNPCs:
         query = gql(
             """
@@ -893,7 +905,422 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getRateLimitData",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetRateLimitData.model_validate(data)
+
+    async def get_report_events(
+        self,
+        code: str,
+        ability_id: Union[Optional[float], UnsetType] = UNSET,
+        data_type: Union[Optional[EventDataType], UnsetType] = UNSET,
+        death: Union[Optional[int], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        encounter_id: Union[Optional[int], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
+        filter_expression: Union[Optional[str], UnsetType] = UNSET,
+        hostility_type: Union[Optional[HostilityType], UnsetType] = UNSET,
+        include_resources: Union[Optional[bool], UnsetType] = UNSET,
+        kill_type: Union[Optional[KillType], UnsetType] = UNSET,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        source_auras_absent: Union[Optional[str], UnsetType] = UNSET,
+        source_auras_present: Union[Optional[str], UnsetType] = UNSET,
+        source_class: Union[Optional[str], UnsetType] = UNSET,
+        source_id: Union[Optional[int], UnsetType] = UNSET,
+        source_instance_id: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        target_auras_absent: Union[Optional[str], UnsetType] = UNSET,
+        target_auras_present: Union[Optional[str], UnsetType] = UNSET,
+        target_class: Union[Optional[str], UnsetType] = UNSET,
+        target_id: Union[Optional[int], UnsetType] = UNSET,
+        target_instance_id: Union[Optional[int], UnsetType] = UNSET,
+        translate: Union[Optional[bool], UnsetType] = UNSET,
+        use_ability_i_ds: Union[Optional[bool], UnsetType] = UNSET,
+        use_actor_i_ds: Union[Optional[bool], UnsetType] = UNSET,
+        view_options: Union[Optional[int], UnsetType] = UNSET,
+        wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReportEvents:
+        query = gql(
+            """
+            query getReportEvents($code: String!, $abilityID: Float, $dataType: EventDataType, $death: Int, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $filterExpression: String, $hostilityType: HostilityType, $includeResources: Boolean, $killType: KillType, $limit: Int, $sourceAurasAbsent: String, $sourceAurasPresent: String, $sourceClass: String, $sourceID: Int, $sourceInstanceID: Int, $startTime: Float, $targetAurasAbsent: String, $targetAurasPresent: String, $targetClass: String, $targetID: Int, $targetInstanceID: Int, $translate: Boolean, $useAbilityIDs: Boolean, $useActorIDs: Boolean, $viewOptions: Int, $wipeCutoff: Int) {
+              reportData {
+                report(code: $code) {
+                  events(
+                    abilityID: $abilityID
+                    dataType: $dataType
+                    death: $death
+                    difficulty: $difficulty
+                    encounterID: $encounterID
+                    endTime: $endTime
+                    fightIDs: $fightIDs
+                    filterExpression: $filterExpression
+                    hostilityType: $hostilityType
+                    includeResources: $includeResources
+                    killType: $killType
+                    limit: $limit
+                    sourceAurasAbsent: $sourceAurasAbsent
+                    sourceAurasPresent: $sourceAurasPresent
+                    sourceClass: $sourceClass
+                    sourceID: $sourceID
+                    sourceInstanceID: $sourceInstanceID
+                    startTime: $startTime
+                    targetAurasAbsent: $targetAurasAbsent
+                    targetAurasPresent: $targetAurasPresent
+                    targetClass: $targetClass
+                    targetID: $targetID
+                    targetInstanceID: $targetInstanceID
+                    translate: $translate
+                    useAbilityIDs: $useAbilityIDs
+                    useActorIDs: $useActorIDs
+                    viewOptions: $viewOptions
+                    wipeCutoff: $wipeCutoff
+                  ) {
+                    data
+                    nextPageTimestamp
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "code": code,
+            "abilityID": ability_id,
+            "dataType": data_type,
+            "death": death,
+            "difficulty": difficulty,
+            "encounterID": encounter_id,
+            "endTime": end_time,
+            "fightIDs": fight_i_ds,
+            "filterExpression": filter_expression,
+            "hostilityType": hostility_type,
+            "includeResources": include_resources,
+            "killType": kill_type,
+            "limit": limit,
+            "sourceAurasAbsent": source_auras_absent,
+            "sourceAurasPresent": source_auras_present,
+            "sourceClass": source_class,
+            "sourceID": source_id,
+            "sourceInstanceID": source_instance_id,
+            "startTime": start_time,
+            "targetAurasAbsent": target_auras_absent,
+            "targetAurasPresent": target_auras_present,
+            "targetClass": target_class,
+            "targetID": target_id,
+            "targetInstanceID": target_instance_id,
+            "translate": translate,
+            "useAbilityIDs": use_ability_i_ds,
+            "useActorIDs": use_actor_i_ds,
+            "viewOptions": view_options,
+            "wipeCutoff": wipe_cutoff,
+        }
+        response = await self.execute(
+            query=query, operation_name="getReportEvents", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetReportEvents.model_validate(data)
+
+    async def get_report_graph(
+        self,
+        code: str,
+        ability_id: Union[Optional[float], UnsetType] = UNSET,
+        data_type: Union[Optional[GraphDataType], UnsetType] = UNSET,
+        death: Union[Optional[int], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        encounter_id: Union[Optional[int], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
+        filter_expression: Union[Optional[str], UnsetType] = UNSET,
+        hostility_type: Union[Optional[HostilityType], UnsetType] = UNSET,
+        kill_type: Union[Optional[KillType], UnsetType] = UNSET,
+        source_auras_absent: Union[Optional[str], UnsetType] = UNSET,
+        source_auras_present: Union[Optional[str], UnsetType] = UNSET,
+        source_class: Union[Optional[str], UnsetType] = UNSET,
+        source_id: Union[Optional[int], UnsetType] = UNSET,
+        source_instance_id: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        target_auras_absent: Union[Optional[str], UnsetType] = UNSET,
+        target_auras_present: Union[Optional[str], UnsetType] = UNSET,
+        target_class: Union[Optional[str], UnsetType] = UNSET,
+        target_id: Union[Optional[int], UnsetType] = UNSET,
+        target_instance_id: Union[Optional[int], UnsetType] = UNSET,
+        translate: Union[Optional[bool], UnsetType] = UNSET,
+        view_options: Union[Optional[int], UnsetType] = UNSET,
+        view_by: Union[Optional[ViewType], UnsetType] = UNSET,
+        wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReportGraph:
+        query = gql(
+            """
+            query getReportGraph($code: String!, $abilityID: Float, $dataType: GraphDataType, $death: Int, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $filterExpression: String, $hostilityType: HostilityType, $killType: KillType, $sourceAurasAbsent: String, $sourceAurasPresent: String, $sourceClass: String, $sourceID: Int, $sourceInstanceID: Int, $startTime: Float, $targetAurasAbsent: String, $targetAurasPresent: String, $targetClass: String, $targetID: Int, $targetInstanceID: Int, $translate: Boolean, $viewOptions: Int, $viewBy: ViewType, $wipeCutoff: Int) {
+              reportData {
+                report(code: $code) {
+                  graph(
+                    abilityID: $abilityID
+                    dataType: $dataType
+                    death: $death
+                    difficulty: $difficulty
+                    encounterID: $encounterID
+                    endTime: $endTime
+                    fightIDs: $fightIDs
+                    filterExpression: $filterExpression
+                    hostilityType: $hostilityType
+                    killType: $killType
+                    sourceAurasAbsent: $sourceAurasAbsent
+                    sourceAurasPresent: $sourceAurasPresent
+                    sourceClass: $sourceClass
+                    sourceID: $sourceID
+                    sourceInstanceID: $sourceInstanceID
+                    startTime: $startTime
+                    targetAurasAbsent: $targetAurasAbsent
+                    targetAurasPresent: $targetAurasPresent
+                    targetClass: $targetClass
+                    targetID: $targetID
+                    targetInstanceID: $targetInstanceID
+                    translate: $translate
+                    viewOptions: $viewOptions
+                    viewBy: $viewBy
+                    wipeCutoff: $wipeCutoff
+                  )
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "code": code,
+            "abilityID": ability_id,
+            "dataType": data_type,
+            "death": death,
+            "difficulty": difficulty,
+            "encounterID": encounter_id,
+            "endTime": end_time,
+            "fightIDs": fight_i_ds,
+            "filterExpression": filter_expression,
+            "hostilityType": hostility_type,
+            "killType": kill_type,
+            "sourceAurasAbsent": source_auras_absent,
+            "sourceAurasPresent": source_auras_present,
+            "sourceClass": source_class,
+            "sourceID": source_id,
+            "sourceInstanceID": source_instance_id,
+            "startTime": start_time,
+            "targetAurasAbsent": target_auras_absent,
+            "targetAurasPresent": target_auras_present,
+            "targetClass": target_class,
+            "targetID": target_id,
+            "targetInstanceID": target_instance_id,
+            "translate": translate,
+            "viewOptions": view_options,
+            "viewBy": view_by,
+            "wipeCutoff": wipe_cutoff,
+        }
+        response = await self.execute(
+            query=query, operation_name="getReportGraph", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetReportGraph.model_validate(data)
+
+    async def get_report_table(
+        self,
+        code: str,
+        ability_id: Union[Optional[float], UnsetType] = UNSET,
+        data_type: Union[Optional[TableDataType], UnsetType] = UNSET,
+        death: Union[Optional[int], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        encounter_id: Union[Optional[int], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
+        filter_expression: Union[Optional[str], UnsetType] = UNSET,
+        hostility_type: Union[Optional[HostilityType], UnsetType] = UNSET,
+        kill_type: Union[Optional[KillType], UnsetType] = UNSET,
+        source_auras_absent: Union[Optional[str], UnsetType] = UNSET,
+        source_auras_present: Union[Optional[str], UnsetType] = UNSET,
+        source_class: Union[Optional[str], UnsetType] = UNSET,
+        source_id: Union[Optional[int], UnsetType] = UNSET,
+        source_instance_id: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        target_auras_absent: Union[Optional[str], UnsetType] = UNSET,
+        target_auras_present: Union[Optional[str], UnsetType] = UNSET,
+        target_class: Union[Optional[str], UnsetType] = UNSET,
+        target_id: Union[Optional[int], UnsetType] = UNSET,
+        target_instance_id: Union[Optional[int], UnsetType] = UNSET,
+        translate: Union[Optional[bool], UnsetType] = UNSET,
+        view_options: Union[Optional[int], UnsetType] = UNSET,
+        view_by: Union[Optional[ViewType], UnsetType] = UNSET,
+        wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReportTable:
+        query = gql(
+            """
+            query getReportTable($code: String!, $abilityID: Float, $dataType: TableDataType, $death: Int, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $filterExpression: String, $hostilityType: HostilityType, $killType: KillType, $sourceAurasAbsent: String, $sourceAurasPresent: String, $sourceClass: String, $sourceID: Int, $sourceInstanceID: Int, $startTime: Float, $targetAurasAbsent: String, $targetAurasPresent: String, $targetClass: String, $targetID: Int, $targetInstanceID: Int, $translate: Boolean, $viewOptions: Int, $viewBy: ViewType, $wipeCutoff: Int) {
+              reportData {
+                report(code: $code) {
+                  table(
+                    abilityID: $abilityID
+                    dataType: $dataType
+                    death: $death
+                    difficulty: $difficulty
+                    encounterID: $encounterID
+                    endTime: $endTime
+                    fightIDs: $fightIDs
+                    filterExpression: $filterExpression
+                    hostilityType: $hostilityType
+                    killType: $killType
+                    sourceAurasAbsent: $sourceAurasAbsent
+                    sourceAurasPresent: $sourceAurasPresent
+                    sourceClass: $sourceClass
+                    sourceID: $sourceID
+                    sourceInstanceID: $sourceInstanceID
+                    startTime: $startTime
+                    targetAurasAbsent: $targetAurasAbsent
+                    targetAurasPresent: $targetAurasPresent
+                    targetClass: $targetClass
+                    targetID: $targetID
+                    targetInstanceID: $targetInstanceID
+                    translate: $translate
+                    viewOptions: $viewOptions
+                    viewBy: $viewBy
+                    wipeCutoff: $wipeCutoff
+                  )
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "code": code,
+            "abilityID": ability_id,
+            "dataType": data_type,
+            "death": death,
+            "difficulty": difficulty,
+            "encounterID": encounter_id,
+            "endTime": end_time,
+            "fightIDs": fight_i_ds,
+            "filterExpression": filter_expression,
+            "hostilityType": hostility_type,
+            "killType": kill_type,
+            "sourceAurasAbsent": source_auras_absent,
+            "sourceAurasPresent": source_auras_present,
+            "sourceClass": source_class,
+            "sourceID": source_id,
+            "sourceInstanceID": source_instance_id,
+            "startTime": start_time,
+            "targetAurasAbsent": target_auras_absent,
+            "targetAurasPresent": target_auras_present,
+            "targetClass": target_class,
+            "targetID": target_id,
+            "targetInstanceID": target_instance_id,
+            "translate": translate,
+            "viewOptions": view_options,
+            "viewBy": view_by,
+            "wipeCutoff": wipe_cutoff,
+        }
+        response = await self.execute(
+            query=query, operation_name="getReportTable", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetReportTable.model_validate(data)
+
+    async def get_report_rankings(
+        self,
+        code: str,
+        compare: Union[Optional[RankingCompareType], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        encounter_id: Union[Optional[int], UnsetType] = UNSET,
+        fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
+        player_metric: Union[Optional[ReportRankingMetricType], UnsetType] = UNSET,
+        timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReportRankings:
+        query = gql(
+            """
+            query getReportRankings($code: String!, $compare: RankingCompareType, $difficulty: Int, $encounterID: Int, $fightIDs: [Int], $playerMetric: ReportRankingMetricType, $timeframe: RankingTimeframeType) {
+              reportData {
+                report(code: $code) {
+                  rankings(
+                    compare: $compare
+                    difficulty: $difficulty
+                    encounterID: $encounterID
+                    fightIDs: $fightIDs
+                    playerMetric: $playerMetric
+                    timeframe: $timeframe
+                  )
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "code": code,
+            "compare": compare,
+            "difficulty": difficulty,
+            "encounterID": encounter_id,
+            "fightIDs": fight_i_ds,
+            "playerMetric": player_metric,
+            "timeframe": timeframe,
+        }
+        response = await self.execute(
+            query=query,
+            operation_name="getReportRankings",
+            variables=variables,
+            **kwargs,
+        )
+        data = self.get_data(response)
+        return GetReportRankings.model_validate(data)
+
+    async def get_report_player_details(
+        self,
+        code: str,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        encounter_id: Union[Optional[int], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
+        kill_type: Union[Optional[KillType], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        translate: Union[Optional[bool], UnsetType] = UNSET,
+        include_combatant_info: Union[Optional[bool], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReportPlayerDetails:
+        query = gql(
+            """
+            query getReportPlayerDetails($code: String!, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $killType: KillType, $startTime: Float, $translate: Boolean, $includeCombatantInfo: Boolean) {
+              reportData {
+                report(code: $code) {
+                  playerDetails(
+                    difficulty: $difficulty
+                    encounterID: $encounterID
+                    endTime: $endTime
+                    fightIDs: $fightIDs
+                    killType: $killType
+                    startTime: $startTime
+                    translate: $translate
+                    includeCombatantInfo: $includeCombatantInfo
+                  )
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "code": code,
+            "difficulty": difficulty,
+            "encounterID": encounter_id,
+            "endTime": end_time,
+            "fightIDs": fight_i_ds,
+            "killType": kill_type,
+            "startTime": start_time,
+            "translate": translate,
+            "includeCombatantInfo": include_combatant_info,
+        }
+        response = await self.execute(
+            query=query,
+            operation_name="getReportPlayerDetails",
+            variables=variables,
+            **kwargs,
+        )
+        data = self.get_data(response)
+        return GetReportPlayerDetails.model_validate(data)
