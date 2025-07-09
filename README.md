@@ -39,23 +39,17 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 git clone https://github.com/knowlen/python-esologs.git
 cd python-esologs
 
-# Install dependencies
+# Basic installation
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -e .
 ```
 
-### Future Installation (In Development)
+### Development Installation
 
-We're working on modern packaging with pyproject.toml that will support:
-
+For development with testing, linting, and pre-commit hooks:
 ```bash
-# Development installation (coming soon)
+# Development installation
 pip install -e ".[dev]"
-
-# Optional dependency groups (planned)
-pip install -e ".[websockets]"  # WebSocket support
-pip install -e ".[pandas]"      # Data analysis integration
-pip install -e ".[all]"         # All features
 ```
 
 ## 🔑 API Setup
