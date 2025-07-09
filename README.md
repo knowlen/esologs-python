@@ -1,15 +1,15 @@
-# Python ESO Logs
+# ESO Logs Python Client
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/python-esologs)
+[![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
 
 A comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/). This library provides both synchronous and asynchronous interfaces to access Elder Scrolls Online combat logging data, with built-in support for data transformation and analysis.
 
 ## 🎯 Project Status
 
-**Current Version:** 0.2.0-alpha  
-**API Coverage:** ~20% (expanding to 95%+ coverage)  
+**Current Version:** 0.2.0-alpha
+**API Coverage:** ~20% (expanding to 95%+ coverage)
 **Development Stage:** Active development with major refactoring in progress
 
 ### What's Working
@@ -36,8 +36,8 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ```bash
 # Clone the repository
-git clone https://github.com/knowlen/python-esologs.git
-cd python-esologs
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 
 # Basic installation
 pip install --upgrade pip
@@ -84,26 +84,26 @@ from access_token import get_access_token
 async def main():
     # Get authentication token
     token = get_access_token()
-    
+
     # Create client
     async with Client(
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get character information
         character = await client.get_character_by_id(id=12345)
-        print(f"Character: {character.character_data.character.name}")
-        
+        print(f"Character: {character.character_data.character.name}")  # noqa: T201
+
         # Get recent reports for character
         reports = await client.get_character_reports(character_id=12345, limit=10)
         for report in reports.character_data.character.recent_reports.data:
-            print(f"Report: {report.code} - {report.zone.name}")
-        
+            print(f"Report: {report.code} - {report.zone.name}")  # noqa: T201
+
         # Get game data
         abilities = await client.get_abilities(limit=50, page=1)
         for ability in abilities.game_data.abilities.data:
-            print(f"Ability: {ability.name}")
+            print(f"Ability: {ability.name}")  # noqa: T201
 
 # Run the async function
 asyncio.run(main())
@@ -167,8 +167,8 @@ token = get_access_token(
 
 ```bash
 # Clone and install
-git clone https://github.com/knowlen/python-esologs.git
-cd python-esologs
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 
 # Current method
 pip install -r requirements.txt
@@ -197,7 +197,7 @@ This project uses several tools to maintain code quality:
 ### Project Structure
 
 ```
-python-esologs/
+esologs-python/
 ├── esologs/                 # Main package
 │   ├── client.py           # Main client implementation
 │   ├── async_base_client.py # Base async GraphQL client
@@ -260,8 +260,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/knowlen/python-esologs/issues)
-- **Documentation**: [GitHub Repository](https://github.com/knowlen/python-esologs)
+- **Issues**: [GitHub Issues](https://github.com/knowlen/esologs-python/issues)
+- **Documentation**: [GitHub Repository](https://github.com/knowlen/esologs-python)
 - **ESO Logs API**: [Official Documentation](https://www.esologs.com/v2-api-docs/eso/)
 
 ---
