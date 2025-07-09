@@ -156,6 +156,31 @@ async def test_queries():
         print(separator)
 
         try:
+            # Test getCharacterEncounterRankings (new method)
+            from esologs.enums import CharacterRankingMetricType
+            encounter_rankings_response = await client.get_character_encounter_rankings(
+                character_id=character_id, 
+                encounter_id=encounter_id,
+                metric=CharacterRankingMetricType.dps
+            )
+            print("Get Character Encounter Rankings Response:", encounter_rankings_response)
+        except Exception as e:
+            print(f"An error occurred during get_character_encounter_rankings: {e}")
+        print(separator)
+
+        try:
+            # Test getCharacterZoneRankings (new method)
+            zone_rankings_response = await client.get_character_zone_rankings(
+                character_id=character_id,
+                zone_id=zone_id,
+                metric=CharacterRankingMetricType.playerscore
+            )
+            print("Get Character Zone Rankings Response:", zone_rankings_response)
+        except Exception as e:
+            print(f"An error occurred during get_character_zone_rankings: {e}")
+        print(separator)
+
+        try:
             # Test getEncountersByZone
             zone_id = 1
             encounters_response = await client.get_encounters_by_zone(zone_id=zone_id)

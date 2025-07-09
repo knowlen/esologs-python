@@ -2,11 +2,19 @@ from typing import Any, Dict, Optional, Union
 
 from .async_base_client import AsyncBaseClient
 from .base_model import UNSET, UnsetType
+from .enums import (
+    CharacterRankingMetricType,
+    RankingCompareType,
+    RankingTimeframeType,
+    RoleType,
+)
 from .get_abilities import GetAbilities
 from .get_ability import GetAbility
 from .get_character_by_id import GetCharacterById
 from .get_character_encounter_ranking import GetCharacterEncounterRanking
+from .get_character_encounter_rankings import GetCharacterEncounterRankings
 from .get_character_reports import GetCharacterReports
+from .get_character_zone_rankings import GetCharacterZoneRankings
 from .get_class import GetClass
 from .get_classes import GetClasses
 from .get_encounters_by_zone import GetEncountersByZone
@@ -430,6 +438,139 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetCharacterEncounterRanking.model_validate(data)
+
+    async def get_character_encounter_rankings(
+        self,
+        character_id: int,
+        encounter_id: int,
+        by_bracket: Union[Optional[bool], UnsetType] = UNSET,
+        class_name: Union[Optional[str], UnsetType] = UNSET,
+        compare: Union[Optional[RankingCompareType], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        include_combatant_info: Union[Optional[bool], UnsetType] = UNSET,
+        include_private_logs: Union[Optional[bool], UnsetType] = UNSET,
+        metric: Union[Optional[CharacterRankingMetricType], UnsetType] = UNSET,
+        partition: Union[Optional[int], UnsetType] = UNSET,
+        role: Union[Optional[RoleType], UnsetType] = UNSET,
+        size: Union[Optional[int], UnsetType] = UNSET,
+        spec_name: Union[Optional[str], UnsetType] = UNSET,
+        timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetCharacterEncounterRankings:
+        query = gql(
+            """
+            query getCharacterEncounterRankings($characterId: Int!, $encounterId: Int!, $byBracket: Boolean, $className: String, $compare: RankingCompareType, $difficulty: Int, $includeCombatantInfo: Boolean, $includePrivateLogs: Boolean, $metric: CharacterRankingMetricType, $partition: Int, $role: RoleType, $size: Int, $specName: String, $timeframe: RankingTimeframeType) {
+              characterData {
+                character(id: $characterId) {
+                  encounterRankings(
+                    encounterID: $encounterId
+                    byBracket: $byBracket
+                    className: $className
+                    compare: $compare
+                    difficulty: $difficulty
+                    includeCombatantInfo: $includeCombatantInfo
+                    includePrivateLogs: $includePrivateLogs
+                    metric: $metric
+                    partition: $partition
+                    role: $role
+                    size: $size
+                    specName: $specName
+                    timeframe: $timeframe
+                  )
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "characterId": character_id,
+            "encounterId": encounter_id,
+            "byBracket": by_bracket,
+            "className": class_name,
+            "compare": compare,
+            "difficulty": difficulty,
+            "includeCombatantInfo": include_combatant_info,
+            "includePrivateLogs": include_private_logs,
+            "metric": metric,
+            "partition": partition,
+            "role": role,
+            "size": size,
+            "specName": spec_name,
+            "timeframe": timeframe,
+        }
+        response = await self.execute(
+            query=query,
+            operation_name="getCharacterEncounterRankings",
+            variables=variables,
+            **kwargs
+        )
+        data = self.get_data(response)
+        return GetCharacterEncounterRankings.model_validate(data)
+
+    async def get_character_zone_rankings(
+        self,
+        character_id: int,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        by_bracket: Union[Optional[bool], UnsetType] = UNSET,
+        class_name: Union[Optional[str], UnsetType] = UNSET,
+        compare: Union[Optional[RankingCompareType], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        include_private_logs: Union[Optional[bool], UnsetType] = UNSET,
+        metric: Union[Optional[CharacterRankingMetricType], UnsetType] = UNSET,
+        partition: Union[Optional[int], UnsetType] = UNSET,
+        role: Union[Optional[RoleType], UnsetType] = UNSET,
+        size: Union[Optional[int], UnsetType] = UNSET,
+        spec_name: Union[Optional[str], UnsetType] = UNSET,
+        timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetCharacterZoneRankings:
+        query = gql(
+            """
+            query getCharacterZoneRankings($characterId: Int!, $zoneId: Int, $byBracket: Boolean, $className: String, $compare: RankingCompareType, $difficulty: Int, $includePrivateLogs: Boolean, $metric: CharacterRankingMetricType, $partition: Int, $role: RoleType, $size: Int, $specName: String, $timeframe: RankingTimeframeType) {
+              characterData {
+                character(id: $characterId) {
+                  zoneRankings(
+                    zoneID: $zoneId
+                    byBracket: $byBracket
+                    className: $className
+                    compare: $compare
+                    difficulty: $difficulty
+                    includePrivateLogs: $includePrivateLogs
+                    metric: $metric
+                    partition: $partition
+                    role: $role
+                    size: $size
+                    specName: $specName
+                    timeframe: $timeframe
+                  )
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "characterId": character_id,
+            "zoneId": zone_id,
+            "byBracket": by_bracket,
+            "className": class_name,
+            "compare": compare,
+            "difficulty": difficulty,
+            "includePrivateLogs": include_private_logs,
+            "metric": metric,
+            "partition": partition,
+            "role": role,
+            "size": size,
+            "specName": spec_name,
+            "timeframe": timeframe,
+        }
+        response = await self.execute(
+            query=query,
+            operation_name="getCharacterZoneRankings",
+            variables=variables,
+            **kwargs
+        )
+        data = self.get_data(response)
+        return GetCharacterZoneRankings.model_validate(data)
 
     async def get_zones(self, **kwargs: Any) -> GetZones:
         query = gql(
