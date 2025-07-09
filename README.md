@@ -1,8 +1,8 @@
-# Python ESO Logs
+# ESO Logs Python Client
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/python-esologs)
+[![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
 
 A comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/). This library provides both synchronous and asynchronous interfaces to access Elder Scrolls Online combat logging data, with built-in support for data transformation and analysis.
 
@@ -36,8 +36,8 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ```bash
 # Clone the repository
-git clone https://github.com/knowlen/python-esologs.git
-cd python-esologs
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 
 # Basic installation
 pip install --upgrade pip
@@ -167,8 +167,8 @@ token = get_access_token(
 
 ```bash
 # Clone and install
-git clone https://github.com/knowlen/python-esologs.git
-cd python-esologs
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 
 # Current method
 pip install -r requirements.txt
@@ -197,7 +197,7 @@ This project uses several tools to maintain code quality:
 ### Project Structure
 
 ```
-python-esologs/
+esologs-python/
 ├── esologs/                 # Main package
 │   ├── client.py           # Main client implementation
 │   ├── async_base_client.py # Base async GraphQL client
@@ -260,8 +260,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/knowlen/python-esologs/issues)
-- **Documentation**: [GitHub Repository](https://github.com/knowlen/python-esologs)
+- **Issues**: [GitHub Issues](https://github.com/knowlen/esologs-python/issues)
+- **Documentation**: [GitHub Repository](https://github.com/knowlen/esologs-python)
 - **ESO Logs API**: [Official Documentation](https://www.esologs.com/v2-api-docs/eso/)
 
 ---

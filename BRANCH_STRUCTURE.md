@@ -1,6 +1,6 @@
 # Branch Structure Documentation
 
-This document outlines the branch structure and purpose for the python-esologs repository.
+This document outlines the branch structure and purpose for the esologs-python repository.
 
 ## 🌟 Active Development Branches
 
@@ -83,8 +83,8 @@ This document outlines the branch structure and purpose for the python-esologs r
 
 ### For New Development
 ```bash
-git clone https://github.com/knowlen/python-esologs.git
-cd python-esologs
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 git checkout v2-dev
 pip install -e ".[dev]"
 ```
