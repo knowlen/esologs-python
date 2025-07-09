@@ -9,7 +9,7 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 ## 🎯 Project Status
 
 **Current Version:** 0.2.0-alpha
-**API Coverage:** ~25% (expanding to 95%+ coverage)
+**API Coverage:** ~35% (expanding to 95%+ coverage)
 **Development Stage:** Active development - Phase 2 implementation in progress
 
 ### What's Working
@@ -19,10 +19,15 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 - ✅ Basic report data access
 - ✅ Rate limiting information
 - ✅ Async/await support with HTTP and WebSocket connections
-- ✅ **Character rankings and performance metrics** (PR #4 - In Review)
+- ✅ **Character rankings and performance metrics** (PR #4 - Merged)
+- ✅ **Comprehensive report analysis** (PR #5 - Approved & Ready for Merge)
+  - Event-by-event combat log data
+  - Time-series performance graphs
+  - Tabular analysis data
+  - Report rankings and player details
 
 ### Coming Soon
-- 🚧 Detailed report analysis (events, graphs, tables)
+- 🚧 Advanced report search and filtering
 - 🚧 Progress race tracking
 - 🚧 User account integration
 - 🚧 Pandas DataFrame integration for data analysis

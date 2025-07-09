@@ -24,13 +24,25 @@ This document outlines the branch structure and purpose for the esologs-python r
 
 ### `v2/character-rankings-api`
 - **Purpose**: Character rankings API implementation (Phase 2 PR 1)
-- **Status**: 🔄 In Review (PR #4)
+- **Status**: ✅ Complete (merged into v2-dev)
 - **Features**: 
   - Character encounter rankings (`get_character_encounter_rankings()`)
   - Character zone rankings (`get_character_zone_rankings()`)
   - Full support for all ranking metrics (dps, hps, playerscore, etc.)
   - Comprehensive unit tests and integration tests
-- **Use**: Under review - implements high-priority ranking functionality
+- **Use**: Archived - features merged into v2-dev
+
+### `v2/report-analysis-api`
+- **Purpose**: Report analysis API implementation (Phase 2 PR 2)
+- **Status**: ✅ Approved (PR #5) - Ready for merge
+- **Features**: 
+  - Report events analysis (`get_report_events()`)
+  - Report graph data (`get_report_graph()`)
+  - Report table data (`get_report_table()`)
+  - Report rankings (`get_report_rankings()`)
+  - Report player details (`get_report_player_details()`)
+  - Comprehensive unit tests and integration tests
+- **Use**: Approved - implements comprehensive report analysis functionality
 
 ### `v2/codegen` 
 - **Purpose**: Base v2 GraphQL code generation setup
@@ -84,7 +96,8 @@ This document outlines the branch structure and purpose for the esologs-python r
 | Branch | API Version | Status | Authentication | Features | Use Case |
 |--------|-------------|--------|----------------|----------|----------|
 | `v2-dev` | v2 GraphQL | ✅ Active | OAuth2 | Full modern stack | **Use this** |
-| `v2/character-rankings-api` | v2 GraphQL | 🔄 In Review | OAuth2 | Character rankings API | **Under review** |
+| `v2/character-rankings-api` | v2 GraphQL | ✅ Archived | OAuth2 | Character rankings API | Reference |
+| `v2/report-analysis-api` | v2 GraphQL | ✅ Approved | OAuth2 | Report analysis API | **Ready for merge** |
 | `v2/security-foundation-fixes` | v2 GraphQL | ✅ Archived | OAuth2 | Phase 1 complete | Reference |
 | `v2/codegen` | v2 GraphQL | ✅ Archived | OAuth2 | Basic GraphQL | Reference |
 | `main` | v1 REST | ⚠️ Deprecated | API Key | Legacy scripts | **Avoid** |
