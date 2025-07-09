@@ -8,8 +8,8 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## 🎯 Project Status
 
-**Current Version:** 0.2.0-alpha  
-**API Coverage:** ~20% (expanding to 95%+ coverage)  
+**Current Version:** 0.2.0-alpha
+**API Coverage:** ~20% (expanding to 95%+ coverage)
 **Development Stage:** Active development with major refactoring in progress
 
 ### What's Working
@@ -84,26 +84,26 @@ from access_token import get_access_token
 async def main():
     # Get authentication token
     token = get_access_token()
-    
+
     # Create client
     async with Client(
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get character information
         character = await client.get_character_by_id(id=12345)
-        print(f"Character: {character.character_data.character.name}")
-        
+        print(f"Character: {character.character_data.character.name}")  # noqa: T201
+
         # Get recent reports for character
         reports = await client.get_character_reports(character_id=12345, limit=10)
         for report in reports.character_data.character.recent_reports.data:
-            print(f"Report: {report.code} - {report.zone.name}")
-        
+            print(f"Report: {report.code} - {report.zone.name}")  # noqa: T201
+
         # Get game data
         abilities = await client.get_abilities(limit=50, page=1)
         for ability in abilities.game_data.abilities.data:
-            print(f"Ability: {ability.name}")
+            print(f"Ability: {ability.name}")  # noqa: T201
 
 # Run the async function
 asyncio.run(main())

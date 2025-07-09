@@ -42,7 +42,7 @@ repos:
     hooks:
       - id: no-print-statements
         name: No print statements
-        entry: grep -n "print(" 
+        entry: grep -n "print("
         language: system
         files: ^esologs/.*\.py$
         exclude: ^esologs/(get_.*\.py|input_types\.py|enums\.py|base_model\.py|exceptions\.py|async_base_client\.py)$

@@ -106,8 +106,6 @@ extend-exclude = [
     "esologs/exceptions.py",
     "esologs/async_base_client.py",
 ]
-
-[tool.ruff.lint]
 select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
@@ -139,8 +137,11 @@ warn_unreachable = true
 strict_equality = true
 
 [[tool.mypy.overrides]]
+module = "esologs.get_*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
 module = [
-    "esologs.get_*",
     "esologs.input_types",
     "esologs.enums",
     "esologs.base_model",
