@@ -167,3 +167,7 @@ dmypy.json
 # Development
 .env.local
 .env.*.local
+
+# Test files with API credentials (use environment variables instead)
+test_validation.py
+*_validation_test.py
