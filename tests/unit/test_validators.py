@@ -1,6 +1,7 @@
 """Unit tests for parameter validation functions."""
 
 import pytest
+
 from esologs.validators import (
     ValidationError,
     validate_ability_id,
@@ -34,7 +35,9 @@ class TestValidateReportCode:
 
     def test_invalid_characters(self):
         """Test report code with invalid characters."""
-        with pytest.raises(ValidationError, match="must contain only alphanumeric characters"):
+        with pytest.raises(
+            ValidationError, match="must contain only alphanumeric characters"
+        ):
             validate_report_code("ABC-123")
 
     def test_too_short(self):
@@ -64,7 +67,9 @@ class TestValidateAbilityId:
 
     def test_float_non_integer(self):
         """Test float that's not a whole number."""
-        with pytest.raises(ValidationError, match="Ability ID should be a whole number"):
+        with pytest.raises(
+            ValidationError, match="Ability ID should be a whole number"
+        ):
             validate_ability_id(123.5)
 
 
@@ -99,7 +104,9 @@ class TestValidateTimeRange:
 
     def test_start_after_end(self):
         """Test start time after end time."""
-        with pytest.raises(ValidationError, match="Start time must be less than end time"):
+        with pytest.raises(
+            ValidationError, match="Start time must be less than end time"
+        ):
             validate_time_range(100, 50)
 
 
@@ -121,7 +128,7 @@ class TestValidatePositiveInteger:
         """Test zero or negative integer."""
         with pytest.raises(ValidationError, match="test_param must be positive"):
             validate_positive_integer(0, "test_param")
-        
+
         with pytest.raises(ValidationError, match="test_param must be positive"):
             validate_positive_integer(-1, "test_param")
 
@@ -200,6 +207,6 @@ class TestValidateRequiredString:
         """Test empty string after stripping."""
         with pytest.raises(ValidationError, match="param cannot be empty"):
             validate_required_string("", "param")
-        
+
         with pytest.raises(ValidationError, match="param cannot be empty"):
             validate_required_string("   ", "param")

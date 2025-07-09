@@ -103,7 +103,7 @@ class AsyncBaseClient:
         self._last_query = query
         self._last_operation_name = operation_name
         self._last_variables = variables
-        
+
         processed_variables, files, files_map = self._process_variables(variables)
 
         if files and files_map:
@@ -128,9 +128,13 @@ class AsyncBaseClient:
             # Enhanced error handling with more context
             if response.status_code == 401:
                 from .exceptions import AuthenticationError
-                raise AuthenticationError("API authentication failed - check your credentials")
+
+                raise AuthenticationError(
+                    "API authentication failed - check your credentials"
+                )
             elif response.status_code == 429:
                 from .exceptions import RateLimitError
+
                 retry_after = response.headers.get("Retry-After")
                 retry_seconds = int(retry_after) if retry_after else None
                 raise RateLimitError("Rate limit exceeded", retry_after=retry_seconds)
@@ -154,39 +158,41 @@ class AsyncBaseClient:
 
         if errors:
             # Enhanced error handling with ESO Logs specific context
-            from .exceptions import ReportNotFoundError, GraphQLQueryError
-            
+            from .exceptions import GraphQLQueryError, ReportNotFoundError
+
             # Check for specific ESO Logs error patterns
             for error in errors:
                 error_message = error.get("message", "")
-                if "report" in error_message.lower() and "not found" in error_message.lower():
+                if (
+                    "report" in error_message.lower()
+                    and "not found" in error_message.lower()
+                ):
                     # Extract report code if available
                     path = error.get("path", [])
                     report_code = None
                     if path and len(path) > 1:
                         report_code = path[1] if isinstance(path[1], str) else None
                     raise ReportNotFoundError(
-                        code=report_code or "unknown", 
-                        message=error_message
+                        code=report_code or "unknown", message=error_message
                     )
-            
+
             # Create enhanced GraphQL error with context
             error_messages = [e.get("message", "") for e in errors]
             combined_message = "; ".join(error_messages)
-            
+
             # Try to extract query context from the first error
             first_error = errors[0] if errors else {}
             query_context = {
                 "path": first_error.get("path"),
                 "locations": first_error.get("locations"),
-                "extensions": first_error.get("extensions")
+                "extensions": first_error.get("extensions"),
             }
-            
+
             raise GraphQLQueryError(
                 message=combined_message,
-                query=getattr(self, '_last_query', None),
-                variables=getattr(self, '_last_variables', None),
-                operation_name=getattr(self, '_last_operation_name', None)
+                query=getattr(self, "_last_query", None),
+                variables=getattr(self, "_last_variables", None),
+                operation_name=getattr(self, "_last_operation_name", None),
             )
 
         return cast(Dict[str, Any], data)

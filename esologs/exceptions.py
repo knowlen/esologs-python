@@ -86,12 +86,13 @@ class GraphQLClientInvalidMessageFormat(GraphQLClientError):
 # ESO Logs specific exceptions
 class ESOLogsError(GraphQLClientError):
     """Base exception for ESO Logs specific errors."""
+
     pass
 
 
 class ReportNotFoundError(ESOLogsError):
     """Raised when a report code doesn't exist."""
-    
+
     def __init__(self, code: str, message: str = None):
         self.code = code
         self.message = message or f"Report '{code}' not found"
@@ -100,7 +101,7 @@ class ReportNotFoundError(ESOLogsError):
 
 class CharacterNotFoundError(ESOLogsError):
     """Raised when a character ID doesn't exist."""
-    
+
     def __init__(self, character_id: int, message: str = None):
         self.character_id = character_id
         self.message = message or f"Character ID {character_id} not found"
@@ -109,7 +110,7 @@ class CharacterNotFoundError(ESOLogsError):
 
 class GuildNotFoundError(ESOLogsError):
     """Raised when a guild ID doesn't exist."""
-    
+
     def __init__(self, guild_id: int, message: str = None):
         self.guild_id = guild_id
         self.message = message or f"Guild ID {guild_id} not found"
@@ -118,7 +119,7 @@ class GuildNotFoundError(ESOLogsError):
 
 class AuthenticationError(ESOLogsError):
     """Raised when authentication fails."""
-    
+
     def __init__(self, message: str = "Authentication failed"):
         self.message = message
         super().__init__(self.message)
@@ -126,7 +127,7 @@ class AuthenticationError(ESOLogsError):
 
 class RateLimitError(ESOLogsError):
     """Raised when rate limit is exceeded."""
-    
+
     def __init__(self, message: str = "Rate limit exceeded", retry_after: int = None):
         self.message = message
         self.retry_after = retry_after
@@ -135,7 +136,7 @@ class RateLimitError(ESOLogsError):
 
 class ValidationError(ESOLogsError):
     """Raised when parameter validation fails."""
-    
+
     def __init__(self, message: str, parameter: str = None):
         self.message = message
         self.parameter = parameter
@@ -144,22 +145,27 @@ class ValidationError(ESOLogsError):
 
 class GraphQLQueryError(ESOLogsError):
     """Raised when GraphQL query fails with additional context."""
-    
-    def __init__(self, message: str, query: str = None, variables: Dict[str, Any] = None, 
-                 operation_name: str = None):
+
+    def __init__(
+        self,
+        message: str,
+        query: str = None,
+        variables: Dict[str, Any] = None,
+        operation_name: str = None,
+    ):
         self.message = message
         self.query = query
         self.variables = variables
         self.operation_name = operation_name
         super().__init__(self.message)
-    
+
     def __str__(self) -> str:
         context = []
         if self.operation_name:
             context.append(f"Operation: {self.operation_name}")
         if self.variables:
             context.append(f"Variables: {self.variables}")
-        
+
         if context:
             return f"{self.message} ({'; '.join(context)})"
         return self.message

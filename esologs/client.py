@@ -46,7 +46,6 @@ from .get_report_table import GetReportTable
 from .get_world_data import GetWorldData
 from .get_zones import GetZones
 from .validators import (
-    ValidationError,
     validate_ability_id,
     validate_fight_ids,
     validate_limit_parameter,
@@ -954,10 +953,10 @@ class Client(AsyncBaseClient):
     ) -> GetReportEvents:
         """
         Retrieve event-by-event combat log data for a specific report.
-        
+
         This method provides access to detailed combat events including damage, healing,
         buffs, debuffs, and other combat-related activities from ESO Logs reports.
-        
+
         Args:
             code: The report code (e.g., 'ABC123')
             ability_id: Filter events by specific ability ID
@@ -989,13 +988,13 @@ class Client(AsyncBaseClient):
             view_options: View options bitmask
             wipe_cutoff: Cutoff time for wipe detection
             **kwargs: Additional arguments passed to the GraphQL client
-            
+
         Returns:
             GetReportEvents: Event data with pagination support
-            
+
         Raises:
             ValidationError: If parameters are invalid
-            
+
         Example:
             >>> events = await client.get_report_events(
             ...     code="ABC123",
@@ -1011,11 +1010,11 @@ class Client(AsyncBaseClient):
         validate_ability_id(ability_id if ability_id is not UNSET else None)
         validate_time_range(
             start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None
+            end_time if end_time is not UNSET else None,
         )
         validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
         validate_limit_parameter(limit if limit is not UNSET else None)
-        
+
         # Validate positive integer parameters
         for param_name, param_value in [
             ("encounter_id", encounter_id),
@@ -1142,10 +1141,10 @@ class Client(AsyncBaseClient):
     ) -> GetReportGraph:
         """
         Retrieve time-series graph data for performance metrics from a specific report.
-        
+
         This method provides access to graphical performance data over time including DPS,
         HPS, resource usage, and other metrics for analysis and visualization.
-        
+
         Args:
             code: The report code (e.g., 'ABC123')
             ability_id: Filter graph by specific ability ID
@@ -1174,13 +1173,13 @@ class Client(AsyncBaseClient):
             view_by: How to group/view the graph data (Source, Target, etc.)
             wipe_cutoff: Cutoff time for wipe detection
             **kwargs: Additional arguments passed to the GraphQL client
-            
+
         Returns:
             GetReportGraph: Time-series graph data for visualization
-            
+
         Raises:
             ValidationError: If parameters are invalid
-            
+
         Example:
             >>> graph = await client.get_report_graph(
             ...     code="ABC123",
@@ -1196,10 +1195,10 @@ class Client(AsyncBaseClient):
         validate_ability_id(ability_id if ability_id is not UNSET else None)
         validate_time_range(
             start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None
+            end_time if end_time is not UNSET else None,
         )
         validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-        
+
         # Validate positive integer parameters
         for param_name, param_value in [
             ("encounter_id", encounter_id),
@@ -1317,11 +1316,11 @@ class Client(AsyncBaseClient):
     ) -> GetReportTable:
         """
         Retrieve tabular data for damage, healing, and other metrics from a specific report.
-        
-        This method provides access to aggregated tabular data that can be used for 
+
+        This method provides access to aggregated tabular data that can be used for
         detailed analysis, comparisons, and report generation. Perfect for leaderboard
         views and statistical analysis.
-        
+
         Args:
             code: The report code (e.g., 'ABC123')
             ability_id: Filter table by specific ability ID
@@ -1350,13 +1349,13 @@ class Client(AsyncBaseClient):
             view_by: How to group/view the table data (Source, Target, etc.)
             wipe_cutoff: Cutoff time for wipe detection
             **kwargs: Additional arguments passed to the GraphQL client
-            
+
         Returns:
             GetReportTable: Tabular data with aggregated metrics
-            
+
         Raises:
             ValidationError: If parameters are invalid
-            
+
         Example:
             >>> table = await client.get_report_table(
             ...     code="ABC123",
@@ -1371,10 +1370,10 @@ class Client(AsyncBaseClient):
         validate_ability_id(ability_id if ability_id is not UNSET else None)
         validate_time_range(
             start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None
+            end_time if end_time is not UNSET else None,
         )
         validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-        
+
         # Validate positive integer parameters
         for param_name, param_value in [
             ("encounter_id", encounter_id),
@@ -1473,11 +1472,11 @@ class Client(AsyncBaseClient):
     ) -> GetReportRankings:
         """
         Retrieve ranking data for players within a specific report.
-        
+
         This method provides access to player rankings and performance comparisons
         within the context of a single report, allowing for detailed analysis of
         individual and team performance.
-        
+
         Args:
             code: The report code (e.g., 'ABC123')
             compare: How to compare rankings (Rankings, Parses, etc.)
@@ -1487,13 +1486,13 @@ class Client(AsyncBaseClient):
             player_metric: Specific metric for player rankings (dps, hps, etc.)
             timeframe: Time period for ranking comparison
             **kwargs: Additional arguments passed to the GraphQL client
-            
+
         Returns:
             GetReportRankings: Player ranking data within the report
-            
+
         Raises:
             ValidationError: If parameters are invalid
-            
+
         Example:
             >>> rankings = await client.get_report_rankings(
             ...     code="ABC123",
@@ -1506,7 +1505,7 @@ class Client(AsyncBaseClient):
         # Validate parameters
         validate_report_code(code)
         validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-        
+
         # Validate positive integer parameters
         for param_name, param_value in [
             ("encounter_id", encounter_id),
@@ -1565,11 +1564,11 @@ class Client(AsyncBaseClient):
     ) -> GetReportPlayerDetails:
         """
         Retrieve detailed player information and combatant data from a specific report.
-        
+
         This method provides access to comprehensive player details including gear,
         specs, and combat statistics for detailed character analysis and report
         understanding.
-        
+
         Args:
             code: The report code (e.g., 'ABC123')
             difficulty: Encounter difficulty level to filter by
@@ -1581,13 +1580,13 @@ class Client(AsyncBaseClient):
             translate: Whether to translate IDs to human-readable names
             include_combatant_info: Include detailed combatant information
             **kwargs: Additional arguments passed to the GraphQL client
-            
+
         Returns:
             GetReportPlayerDetails: Detailed player and combatant information
-            
+
         Raises:
             ValidationError: If parameters are invalid
-            
+
         Example:
             >>> details = await client.get_report_player_details(
             ...     code="ABC123",
@@ -1600,10 +1599,10 @@ class Client(AsyncBaseClient):
         validate_report_code(code)
         validate_time_range(
             start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None
+            end_time if end_time is not UNSET else None,
         )
         validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-        
+
         # Validate positive integer parameters
         for param_name, param_value in [
             ("encounter_id", encounter_id),
