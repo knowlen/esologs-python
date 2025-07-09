@@ -1,0 +1,736 @@
+query getAbility($id: Int!) {
+  gameData {
+    ability(id: $id) {
+      id
+      name
+      icon
+      description
+    }
+  }
+}
+
+query getAbilities($limit: Int, $page: Int) {
+  gameData {
+    abilities(limit: $limit, page: $page) {
+      data {
+        id
+        name
+        icon
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getClass($id: Int!) {
+  gameData {
+    class(id: $id) {
+      id
+      name
+      slug
+    }
+  }
+}
+
+query getWorldData {
+  worldData {
+    encounter {
+      id
+      name
+    }
+    expansion {
+      id
+      name
+    }
+    expansions {
+      id
+      name
+    }
+    region {
+      id
+      name
+    }
+    regions {
+      id
+      name
+    }
+    server {
+      id
+      name
+    }
+    subregion {
+      id
+      name
+    }
+    zone {
+      id
+      name
+      frozen
+      expansion {
+        id
+        name
+      }
+      difficulties {
+        id
+        name
+        sizes
+      }
+      encounters {
+        id
+        name
+      }
+      partitions {
+        id
+        name
+        compactName
+        default
+      }
+    }
+    zones {
+      id
+      name
+      frozen
+      expansion {
+        id
+        name
+      }
+      brackets {
+        min
+        max
+        bucket
+        type
+      }
+      difficulties {
+        id
+        name
+        sizes
+      }
+      encounters {
+        id
+        name
+      }
+      partitions {
+        id
+        name
+        compactName
+        default
+      }
+    }
+  }
+}
+
+query getCharacterById($id: Int!) {
+  characterData {
+    character(id: $id) {
+      id
+      name
+      classID
+      raceID
+      guildRank
+      hidden
+      server {
+        name
+        region {
+          name
+        }
+      }
+    }
+  }
+}
+
+query getCharacterReports($characterId: Int!, $limit: Int = 10) {
+  characterData {
+    character(id: $characterId) {
+      recentReports(limit: $limit) {
+        data {
+          code
+          startTime
+          endTime
+          zone {
+            name
+          }
+        }
+        total
+        per_page
+        current_page
+        from
+        to
+        last_page
+        has_more_pages
+      }
+    }
+  }
+}
+
+query getGuildById($guildId: Int!) {
+  guildData {
+    guild(id: $guildId) {
+      id
+      name
+      description
+      faction {
+        name
+      }
+      server {
+        name
+        region {
+          name
+        }
+      }
+      tags {
+        id
+        name
+      }
+    }
+  }
+}
+
+query getEncountersByZone($zoneId: Int!) {
+  worldData {
+    zone(id: $zoneId) {
+      id
+      name
+      encounters {
+        id
+        name
+      }
+    }
+  }
+}
+
+
+query getRegions {
+  worldData {
+    regions {
+      id
+      name
+      subregions {
+        id
+        name
+      }
+    }
+  }
+}
+
+query getReportByCode($code: String!) {
+  reportData {
+    report(code: $code) {
+      code
+      startTime
+      endTime
+      title
+      visibility
+      zone {
+        name
+      }
+      fights {
+        id
+        name
+        difficulty
+        startTime
+        endTime
+      }
+    }
+  }
+}
+
+
+query getCharacterEncounterRanking($characterId: Int!, $encounterId: Int!) {
+  characterData {
+    character(id: $characterId) {
+      encounterRankings(encounterID: $encounterId)
+    }
+  }
+}
+
+query getCharacterEncounterRankings(
+  $characterId: Int!
+  $encounterId: Int!
+  $byBracket: Boolean
+  $className: String
+  $compare: RankingCompareType
+  $difficulty: Int
+  $includeCombatantInfo: Boolean
+  $includePrivateLogs: Boolean
+  $metric: CharacterRankingMetricType
+  $partition: Int
+  $role: RoleType
+  $size: Int
+  $specName: String
+  $timeframe: RankingTimeframeType
+) {
+  characterData {
+    character(id: $characterId) {
+      encounterRankings(
+        encounterID: $encounterId
+        byBracket: $byBracket
+        className: $className
+        compare: $compare
+        difficulty: $difficulty
+        includeCombatantInfo: $includeCombatantInfo
+        includePrivateLogs: $includePrivateLogs
+        metric: $metric
+        partition: $partition
+        role: $role
+        size: $size
+        specName: $specName
+        timeframe: $timeframe
+      )
+    }
+  }
+}
+
+query getCharacterZoneRankings(
+  $characterId: Int!
+  $zoneId: Int
+  $byBracket: Boolean
+  $className: String
+  $compare: RankingCompareType
+  $difficulty: Int
+  $includePrivateLogs: Boolean
+  $metric: CharacterRankingMetricType
+  $partition: Int
+  $role: RoleType
+  $size: Int
+  $specName: String
+  $timeframe: RankingTimeframeType
+) {
+  characterData {
+    character(id: $characterId) {
+      zoneRankings(
+        zoneID: $zoneId
+        byBracket: $byBracket
+        className: $className
+        compare: $compare
+        difficulty: $difficulty
+        includePrivateLogs: $includePrivateLogs
+        metric: $metric
+        partition: $partition
+        role: $role
+        size: $size
+        specName: $specName
+        timeframe: $timeframe
+      )
+    }
+  }
+}
+
+
+query getZones {
+  worldData {
+    zones {
+      id
+      name
+      frozen
+      brackets {
+        type
+        min
+        max
+        bucket
+      }
+      encounters {
+        id
+        name
+      }
+      difficulties {
+        id
+        name
+        sizes
+      }
+      expansion {
+        id
+        name
+      }
+    }
+  }
+}
+
+query getClasses($faction_id: Int, $zone_id: Int) {
+  gameData {
+    classes(faction_id: $faction_id, zone_id: $zone_id) {
+      id
+      name
+      slug
+    }
+  }
+}
+
+query getFactions {
+  gameData {
+    factions {
+      id
+      name
+    }
+  }
+}
+
+query getItem($id: Int!) {
+  gameData {
+    item(id: $id) {
+      id
+      name
+      icon
+    }
+  }
+}
+
+query getItemSet($id: Int!) {
+  gameData {
+    item_set(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+
+query getItemSets($limit: Int, $page: Int) {
+  gameData {
+    item_sets(limit: $limit, page: $page) {
+      data {
+        id
+        name
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getItems($limit: Int, $page: Int) {
+  gameData {
+    items(limit: $limit, page: $page) {
+      data {
+        id
+        name
+        icon
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getMap($id: Int!) {
+  gameData {
+    map(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+query getMaps($limit: Int, $page: Int) {
+  gameData {
+    maps(limit: $limit, page: $page) {
+      data {
+        id
+        name
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+
+query getNPC($id: Int!) {
+  gameData {
+    npc(id: $id) {
+      id
+      name
+    }
+  }
+}
+
+
+
+query getNPCs($limit: Int, $page: Int) {
+  gameData {
+    npcs(limit: $limit, page: $page) {
+      data {
+        id
+        name
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}
+
+query getRateLimitData {
+  rateLimitData {
+    limitPerHour
+    pointsSpentThisHour
+    pointsResetIn
+  }
+}
+
+query getReportEvents(
+  $code: String!
+  $abilityID: Float
+  $dataType: EventDataType
+  $death: Int
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $filterExpression: String
+  $hostilityType: HostilityType
+  $includeResources: Boolean
+  $killType: KillType
+  $limit: Int
+  $sourceAurasAbsent: String
+  $sourceAurasPresent: String
+  $sourceClass: String
+  $sourceID: Int
+  $sourceInstanceID: Int
+  $startTime: Float
+  $targetAurasAbsent: String
+  $targetAurasPresent: String
+  $targetClass: String
+  $targetID: Int
+  $targetInstanceID: Int
+  $translate: Boolean
+  $useAbilityIDs: Boolean
+  $useActorIDs: Boolean
+  $viewOptions: Int
+  $wipeCutoff: Int
+) {
+  reportData {
+    report(code: $code) {
+      events(
+        abilityID: $abilityID
+        dataType: $dataType
+        death: $death
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        filterExpression: $filterExpression
+        hostilityType: $hostilityType
+        includeResources: $includeResources
+        killType: $killType
+        limit: $limit
+        sourceAurasAbsent: $sourceAurasAbsent
+        sourceAurasPresent: $sourceAurasPresent
+        sourceClass: $sourceClass
+        sourceID: $sourceID
+        sourceInstanceID: $sourceInstanceID
+        startTime: $startTime
+        targetAurasAbsent: $targetAurasAbsent
+        targetAurasPresent: $targetAurasPresent
+        targetClass: $targetClass
+        targetID: $targetID
+        targetInstanceID: $targetInstanceID
+        translate: $translate
+        useAbilityIDs: $useAbilityIDs
+        useActorIDs: $useActorIDs
+        viewOptions: $viewOptions
+        wipeCutoff: $wipeCutoff
+      ) {
+        data
+        nextPageTimestamp
+      }
+    }
+  }
+}
+
+query getReportGraph(
+  $code: String!
+  $abilityID: Float
+  $dataType: GraphDataType
+  $death: Int
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $filterExpression: String
+  $hostilityType: HostilityType
+  $killType: KillType
+  $sourceAurasAbsent: String
+  $sourceAurasPresent: String
+  $sourceClass: String
+  $sourceID: Int
+  $sourceInstanceID: Int
+  $startTime: Float
+  $targetAurasAbsent: String
+  $targetAurasPresent: String
+  $targetClass: String
+  $targetID: Int
+  $targetInstanceID: Int
+  $translate: Boolean
+  $viewOptions: Int
+  $viewBy: ViewType
+  $wipeCutoff: Int
+) {
+  reportData {
+    report(code: $code) {
+      graph(
+        abilityID: $abilityID
+        dataType: $dataType
+        death: $death
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        filterExpression: $filterExpression
+        hostilityType: $hostilityType
+        killType: $killType
+        sourceAurasAbsent: $sourceAurasAbsent
+        sourceAurasPresent: $sourceAurasPresent
+        sourceClass: $sourceClass
+        sourceID: $sourceID
+        sourceInstanceID: $sourceInstanceID
+        startTime: $startTime
+        targetAurasAbsent: $targetAurasAbsent
+        targetAurasPresent: $targetAurasPresent
+        targetClass: $targetClass
+        targetID: $targetID
+        targetInstanceID: $targetInstanceID
+        translate: $translate
+        viewOptions: $viewOptions
+        viewBy: $viewBy
+        wipeCutoff: $wipeCutoff
+      )
+    }
+  }
+}
+
+query getReportTable(
+  $code: String!
+  $abilityID: Float
+  $dataType: TableDataType
+  $death: Int
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $filterExpression: String
+  $hostilityType: HostilityType
+  $killType: KillType
+  $sourceAurasAbsent: String
+  $sourceAurasPresent: String
+  $sourceClass: String
+  $sourceID: Int
+  $sourceInstanceID: Int
+  $startTime: Float
+  $targetAurasAbsent: String
+  $targetAurasPresent: String
+  $targetClass: String
+  $targetID: Int
+  $targetInstanceID: Int
+  $translate: Boolean
+  $viewOptions: Int
+  $viewBy: ViewType
+  $wipeCutoff: Int
+) {
+  reportData {
+    report(code: $code) {
+      table(
+        abilityID: $abilityID
+        dataType: $dataType
+        death: $death
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        filterExpression: $filterExpression
+        hostilityType: $hostilityType
+        killType: $killType
+        sourceAurasAbsent: $sourceAurasAbsent
+        sourceAurasPresent: $sourceAurasPresent
+        sourceClass: $sourceClass
+        sourceID: $sourceID
+        sourceInstanceID: $sourceInstanceID
+        startTime: $startTime
+        targetAurasAbsent: $targetAurasAbsent
+        targetAurasPresent: $targetAurasPresent
+        targetClass: $targetClass
+        targetID: $targetID
+        targetInstanceID: $targetInstanceID
+        translate: $translate
+        viewOptions: $viewOptions
+        viewBy: $viewBy
+        wipeCutoff: $wipeCutoff
+      )
+    }
+  }
+}
+
+query getReportRankings(
+  $code: String!
+  $compare: RankingCompareType
+  $difficulty: Int
+  $encounterID: Int
+  $fightIDs: [Int]
+  $playerMetric: ReportRankingMetricType
+  $timeframe: RankingTimeframeType
+) {
+  reportData {
+    report(code: $code) {
+      rankings(
+        compare: $compare
+        difficulty: $difficulty
+        encounterID: $encounterID
+        fightIDs: $fightIDs
+        playerMetric: $playerMetric
+        timeframe: $timeframe
+      )
+    }
+  }
+}
+
+query getReportPlayerDetails(
+  $code: String!
+  $difficulty: Int
+  $encounterID: Int
+  $endTime: Float
+  $fightIDs: [Int]
+  $killType: KillType
+  $startTime: Float
+  $translate: Boolean
+  $includeCombatantInfo: Boolean
+) {
+  reportData {
+    report(code: $code) {
+      playerDetails(
+        difficulty: $difficulty
+        encounterID: $encounterID
+        endTime: $endTime
+        fightIDs: $fightIDs
+        killType: $killType
+        startTime: $startTime
+        translate: $translate
+        includeCombatantInfo: $includeCombatantInfo
+      )
+    }
+  }
+}
+

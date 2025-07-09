@@ -1,0 +1,2572 @@
+schema {
+  query: Query
+}
+
+scalar Boolean
+scalar Float
+scalar ID
+scalar Int
+scalar JSON
+scalar String
+
+type Query {
+  # Obtain the character data object that allows the retrieval of individual
+  # characters or filtered collections of characters.
+  characterData: CharacterData
+  # Obtain the game data object that holds collections of static data such as
+  # abilities, achievements, classes, items, NPCs, etc..
+  gameData: GameData
+  # Obtain the guild data object that allows the retrieval of individual guilds or
+  # filtered collections of guilds.
+  guildData: GuildData
+  # Obtain information about an ongoing world first or realm first race. Inactive
+  # when no race is occurring. This data only updates once every 30 seconds, so you
+  # do not need to fetch this information more often than that.
+  progressRaceData: ProgressRaceData
+  # Obtain the rate limit data object to see how many points have been spent by this
+  # key.
+  rateLimitData: RateLimitData
+  # Obtain the report data object that allows the retrieval of individual reports or
+  # filtered collections of reports by guild or by user.
+  reportData: ReportData
+  # Obtain the user object that allows the retrieval of the authorized user's id and
+  # username.
+  userData: UserData
+  # Obtain the world data object that holds collections of data such as all
+  # expansions, regions, subregions, servers, dungeon/raid zones, and encounters.
+  worldData: WorldData
+}
+
+enum CharacterRankingMetricType {
+  # Boss cDPS is unique to FFXIV and is damage done to the boss adjusted for
+  # raid-contributing buffs and debuffs.
+  bosscdps
+  # Boss damage per second.
+  bossdps
+  # Boss nDPS is unique to FFXIV and is damage done to the boss adjusted for
+  # raid-contributing buffs and debuffs.
+  bossndps
+  # Boss rDPS is unique to FFXIV and is damage done to the boss adjusted for
+  # raid-contributing buffs and debuffs.
+  bossrdps
+  # Choose an appropriate default depending on the other selected parameters.
+  default
+  # Damage per second.
+  dps
+  # Healing per second.
+  hps
+  # Survivability ranking for tanks. Deprecated. Only supported for some older WoW
+  # zones.
+  krsi
+  # Score. Used by WoW Mythic dungeons and by ESO trials.
+  playerscore
+  # Speed. Not supported by every zone.
+  playerspeed
+  # cDPS is unique to FFXIV and is damage done adjusted for raid-contributing buffs
+  # and debuffs.
+  cdps
+  # nDPS is unique to FFXIV and is damage done adjusted for raid-contributing buffs
+  # and debuffs.
+  ndps
+  # rDPS is unique to FFXIV and is damage done adjusted for raid-contributing buffs
+  # and debuffs.
+  rdps
+  # Healing done per second to tanks.
+  tankhps
+  # Weighted damage per second. Unique to WoW currently. Used to remove pad damage
+  # and reward damage done to high priority targets.
+  wdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombineddps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedbossdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedcdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedbosscdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedndps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedbossndps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedrdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of healers in eight
+  # player content.
+  healercombinedbossrdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombineddps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedbossdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedcdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedbosscdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedndps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedbossndps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedrdps
+  # Unique to FFXIV. Represents the combined ranking for a pair of tanks in eight
+  # player content.
+  tankcombinedbossrdps
+}
+
+enum EventDataType {
+  # All Events
+  All
+  # Buffs.
+  Buffs
+  # Casts.
+  Casts
+  # Combatant info events (includes gear).
+  CombatantInfo
+  # Damage done.
+  DamageDone
+  # Damage taken.
+  DamageTaken
+  # Deaths.
+  Deaths
+  # Debuffs.
+  Debuffs
+  # Dispels.
+  Dispels
+  # Healing done.
+  Healing
+  # Interrupts.
+  Interrupts
+  # Resources.
+  Resources
+  # Summons
+  Summons
+  # Threat.
+  Threat
+}
+
+enum ExternalBuffRankFilter {
+  # Include all ranks, regardless of external buffs.
+  Any
+  # Only include ranks that DO CONTAIN external buffs.
+  Require
+  # Only include ranks that DO NOT CONTAIN external buffs.
+  Exclude
+}
+
+enum FightRankingMetricType {
+  # Choose an appropriate default depending on the other selected parameters.
+  default
+  # A metric that rewards minimizing deaths and damage taken.
+  execution
+  # Feats of strength in WoW or Challenges in FF.
+  feats
+  # For Mythic+ dungeons in WoW, represents the team's score. Used for ESO trials
+  # and dungeons also.
+  score
+  # Speed metric, based off the duration of the fight.
+  speed
+  # Progress metric, based off when the fight was defeated.
+  progress
+}
+
+enum GraphDataType {
+  # Summary Overview
+  Summary
+  # Buffs.
+  Buffs
+  # Casts.
+  Casts
+  # Damage done.
+  DamageDone
+  # Damage taken.
+  DamageTaken
+  # Deaths.
+  Deaths
+  # Debuffs.
+  Debuffs
+  # Dispels.
+  Dispels
+  # Healing done.
+  Healing
+  # Interrupts.
+  Interrupts
+  # Resources.
+  Resources
+  # Summons
+  Summons
+  # Survivability (death info across multiple pulls).
+  Survivability
+  # Threat.
+  Threat
+}
+
+enum GuildRank {
+  # The user is not a member of this guild or team.
+  NonMember
+  Applicant
+  Recruit
+  Member
+  Officer
+  GuildMaster
+}
+
+enum HardModeLevelRankFilter {
+  # Any hard mode level (including normal mode).
+  Any
+  # The highest hard mode level. Convenience alias for hard mode level 4.
+  Highest
+  # The normal (non-hard) mode level. Convenience alias for hard mode level 0.
+  NormalMode
+  # Hard mode level 0.
+  Level0
+  # Hard mode level 1.
+  Level1
+  # Hard mode level 2.
+  Level2
+  # Hard mode level 3.
+  Level3
+  # Hard mode level 4.
+  Level4
+}
+
+enum HostilityType {
+  # Fetch information for friendlies.
+  Friendlies
+  # Fetch information for enemies.
+  Enemies
+}
+
+enum KillType {
+  # Include trash and encounters.
+  All
+  # Only include encounters (kills and wipes).
+  Encounters
+  # Only include encounters that end in a kill.
+  Kills
+  # Only include trash.
+  Trash
+  # Only include encounters that end in a wipe.
+  Wipes
+}
+
+enum LeaderboardRank {
+  # All ranks are included.
+  Any
+  # Only include ranks with a backing log.
+  LogsOnly
+}
+
+enum RankingCompareType {
+  # Compare against rankings.
+  Rankings
+  # Compare against all parses in a two week window.
+  Parses
+}
+
+enum RankingTimeframeType {
+  # Compare against today's rankings.
+  Today
+  # Compare against historical rankings.
+  Historical
+}
+
+enum ReportRankingMetricType {
+  # Boss damage per second.
+  bossdps
+  # Boss rDPS is unique to FFXIV and is damage done to the boss adjusted for
+  # raid-contributing buffs and debuffs.
+  bossrdps
+  # Choose an appropriate default depending on the other selected parameters.
+  default
+  # Damage per second.
+  dps
+  # Healing per second.
+  hps
+  # Survivability ranking for tanks. Deprecated. Only supported for some older WoW
+  # zones.
+  krsi
+  # Score. Used by WoW Mythic dungeons and by ESO trials.
+  playerscore
+  # Speed. Not supported by every zone.
+  playerspeed
+  # rDPS is unique to FFXIV and is damage done adjusted for raid-contributing buffs
+  # and debuffs.
+  rdps
+  # Healing done per second to tanks.
+  tankhps
+  # Weighted damage per second. Unique to WoW currently. Used to remove pad damage
+  # and reward damage done to high priority targets.
+  wdps
+}
+
+enum RoleType {
+  # Fetch any role..
+  Any
+  # Fetch the DPS role only.
+  DPS
+  # Fetch the healer role only.
+  Healer
+  # Fetch the tanking role only.
+  Tank
+}
+
+enum SubscriptionStatus {
+  # Silver Tier subscription
+  Silver
+  # Gold Tier subscription
+  Gold
+  # Platinum Tier subscription
+  Platinum
+  # Legacy Silver Tier subscription
+  LegacySilver
+    @deprecated(
+      reason: "Legacy Silver subscriptions are not available for new users."
+    )
+  # Legacy Gold Tier subscription
+  LegacyGold
+    @deprecated(
+      reason: "Legacy Gold subscriptions are not available for new users."
+    )
+  # Legacy Platinum Tier subscription
+  LegacyPlatinum
+    @deprecated(
+      reason: "Legacy Platinum subscriptions are not available for new users."
+    )
+  # Alchemical Society Tier subscription
+  AlchemicalSociety
+}
+
+enum TableDataType {
+  # Summary Overview
+  Summary
+  # Buffs.
+  Buffs
+  # Casts.
+  Casts
+  # Damage done.
+  DamageDone
+  # Damage taken.
+  DamageTaken
+  # Deaths.
+  Deaths
+  # Debuffs.
+  Debuffs
+  # Dispels.
+  Dispels
+  # Healing done.
+  Healing
+  # Interrupts.
+  Interrupts
+  # Resources.
+  Resources
+  # Summons
+  Summons
+  # Survivability (death info across multiple pulls).
+  Survivability
+  # Threat.
+  Threat
+}
+
+enum ViewType {
+  # Use the same default that the web site picks based off the other selected
+  # parameters.
+  Default
+  # View by ability.
+  Ability
+  # View. by source.
+  Source
+  # View by target.
+  Target
+}
+
+enum __DirectiveLocation {
+  # Location adjacent to a query operation.
+  QUERY
+  # Location adjacent to a mutation operation.
+  MUTATION
+  # Location adjacent to a subscription operation.
+  SUBSCRIPTION
+  # Location adjacent to a field.
+  FIELD
+  # Location adjacent to a fragment definition.
+  FRAGMENT_DEFINITION
+  # Location adjacent to a fragment spread.
+  FRAGMENT_SPREAD
+  # Location adjacent to an inline fragment.
+  INLINE_FRAGMENT
+  # Location adjacent to a variable definition.
+  VARIABLE_DEFINITION
+  # Location adjacent to a schema definition.
+  SCHEMA
+  # Location adjacent to a scalar definition.
+  SCALAR
+  # Location adjacent to an object type definition.
+  OBJECT
+  # Location adjacent to a field definition.
+  FIELD_DEFINITION
+  # Location adjacent to an argument definition.
+  ARGUMENT_DEFINITION
+  # Location adjacent to an interface definition.
+  INTERFACE
+  # Location adjacent to a union definition.
+  UNION
+  # Location adjacent to an enum definition.
+  ENUM
+  # Location adjacent to an enum value definition.
+  ENUM_VALUE
+  # Location adjacent to an input object type definition.
+  INPUT_OBJECT
+  # Location adjacent to an input object field definition.
+  INPUT_FIELD_DEFINITION
+}
+
+enum __TypeKind {
+  # Indicates this type is a scalar.
+  SCALAR
+  # Indicates this type is an object. `fields` and `interfaces` are valid fields.
+  OBJECT
+  # Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes`
+  # are valid fields.
+  INTERFACE
+  # Indicates this type is a union. `possibleTypes` is a valid field.
+  UNION
+  # Indicates this type is an enum. `enumValues` is a valid field.
+  ENUM
+  # Indicates this type is an input object. `inputFields` is a valid field.
+  INPUT_OBJECT
+  # Indicates this type is a list. `ofType` is a valid field.
+  LIST
+  # Indicates this type is a non-null. `ofType` is a valid field.
+  NON_NULL
+}
+
+type ArchonViewModels {
+  user: JSON
+  googleAnalytics: JSON
+  game: JSON
+  # Arguments
+  # keys: [Not documented]
+  translations(keys: [String]): JSON
+  # Arguments
+  # gameSlug: [Not documented]
+  header(gameSlug: String): JSON
+  headerTitle: JSON
+  footer: JSON
+  indexPage: JSON
+  signInPage: JSON
+  signOutPage: JSON
+  authErrorPage: JSON
+  accountPage: JSON
+  gamePage: JSON
+  contactPage: JSON
+  privacyPolicyPage: JSON
+  aboutPage: JSON
+  announcementPage: JSON
+  gameSlugs: JSON
+  buildsZonePageSlugs: JSON
+  # Arguments
+  # gameSlug: [Not documented]
+  # rankingsSlug: [Not documented]
+  # zoneTypeSlug: [Not documented]
+  # difficultySlug: [Not documented]
+  # encounterSlug: [Not documented]
+  # affixesSlug: [Not documented]
+  buildsZonePage(
+    gameSlug: String
+    rankingsSlug: String
+    zoneTypeSlug: String
+    difficultySlug: String
+    encounterSlug: String
+    affixesSlug: String
+  ): JSON
+  buildsSpecPageSlugs: JSON
+  # Arguments
+  # gameSlug: [Not documented]
+  # classSlug: [Not documented]
+  # specSlug: [Not documented]
+  # zoneTypeSlug: [Not documented]
+  # categorySlug: [Not documented]
+  # difficultySlug: [Not documented]
+  # encounterSlug: [Not documented]
+  # affixesSlug: [Not documented]
+  buildsSpecPage(
+    gameSlug: String
+    classSlug: String
+    specSlug: String
+    zoneTypeSlug: String
+    categorySlug: String
+    difficultySlug: String
+    encounterSlug: String
+    affixesSlug: String
+  ): JSON
+  # Arguments
+  # gameSlug: [Not documented]
+  buildsClassesAndSpecsPage(gameSlug: String): JSON
+  # Arguments
+  # id: [Not documented]
+  ability(id: Int): JSON
+  # Arguments
+  # articleCategorySlug: [Not documented]
+  articleCategory(articleCategorySlug: String): JSON
+  articleCategories: JSON
+  # Arguments
+  # articleCategorySlug: [Not documented]
+  # siteName: [Not documented]
+  articleSlugs(articleCategorySlug: String, siteName: String): JSON
+  # Arguments
+  # articleSlug: [Not documented]
+  # articleCategorySlug: [Not documented]
+  # siteName: [Not documented]
+  article(
+    articleSlug: String
+    articleCategorySlug: String
+    siteName: String
+  ): JSON
+  # Arguments
+  # currentSlug: [Not documented]
+  cmsNavigation(currentSlug: String): JSON
+  # Arguments
+  # articleCategorySlug: [Not documented]
+  # pageNumber: [Not documented]
+  # siteName: [Not documented]
+  pageOfArticlePreviews(
+    articleCategorySlug: String
+    pageNumber: Int
+    siteName: String
+  ): JSON
+  # Arguments
+  # snippetSlugs: [Not documented]
+  snippets(snippetSlugs: [String]): JSON
+  articleIndexPage: JSON
+  playwireAds: JSON
+  adPlacements: JSON
+  # Arguments
+  # userId: [Not documented]
+  # reportCode: [Not documented]
+  reportPage(userId: Int, reportCode: String!): JSON
+  # Arguments
+  # userId: [Not documented]
+  # reportCode: [Not documented]
+  # fightId: [Not documented]
+  fightPage(userId: Int, reportCode: String!, fightId: Int!): JSON
+  # Arguments
+  # characterId: [Not documented]
+  characterPage(characterId: Int!): JSON
+  # Arguments
+  # userId: [Not documented]
+  # characterId: [Not documented]
+  characterPageData(userId: Int, characterId: Int!): JSON
+}
+
+type Bracket {
+  # An integer representing the minimum value used by bracket number 1, etc.
+  min: Float!
+  # An integer representing the value used by bracket N when there are a total of N
+  # brackets, etc.
+  max: Float!
+  # A float representing the value to increment when moving from bracket 1 to
+  # bracket N, etc.
+  bucket: Float!
+  # The localized name of the bracket type.
+  type: String
+}
+
+type Character {
+  # Whether or not the character info is anonymous in the log.
+  anonymous: Boolean
+  # The canonical ID of the character. If a character renames or transfers, then the
+  # canonical id can be used to identify the most recent version of the character.
+  canonicalID: Int!
+  # Whether this character is claimed by the current user. Only accessible if
+  # accessed via the user API with the "view-user-profile" scope.
+  claimed: Boolean
+  # The class id of the character.
+  classID: Int!
+  # The display name (account) of the character.
+  displayName: String!
+  # Encounter rankings information for a character, filterable to specific zones,
+  # bosses, metrics, etc. This data is not considered frozen, and it can change
+  # without notice. Use at your own risk.
+  #
+  # Arguments
+  # byBracket: Optional. Whether or not to use bracket rankings
+  # instead of overall rankings. For WoW, brackets are item levels or keystones. For
+  # FF, brackets are patches.
+  # className: Optional. The slug for a specific class. Whether or
+  # not to filter rankings to a specific class. Only used by games that support
+  # multiple classes on a single character..
+  # compare: Optional. Whether or not to compare against rankings
+  # (best scores across the entire tier) or two weeks worth of parses (more
+  # representative of real-world performance).
+  # difficulty: Optional. Whether or not to filter the rankings to
+  # a specific difficulty. If omitted, the highest difficulty is used.
+  # encounterID: Required. The specific encounter whose rankings
+  # should be fetched.
+  # includeCombatantInfo: Optional. Whether or not to include
+  # detailed combatant info such as gear in the results.
+  # includePrivateLogs: Optional. Whether or not to include private
+  # logs in the results. This option is only available if using the user GraphQL
+  # endpoint.
+  # metric: Optional. You can filter to a specific character metric
+  # like dps or hps. If omitted, an appropriate default metric for the zone will be
+  # chosen.
+  # partition: Optional. Whether or not to filter the rankings to a
+  # specific partition. By default, the latest partition is chosen. A special value
+  # of -1 can be passed to fetch data from all partitions.
+  # role: Optional. The slug for a specific role. This allow you to
+  # only fetch ranks for the healing role, dps role or tank role.
+  # size: Optional. Whether or not to filter rankings to a specific
+  # size. If omitted, the first valid raid size will be used.
+  # specName: Optional. The slug for a specific spec. Whether or
+  # not to filter rankings to a specific spec. If omitted, data for all specs will
+  # be used.
+  # timeframe: Optional. Whether or not the returned report
+  # rankings should be compared against today's rankings or historical rankings
+  # around the time the fight occurred.
+  encounterRankings(
+    byBracket: Boolean
+    className: String
+    compare: RankingCompareType
+    difficulty: Int
+    encounterID: Int
+    includeCombatantInfo: Boolean
+    includePrivateLogs: Boolean
+    metric: CharacterRankingMetricType
+    partition: Int
+    role: RoleType
+    size: Int
+    specName: String
+    timeframe: RankingTimeframeType
+  ): JSON
+  # Cached game data such as gear for the character. This data was fetched from the
+  # appropriate source (Blizzard APIs for WoW, Lodestone for FF). This call will
+  # only return a cached copy of the data if it exists already. It will not go out
+  # to Blizzard or Lodestone to fetch a new copy.
+  #
+  # Arguments
+  # specID: Optional. A specific spec ID to retrieve information
+  # for. If omitted, the last observed spec on Armory (WoW) or Lodestone (FF) will
+  # be used.
+  # forceUpdate: Optional. Whether or not to force the updating of
+  # the character before returning the game data.
+  gameData(specID: Int, forceUpdate: Boolean): JSON
+  # The guild rank of the character in their primary guild. This is not the user
+  # rank on the site, but the rank according to the game data, e.g., a Warcraft
+  # guild rank or an FFXIV Free Company rank.
+  guildRank: Int!
+  # All guilds that the character belongs to.
+  guilds: [Guild]
+  # Whether or not the character has all its rankings hidden.
+  hidden: Boolean!
+  # The ID of the character.
+  id: Int!
+  # The name of the character.
+  name: String!
+  # The race of the character.
+  raceID: Int!
+  # Recent reports for the character.
+  #
+  # Arguments
+  # limit: Optional. The number of recent reports to retrieve. If
+  # omitted, defaults to 10. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  recentReports(limit: Int, page: Int): ReportPagination
+  # The server that the character belongs to.
+  server: Server!
+  # Rankings information for a character, filterable to specific zones, bosses,
+  # metrics, etc. This data is not considered frozen, and it can change without
+  # notice. Use at your own risk.
+  #
+  # Arguments
+  # byBracket: Optional. Whether or not to use bracket rankings
+  # instead of overall rankings. For WoW, brackets are item levels or keystones. For
+  # FF, brackets are patches.
+  # className: Optional. The slug for a specific class. Whether or
+  # not to filter rankings to a specific class. Only used by games that support
+  # multiple classes on a single character..
+  # compare: Optional. Whether or not to compare against rankings
+  # (best scores across the entire tier) or two weeks worth of parses (more
+  # representative of real-world performance).
+  # difficulty: Optional. Whether or not to filter the rankings to
+  # a specific difficulty. If omitted, the highest difficulty is used.
+  # includePrivateLogs: Optional. Whether or not to include private
+  # logs in the results. This option is only available if using the user GraphQL
+  # endpoint.
+  # metric: Optional. You can filter to a specific character metric
+  # like dps or hps. If omitted, an appropriate default metric for the zone will be
+  # chosen.
+  # partition: Optional. Whether or not to filter the rankings to a
+  # specific partition. By default, the latest partition is chosen. A special value
+  # of -1 can be passed to fetch data from all partitions.
+  # role: Optional. The slug for a specific role. This allow you to
+  # only fetch ranks for the healing role, dps role or tank role.
+  # size: Optional. Whether or not to filter rankings to a specific
+  # size. If omitted, the first valid raid size will be used.
+  # specName: Optional. The slug for a specific spec. Whether or
+  # not to filter rankings to a specific spec. If omitted, data for all specs will
+  # be used.
+  # timeframe: Optional. Whether or not the returned report
+  # rankings should be compared against today's rankings or historical rankings
+  # around the time the fight occurred.
+  # zoneID: Optional. If not specified, the latest unfrozen zone
+  # will be used.
+  zoneRankings(
+    byBracket: Boolean
+    className: String
+    compare: RankingCompareType
+    difficulty: Int
+    includePrivateLogs: Boolean
+    metric: CharacterRankingMetricType
+    partition: Int
+    role: RoleType
+    size: Int
+    specName: String
+    timeframe: RankingTimeframeType
+    zoneID: Int
+  ): JSON
+}
+
+type CharacterData {
+  # Obtain a specific character either by id or by name/server_slug/server_region.
+  #
+  # Arguments
+  # id: Optional. The ID of a single character to retrieve.
+  # name: Optional. The name of a specific character. Must be used
+  # in conjunction with serverSlug and serverRegion to uniquely identify a
+  # character.
+  # serverSlug: Optional. The slug of a specific server. Must be
+  # used in conjunction with name and serverRegion to uniquely identify a character.
+  # serverRegion: Optional. The region for a specific character.
+  # Must be used in conjunction with name and serverRegion to uniquely identify a
+  # character.
+  character(
+    id: Int
+    name: String
+    serverSlug: String
+    serverRegion: String
+  ): Character
+  # A collection of characters for a specific guild.
+  #
+  # Arguments
+  # guildID: Required. The ID of a specific guild. Characters from
+  # that guild will be fetched.
+  # limit: Optional. The number of characters to retrieve per page.
+  # If omitted, defaults to 100. The maximum allowed value is 100, and minimum
+  # allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  characters(guildID: Int, limit: Int, page: Int): CharacterPagination
+}
+
+type CharacterPagination {
+  # List of items on the current page
+  data: [Character]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type Difficulty {
+  # An integer representing a specific difficulty level within a zone. For example,
+  # in World of Warcraft, this could be Mythic. In FF, it could be Savage, etc.
+  id: Int!
+  # The localized name for the difficulty level.
+  name: String!
+  # A list of supported sizes for the difficulty level. An empty result means that
+  # the difficulty level has a flexible raid size.
+  sizes: [Int]
+}
+
+type Encounter {
+  # The ID of the encounter.
+  id: Int!
+  # The localized name of the encounter.
+  name: String!
+  # Player rankings information for a zone. This data is not considered frozen, and
+  # it can change without notice. Use at your own risk.
+  #
+  # Arguments
+  # bracket: Optional. A specific bracket (e.g., item level range)
+  # to use instead of overall rankings. For WoW, brackets are item levels or
+  # keystones. For FF, brackets are patches.
+  # difficulty: Optional. A specific difficulty to fetch rankings
+  # for. If omitted, the highest difficulty is used.
+  # filter: Optional. A filter string for advanced searching. The
+  # syntax matches the one used on the web site exactly, so you can filter encounter
+  # rankings on the site to figure out the string to use.
+  # page: Optional. Which page of rankings to fetch. By default the
+  # first page is used.
+  # partition: Optional. Whether or not to filter the rankings to a
+  # specific partition. By default, the latest partition is chosen.
+  # serverRegion: Optional. The short name of a region to filter
+  # to. If paired with a server slug, will uniquely identify a server. If used by
+  # itself, rankings for that specific region will be fetched.
+  # serverSlug: Optional. The slug for a specific server. Whether
+  # or not to filter rankings to a specific server. If omitted, data for all servers
+  # will be used.
+  # size: Optional. Whether or not to filter rankings to a specific
+  # size. If omitted, the first valid raid size will be used.
+  # leaderboard: Optional. Controls whether to include ranks
+  # without backing logs in games & content types that support this. Ignored if
+  # unsupported.
+  # hardModeLevel: Optional. Filters ranks to a specific hard mode
+  # (0-5) or any hard mode level (-1). Most encounters do not have variable hard
+  # mode levels. Use `difficulty` for ESO Veteran Hard Modes.
+  # metric: Optional. You can filter to a specific player metric
+  # like dps or hps. If omitted, an appropriate default player metric for the zone
+  # will be chosen.
+  # includeCombatantInfo: Optional. Whether or not to include
+  # detailed combatant info such as gear in the results.
+  # className: Optional. The slug for a specific class. Whether or
+  # not to filter rankings to a specific class. If omitted, data for all classes
+  # will be used.
+  # specName: Optional. The slug for a specific spec. Whether or
+  # not to filter rankings to a specific spec. If omitted, data for all specs will
+  # be used.
+  # externalBuffs: Optional. Controls whether to include ranks
+  # with/without external buffs. Most games and zones do not support this filter and
+  # will quietly ignore it.
+  characterRankings(
+    bracket: Int
+    difficulty: Int
+    filter: String
+    page: Int
+    partition: Int
+    serverRegion: String
+    serverSlug: String
+    size: Int
+    leaderboard: LeaderboardRank
+    hardModeLevel: HardModeLevelRankFilter
+    metric: CharacterRankingMetricType
+    includeCombatantInfo: Boolean
+    className: String
+    specName: String
+    externalBuffs: ExternalBuffRankFilter
+  ): JSON
+  # Fight rankings information for a zone. This data is not considered frozen, and
+  # it can change without notice. Use at your own risk.
+  #
+  # Arguments
+  # bracket: Optional. A specific bracket (e.g., item level range)
+  # to use instead of overall rankings. For WoW, brackets are item levels or
+  # keystones. For FF, brackets are patches.
+  # difficulty: Optional. A specific difficulty to fetch rankings
+  # for. If omitted, the highest difficulty is used.
+  # filter: Optional. A filter string for advanced searching. The
+  # syntax matches the one used on the web site exactly, so you can filter encounter
+  # rankings on the site to figure out the string to use.
+  # page: Optional. Which page of rankings to fetch. By default the
+  # first page is used.
+  # partition: Optional. Whether or not to filter the rankings to a
+  # specific partition. By default, the latest partition is chosen.
+  # serverRegion: Optional. The short name of a region to filter
+  # to. If paired with a server slug, will uniquely identify a server. If used by
+  # itself, rankings for that specific region will be fetched.
+  # serverSlug: Optional. The slug for a specific server. Whether
+  # or not to filter rankings to a specific server. If omitted, data for all servers
+  # will be used.
+  # size: Optional. Whether or not to filter rankings to a specific
+  # size. If omitted, the first valid raid size will be used.
+  # leaderboard: Optional. Controls whether to include ranks
+  # without backing logs in games & content types that support this. Ignored if
+  # unsupported.
+  # hardModeLevel: Optional. Filters ranks to a specific hard mode
+  # (0-5) or any hard mode level (-1). Most encounters do not have variable hard
+  # mode levels. Use `difficulty` for ESO Veteran Hard Modes.
+  # metric: Optional. You can filter to a specific fight metric
+  # like speed or execution. If omitted, an appropriate default fight metric for the
+  # zone will be chosen.
+  fightRankings(
+    bracket: Int
+    difficulty: Int
+    filter: String
+    page: Int
+    partition: Int
+    serverRegion: String
+    serverSlug: String
+    size: Int
+    leaderboard: LeaderboardRank
+    hardModeLevel: HardModeLevelRankFilter
+    metric: FightRankingMetricType
+  ): JSON
+  # The zone that this encounter is found in.
+  zone: Zone!
+}
+
+type EncounterPhases {
+  encounterID: Int!
+  # Whether the phases can be used to separate wipes in the report UI.
+  separatesWipes: Boolean
+  # Phase metadata for all phases in this encounter.
+  phases: [PhaseMetadata!]
+}
+
+type Expansion {
+  # The ID of the expansion.
+  id: Int!
+  # The localized name of the expansion.
+  name: String!
+  # The zones (e.g., raids and dungeons) supported for this expansion.
+  zones: [Zone]
+}
+
+type GameAbility {
+  # The ID of the ability.
+  id: Int!
+  # The icon for the ability.
+  icon: String
+  # The localized name of the ability. Will be null if no localization information
+  # exists for the ability.
+  name: String
+  # A description for the ability if it is available.
+  description: String
+}
+
+type GameAbilityPagination {
+  # List of items on the current page
+  data: [GameAbility]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GameAchievement {
+  # The ID of the achievement.
+  id: Int!
+  # The icon for the achievement.
+  icon: String
+  # The localized name of the achievement. Will be null if no localization
+  # information exists for the achievement.
+  name: String
+}
+
+type GameAffix {
+  # The ID of the affix.
+  id: Int!
+  # The icon for the affix.
+  icon: String
+  # The localized name of the affix. Will be null if no localization information
+  # exists for the affix.
+  name: String
+}
+
+type GameClass {
+  # An integer used to identify the class.
+  id: Int!
+  # The localized name of the class.
+  name: String!
+  # A slug used to identify the class.
+  slug: String!
+  # The specs supported by the class.
+  specs: [GameSpec]
+}
+
+type GameData {
+  # The player and enemy abilities for the game.
+  #
+  # Arguments
+  # limit: Optional. The number of abilities to retrieve per page.
+  # If omitted, defaults to 100. The maximum allowed value is 100, and minimum
+  # allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  abilities(limit: Int, page: Int): GameAbilityPagination
+  # Obtain a single ability for the game.
+  #
+  # Arguments
+  # id: Required. Specify a specific ability to retrieve by its id.
+  ability(id: Int): GameAbility
+  # Obtain a single class for the game.
+  #
+  # Arguments
+  # id: Required. Specify a specific class to retrieve by its id.
+  # faction_id: Optional. Specify which faction you are retrieving
+  # the set of classes for. If the game has faction-specific classes, then the
+  # correct slugs and names will be returned for that faction.
+  # zone_id: Optional. Specify which zone you are retrieving the
+  # set of classes for. The classes that existed at the time the zone was relevant
+  # will be returned.
+  class(id: Int, faction_id: Int, zone_id: Int): GameClass
+  # Obtain the supported classes for the game.
+  #
+  # Arguments
+  # faction_id: Optional. Specify which faction you are retrieving
+  # the set of classes for. If the game has faction-specific classes, then the
+  # correct slugs and names will be returned for that faction.
+  # zone_id: Optional. Specify which zone you are retrieving the
+  # set of classes for. The classes that existed at the time the zone was relevant
+  # will be returned.
+  classes(faction_id: Int, zone_id: Int): [GameClass]
+  # Obtain all the factions that guilds and players can belong to.
+  factions: [GameFaction]
+  # Obtain a single item for the game.
+  #
+  # Arguments
+  # id: Required. Specify a specific item to retrieve by its id.
+  item(id: Int): GameItem
+  # Obtain a single item set for the game.
+  #
+  # Arguments
+  # id: Required. Specify a specific item set to retrieve by its
+  # id.
+  item_set(id: Int): GameItemSet
+  # Item sets for the game.
+  #
+  # Arguments
+  # limit: Optional. The number of item sets to retrieve per page.
+  # If omitted, defaults to 100. The maximum allowed value is 100, and minimum
+  # allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  item_sets(limit: Int, page: Int): GameItemSetPagination
+  # Items for the game.
+  #
+  # Arguments
+  # limit: Optional. The number of items to retrieve per page. If
+  # omitted, defaults to 100. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  items(limit: Int, page: Int): GameItemPagination
+  # Obtain a single map for the game.
+  #
+  # Arguments
+  # id: Required. Specify a specific map to retrieve by its id.
+  map(id: Int): GameMap
+  # Maps for the game.
+  #
+  # Arguments
+  # limit: Optional. The number of maps to retrieve per page. If
+  # omitted, defaults to 100. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  maps(limit: Int, page: Int): GameMapPagination
+  # Obtain a single NPC for the game.
+  #
+  # Arguments
+  # id: Required. Specify a specific NPC to retrieve by its id.
+  npc(id: Int): GameNPC
+  # NPCs for the game.
+  #
+  # Arguments
+  # limit: Optional. The number of NPCs to retrieve per page. If
+  # omitted, defaults to 100. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  npcs(limit: Int, page: Int): GameNPCPagination
+}
+
+type GameEnchant {
+  # The ID of the enchant.
+  id: Int!
+  # The localized name of the enchant. Will be null if no localization information
+  # exists for the enchant.
+  name: String
+}
+
+type GameFaction {
+  # An integer representing the faction id.
+  id: Int!
+  # The localized name of the faction.
+  name: String!
+}
+
+type GameItem {
+  # The ID of the item.
+  id: Int!
+  # The icon for the item.
+  icon: String
+  # The localized name of the item. Will be null if no localization information
+  # exists for the item.
+  name: String
+}
+
+type GameItemPagination {
+  # List of items on the current page
+  data: [GameItem]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GameItemSet {
+  # The ID of the item set.
+  id: Int!
+  # The localized name of the item set. Will be null if no localization information
+  # exists for the item set.
+  name: String
+}
+
+type GameItemSetPagination {
+  # List of items on the current page
+  data: [GameItemSet]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GameMap {
+  # The ID of the map.
+  id: Int!
+  # The localized name of the map. Will be null if no localization information
+  # exists for the map.
+  name: String
+}
+
+type GameMapPagination {
+  # List of items on the current page
+  data: [GameMap]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GameNPC {
+  # The ID of the NPC.
+  id: Int!
+  # The localized name of the NPC. Will be null if no localization information
+  # exists for the NPC.
+  name: String
+}
+
+type GameNPCPagination {
+  # List of items on the current page
+  data: [GameNPC]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GameSpec {
+  # An integer used to identify the spec.
+  id: Int!
+  # The player class that the spec belongs to.
+  class: GameClass
+  # The localized name of the class.
+  name: String!
+  # A slug used to identify the spec.
+  slug: String!
+}
+
+type GameZone {
+  # The ID of the zone.
+  id: Float!
+  # The localized name of the zone. Will be null if no localization information
+  # exists for the zone.
+  name: String
+}
+
+type Guild {
+  # Arguments
+  # guildTagID: Optional. Whether or not to filter the attendance
+  # to a specific guild tag.
+  # limit: Optional. The number of reports to retrieve per page. If
+  # omitted, defaults to 16. The maximum allowed value is 25, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  # zoneID: Optional. Whether or not to filter the attendance table
+  # to a specific zone.
+  attendance(
+    guildTagID: Int
+    limit: Int
+    page: Int
+    zoneID: Int
+  ): GuildAttendancePagination!
+  # Whether or not the guild has competition mode enabled.
+  competitionMode: Boolean!
+  # The description for the guild that is displayed with the guild name on the site.
+  description: String!
+  # The faction of the guild.
+  faction: GameFaction!
+  # The ID of the guild.
+  id: Int!
+  # The name of the guild.
+  name: String!
+  # The server that the guild belongs to.
+  server: Server!
+  # Whether or not the guild has stealth mode enabled.
+  stealthMode: Boolean!
+  # The tags used to label reports. In the site UI, these are called raid teams.
+  tags: [GuildTag]
+  # The member roster for a specific guild. The result of this query is a paginated
+  # list of characters. This query only works for games where the guild roster is
+  # verifiable, e.g., it does not work for Classic Warcraft.
+  #
+  # Arguments
+  # limit: Optional. The number of characters to retrieve per page.
+  # If omitted, defaults to 100. The maximum allowed value is 100, and minimum
+  # allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  members(limit: Int, page: Int): CharacterPagination!
+  # The current user's rank within the guild. Only accessible via user
+  # authentication with the "view-user-profile" scope.
+  currentUserRank: GuildRank
+  # The guild's ranking for a zone. If `zoneId` is unset or null, uses the latest
+  # zone.
+  #
+  # Arguments
+  # zoneId: [Not documented]
+  zoneRanking(zoneId: Int): GuildZoneRankings!
+}
+
+type GuildAttendance {
+  # The code of the report for the raid night.
+  code: String!
+  # The players that attended that raid night.
+  players: [PlayerAttendance]
+  # The start time of the raid night.
+  startTime: Float
+  # The principal zone of the raid night.
+  zone: Zone
+}
+
+type GuildAttendancePagination {
+  # List of items on the current page
+  data: [GuildAttendance]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GuildData {
+  # Obtain a specific guild either by id or by name/serverSlug/serverRegion.
+  #
+  # Arguments
+  # id: Optional. The ID of a single guild to retrieve.
+  # name: Optional. The name of a specific guild. Must be used in
+  # conjunction with serverSlug and serverRegion to uniquely identify a guild.
+  # serverSlug: Optional. The name of a specific guild. Must be
+  # used in conjunction with name and serverRegion to uniquely identify a guild.
+  # serverRegion: Optional. The region for a specific guild. Must
+  # be used in conjunction with name and serverRegion to uniquely identify a guild.
+  guild(id: Int, name: String, serverSlug: String, serverRegion: String): Guild
+  # The set of all guilds supported by the site. Can be optionally filtered to a
+  # specific server id.
+  #
+  # Arguments
+  # limit: Optional. The number of guilds to retrieve per page. If
+  # omitted, defaults to 100. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  # serverID: Optional. The ID of a specific server. If present,
+  # only guilds from that server (and any connected servers) will be fetched.
+  # serverSlug: Optional. The slug for a specific server. Must be
+  # used in conjunction with serverRegion to uniquely identify a server. Only guilds
+  # from that server (and any connected servers) will be fetched.
+  # serverRegion: Optional. The region for a specific server. Must
+  # be used in conjunction with serverSlug to uniquely identify a server. Only
+  # guilds from that server (and any connected servers) will be fetched.
+  guilds(
+    limit: Int
+    page: Int
+    serverID: Int
+    serverSlug: String
+    serverRegion: String
+  ): GuildPagination
+}
+
+type GuildPagination {
+  # List of items on the current page
+  data: [Guild]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GuildPagination {
+  # List of items on the current page
+  data: [Guild]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type GuildTag {
+  # The ID of the tag.
+  id: Int!
+  # The guild that the tag belongs to.
+  guild: Guild!
+  # The name of the tag.
+  name: String!
+}
+
+type GuildZoneRankings {
+  # The progress ranks for the guild. Always uses the highest difficulty.
+  #
+  # Arguments
+  # size: Raid size. Only used for Classic WoW and certain old
+  # Retail WoW zones.
+  progress(size: Int): WorldRegionServerRankPositions
+  # The all-star based speed rank for the guild.
+  #
+  # Arguments
+  # size: Raid size. Only used for Classic WoW and certain old
+  # Retail WoW zones.
+  # difficulty: Raid difficulty.
+  speed(size: Int, difficulty: Int): WorldRegionServerRankPositions
+  # The complete raid speed ranks for the guild. Most non-Classic WoW zones do not
+  # support complete raid ranks.
+  #
+  # Arguments
+  # size: Raid size. Only used for Classic WoW and certain old
+  # Retail WoW zones.
+  # difficulty: Raid difficulty.
+  completeRaidSpeed(size: Int, difficulty: Int): WorldRegionServerRankPositions
+}
+
+type Partition {
+  # An integer representing a specific partition within a zone.
+  id: Int!
+  # The localized name for partition.
+  name: String!
+  # The compact localized name for the partition. Typically an abbreviation to
+  # conserve space.
+  compactName: String!
+  # Whether or not the partition is the current default when viewing rankings or
+  # statistics for the zone.
+  default: Boolean!
+}
+
+type PhaseMetadata {
+  # Phase ID. 1-indexed
+  id: Int!
+  name: String!
+  # Whether this phase represents an intermission.
+  isIntermission: Boolean
+}
+
+type PhaseTransition {
+  # The 1-indexed id of the phase. Phase IDs are absolute within a fight: phases
+  # with the same ID correspond to the same semantic phase.
+  id: Int!
+  # The report-relative timestamp of the transition into the phase. The phase ends
+  # at the beginning of the next phase, or at the end of the fight.
+  startTime: Int!
+}
+
+type PlayerAttendance {
+  # The name of the player.
+  name: String
+  # The class of the player.
+  type: String
+  # Presence info for the player. A value of 1 means the player was present. A value
+  # of 2 indicates present but on the bench.
+  presence: Int
+}
+
+type ProgressRaceData {
+  # Progress race information including best percentages, pull counts and streams
+  # for top guilds. This API is only active when there is an ongoing race. The
+  # format of this JSON may change without notice and is not considered frozen.
+  #
+  # Arguments
+  # serverRegion: Optional. The short name of a region to filter
+  # to. If paired with a server slug, will uniquely identify a server. If used by
+  # itself, rankings for that specific region will be fetched.
+  # serverSubregion: Optional. The short name of a subregion to
+  # filter to. Must be paired with serverRegion. Rankings for that specific
+  # subregion will be fetched.
+  # serverSlug: Optional. The slug for a specific server. Whether
+  # or not to filter rankings to a specific server. If omitted, data for all servers
+  # will be used.
+  # zoneID: Optional. If not specified, the latest zone will be
+  # used.
+  # competitionID: Optional. If not specified, the race to world
+  # first competition will be used.
+  # difficulty: Optional. If not specified, the highest difficulty
+  # will be used.
+  # size: Optional. If not specified, the default size for the
+  # highest difficulty will be used.
+  # guildID: Optional. The ID of a single guild to retrieve.
+  # guildName: Optional. The name of a specific guild. Must be used
+  # in conjunction with serverSlug and serverRegion to uniquely identify a guild.
+  progressRace(
+    serverRegion: String
+    serverSubregion: String
+    serverSlug: String
+    zoneID: Int
+    competitionID: Int
+    difficulty: Int
+    size: Int
+    guildID: Int
+    guildName: String
+  ): JSON
+  # Detailed composition data for a given guild and encounter.
+  #
+  # Arguments
+  # competitionID: Optional. If not specified, the race to world
+  # first competition will be used.
+  # guildID: Optional. The ID of a single guild to retrieve.
+  # guildName: Optional. The name of a specific guild. Must be used
+  # in conjunction with serverSlug and serverRegion to uniquely identify a guild.
+  # serverSlug: Optional. The name of a specific guild. Must be
+  # used in conjunction with name and serverRegion to uniquely identify a guild.
+  # serverRegion: Optional. The region for a specific guild. Must
+  # be used in conjunction with name and serverRegion to uniquely identify a guild.
+  # encounterID: Optional. If not specified, the current boss that
+  # is being pulled will be used.
+  # difficulty: Optional. If not specified, the highest difficulty
+  # will be used.
+  # size: Optional. If not specified, the default size for the
+  # highest difficulty will be used.
+  detailedComposition(
+    competitionID: Int
+    guildID: Int
+    guildName: String
+    serverSlug: String
+    serverRegion: String
+    encounterID: Int
+    difficulty: Int
+    size: Int
+  ): JSON
+}
+
+type Rank {
+  # The ordinal rank (usually written "Rank N"). Rank 1 = highest.
+  number: Int!
+  # The percentile of the rank as an integer in [0, 100]. Always null for guild
+  # ranks.
+  percentile: Int
+  # The color class used by the site for this rank.
+  color: String!
+}
+
+type RateLimitData {
+  # The total amount of points this API key can spend per hour.
+  limitPerHour: Int!
+  # The total amount of points spent during this hour.
+  pointsSpentThisHour: Float!
+  # The number of seconds remaining until the points reset.
+  pointsResetIn: Int!
+}
+
+type Region {
+  # The ID of the region.
+  id: Int!
+  # The localized compact name of the region, e.g., US for United States.
+  compactName: String!
+  # The localized name of the region.
+  name: String!
+  # The slug for the region, usable when looking up characters and guilds by server.
+  slug: String!
+  # The subregions found within this region.
+  subregions: [Subregion]
+  # The servers found within this region.
+  #
+  # Arguments
+  # limit: Optional. The number of servers to retrieve per page. If
+  # omitted, defaults to 100. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  servers(limit: Int, page: Int): ServerPagination
+}
+
+type Report {
+  # The report code, a unique value used to identify the report.
+  code: String!
+  # The end time of the report. This is a UNIX timestamp representing the timestamp
+  # of the last event contained in the report.
+  endTime: Float!
+  # A set of paginated report events, filterable via arguments like type, source,
+  # target, ability, etc. This data is not considered frozen, and it can change
+  # without notice. Use at your own risk.
+  #
+  # Arguments
+  # abilityID: Optional. The game id of a specific ability to
+  # filter to.
+  # dataType: Optional. You can filter to a specific subset of
+  # events.
+  # death: Optional. If viewing death events, a specific death to
+  # obtain information for.
+  # difficulty: Optional. Whether or not to filter the fights to a
+  # specific difficulty. By default all fights are included.
+  # encounterID: Optional. Whether or not to filter the fights to a
+  # specific boss. By default all fights are included.
+  # endTime: Optional. The end time of the events range to fetch.
+  # fightIDs: Optional. A list of fight ids to include. Fights with
+  # any other id will be excluded.
+  # filterExpression: Optional. An expression in the site's query
+  # language that will be applied as a filter to the events.
+  # hostilityType: Optional. A hostility of 0 indicates a
+  # friendlies view. A hostility of 1 represents enemies.
+  # includeResources: Optional. Whether or not to include detailed
+  # unit resources for actors. Adds substantially to bandwidth, so defaults to off.
+  # killType: Optional. A filter to only include kills, wipes,
+  # encounters or trash.
+  # limit: Optional. How many events to retrieve. Allowed value
+  # ranges are 100-10000. The default value is 300.
+  # sourceAurasAbsent: A comma-separated list of auras that must be
+  # absent on the source for the event to be included.
+  # sourceAurasPresent: A comma-separated list of auras that must
+  # be present on the source for the event to be included.
+  # sourceClass: Optional. Whether or not to filter the fights to a
+  # specific source class. The argument here is the class slug, obtainable from game
+  # data.
+  # sourceID: Optional. Whether or not to filter the fights to a
+  # specific source actor ID. By default all sources are included.
+  # sourceInstanceID: Optional. Whether or not to filter the fights
+  # to a specific source actor instance ID. By default all instances of an actor are
+  # included.
+  # startTime: Optional. The start time of the events range to
+  # fetch.
+  # targetAurasAbsent: A comma-separated list of auras that must be
+  # absent on the target for the event to be included.
+  # targetAurasPresent: A comma-separated list of auras that must
+  # be present on the target for the event to be included.
+  # targetClass: Optional. Whether or not to filter the fights to a
+  # specific target class. The argument here is the class slug, obtainable from game
+  # data.
+  # targetID: Optional. Whether or not to filter the fights to a
+  # specific target actor ID. By default all targets are included.
+  # targetInstanceID: Optional. Whether or not to filter the fights
+  # to a specific target actor instance ID. By default all instances of an actor are
+  # included.
+  # translate: Optional. Whether or not the fight data should be
+  # auto-translated. Defaults to true. Set to false if is a priority, and you do not
+  # care about the names.
+  # useAbilityIDs: Optional. Whether or not to include detailed
+  # ability information. Adds substantially to bandwidth, so defaults to true. Set
+  # to false if you do not want to fetch the master data of the report.
+  # useActorIDs: Optional. Whether or not to include detailed actor
+  # information. Adds substantially to bandwidth, so defaults to true. Set to false
+  # if you do not want to fetch the master data of the report.
+  # viewOptions: Optional. A bitfield set of options used in the
+  # site UI. You can experiment in each view with the options to see what these
+  # values are.
+  # wipeCutoff: Optional. The number of deaths after which all
+  # subsequent events should be ignored.
+  events(
+    abilityID: Float
+    dataType: EventDataType
+    death: Int
+    difficulty: Int
+    encounterID: Int
+    endTime: Float
+    fightIDs: [Int]
+    filterExpression: String
+    hostilityType: HostilityType
+    includeResources: Boolean
+    killType: KillType
+    limit: Int
+    sourceAurasAbsent: String
+    sourceAurasPresent: String
+    sourceClass: String
+    sourceID: Int
+    sourceInstanceID: Int
+    startTime: Float
+    targetAurasAbsent: String
+    targetAurasPresent: String
+    targetClass: String
+    targetID: Int
+    targetInstanceID: Int
+    translate: Boolean
+    useAbilityIDs: Boolean
+    useActorIDs: Boolean
+    viewOptions: Int
+    wipeCutoff: Int
+  ): ReportEventPaginator
+  # The number of exported segments in the report. This is how many segments have
+  # been processed for rankings.
+  exportedSegments: Int!
+  # A set of fights with details about participating players.
+  #
+  # Arguments
+  # difficulty: Optional. Whether or not to filter the fights to a
+  # specific difficulty. By default all fights are included.
+  # encounterID: Optional. Whether or not to filter the fights to a
+  # specific boss. By default all fights are included.
+  # fightIDs: Optional. A list of fight ids to include. Fights with
+  # any other id will be excluded.
+  # killType: Optional. A filter to only include kills, wipes,
+  # encounters or trash.
+  # translate: Optional. Whether or not the fight data should be
+  # auto-translated. Defaults to true. Set to false if speed is a priority, and you
+  # do not care about the names.
+  fights(
+    difficulty: Int
+    encounterID: Int
+    fightIDs: [Int]
+    killType: KillType
+    translate: Boolean
+  ): [ReportFight]
+  # A graph of information for a report, filterable via arguments like type, source,
+  # target, ability, etc. This data is not considered frozen, and it can change
+  # without notice. Use at your own risk.
+  #
+  # Arguments
+  # abilityID: Optional. The game id of a specific ability to
+  # filter to.
+  # dataType: Optional. You can filter to a specific subset of
+  # events.
+  # death: Optional. If viewing death events, a specific death to
+  # obtain information for.
+  # difficulty: Optional. Whether or not to filter the fights to a
+  # specific difficulty. By default all fights are included.
+  # encounterID: Optional. Whether or not to filter the fights to a
+  # specific boss. By default all fights are included.
+  # endTime: Optional. The end time of the events range to fetch.
+  # fightIDs: Optional. A list of fight ids to include. Fights with
+  # any other id will be excluded.
+  # filterExpression: Optional. An expression in the site's query
+  # language that will be applied as a filter to the events.
+  # hostilityType: Optional. A hostility of 0 indicates a
+  # friendlies view. A hostility of 1 represents enemies.
+  # killType: Optional. A filter to only include kills, wipes,
+  # encounters or trash.
+  # sourceAurasAbsent: A comma-separated list of auras that must be
+  # absent on the source for the event to be included.
+  # sourceAurasPresent: A comma-separated list of auras that must
+  # be present on the source for the event to be included.
+  # sourceClass: Optional. Whether or not to filter the fights to a
+  # specific source class. The argument here is the class slug, obtainable from game
+  # data.
+  # sourceID: Optional. Whether or not to filter the fights to a
+  # specific source actor ID. By default all sources are included.
+  # sourceInstanceID: Optional. Whether or not to filter the fights
+  # to a specific source actor instance ID. By default all instances of an actor are
+  # included.
+  # startTime: Optional. The start time of the events range to
+  # fetch.
+  # targetAurasAbsent: A comma-separated list of auras that must be
+  # absent on the target for the event to be included.
+  # targetAurasPresent: A comma-separated list of auras that must
+  # be present on the target for the event to be included.
+  # targetClass: Optional. Whether or not to filter the fights to a
+  # specific target class. The argument here is the class slug, obtainable from game
+  # data.
+  # targetID: Optional. Whether or not to filter the fights to a
+  # specific target actor ID. By default all targets are included.
+  # targetInstanceID: Optional. Whether or not to filter the fights
+  # to a specific target actor instance ID. By default all instances of an actor are
+  # included.
+  # translate: Optional. Whether or not the fight data should be
+  # auto-translated. Defaults to true. Set to false if speed is a priority, and you
+  # do not care about the names.
+  # viewOptions: Optional. A bitfield set of options used in the
+  # site UI. You can experiment in each view with the options to see what these
+  # values are.
+  # viewBy: Optional. Whether to view by source, by target or by
+  # ability.
+  # wipeCutoff: Optional. The number of deaths after which all
+  # subsequent events should be ignored.
+  graph(
+    abilityID: Float
+    dataType: GraphDataType
+    death: Int
+    difficulty: Int
+    encounterID: Int
+    endTime: Float
+    fightIDs: [Int]
+    filterExpression: String
+    hostilityType: HostilityType
+    killType: KillType
+    sourceAurasAbsent: String
+    sourceAurasPresent: String
+    sourceClass: String
+    sourceID: Int
+    sourceInstanceID: Int
+    startTime: Float
+    targetAurasAbsent: String
+    targetAurasPresent: String
+    targetClass: String
+    targetID: Int
+    targetInstanceID: Int
+    translate: Boolean
+    viewOptions: Int
+    viewBy: ViewType
+    wipeCutoff: Int
+  ): JSON
+  # The guild that the report belongs to. If this is null, then the report was
+  # uploaded to the user's personal logs.
+  guild: Guild
+  # The guild tag that the report belongs to. If this is null, then the report was
+  # not tagged.
+  guildTag: GuildTag
+  # The user that uploaded the report.
+  owner: User
+  # Data from the report's master file. This includes version info, all of the
+  # players, NPCs and pets that occur in the report, and all the game abilities used
+  # in the report.
+  #
+  # Arguments
+  # translate: Optional. Whether or not the actors and abilities in
+  # the master data should be auto-translated. Defaults to true. Set to false if
+  # speed is a priority, and you do not care about the names of abilities and
+  # actors.
+  masterData(translate: Boolean): ReportMasterData
+  # A table of information for the players of a report, including their specs,
+  # talents, gear, etc. This data is not considered frozen, and it can change
+  # without notice. Use at your own risk.
+  #
+  # Arguments
+  # difficulty: Optional. Whether or not to filter the fights to a
+  # specific difficulty. By default all fights are included.
+  # encounterID: Optional. Whether or not to filter the fights to a
+  # specific boss. By default all fights are included.
+  # endTime: Optional. The end time of the events range to fetch.
+  # fightIDs: Optional. A list of fight ids to include. Fights with
+  # any other id will be excluded.
+  # killType: Optional. A filter to only include kills, wipes,
+  # encounters or trash.
+  # startTime: Optional. The start time of the events range to
+  # fetch.
+  # translate: Optional. Whether or not the fight data should be
+  # auto-translated. Defaults to true. Set to false if speed is a priority, and you
+  # do not care about the names.
+  # includeCombatantInfo: Optional. Whether or not to include
+  # detailed combatant info such as gear in the results.
+  playerDetails(
+    difficulty: Int
+    encounterID: Int
+    endTime: Float
+    fightIDs: [Int]
+    killType: KillType
+    startTime: Float
+    translate: Boolean
+    includeCombatantInfo: Boolean
+  ): JSON
+  # A list of all characters that ranked on kills in the report.
+  rankedCharacters: [Character]
+  # Rankings information for a report, filterable to specific fights, bosses,
+  # metrics, etc. This data is not considered frozen, and it can change without
+  # notice. Use at your own risk.
+  #
+  # Arguments
+  # compare: Optional. Whether or not to compare against rankings
+  # (best scores across the entire tier) or two weeks worth of parses (more
+  # representative of real-world performance).
+  # difficulty: Optional. Whether or not to filter the fights to a
+  # specific difficulty. By default all fights are included.
+  # encounterID: Optional. Whether or not to filter the fights to a
+  # specific boss. By default all fights are included.
+  # fightIDs: Optional. A list of fight ids to include. Fights with
+  # any other id will be excluded.
+  # playerMetric: Optional. You can filter to a specific player
+  # metric like dps or hps.
+  # timeframe: Optional. Whether or not the returned report
+  # rankings should be compared against today's rankings or historical rankings
+  # around the time the fight occurred.
+  rankings(
+    compare: RankingCompareType
+    difficulty: Int
+    encounterID: Int
+    fightIDs: [Int]
+    playerMetric: ReportRankingMetricType
+    timeframe: RankingTimeframeType
+  ): JSON
+  # The region of the report.
+  region: Region
+  # The revision of the report. This number is increased when reports get
+  # re-exported.
+  revision: Int!
+  # The number of uploaded segments in the report.
+  segments: Int!
+  # The start time of the report. This is a UNIX timestamp representing the
+  # timestamp of the first event contained in the report.
+  startTime: Float!
+  # A table of information for a report, filterable via arguments like type, source,
+  # target, ability, etc. This data is not considered frozen, and it can change
+  # without notice. Use at your own risk.
+  #
+  # Arguments
+  # abilityID: Optional. The game id of a specific ability to
+  # filter to.
+  # dataType: Optional. You can filter to a specific subset of
+  # events.
+  # death: Optional. If viewing death events, a specific death to
+  # obtain information for.
+  # difficulty: Optional. Whether or not to filter the fights to a
+  # specific difficulty. By default all fights are included.
+  # encounterID: Optional. Whether or not to filter the fights to a
+  # specific boss. By default all fights are included.
+  # endTime: Optional. The end time of the events range to fetch.
+  # fightIDs: Optional. A list of fight ids to include. Fights with
+  # any other id will be excluded.
+  # filterExpression: Optional. An expression in the site's query
+  # language that will be applied as a filter to the events.
+  # hostilityType: Optional. A hostility of 0 indicates a
+  # friendlies view. A hostility of 1 represents enemies.
+  # killType: Optional. A filter to only include kills, wipes,
+  # encounters or trash.
+  # sourceAurasAbsent: A comma-separated list of auras that must be
+  # absent on the source for the event to be included.
+  # sourceAurasPresent: A comma-separated list of auras that must
+  # be present on the source for the event to be included.
+  # sourceClass: Optional. Whether or not to filter the fights to a
+  # specific source class. The argument here is the class slug, obtainable from game
+  # data.
+  # sourceID: Optional. Whether or not to filter the fights to a
+  # specific source actor ID. By default all sources are included.
+  # sourceInstanceID: Optional. Whether or not to filter the fights
+  # to a specific source actor instance ID. By default all instances of an actor are
+  # included.
+  # startTime: Optional. The start time of the events range to
+  # fetch.
+  # targetAurasAbsent: A comma-separated list of auras that must be
+  # absent on the target for the event to be included.
+  # targetAurasPresent: A comma-separated list of auras that must
+  # be present on the target for the event to be included.
+  # targetClass: Optional. Whether or not to filter the fights to a
+  # specific target class. The argument here is the class slug, obtainable from game
+  # data.
+  # targetID: Optional. Whether or not to filter the fights to a
+  # specific target actor ID. By default all targets are included.
+  # targetInstanceID: Optional. Whether or not to filter the fights
+  # to a specific target actor instance ID. By default all instances of an actor are
+  # included.
+  # translate: Optional. Whether or not the fight data should be
+  # auto-translated. Defaults to true. Set to false if speed is a priority, and you
+  # do not care about the names.
+  # viewOptions: Optional. A bitfield set of options used in the
+  # site UI. You can experiment in each view with the options to see what these
+  # values are.
+  # viewBy: Optional. Whether to view by source, by target or by
+  # ability.
+  # wipeCutoff: Optional. The number of deaths after which all
+  # subsequent events should be ignored.
+  table(
+    abilityID: Float
+    dataType: TableDataType
+    death: Int
+    difficulty: Int
+    encounterID: Int
+    endTime: Float
+    fightIDs: [Int]
+    filterExpression: String
+    hostilityType: HostilityType
+    killType: KillType
+    sourceAurasAbsent: String
+    sourceAurasPresent: String
+    sourceClass: String
+    sourceID: Int
+    sourceInstanceID: Int
+    startTime: Float
+    targetAurasAbsent: String
+    targetAurasPresent: String
+    targetClass: String
+    targetID: Int
+    targetInstanceID: Int
+    translate: Boolean
+    viewOptions: Int
+    viewBy: ViewType
+    wipeCutoff: Int
+  ): JSON
+  # A title for the report.
+  title: String!
+  # The visibility level of the report. The possible values are 'public', 'private',
+  # and 'unlisted'.
+  visibility: String!
+  # The principal zone that the report contains fights for. Null if no supported
+  # zone exists.
+  zone: Zone
+  # Whether this report has been archived. Events, tables, and graphs for archived
+  # reports are inaccessible unless the retrieving user has a subscription including
+  # archive access.
+  archiveStatus: ReportArchiveStatus
+  # Phase information for all boss encounters observed in this report. This requires
+  # loading fight data, but does not double-charge API points if you load fights and
+  # phases.
+  phases: [EncounterPhases!]
+}
+
+type ReportAbility {
+  # The game ID of the ability.
+  gameID: Float
+  # An icon to use for the ability.
+  icon: String
+  # The name of the actor.
+  name: String
+  # The type of the ability. This represents the type of damage (e.g., the spell
+  # school in WoW).
+  type: String
+}
+
+type ReportActor {
+  # Whether or not the character info is anonymous in the log.
+  anonymous: Boolean
+  # The display name (account) of the character.
+  displayName: String!
+  # The game ID of the actor.
+  gameID: Float
+  # An icon to use for the actor. For pets and NPCs, this will be the icon the site
+  # chose to represent that actor.
+  icon: String
+  # The report ID of the actor. This ID is used in events to identify sources and
+  # targets.
+  id: Int
+  # The name of the actor.
+  name: String
+  # The report ID of the actor's owner if the actor is a pet.
+  petOwner: Int
+  # The normalized server name of the actor.
+  server: String
+  # The sub-type of the actor, for players it's their class, and for NPCs, they are
+  # further subdivided into normal NPCs and bosses.
+  subType: String
+  # The type of the actor, i.e., if it is a player, pet or NPC.
+  type: String
+}
+
+type ReportArchiveStatus {
+  # Whether the report has been archived.
+  isArchived: Boolean!
+  # Whether the current user can access the report. Always true if the report is not
+  # archived, and always false if not using user authentication.
+  isAccessible: Boolean!
+  # The date on which the report was archived (if it has been archived).
+  archiveDate: Int
+}
+
+type ReportData {
+  # Obtain a specific report by its code.
+  #
+  # Arguments
+  # code: Required. The code of a single report to retrieve.
+  report(code: String): Report
+  # A set of reports for a specific guild, guild tag, or user.
+  #
+  # Arguments
+  # endTime: Optional. A UNIX timestamp with millisecond precision
+  # representing the end time for a report range. If omitted, defaults to the
+  # current time in milliseconds.
+  # guildID: Optional. The ID of a specific guild. Reports from
+  # that guild will be fetched.
+  # guildName: Optional. The name of a specific guild. Must be used
+  # in conjunction with guildServerSlug and guildServerRegion to uniquely identify a
+  # guild.
+  # guildServerSlug: Optional. The name of a specific guild. Must
+  # be used in conjunction with guildName and guildServerRegion to uniquely identify
+  # a guild.
+  # guildServerRegion: Optional. The region for a specific guild.
+  # Must be used in conjunction with guildName and guildServerRegion to uniquely
+  # identify a guild.
+  # guildTagID: Optional. The ID of a specific guild tag. Reports
+  # from that guild tag will be fetched. This will take precedence over all other
+  # guild arguments.
+  # userID: Optional. The ID of a specific user. Reports from that
+  # user's personal logs will be fetched.
+  # limit: Optional. The number of characters to retrieve per page.
+  # If omitted, defaults to 100. The maximum allowed value is 100, and minimum
+  # allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  # startTime: Optional. A UNIX timestamp with millisecond
+  # precision representing a start time for a report range. If omitted, defaults to
+  # 0.
+  # zoneID: Optional. The ID of a specific zone to filter to.
+  # Reports with that zone as their default will be included.
+  # gameZoneID: Optional. The ID of a specific game zone to filter
+  # reports to.
+  reports(
+    endTime: Float
+    guildID: Int
+    guildName: String
+    guildServerSlug: String
+    guildServerRegion: String
+    guildTagID: Int
+    userID: Int
+    limit: Int
+    page: Int
+    startTime: Float
+    zoneID: Int
+    gameZoneID: Int
+  ): ReportPagination
+}
+
+type ReportDungeonPull {
+  # The bounding box that encloses the positions of all players/enemies in the
+  # fight.
+  boundingBox: ReportMapBoundingBox
+  # The encounter ID of the fight. If the ID is 0, the fight is considered a trash
+  # fight.
+  encounterID: Int!
+  # The end time of the fight. This is a timestamp with millisecond precision that
+  # is relative to the start of the report, i.e., the start of the report is
+  # considered time 0.
+  endTime: Float!
+  # Information about enemies involved in the fight. Includes report IDs, instance
+  # counts, and instance group counts for each NPC.
+  enemyNPCs: [ReportDungeonPullNPC]
+  # The report ID of the fight. This ID can be used to fetch only events, tables or
+  # graphs for this fight.
+  id: Int!
+  # Whether or not the fight was a boss kill, i.e., successful. If this field is
+  # false, it means the fight was an incomplete run, etc..
+  kill: Boolean
+  # All the maps that were involved in a pull.
+  maps: [ReportMap]
+  # The name of the fight.
+  name: String!
+  # The start time of the fight. This is a timestamp with millisecond precision that
+  # is relative to the start of the report, i.e., the start of the report is
+  # considered time 0.
+  startTime: Float!
+  # The x position of the first mob damaged in the pull at the time this damage
+  # happens. Used to establish a marker position to represent where the pull took
+  # place.
+  x: Int!
+  # The y position of the first mob damaged in the pull at the time this damage
+  # happens. Used to establish a marker position to represent where the pull took
+  # place.
+  y: Int!
+}
+
+type ReportDungeonPullNPC {
+  # The report ID of the actor. This ID is used in events to identify sources and
+  # targets.
+  id: Int
+  # The game ID of the actor, e.g., so it can be looked up on external Web sites.
+  gameID: Int
+  # The lowest instance ID seen during the pull.
+  minimumInstanceID: Int
+  # The highest instance ID seen during the pull.
+  maximumInstanceID: Int
+  # The lowest instance group ID seen during the pull.
+  minimumInstanceGroupID: Int
+  # The highest instance group ID seen during the pull.
+  maximumInstanceGroupID: Int
+}
+
+type ReportEventPaginator {
+  # The list of events obtained.
+  data: JSON
+  # A timestamp to pass in as the start time when fetching the next page of data.
+  nextPageTimestamp: Float
+}
+
+type ReportFight {
+  # The average item level of the players in the fight.
+  averageItemLevel: Float
+  # The percentage health of the active boss or bosses at the end of a fight.
+  bossPercentage: Float
+  # The bounding box that encloses the positions of all players/enemies in the
+  # fight.
+  boundingBox: ReportMapBoundingBox
+  # Whether or not a fight represents an entire raid from start to finish, e.g., in
+  # Classic WoW a complete run of Blackwing Lair.
+  completeRaid: Boolean!
+  # The difficulty setting for the raid, dungeon, or arena. Null for trash.
+  difficulty: Int
+  # For a dungeon, a list of pulls that occurred in the dungeon. Pulls have details
+  # such as the enemies involved in the pull and map info showing where the pull
+  # took place.
+  dungeonPulls: [ReportDungeonPull]
+  # The encounter ID of the fight. If the ID is 0, the fight is considered a trash
+  # fight.
+  encounterID: Int!
+  # The end time of the fight. This is a timestamp with millisecond precision that
+  # is relative to the start of the report, i.e., the start of the report is
+  # considered time 0.
+  endTime: Float!
+  # Information about enemy NPCs involved in the fight. Includes report IDs,
+  # instance counts, and instance group counts for each NPC.
+  enemyNPCs: [ReportFightNPC]
+  # Information about enemy pets involved in the fight. Includes report IDs,
+  # instance counts, and instance group counts for each pet.
+  enemyPets: [ReportFightNPC]
+  # The IDs of all players involved in a fight. These players can be referenced in
+  # the master data actors table to get detailed information about each participant.
+  enemyPlayers: [Int]
+  # The actual completion percentage of the fight. This is the field used to
+  # indicate how far into a fight a wipe was, since fights can be complicated and
+  # have multiple bosses, no bosses, bosses that heal, etc.
+  fightPercentage: Float
+  # Information about friendly NPCs involved in the fight. Includes report IDs,
+  # instance counts, and instance group counts for each NPC.
+  friendlyNPCs: [ReportFightNPC]
+  # Information about friendly pets involved in the fight. Includes report IDs,
+  # instance counts, and instance group counts for each pet.
+  friendlyPets: [ReportFightNPC]
+  # The IDs of all players involved in a fight. These players can be referenced in
+  # the master data actors table to get detailed information about each participant.
+  friendlyPlayers: [Int]
+  # The game zone the fight takes place in. This should not be confused with the
+  # zones used by the sites for rankings. This is the actual in-game zone info.
+  gameZone: GameZone
+  # The report ID of the fight. This ID can be used to fetch only events, tables or
+  # graphs for this fight.
+  id: Int!
+  # Whether or not the fight is still in progress. If this field is false, it means
+  # the entire fight has been uploaded.
+  inProgress: Boolean
+  # Whether or not the fight was a boss kill, i.e., successful. If this field is
+  # false, it means the fight was a wipe or a failed run, etc..
+  kill: Boolean
+  # The phase that the encounter was in when the fight ended. Counts up from 1 based
+  # off the phase type (i.e., normal phase vs intermission).
+  lastPhase: Int
+  # The phase that the encounter was in when the fight ended. Always increases from
+  # 0, so a fight with three real phases and two intermissions would count up from 0
+  # to 4.
+  lastPhaseAsAbsoluteIndex: Int
+  # Whether or not the phase that the encounter was in when the fight ended was an
+  # intermission or not.
+  lastPhaseIsIntermission: Boolean
+  # All the maps that were involved in a fight. For single bosses this will usually
+  # be a single map, but for dungeons it will typically be multiple maps.
+  maps: [ReportMap]
+  # The name of the fight.
+  name: String!
+  # Some boss fights may be converted to trash fights (encounterID = 0). When this
+  # occurs, `originalEncounterID` contains the original ID of the encounter.
+  originalEncounterID: Int
+  # List of observed phase transitions during the fight.
+  phaseTransitions: [PhaseTransition!]
+  # The group size for the raid, dungeon, or arena. Null for trash.
+  size: Int
+  # The start time of the fight. This is a timestamp with millisecond precision that
+  # is relative to the start of the report, i.e., the start of the report is
+  # considered time 0.
+  startTime: Float!
+  # If the fight is the last encounter in a trial, then the trial score for
+  # completion will be present in this field.
+  trialScore: Float
+  # If the fight is the last encounter in a trial, then the trial time for overall
+  # completion will be present in this field.
+  trialTime: Float
+  # If a wipe was explicitly called using the Companion app, then this field will
+  # contain the time. This is a timestamp with millisecond precision that is
+  # relative to the start of the report, i.e., the start of the report is considered
+  # time 0.
+  wipeCalledTime: Float
+}
+
+type ReportFightNPC {
+  # The game ID of the actor. This ID is used in events to identify sources and
+  # targets.
+  gameID: Int
+  # The report ID of the actor. This ID is used in events to identify sources and
+  # targets.
+  id: Int
+  # How many instances of the NPC were seen during the fight.
+  instanceCount: Int
+  # How many packs of the NPC were seen during the fight.
+  groupCount: Int
+  # The report ID of the actor that owns this NPC (if it is a pet). This ID is used
+  # in events to identify sources and targets.
+  petOwner: Int
+}
+
+type ReportMap {
+  # The file of the map if one exists.
+  file: String
+  # The map's game ID.
+  id: Int!
+  # The name of the map if one exists.
+  name: String
+}
+
+type ReportMapBoundingBox {
+  # The smallest X position.
+  minX: Int!
+  # The largest X position.
+  maxX: Int!
+  # The smallest Y position.
+  minY: Int!
+  # The largest Y position.
+  maxY: Int!
+}
+
+type ReportMasterData {
+  # The version of the client parser that was used to parse and upload this log
+  # file.
+  logVersion: Int!
+  # The version of the game that generated the log file. Used to distinguish Classic
+  # and Retail Warcraft primarily.
+  gameVersion: Int
+  # The auto-detected locale of the report. This is the source language of the
+  # original log file.
+  lang: String
+  # A list of every ability that occurs in the report.
+  abilities: [ReportAbility]
+  # A list of every actor (player, NPC, pet) that occurs in the report.
+  #
+  # Arguments
+  # type: Optional. A filter on the actors in a report. If the type
+  # field of the actor matches the specified type field, it will be included.
+  # subType: Optional. A filter on the actors in a report. If the
+  # subType field of the actor matches the specified subType field, it will be
+  # included.
+  actors(type: String, subType: String): [ReportActor]
+}
+
+type ReportPagination {
+  # List of items on the current page
+  data: [Report]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type Server {
+  # The ID of the server.
+  id: Int!
+  # The name of the server in the locale of the subregion that the server belongs
+  # to.
+  name: String!
+  # The normalized name is a transformation of the name, dropping spaces. It is how
+  # the server appears in a World of Warcraft log file.
+  normalizedName: String!
+  # The server slug, also a transformation of the name following Blizzard rules. For
+  # retail World of Warcraft realms, this slug will be in English. For all other
+  # games, the slug is just a transformation of the name field.
+  slug: String!
+  # The region that this server belongs to.
+  region: Region!
+  # The subregion that this server belongs to.
+  subregion: Subregion!
+  # The guilds found on this server (and any servers connected to this one.
+  #
+  # Arguments
+  # limit: Optional. The number of guilds to retrieve per page. The
+  # maximum allowed value is 100, and minimum allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  guilds(limit: Int, page: Int): GuildPagination
+  # The characters found on this server (and any servers connected to this one.
+  #
+  # Arguments
+  # limit: Optional. The number of characters to retrieve per page.
+  # The maximum allowed value is 100, and minimum allowed value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  characters(limit: Int, page: Int): CharacterPagination
+}
+
+type ServerPagination {
+  # List of items on the current page
+  data: [Server]
+  # Number of total items selected by the query
+  total: Int!
+  # Number of items returned per page
+  per_page: Int!
+  # Current page of the cursor
+  current_page: Int!
+  # Number of the first item returned
+  from: Int
+  # Number of the last item returned
+  to: Int
+  # The last page (number of pages)
+  last_page: Int!
+  # Determines if cursor has more pages after the current page
+  has_more_pages: Boolean!
+}
+
+type Subregion {
+  # The ID of the subregion.
+  id: Int!
+  # The localized name of the subregion.
+  name: String!
+  # The region that this subregion is found in.
+  region: Region!
+  # The servers found within this region.
+  #
+  # Arguments
+  # limit: Optional. The number of servers to retrieve per page. If
+  # omitted, defaults to 100. The maximum allowed value is 100, and minimum allowed
+  # value is 1.
+  # page: Optional. The page of paginated data to retrieve. If
+  # omitted, defaults to the first page.
+  servers(limit: Int, page: Int): ServerPagination
+}
+
+type User {
+  # The ID of the user.
+  id: Int!
+  # The name of the user.
+  name: String!
+  # The list of guilds to which the user belongs. Only accessible via user
+  # authentication when you have the "view-user-profile" scope.
+  guilds: [Guild]
+  # The characters claimed by this user. Only accessible via user authentication
+  # when you have the "view-user-profile" scope.
+  characters: [Character]
+  # The display name of the user in North America if they have linked it.
+  naDisplayName: String
+  # The display name of the user in Europe if they have linked it.
+  euDisplayName: String
+}
+
+type UserData {
+  # Obtain a specific user by id.
+  #
+  # Arguments
+  # id: Required. Specify a single user ID to retrieve.
+  user(id: Int): User
+  # Obtain the current user (only works with user endpoint).
+  currentUser: User
+}
+
+type WorldData {
+  # Obtain a specific encounter by id.
+  #
+  # Arguments
+  # id: Required. Specify a single encounter ID to retrieve.
+  encounter(id: Int): Encounter
+  # A single expansion obtained by ID.
+  #
+  # Arguments
+  # id: Required. The ID of a single expansion to retrieve.
+  expansion(id: Int): Expansion
+  # The set of all expansions supported by the site.
+  expansions: [Expansion]
+  # Obtain a specific region by its ID.
+  #
+  # Arguments
+  # id: Required. The ID of a single region to retrieve.
+  region(id: Int): Region
+  # The set of all regions supported by the site.
+  regions: [Region]
+  # Obtain a specific server either by id or by slug and region.
+  #
+  # Arguments
+  # id: Optional. The ID of a single server to retrieve.
+  # region: Optional. The compact English abbreviation for a
+  # specific region (e.g., "US"). Use in conjunction with the server slug to
+  # retrieve a single server.
+  # slug: Optional. A server slug. Use in conjunction with the
+  # server region to retrieve a single server.
+  server(id: Int, region: String, slug: String): Server
+  # Obtain a specific subregion by its ID.
+  #
+  # Arguments
+  # id: Required. The ID of a single subregion to retrieve.
+  subregion(id: Int): Subregion
+  # Obtain a specific zone by its ID.
+  #
+  # Arguments
+  # id: Required. The ID of a specific zone.
+  zone(id: Int): Zone
+  # Obtain a set of all zones supported by the site.
+  #
+  # Arguments
+  # expansion_id: Optional. The ID of a specific expansion. If
+  # omitted, the zones from all expansions will be retrieved.
+  zones(expansion_id: Int): [Zone]
+}
+
+type WorldRegionServerRankPositions {
+  worldRank: Rank
+  regionRank: Rank
+  serverRank: Rank
+}
+
+type Zone {
+  # The ID of the zone.
+  id: Int!
+  # The bracket information for this zone. This field will be null if the zone does
+  # not support brackets.
+  brackets: Bracket
+  # A list of all the difficulties supported for this zone.
+  difficulties: [Difficulty]
+  # The encounters found within this zone.
+  encounters: [Encounter]
+  # The expansion that this zone belongs to.
+  expansion: Expansion!
+  # Whether or not the entire zone (including all its partitions) is permanently
+  # frozen. When a zone is frozen, data involving that zone will never change and
+  # can be cached forever.
+  frozen: Boolean!
+  # The name of the zone.
+  name: String!
+  # A list of all the partitions supported for this zone.
+  partitions: [Partition]
+}
+
+type __Directive {
+  name: String!
+  description: String
+  args: [__InputValue!]!
+  isRepeatable: Boolean!
+  locations: [__DirectiveLocation!]!
+}
+
+type __EnumValue {
+  name: String!
+  description: String
+  isDeprecated: Boolean!
+  deprecationReason: String
+}
+
+type __Field {
+  name: String!
+  description: String
+  args: [__InputValue!]!
+  type: __Type!
+  isDeprecated: Boolean!
+  deprecationReason: String
+}
+
+type __InputValue {
+  name: String!
+  description: String
+  type: __Type!
+  # A GraphQL-formatted string representing the default value for this input value.
+  defaultValue: String
+}
+
+type __Schema {
+  # A list of all types supported by this server.
+  types: [__Type!]!
+  # The type that query operations will be rooted at.
+  queryType: __Type!
+  # If this server supports mutation, the type that mutation operations will be
+  # rooted at.
+  mutationType: __Type
+  # If this server support subscription, the type that subscription operations will
+  # be rooted at.
+  subscriptionType: __Type
+  # A list of all directives supported by this server.
+  directives: [__Directive!]!
+}
+
+type __Type {
+  kind: __TypeKind!
+  name: String
+  description: String
+  # Arguments
+  # includeDeprecated: [Not documented]
+  fields(includeDeprecated: Boolean): [__Field!]
+  interfaces: [__Type!]
+  possibleTypes: [__Type!]
+  # Arguments
+  # includeDeprecated: [Not documented]
+  enumValues(includeDeprecated: Boolean): [__EnumValue!]
+  inputFields: [__InputValue!]
+  ofType: __Type
+}
+
+directive @deprecated(reason: String) on FIELD_DEFINITION | ENUM_VALUE
+directive @include(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT

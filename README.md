@@ -1,35 +1,320 @@
-# python-esologs
-A Python frontend for the ![https://www.esologs.com/](esologs) API. 
+# ESO Logs Python Client
 
-Note: This project is early. Currently only contains a basic Python script to pull slices of data from a subset of filters.
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
 
-Requires at least Python >= 3.6. Tested on MacOS, but should work on all platforms.
+A comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/). This library provides both synchronous and asynchronous interfaces to access Elder Scrolls Online combat logging data, with built-in support for data transformation and analysis.
 
+## 🎯 Project Status
 
-# Quickstart
----
-## Install
-1. Clone this repo
-2. Create a virtual environment (optional)
-3. Install dependencies 
-```Bash
+**Current Version:** 0.2.0-alpha
+**API Coverage:** ~35% (expanding to 95%+ coverage)
+**Development Stage:** Active development - Phase 2 implementation in progress
+
+### What's Working
+- ✅ OAuth2 authentication with ESO Logs API
+- ✅ Basic game data queries (abilities, classes, items, NPCs, maps)
+- ✅ Character and guild information retrieval
+- ✅ Basic report data access
+- ✅ Rate limiting information
+- ✅ Async/await support with HTTP and WebSocket connections
+- ✅ **Character rankings and performance metrics** (PR #4 - Merged)
+- ✅ **Comprehensive report analysis** (PR #5 - Approved & Ready for Merge)
+  - Event-by-event combat log data
+  - Time-series performance graphs
+  - Tabular analysis data
+  - Report rankings and player details
+
+### Coming Soon
+- 🚧 Advanced report search and filtering
+- 🚧 Progress race tracking
+- 🚧 User account integration
+- 🚧 Pandas DataFrame integration for data analysis
+- 🚧 Enhanced client architecture (modular design)
+
+## 🚀 Installation
+
+**Note**: This package is currently in development and not yet published to PyPI.
+
+### Current Installation Method
+
+```bash
+# Clone the repository
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
+
+# Basic installation
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -e .
 ```
 
-## Obtain API Key
-Set V1 Client Name and generate a key in the Web API section at the bottom of ![this page](https://www.esologs.com/profile).
+### Development Installation
 
-## Download Data
-Example
-```Bash
-$ cd ./scripts
-$ python pull_data.py --target-spec stamina --target-class nightblade --target-patch 34 --output-directory ./test --api-key my_esologs_api_key
+For development with testing, linting, and pre-commit hooks:
+```bash
+# Development installation
+pip install -e ".[dev]"
 ```
-Output:
-```Text
-[update 34] stamina nightblade
- * found 6 parses over 40k dps
- * query: https://www.esologs.com:443/v1/rankings/encounter/3009?metric=dps&partition=13&class=2&spec=3&page=1&includeCombatantInfo=true&api_key=
+
+## 🔑 API Setup
+
+1. **Create an ESO Logs API Client**
+   - Visit [ESO Logs API Clients](https://www.esologs.com/api/clients/)
+   - Create a new v2 client application
+   - Note your Client ID and Client Secret
+
+2. **Set Environment Variables**
+   ```bash
+   export ESOLOGS_ID="your_client_id_here"
+   export ESOLOGS_SECRET="your_client_secret_here"
+   ```
+
+3. **Alternative: Use .env file**
+   ```bash
+   # Create .env file in your project root
+   echo "ESOLOGS_ID=your_client_id_here" >> .env
+   echo "ESOLOGS_SECRET=your_client_secret_here" >> .env
+   ```
+
+## 📖 Quick Start
+
+### Basic Usage
+
+```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
+async def main():
+    # Get authentication token
+    token = get_access_token()
+
+    # Create client
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Get character information
+        character = await client.get_character_by_id(id=12345)
+        print(f"Character: {character.character_data.character.name}")  # noqa: T201
+
+        # Get recent reports for character
+        reports = await client.get_character_reports(character_id=12345, limit=10)
+        for report in reports.character_data.character.recent_reports.data:
+            print(f"Report: {report.code} - {report.zone.name}")  # noqa: T201
+
+        # Get game data
+        abilities = await client.get_abilities(limit=50, page=1)
+        for ability in abilities.game_data.abilities.data:
+            print(f"Ability: {ability.name}")  # noqa: T201
+
+# Run the async function
+asyncio.run(main())
 ```
-![Output file](/examples/34-stamina-nightblade.json)
+
+### Authentication Only
+
+```python
+from access_token import get_access_token
+
+# Using environment variables
+token = get_access_token()
+
+# Using explicit credentials
+token = get_access_token(
+    client_id="your_client_id",
+    client_secret="your_client_secret"
+)
+```
+
+### Character Rankings (NEW)
+
+```python
+import asyncio
+from esologs.client import Client
+from esologs.enums import CharacterRankingMetricType, RoleType
+from access_token import get_access_token
+
+async def main():
+    token = get_access_token()
+    
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        # Get character encounter rankings with filtering
+        encounter_rankings = await client.get_character_encounter_rankings(
+            character_id=12345,
+            encounter_id=27,
+            metric=CharacterRankingMetricType.dps,
+            role=RoleType.DPS,
+            difficulty=125
+        )
+        
+        # Get zone-wide character leaderboards
+        zone_rankings = await client.get_character_zone_rankings(
+            character_id=12345,
+            zone_id=1,
+            metric=CharacterRankingMetricType.playerscore
+        )
+        
+        # Access ranking data
+        if encounter_rankings.character_data.character.encounter_rankings:
+            rankings_data = encounter_rankings.character_data.character.encounter_rankings
+            print(f"Best DPS: {rankings_data.get('bestAmount', 0)}")
+            print(f"Total Kills: {rankings_data.get('totalKills', 0)}")
+
+asyncio.run(main())
+```
+
+## 📊 Available API Methods
+
+### Game Data
+- `get_ability(id)` - Get specific ability information
+- `get_abilities(limit, page)` - List abilities with pagination
+- `get_class(id)` - Get character class information
+- `get_classes(faction_id, zone_id)` - List character classes
+- `get_factions()` - Get available factions
+- `get_item(id)` - Get specific item information
+- `get_items(limit, page)` - List items with pagination
+- `get_item_set(id)` - Get item set information
+- `get_item_sets(limit, page)` - List item sets with pagination
+- `get_map(id)` - Get map information
+- `get_maps(limit, page)` - List maps with pagination
+- `get_npc(id)` - Get NPC information
+- `get_np_cs(limit, page)` - List NPCs with pagination
+
+### Character Data
+- `get_character_by_id(id)` - Get character profile
+- `get_character_reports(character_id, limit)` - Get character's reports
+- `get_character_encounter_ranking(character_id, encounter_id)` - Get character rankings (legacy)
+- `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - **NEW**: Advanced encounter rankings with full filtering
+- `get_character_zone_rankings(character_id, zone_id, **kwargs)` - **NEW**: Zone-wide character leaderboards
+
+### Guild Data
+- `get_guild_by_id(guild_id)` - Get guild information
+
+### World Data
+- `get_world_data()` - Get comprehensive world information
+- `get_regions()` - Get available regions
+- `get_zones()` - Get available zones
+- `get_encounters_by_zone(zone_id)` - Get encounters in specific zone
+
+### Report Data
+- `get_report_by_code(code)` - Get specific report by code
+
+### System
+- `get_rate_limit_data()` - Check API usage and rate limits
+
+## 🛠️ Development
+
+### Setup Development Environment
+
+```bash
+# Clone and install
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
+
+# Production installation
+pip install -e .
+
+# Development installation with all tools
+pip install -e ".[dev]"
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run tests
+pytest tests/
+```
+
+### Code Quality Tools
+
+This project uses several tools to maintain code quality:
+
+- **Black**: Code formatting
+- **isort**: Import sorting
+- **Ruff**: Fast Python linting
+- **MyPy**: Static type checking
+- **pytest**: Testing framework
+- **pre-commit**: Git hooks for code quality
+
+### Project Structure
+
+```
+esologs-python/
+├── esologs/                 # Main package
+│   ├── client.py           # Main client implementation
+│   ├── async_base_client.py # Base async GraphQL client
+│   ├── exceptions.py       # Custom exceptions
+│   └── get_*.py           # Generated GraphQL query modules
+├── tests/                  # Test suite
+│   ├── unit/              # Unit tests
+│   └── integration/       # Integration tests
+├── access_token.py        # OAuth2 authentication
+├── schema.graphql         # GraphQL schema
+├── queries.graphql        # GraphQL queries
+├── pyproject.toml         # Project configuration
+└── README.md             # This file
+```
+
+## 🔗 API Reference
+
+### GraphQL Schema
+The complete GraphQL schema is available at: https://www.esologs.com/v2-api-docs/eso/
+
+### Rate Limiting
+- The ESO Logs API uses rate limiting based on points per hour
+- Use `get_rate_limit_data()` to check your current usage
+- The client includes automatic retry logic for rate limit errors
+
+### Data Models
+All API responses are validated using Pydantic models for type safety and data validation.
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Install dependencies (`pip install -e ".[dev]"`)
+4. Make your changes
+5. Run tests (`pytest`)
+6. Run code quality checks (`pre-commit run --all-files`)
+7. Commit your changes (`git commit -m 'Add amazing feature'`)
+8. Push to the branch (`git push origin feature/amazing-feature`)
+9. Open a Pull Request
+
+### Development Roadmap
+
+- **Phase 1** ✅: Security fixes and foundation improvements
+- **Phase 2** 🚧: Core architecture and missing API functionality
+  - ✅ PR #1: Character Rankings Implementation (In Review)
+  - 🚧 PR #2: Report Analysis Implementation (Next)
+  - 🚧 PR #3: Advanced Report Search (Planned)
+- **Phase 3** 🚧: Data transformation and pandas integration
+- **Phase 4** 🚧: Comprehensive testing and documentation
+- **Phase 5** 🚧: Performance optimization and caching
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [ESO Logs](https://www.esologs.com/) for providing the API
+- [ariadne-codegen](https://github.com/mirumee/ariadne-codegen) for GraphQL code generation
+- The Elder Scrolls Online community
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/knowlen/esologs-python/issues)
+- **Documentation**: [GitHub Repository](https://github.com/knowlen/esologs-python)
+- **ESO Logs API**: [Official Documentation](https://www.esologs.com/v2-api-docs/eso/)
+
+---
+
+**Note**: This library is not officially affiliated with ESO Logs or ZeniMax Online Studios.
