@@ -2,6 +2,30 @@
 
 This document outlines the branch structure and purpose for the esologs-python repository.
 
+## 🎯 Branch Comparison
+
+| Branch | API Version | Status | Authentication | Features | Use Case |
+|--------|-------------|--------|----------------|----------|----------|
+| `v2-dev` | v2 GraphQL | ✅ Active | OAuth2 | Full modern stack | **Use this** |
+| `main` | v2 GraphQL | ⚠️ Syncing | OAuth2 | Production ready | **Stable** |
+| `v1-api` | v1 REST | 🔒 Archived | API Key | Legacy scripts | **Archive only** |
+
+## 🚀 Getting Started
+
+### For New Development
+```bash
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
+git checkout v2-dev
+pip install -e ".[dev]"
+```
+
+### For Historical Research
+```bash
+git checkout v1-api
+# See V1_API_ARCHIVE.md for details
+```
+
 ## 🌟 Active Development Branches
 
 ### `v2-dev` (Primary Development Branch)
@@ -15,6 +39,29 @@ This document outlines the branch structure and purpose for the esologs-python r
   - Code quality tools (black, isort, ruff, mypy)
   - Pre-commit hooks
 - **Use**: All new development should happen here
+
+### `v2/documentation-updates`
+- **Purpose**: Current custodial documentation updates
+- **Status**: ✅ Active development
+- **Features**: Updating documentation to reflect merged PR status
+- **Use**: Current branch for documentation maintenance
+
+## 📜 Archive Branches
+
+### `v1-api` (Historical Archive)
+- **Purpose**: Preserves original v1 API implementation
+- **Status**: 🔒 Archived (deprecated)
+- **Features**:
+  - Original REST API implementation
+  - `scripts/pull_data.py` for v1 data extraction
+  - API key authentication
+  - Basic JSON responses
+- **Use**: Historical reference only - **DO NOT USE FOR NEW DEVELOPMENT**
+- **Documentation**: See `V1_API_ARCHIVE.md` in this branch
+
+### `main` 
+- **Purpose**: Current default branch (LTS / release) 
+- **Status**: Recently updated with v2/report-analysis-api merge
 
 ### `v2/security-foundation-fixes`
 - **Purpose**: Phase 1 implementation with security fixes
@@ -34,7 +81,7 @@ This document outlines the branch structure and purpose for the esologs-python r
 
 ### `v2/report-analysis-api`
 - **Purpose**: Report analysis API implementation (Phase 2 PR 2)
-- **Status**: ✅ Approved (PR #5) - Ready for merge
+- **Status**: ✅ Complete (merged into main and v2-dev)
 - **Features**: 
   - Report events analysis (`get_report_events()`)
   - Report graph data (`get_report_graph()`)
@@ -42,29 +89,13 @@ This document outlines the branch structure and purpose for the esologs-python r
   - Report rankings (`get_report_rankings()`)
   - Report player details (`get_report_player_details()`)
   - Comprehensive unit tests and integration tests
-- **Use**: Approved - implements comprehensive report analysis functionality
+- **Use**: Archived - features merged into main and v2-dev
 
 ### `v2/codegen` 
 - **Purpose**: Base v2 GraphQL code generation setup
 - **Status**: ✅ Complete (merged into v2-dev)
 - **Features**: Basic GraphQL client with ariadne-codegen
-- **Use**: Archived - features merged into v2-dev
-
-## 📜 Archive Branches
-
-### `v1-api` (Historical Archive)
-- **Purpose**: Preserves original v1 API implementation
-- **Status**: 🔒 Archived (deprecated)
-- **Features**:
-  - Original REST API implementation
-  - `scripts/pull_data.py` for v1 data extraction
-  - API key authentication
-  - Basic JSON responses
-- **Use**: Historical reference only - **DO NOT USE FOR NEW DEVELOPMENT**
-- **Documentation**: See `V1_API_ARCHIVE.md` in this branch
-
-### `main` 
-- **Purpose**: Current default branch (LTS / release) 
+- **Use**: Archived - features merged into v2-dev 
 
 ## 🔄 Future Plan
 
@@ -91,33 +122,6 @@ This document outlines the branch structure and purpose for the esologs-python r
 - **Stable code**: Wait for main branch migration (coming soon)
 - **Historical reference**: `v1-api` branch (deprecated, do not use)
 
-## 🎯 Branch Comparison
-
-| Branch | API Version | Status | Authentication | Features | Use Case |
-|--------|-------------|--------|----------------|----------|----------|
-| `v2-dev` | v2 GraphQL | ✅ Active | OAuth2 | Full modern stack | **Use this** |
-| `v2/character-rankings-api` | v2 GraphQL | ✅ Archived | OAuth2 | Character rankings API | Reference |
-| `v2/report-analysis-api` | v2 GraphQL | ✅ Approved | OAuth2 | Report analysis API | **Ready for merge** |
-| `v2/security-foundation-fixes` | v2 GraphQL | ✅ Archived | OAuth2 | Phase 1 complete | Reference |
-| `v2/codegen` | v2 GraphQL | ✅ Archived | OAuth2 | Basic GraphQL | Reference |
-| `main` | v1 REST | ⚠️ Deprecated | API Key | Legacy scripts | **Avoid** |
-| `v1-api` | v1 REST | 🔒 Archived | API Key | Legacy scripts | **Archive only** |
-
-## 🚀 Getting Started
-
-### For New Development
-```bash
-git clone https://github.com/knowlen/esologs-python.git
-cd esologs-python
-git checkout v2-dev
-pip install -e ".[dev]"
-```
-
-### For Historical Research
-```bash
-git checkout v1-api
-# See V1_API_ARCHIVE.md for details
-```
 
 ---
 
