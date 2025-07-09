@@ -249,6 +249,78 @@ query getCharacterEncounterRanking($characterId: Int!, $encounterId: Int!) {
   }
 }
 
+query getCharacterEncounterRankings(
+  $characterId: Int!
+  $encounterId: Int!
+  $byBracket: Boolean
+  $className: String
+  $compare: RankingCompareType
+  $difficulty: Int
+  $includeCombatantInfo: Boolean
+  $includePrivateLogs: Boolean
+  $metric: CharacterRankingMetricType
+  $partition: Int
+  $role: RoleType
+  $size: Int
+  $specName: String
+  $timeframe: RankingTimeframeType
+) {
+  characterData {
+    character(id: $characterId) {
+      encounterRankings(
+        encounterID: $encounterId
+        byBracket: $byBracket
+        className: $className
+        compare: $compare
+        difficulty: $difficulty
+        includeCombatantInfo: $includeCombatantInfo
+        includePrivateLogs: $includePrivateLogs
+        metric: $metric
+        partition: $partition
+        role: $role
+        size: $size
+        specName: $specName
+        timeframe: $timeframe
+      )
+    }
+  }
+}
+
+query getCharacterZoneRankings(
+  $characterId: Int!
+  $zoneId: Int
+  $byBracket: Boolean
+  $className: String
+  $compare: RankingCompareType
+  $difficulty: Int
+  $includePrivateLogs: Boolean
+  $metric: CharacterRankingMetricType
+  $partition: Int
+  $role: RoleType
+  $size: Int
+  $specName: String
+  $timeframe: RankingTimeframeType
+) {
+  characterData {
+    character(id: $characterId) {
+      zoneRankings(
+        zoneID: $zoneId
+        byBracket: $byBracket
+        className: $className
+        compare: $compare
+        difficulty: $difficulty
+        includePrivateLogs: $includePrivateLogs
+        metric: $metric
+        partition: $partition
+        role: $role
+        size: $size
+        specName: $specName
+        timeframe: $timeframe
+      )
+    }
+  }
+}
+
 
 query getZones {
   worldData {
