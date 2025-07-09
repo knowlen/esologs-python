@@ -213,16 +213,16 @@ asyncio.run(main())
 git clone https://github.com/knowlen/esologs-python.git
 cd esologs-python
 
-# Current method
-pip install -r requirements.txt
+# Production installation
+pip install -e .
 
-# Future method (when pyproject.toml is fully implemented)
+# Development installation with all tools
 pip install -e ".[dev]"
 
-# Install pre-commit hooks (when available)
+# Install pre-commit hooks
 pre-commit install
 
-# Run tests (when test suite is available)
+# Run tests
 pytest tests/
 ```
 
@@ -275,7 +275,7 @@ We welcome contributions! Please see our contributing guidelines:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Install dependencies (`pip install -r requirements.txt`)
+3. Install dependencies (`pip install -e ".[dev]"`)
 4. Make your changes
 5. Run tests (`pytest`)
 6. Run code quality checks (`pre-commit run --all-files`)

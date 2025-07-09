@@ -10,7 +10,7 @@ This is a Python client library for the ESO Logs API v2, providing a GraphQL-bas
 ### Installation and Setup
 ```bash
 # Install dependencies
-pip install -r requirements.txt
+pip install -e .
 
 # Development installation with all tools
 pip install -e ".[dev]"
@@ -96,8 +96,7 @@ Missing major functionality (~75%) includes detailed report analysis, advanced s
 
 ## Configuration Files
 - **`mini.toml`**: ariadne-codegen configuration
-- **`pyproject.toml`**: Complete project configuration with dev dependencies, code quality tools, and test settings
-- **`requirements.txt`**: Minimal production dependencies (requests, ariadne-codegen)
+- **`pyproject.toml`**: Complete project configuration with dependencies, dev tools, code quality tools, and build settings
 - **`.pre-commit-config.yaml`**: Pre-commit hooks for code quality (black, isort, ruff, mypy)
 - **`schema.graphql`**: GraphQL schema definition
 - **`queries.graphql`**: GraphQL queries for code generation
