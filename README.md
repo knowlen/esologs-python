@@ -20,11 +20,11 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 - ✅ Rate limiting information
 - ✅ Async/await support with HTTP and WebSocket connections
 - ✅ **Character rankings and performance metrics** (PR #4 - Merged)
-- ✅ **Comprehensive report analysis** (PR #5 - Approved & Ready for Merge)
-  - Event-by-event combat log data
-  - Time-series performance graphs
-  - Tabular analysis data
-  - Report rankings and player details
+- ✅ **Comprehensive report analysis** (PR #5 - Merged)
+  - ✅ Event-by-event combat log data
+  - ✅ Time-series performance graphs
+  - ✅ Tabular analysis data
+  - ✅ Report rankings and player details
 
 ### Coming Soon
 - 🚧 Advanced report search and filtering
@@ -205,6 +205,11 @@ asyncio.run(main())
 
 ### Report Data
 - `get_report_by_code(code)` - Get specific report by code
+- `get_report_events(code, **kwargs)` - **NEW**: Get event-by-event combat log data with comprehensive filtering
+- `get_report_graph(code, **kwargs)` - **NEW**: Get time-series performance graphs and metrics
+- `get_report_table(code, **kwargs)` - **NEW**: Get tabular analysis data with sorting and filtering
+- `get_report_rankings(code, **kwargs)` - **NEW**: Get report rankings and leaderboard data
+- `get_report_player_details(code, **kwargs)` - **NEW**: Get detailed player performance data from reports
 
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
@@ -250,6 +255,7 @@ esologs-python/
 │   ├── client.py           # Main client implementation
 │   ├── async_base_client.py # Base async GraphQL client
 │   ├── exceptions.py       # Custom exceptions
+│   ├── validators.py       # Parameter validation utilities
 │   └── get_*.py           # Generated GraphQL query modules
 ├── tests/                  # Test suite
 │   ├── unit/              # Unit tests
@@ -292,9 +298,10 @@ We welcome contributions! Please see our contributing guidelines:
 
 - **Phase 1** ✅: Security fixes and foundation improvements
 - **Phase 2** 🚧: Core architecture and missing API functionality
-  - ✅ PR #1: Character Rankings Implementation (In Review)
-  - 🚧 PR #2: Report Analysis Implementation (Next)
-  - 🚧 PR #3: Advanced Report Search (Planned)
+  - ✅ PR #4: Character Rankings Implementation (Merged)
+  - ✅ PR #5: Report Analysis Implementation (Merged)
+  - 🚧 PR #6: Advanced Report Search (Next)
+  - 🚧 PR #7: Client Architecture Refactor (Planned)
 - **Phase 3** 🚧: Data transformation and pandas integration
 - **Phase 4** 🚧: Comprehensive testing and documentation
 - **Phase 5** 🚧: Performance optimization and caching
