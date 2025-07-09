@@ -30,37 +30,32 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## 🚀 Installation
 
-### Basic Installation
+**Note**: This package is currently in development and not yet published to PyPI.
 
-```bash
-pip install python-esologs
-```
-
-### Development Installation
+### Current Installation Method
 
 ```bash
 # Clone the repository
 git clone https://github.com/knowlen/python-esologs.git
 cd python-esologs
 
-# Install in development mode with all dependencies
-pip install -e .[dev]
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-### Optional Dependencies
+### Future Installation (In Development)
+
+We're working on modern packaging with pyproject.toml that will support:
 
 ```bash
-# For WebSocket support (subscriptions)
-pip install python-esologs[websockets]
+# Development installation (coming soon)
+pip install -e ".[dev]"
 
-# For data analysis with pandas
-pip install python-esologs[pandas]
-
-# For development (testing, linting, formatting)
-pip install python-esologs[dev]
-
-# Install everything
-pip install python-esologs[all]
+# Optional dependency groups (planned)
+pip install -e ".[websockets]"  # WebSocket support
+pip install -e ".[pandas]"      # Data analysis integration
+pip install -e ".[all]"         # All features
 ```
 
 ## 🔑 API Setup
@@ -180,16 +175,18 @@ token = get_access_token(
 # Clone and install
 git clone https://github.com/knowlen/python-esologs.git
 cd python-esologs
-pip install -e .[dev]
 
-# Install pre-commit hooks
+# Current method
+pip install -r requirements.txt
+
+# Future method (when pyproject.toml is fully implemented)
+pip install -e ".[dev]"
+
+# Install pre-commit hooks (when available)
 pre-commit install
 
-# Run tests
+# Run tests (when test suite is available)
 pytest tests/
-
-# Run with coverage
-pytest tests/ --cov=esologs --cov-report=html
 ```
 
 ### Code Quality Tools
@@ -241,7 +238,7 @@ We welcome contributions! Please see our contributing guidelines:
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Install development dependencies (`pip install -e .[dev]`)
+3. Install dependencies (`pip install -r requirements.txt`)
 4. Make your changes
 5. Run tests (`pytest`)
 6. Run code quality checks (`pre-commit run --all-files`)
