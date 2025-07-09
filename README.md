@@ -9,8 +9,8 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 ## 🎯 Project Status
 
 **Current Version:** 0.2.0-alpha
-**API Coverage:** ~20% (expanding to 95%+ coverage)
-**Development Stage:** Active development with major refactoring in progress
+**API Coverage:** ~25% (expanding to 95%+ coverage)
+**Development Stage:** Active development - Phase 2 implementation in progress
 
 ### What's Working
 - ✅ OAuth2 authentication with ESO Logs API
@@ -19,14 +19,14 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 - ✅ Basic report data access
 - ✅ Rate limiting information
 - ✅ Async/await support with HTTP and WebSocket connections
+- ✅ **Character rankings and performance metrics** (PR #4 - In Review)
 
 ### Coming Soon
-- 🚧 Character rankings and performance metrics
 - 🚧 Detailed report analysis (events, graphs, tables)
 - 🚧 Progress race tracking
 - 🚧 User account integration
 - 🚧 Pandas DataFrame integration for data analysis
-- 🚧 Comprehensive test coverage
+- 🚧 Enhanced client architecture (modular design)
 
 ## 🚀 Installation
 
@@ -124,6 +124,47 @@ token = get_access_token(
 )
 ```
 
+### Character Rankings (NEW)
+
+```python
+import asyncio
+from esologs.client import Client
+from esologs.enums import CharacterRankingMetricType, RoleType
+from access_token import get_access_token
+
+async def main():
+    token = get_access_token()
+    
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        # Get character encounter rankings with filtering
+        encounter_rankings = await client.get_character_encounter_rankings(
+            character_id=12345,
+            encounter_id=27,
+            metric=CharacterRankingMetricType.dps,
+            role=RoleType.DPS,
+            difficulty=125
+        )
+        
+        # Get zone-wide character leaderboards
+        zone_rankings = await client.get_character_zone_rankings(
+            character_id=12345,
+            zone_id=1,
+            metric=CharacterRankingMetricType.playerscore
+        )
+        
+        # Access ranking data
+        if encounter_rankings.character_data.character.encounter_rankings:
+            rankings_data = encounter_rankings.character_data.character.encounter_rankings
+            print(f"Best DPS: {rankings_data.get('bestAmount', 0)}")
+            print(f"Total Kills: {rankings_data.get('totalKills', 0)}")
+
+asyncio.run(main())
+```
+
 ## 📊 Available API Methods
 
 ### Game Data
@@ -144,7 +185,9 @@ token = get_access_token(
 ### Character Data
 - `get_character_by_id(id)` - Get character profile
 - `get_character_reports(character_id, limit)` - Get character's reports
-- `get_character_encounter_ranking(character_id, encounter_id)` - Get character rankings
+- `get_character_encounter_ranking(character_id, encounter_id)` - Get character rankings (legacy)
+- `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - **NEW**: Advanced encounter rankings with full filtering
+- `get_character_zone_rankings(character_id, zone_id, **kwargs)` - **NEW**: Zone-wide character leaderboards
 
 ### Guild Data
 - `get_guild_by_id(guild_id)` - Get guild information
@@ -244,6 +287,9 @@ We welcome contributions! Please see our contributing guidelines:
 
 - **Phase 1** ✅: Security fixes and foundation improvements
 - **Phase 2** 🚧: Core architecture and missing API functionality
+  - ✅ PR #1: Character Rankings Implementation (In Review)
+  - 🚧 PR #2: Report Analysis Implementation (Next)
+  - 🚧 PR #3: Advanced Report Search (Planned)
 - **Phase 3** 🚧: Data transformation and pandas integration
 - **Phase 4** 🚧: Comprehensive testing and documentation
 - **Phase 5** 🚧: Performance optimization and caching
