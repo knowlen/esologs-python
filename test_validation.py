@@ -110,8 +110,4 @@ async def test_validation():
 
 
 if __name__ == "__main__":
-    # Set environment variables
-    os.environ["ESOLOGS_SECRET"] = "ZWTwBJZiOhPQi6VeSpT4hZsDlnacTW9cErx8abdA"
-    os.environ["ESOLOGS_ID"] = "9f580a85-fd94-498d-be4d-b3ef1c222554"
-
     asyncio.run(test_validation())
