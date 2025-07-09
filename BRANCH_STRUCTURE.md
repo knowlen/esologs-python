@@ -41,11 +41,8 @@ This document outlines the branch structure and purpose for the python-esologs r
 - **Use**: Historical reference only - **DO NOT USE FOR NEW DEVELOPMENT**
 - **Documentation**: See `V1_API_ARCHIVE.md` in this branch
 
-### `main` (Soon to be replaced)
-- **Purpose**: Current default branch (will be replaced)
-- **Status**: ⚠️ Will be replaced with v2-dev content
-- **Features**: Same as v1-api (deprecated v1 implementation)
-- **Use**: Will be overwritten with v2 code
+### `main` 
+- **Purpose**: Current default branch (LTS / release) 
 
 ## 🔄 Future Plan
 
