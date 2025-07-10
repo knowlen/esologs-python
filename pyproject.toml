@@ -38,6 +38,7 @@ dev = [
     "pytest>=6.0.0",
     "pytest-asyncio>=0.21.0",
     "pytest-cov>=4.0.0",
+    "pytest-timeout>=2.0.0",
     "black>=22.0.0",
     "isort>=5.0.0",
     "ruff>=0.1.0",
@@ -168,6 +169,7 @@ markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "integration: marks tests as integration tests",
     "unit: marks tests as unit tests",
+    "timeout: marks tests with timeout requirements",
 ]
 asyncio_mode = "auto"
 
