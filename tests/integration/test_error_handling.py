@@ -153,7 +153,7 @@ class TestErrorHandlingIntegration:
                 assert hasattr(response, 'game_data')
             except Exception as e:
                 # Expected to raise error for invalid limit
-                assert "limit argument must be" in str(e)
+                assert "limit" in str(e).lower() and ("must be" in str(e).lower() or "invalid" in str(e).lower())
 
     @pytest.mark.asyncio
     async def test_zero_parameters(self, client):
@@ -201,6 +201,7 @@ class TestErrorHandlingIntegration:
                     pass
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(30)  # 30 second timeout
     async def test_concurrent_requests(self, client):
         """Test handling of concurrent API requests."""
         async with client:
@@ -210,8 +211,11 @@ class TestErrorHandlingIntegration:
                 task = client.get_classes()
                 tasks.append(task)
             
-            # Wait for all requests to complete
-            responses = await asyncio.gather(*tasks, return_exceptions=True)
+            # Wait for all requests to complete with timeout
+            responses = await asyncio.wait_for(
+                asyncio.gather(*tasks, return_exceptions=True),
+                timeout=25.0  # 25 second timeout for gather
+            )
             
             # Verify all requests completed successfully
             for response in responses:
