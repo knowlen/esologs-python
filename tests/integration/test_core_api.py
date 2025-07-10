@@ -9,34 +9,7 @@ from esologs.client import Client
 from access_token import get_access_token
 
 
-@pytest.fixture
-def client():
-    """Create a test client with real API credentials."""
-    api_endpoint = "https://www.esologs.com/api/v2/client"
-    access_token = get_access_token()
-    
-    return Client(
-        url=api_endpoint,
-        headers={"Authorization": f"Bearer {access_token}"}
-    )
-
-
-@pytest.fixture
-def test_character_id():
-    """Test character ID for integration tests."""
-    return 34663
-
-
-@pytest.fixture
-def test_guild_id():
-    """Test guild ID for integration tests."""
-    return 3660
-
-
-@pytest.fixture
-def test_report_code():
-    """Test report code for integration tests."""
-    return "VfxqaX47HGC98rAp"
+# Fixtures are now centralized in conftest.py
 
 
 class TestGameDataIntegration:
@@ -227,10 +200,10 @@ class TestCharacterDataIntegration:
     """Integration tests for character data functionality."""
 
     @pytest.mark.asyncio
-    async def test_get_character_by_id(self, client, test_character_id):
+    async def test_get_character_by_id(self, client, test_data):
         """Test character retrieval by ID."""
         async with client:
-            response = await client.get_character_by_id(id=test_character_id)
+            response = await client.get_character_by_id(id=test_data["character_id"])
             
             assert response is not None
             assert hasattr(response, 'character_data')
@@ -238,11 +211,11 @@ class TestCharacterDataIntegration:
                 assert response.character_data.character is not None
 
     @pytest.mark.asyncio
-    async def test_get_character_reports(self, client, test_character_id):
+    async def test_get_character_reports(self, client, test_data):
         """Test character reports retrieval."""
         async with client:
             response = await client.get_character_reports(
-                character_id=test_character_id,
+                character_id=test_data["character_id"],
                 limit=10
             )
             
@@ -253,11 +226,11 @@ class TestCharacterDataIntegration:
                 assert response.character_data.character is not None
 
     @pytest.mark.asyncio
-    async def test_get_character_encounter_ranking(self, client, test_character_id):
+    async def test_get_character_encounter_ranking(self, client, test_data):
         """Test character encounter ranking retrieval."""
         async with client:
             response = await client.get_character_encounter_ranking(
-                character_id=test_character_id,
+                character_id=test_data["character_id"],
                 encounter_id=27
             )
             
@@ -271,10 +244,10 @@ class TestGuildDataIntegration:
     """Integration tests for guild data functionality."""
 
     @pytest.mark.asyncio
-    async def test_get_guild_by_id(self, client, test_guild_id):
+    async def test_get_guild_by_id(self, client, test_data):
         """Test guild retrieval by ID."""
         async with client:
-            response = await client.get_guild_by_id(guild_id=test_guild_id)
+            response = await client.get_guild_by_id(guild_id=test_data["guild_id"])
             
             assert response is not None
             assert hasattr(response, 'guild_data')
@@ -286,10 +259,10 @@ class TestReportDataIntegration:
     """Integration tests for report data functionality."""
 
     @pytest.mark.asyncio
-    async def test_get_report_by_code(self, client, test_report_code):
+    async def test_get_report_by_code(self, client, test_data):
         """Test report retrieval by code."""
         async with client:
-            response = await client.get_report_by_code(code=test_report_code)
+            response = await client.get_report_by_code(code=test_data["report_code"])
             
             assert response is not None
             assert hasattr(response, 'report_data')
@@ -316,23 +289,23 @@ class TestComprehensiveWorkflow:
 
     @pytest.mark.asyncio
     @pytest.mark.timeout(45)  # 45 second timeout for workflow test
-    async def test_full_character_analysis_workflow(self, client, test_character_id):
+    async def test_full_character_analysis_workflow(self, client, test_data):
         """Test full character analysis workflow."""
         async with client:
             # Get character info
-            character = await client.get_character_by_id(id=test_character_id)
+            character = await client.get_character_by_id(id=test_data["character_id"])
             assert character is not None
             
             # Get character reports
             reports = await client.get_character_reports(
-                character_id=test_character_id,
+                character_id=test_data["character_id"],
                 limit=5
             )
             assert reports is not None
             
             # Get character encounter ranking
             encounter_ranking = await client.get_character_encounter_ranking(
-                character_id=test_character_id,
+                character_id=test_data["character_id"],
                 encounter_id=27
             )
             assert encounter_ranking is not None
