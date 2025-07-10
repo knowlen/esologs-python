@@ -23,8 +23,9 @@ ariadne-codegen client --config mini.toml
 
 ### Testing
 ```bash
-python test.py               # Integration tests (requires API credentials)
+python test.py               # Simple integration test (requires API credentials)
 pytest tests/unit/           # Unit tests
+pytest tests/integration/    # Comprehensive integration tests (requires API credentials)
 ```
 
 ### Code Quality
@@ -56,14 +57,16 @@ black . && isort . && ruff check --fix . && mypy .
 - Generated files (get_*.py) excluded from code quality checks
 - All API responses validated with Pydantic models
 - OAuth2 authentication via `access_token.py`
-- Comprehensive test coverage for new features
+- Comprehensive test coverage: 70+ integration tests + unit tests
 - GraphQL queries embedded as strings in client methods
+- Centralized fixtures and test data management
 
 ## Current Phase 2 Development
 - ✅ **PR 1**: Character Rankings (COMPLETED - merged)
 - ✅ **PR 2**: Report Analysis (COMPLETED - events, graphs, tables, rankings, player details)
-- 🚧 **PR 3**: Advanced Report Search (PLANNED)
-- 🚧 **PR 4**: Client Architecture Refactor (PLANNED)
+- ✅ **PR 3**: Integration Test Suite (COMPLETED - 70+ comprehensive tests)
+- 🚧 **PR 4**: Advanced Report Search (NEXT PRIORITY)
+- 🚧 **PR 5**: Client Architecture Refactor (PLANNED)
 
 ## Environment Variables
 ```bash
