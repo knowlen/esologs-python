@@ -118,7 +118,7 @@ async def test_queries():
 
         try:
             # Test getNPCs
-            npcs_response = await client.get_np_cs(limit=100, page=1)
+            npcs_response = await client.get_npcs(limit=100, page=1)
             print("Get NPCs Response:", npcs_response)
         except Exception as e:
             print(f"An error occurred during get_npcs: {e}")

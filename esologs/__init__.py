@@ -103,7 +103,7 @@ from .get_maps import (
     GetMapsGameDataMaps,
     GetMapsGameDataMapsData,
 )
-from .get_np_cs import (
+from .get_npcs import (
     GetNPCs,
     GetNPCsGameData,
     GetNPCsGameDataNpcs,

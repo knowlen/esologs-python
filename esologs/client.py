@@ -33,7 +33,7 @@ from .get_item_sets import GetItemSets
 from .get_items import GetItems
 from .get_map import GetMap
 from .get_maps import GetMaps
-from .get_np_cs import GetNPCs
+from .get_npcs import GetNPCs
 from .get_npc import GetNPC
 from .get_rate_limit_data import GetRateLimitData
 from .get_regions import GetRegions
@@ -862,7 +862,7 @@ class Client(AsyncBaseClient):
         data = self.get_data(response)
         return GetNPC.model_validate(data)
 
-    async def get_np_cs(
+    async def get_npcs(
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,

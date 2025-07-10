@@ -185,7 +185,7 @@ asyncio.run(main())
 - `get_map(id)` - Get map information
 - `get_maps(limit, page)` - List maps with pagination
 - `get_npc(id)` - Get NPC information
-- `get_np_cs(limit, page)` - List NPCs with pagination
+- `get_npcs(limit, page)` - List NPCs with pagination
 
 ### Character Data
 - `get_character_by_id(id)` - Get character profile
