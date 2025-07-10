@@ -16,16 +16,7 @@ from esologs.exceptions import ValidationError
 from access_token import get_access_token
 
 
-@pytest.fixture
-def client():
-    """Create a test client with real API credentials."""
-    api_endpoint = "https://www.esologs.com/api/v2/client"
-    access_token = get_access_token()
-    
-    return Client(
-        url=api_endpoint,
-        headers={"Authorization": f"Bearer {access_token}"}
-    )
+# Fixtures are now centralized in conftest.py
 
 
 class TestErrorHandlingIntegration:

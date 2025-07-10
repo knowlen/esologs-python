@@ -151,7 +151,7 @@ class TestGameDataIntegration:
     async def test_get_npcs(self, client):
         """Test NPCs list retrieval."""
         async with client:
-            response = await client.get_np_cs(limit=10, page=1)
+            response = await client.get_npcs(limit=10, page=1)
             
             assert response is not None
             assert hasattr(response, 'game_data')
