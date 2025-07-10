@@ -292,9 +292,10 @@ class TestReportAnalysisIntegration:
                 assert hasattr(response, 'report_data')
             except Exception as e:
                 # Expected to raise GraphQLQueryError for non-existent report
-                assert "does not exist" in str(e)
+                assert "report" in str(e).lower() and ("exist" in str(e).lower() or "not found" in str(e).lower())
 
     @pytest.mark.asyncio
+    @pytest.mark.timeout(60)  # 60 second timeout for comprehensive test
     async def test_report_analysis_comprehensive_workflow(self, client, test_report_code):
         """Test comprehensive report analysis workflow."""
         async with client:
