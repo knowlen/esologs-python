@@ -1549,9 +1549,9 @@ class Client(AsyncBaseClient):
         """
         # Validate guild-specific parameters
         validate_positive_integer(guild_id, "guild_id")
-        if limit is not UNSET:
+        if limit is not UNSET and limit is not None:
             validate_limit_parameter(limit)
-        if page is not UNSET:
+        if page is not UNSET and page is not None:
             validate_positive_integer(page, "page")
         
         return await self.search_reports(
@@ -1594,9 +1594,9 @@ class Client(AsyncBaseClient):
         """
         # Validate user-specific parameters
         validate_positive_integer(user_id, "user_id")
-        if limit is not UNSET:
+        if limit is not UNSET and limit is not None:
             validate_limit_parameter(limit)
-        if page is not UNSET:
+        if page is not UNSET and page is not None:
             validate_positive_integer(page, "page")
         
         return await self.search_reports(

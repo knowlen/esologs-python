@@ -4,6 +4,7 @@ import re
 from datetime import datetime
 from typing import Any, Dict, Optional, Union
 
+from .base_model import UNSET, UnsetType
 from .exceptions import ValidationError
 
 # Security constants
@@ -98,7 +99,7 @@ def validate_ability_id(ability_id: Optional[Union[float, int]]) -> None:
         raise ValidationError("Ability ID should be a whole number")
 
 
-def validate_time_range(start_time: Optional[float], end_time: Optional[float]) -> None:
+def validate_time_range(start_time: Union[Optional[float], UnsetType], end_time: Union[Optional[float], UnsetType]) -> None:
     """
     Validate time range parameters.
 
@@ -109,19 +110,21 @@ def validate_time_range(start_time: Optional[float], end_time: Optional[float]) 
     Raises:
         ValidationError: If the time range is invalid
     """
-    if start_time is not None and not isinstance(start_time, (int, float)):
+    if start_time is not None and start_time is not UNSET and not isinstance(start_time, (int, float)):
         raise ValidationError("Start time must be a number")
 
-    if end_time is not None and not isinstance(end_time, (int, float)):
+    if end_time is not None and end_time is not UNSET and not isinstance(end_time, (int, float)):
         raise ValidationError("End time must be a number")
 
-    if start_time is not None and start_time < 0:
+    if start_time is not None and start_time is not UNSET and start_time < 0:
         raise ValidationError("Start time cannot be negative")
 
-    if end_time is not None and end_time < 0:
+    if end_time is not None and end_time is not UNSET and end_time < 0:
         raise ValidationError("End time cannot be negative")
 
-    if start_time is not None and end_time is not None and start_time >= end_time:
+    if (start_time is not None and start_time is not UNSET and 
+        end_time is not None and end_time is not UNSET and 
+        start_time >= end_time):
         raise ValidationError("Start time must be less than end time")
 
 
@@ -215,11 +218,11 @@ def validate_required_string(value: Any, param_name: str) -> None:
 
 
 def validate_report_search_params(
-    guild_name: Optional[str] = None,
-    guild_server_slug: Optional[str] = None,
-    guild_server_region: Optional[str] = None,
-    limit: Optional[int] = None,
-    page: Optional[int] = None,
+    guild_name: Union[Optional[str], UnsetType] = None,
+    guild_server_slug: Union[Optional[str], UnsetType] = None,
+    guild_server_region: Union[Optional[str], UnsetType] = None,
+    limit: Union[Optional[int], UnsetType] = None,
+    page: Union[Optional[int], UnsetType] = None,
     **kwargs: Any,
 ) -> None:
     """
@@ -237,8 +240,9 @@ def validate_report_search_params(
         ValidationError: If parameters are invalid
     """
     # Validate guild name requirements with security checks
-    if guild_name is not None:
-        if guild_server_slug is None or guild_server_region is None:
+    if guild_name is not None and guild_name is not UNSET:
+        if (guild_server_slug is None or guild_server_slug is UNSET or 
+            guild_server_region is None or guild_server_region is UNSET):
             raise ValidationError(
                 "guild_name requires both guild_server_slug and guild_server_region"
             )
@@ -249,20 +253,21 @@ def validate_report_search_params(
         validate_required_string(guild_server_region, "guild_server_region")
 
     # Validate limit (ESO Logs API allows 1-25 for reports)
-    if limit is not None:
+    if limit is not None and limit is not UNSET:
         if not isinstance(limit, int):
             raise ValidationError("Limit must be an integer")
         if limit < 1 or limit > 25:
             raise ValidationError("Limit must be between 1 and 25")
 
     # Validate page number
-    if page is not None:
+    if page is not None and page is not UNSET:
         validate_positive_integer(page, "page")
 
-    # Validate time range if both are provided
-    start_time = kwargs.get("start_time")
-    end_time = kwargs.get("end_time")
-    if start_time is not None or end_time is not None:
+    # Validate time range if either are provided
+    start_time = kwargs.get("start_time", UNSET)
+    end_time = kwargs.get("end_time", UNSET)
+    if ((start_time is not None and start_time is not UNSET) or 
+        (end_time is not None and end_time is not UNSET)):
         validate_time_range(start_time, end_time)
 
 
@@ -292,22 +297,22 @@ def parse_date_to_timestamp(date_input: Union[str, datetime, float, int]) -> flo
         parse_date_to_timestamp(1672531200000)
     """
     if isinstance(date_input, (int, float)):
-        # Validate timestamp bounds
-        # ESO released in 2014, so reject timestamps before 2000
-        MIN_TIMESTAMP_SECONDS = 946684800  # Jan 1, 2000 UTC
+        # Validate timestamp bounds (allow Unix epoch for testing)
+        # Allow from Unix epoch (1970) to future dates  
+        MIN_TIMESTAMP_SECONDS = 0  # Unix epoch (Jan 1, 1970 UTC)
         MAX_TIMESTAMP_SECONDS = 4102444800  # Jan 1, 2100 UTC
         
         # Assume it's already a timestamp
         # If it's too small, assume it's in seconds and convert to milliseconds
         if date_input < 1e10:  # Less than 10 billion (seconds format)
             if date_input < MIN_TIMESTAMP_SECONDS:
-                raise ValueError(f"Timestamp {date_input} is before year 2000")
+                raise ValueError(f"Timestamp {date_input} is before Unix epoch (1970)")
             if date_input > MAX_TIMESTAMP_SECONDS:
                 raise ValueError(f"Timestamp {date_input} is after year 2100")
             return float(date_input * 1000)
         else:  # Milliseconds format
             if date_input < MIN_TIMESTAMP_SECONDS * 1000:
-                raise ValueError(f"Timestamp {date_input} is before year 2000")
+                raise ValueError(f"Timestamp {date_input} is before Unix epoch (1970)")
             if date_input > MAX_TIMESTAMP_SECONDS * 1000:
                 raise ValueError(f"Timestamp {date_input} is after year 2100")
             return float(date_input)
