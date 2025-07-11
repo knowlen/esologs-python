@@ -1,9 +1,20 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches: [ main, v2-dev, v2/* ]
+  # Run on PR creation only (not on every push)
   pull_request:
+    types: [opened]
+    branches: [ main, v2-dev ]
+  # Allow manual triggering from GitHub UI
+  workflow_dispatch:
+    inputs:
+      run_integration_tests:
+        description: 'Run integration tests'
+        required: false
+        default: 'true'
+        type: boolean
+  # Still run on pushes to main/v2-dev (for releases)
+  push:
     branches: [ main, v2-dev ]
 
 jobs:
@@ -65,6 +76,7 @@ jobs:
         fi
 
     - name: Run integration tests
+      if: github.event_name != 'workflow_dispatch' || inputs.run_integration_tests == 'true'
       env:
         ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
         ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}
@@ -73,6 +85,7 @@ jobs:
         pytest tests/integration/ -v --tb=short
 
     - name: Run sanity tests
+      if: github.event_name != 'workflow_dispatch' || inputs.run_integration_tests == 'true'
       env:
         ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
         ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}

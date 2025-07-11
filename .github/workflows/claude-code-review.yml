@@ -1,8 +1,11 @@
 name: Claude Code Review
 
 on:
+  # Run only on PR creation (not on every push)
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
+  # Allow manual triggering from GitHub UI
+  workflow_dispatch:
     # Optional: Only run on specific file changes
     # paths:
     #   - "src/**/*.ts"
