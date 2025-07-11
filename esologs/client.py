@@ -43,16 +43,9 @@ from .get_report_graph import GetReportGraph
 from .get_report_player_details import GetReportPlayerDetails
 from .get_report_rankings import GetReportRankings
 from .get_report_table import GetReportTable
+from .get_reports import GetReports
 from .get_world_data import GetWorldData
 from .get_zones import GetZones
-from .validators import (
-    validate_ability_id,
-    validate_fight_ids,
-    validate_limit_parameter,
-    validate_positive_integer,
-    validate_report_code,
-    validate_time_range,
-)
 
 
 def gql(q: str) -> str:
@@ -86,7 +79,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetAbilities:
         query = gql(
             """
@@ -264,7 +257,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterById",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetCharacterById.model_validate(data)
@@ -273,7 +266,7 @@ class Client(AsyncBaseClient):
         self,
         character_id: int,
         limit: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetCharacterReports:
         query = gql(
             """
@@ -307,7 +300,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterReports",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetCharacterReports.model_validate(data)
@@ -370,7 +363,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getEncountersByZone",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetEncountersByZone.model_validate(data)
@@ -454,7 +447,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterEncounterRanking",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetCharacterEncounterRanking.model_validate(data)
@@ -475,7 +468,7 @@ class Client(AsyncBaseClient):
         size: Union[Optional[int], UnsetType] = UNSET,
         spec_name: Union[Optional[str], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetCharacterEncounterRankings:
         query = gql(
             """
@@ -522,7 +515,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterEncounterRankings",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetCharacterEncounterRankings.model_validate(data)
@@ -542,7 +535,7 @@ class Client(AsyncBaseClient):
         size: Union[Optional[int], UnsetType] = UNSET,
         spec_name: Union[Optional[str], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetCharacterZoneRankings:
         query = gql(
             """
@@ -587,7 +580,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterZoneRankings",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetCharacterZoneRankings.model_validate(data)
@@ -636,7 +629,7 @@ class Client(AsyncBaseClient):
         self,
         faction_id: Union[Optional[int], UnsetType] = UNSET,
         zone_id: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetClasses:
         query = gql(
             """
@@ -723,7 +716,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetItemSets:
         query = gql(
             """
@@ -757,7 +750,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetItems:
         query = gql(
             """
@@ -812,7 +805,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetMaps:
         query = gql(
             """
@@ -866,7 +859,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetNPCs:
         query = gql(
             """
@@ -913,7 +906,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getRateLimitData",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetRateLimitData.model_validate(data)
@@ -949,86 +942,8 @@ class Client(AsyncBaseClient):
         use_actor_i_ds: Union[Optional[bool], UnsetType] = UNSET,
         view_options: Union[Optional[int], UnsetType] = UNSET,
         wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetReportEvents:
-        """
-        Retrieve event-by-event combat log data for a specific report.
-
-        This method provides access to detailed combat events including damage, healing,
-        buffs, debuffs, and other combat-related activities from ESO Logs reports.
-
-        Args:
-            code: The report code (e.g., 'ABC123')
-            ability_id: Filter events by specific ability ID
-            data_type: Type of events to retrieve (DamageDone, Healing, etc.)
-            death: Death event index to filter by
-            difficulty: Encounter difficulty level
-            encounter_id: Specific encounter ID to filter by
-            end_time: End time for event filtering (milliseconds since report start)
-            fight_i_ds: List of fight IDs to include in results
-            filter_expression: Advanced filter expression
-            hostility_type: Filter by hostility type (Enemies, Friendlies, etc.)
-            include_resources: Include resource events (magicka, stamina, etc.)
-            kill_type: Filter by kill type (Kills, Wipes, etc.)
-            limit: Maximum number of events to return
-            source_auras_absent: Filter by absent source auras
-            source_auras_present: Filter by present source auras
-            source_class: Filter by source character class
-            source_id: Filter by source actor ID
-            source_instance_id: Filter by source instance ID
-            start_time: Start time for event filtering (milliseconds since report start)
-            target_auras_absent: Filter by absent target auras
-            target_auras_present: Filter by present target auras
-            target_class: Filter by target character class
-            target_id: Filter by target actor ID
-            target_instance_id: Filter by target instance ID
-            translate: Whether to translate IDs to human-readable names
-            use_ability_i_ds: Use ability IDs instead of names
-            use_actor_i_ds: Use actor IDs instead of names
-            view_options: View options bitmask
-            wipe_cutoff: Cutoff time for wipe detection
-            **kwargs: Additional arguments passed to the GraphQL client
-
-        Returns:
-            GetReportEvents: Event data with pagination support
-
-        Raises:
-            ValidationError: If parameters are invalid
-
-        Example:
-            >>> events = await client.get_report_events(
-            ...     code="ABC123",
-            ...     data_type=EventDataType.DamageDone,
-            ...     limit=100,
-            ...     start_time=0,
-            ...     end_time=60000
-            ... )
-            >>> print(f"Retrieved {len(events.report_data.report.events.data)} events")
-        """
-        # Validate parameters
-        validate_report_code(code)
-        validate_ability_id(ability_id if ability_id is not UNSET else None)
-        validate_time_range(
-            start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None,
-        )
-        validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-        validate_limit_parameter(limit if limit is not UNSET else None)
-
-        # Validate positive integer parameters
-        for param_name, param_value in [
-            ("encounter_id", encounter_id),
-            ("source_id", source_id),
-            ("target_id", target_id),
-            ("source_instance_id", source_instance_id),
-            ("target_instance_id", target_instance_id),
-            ("death", death),
-            ("difficulty", difficulty),
-            ("view_options", view_options),
-            ("wipe_cutoff", wipe_cutoff),
-        ]:
-            if param_value is not UNSET:
-                validate_positive_integer(param_value, param_name)
         query = gql(
             """
             query getReportEvents($code: String!, $abilityID: Float, $dataType: EventDataType, $death: Int, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $filterExpression: String, $hostilityType: HostilityType, $includeResources: Boolean, $killType: KillType, $limit: Int, $sourceAurasAbsent: String, $sourceAurasPresent: String, $sourceClass: String, $sourceID: Int, $sourceInstanceID: Int, $startTime: Float, $targetAurasAbsent: String, $targetAurasPresent: String, $targetClass: String, $targetID: Int, $targetInstanceID: Int, $translate: Boolean, $useAbilityIDs: Boolean, $useActorIDs: Boolean, $viewOptions: Int, $wipeCutoff: Int) {
@@ -1137,82 +1052,8 @@ class Client(AsyncBaseClient):
         view_options: Union[Optional[int], UnsetType] = UNSET,
         view_by: Union[Optional[ViewType], UnsetType] = UNSET,
         wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetReportGraph:
-        """
-        Retrieve time-series graph data for performance metrics from a specific report.
-
-        This method provides access to graphical performance data over time including DPS,
-        HPS, resource usage, and other metrics for analysis and visualization.
-
-        Args:
-            code: The report code (e.g., 'ABC123')
-            ability_id: Filter graph by specific ability ID
-            data_type: Type of graph data to retrieve (DamageDone, Healing, etc.)
-            death: Death event index to filter by
-            difficulty: Encounter difficulty level
-            encounter_id: Specific encounter ID to filter by
-            end_time: End time for graph filtering (milliseconds since report start)
-            fight_i_ds: List of fight IDs to include in graph
-            filter_expression: Advanced filter expression
-            hostility_type: Filter by hostility type (Enemies, Friendlies, etc.)
-            kill_type: Filter by kill type (Kills, Wipes, etc.)
-            source_auras_absent: Filter by absent source auras
-            source_auras_present: Filter by present source auras
-            source_class: Filter by source character class
-            source_id: Filter by source actor ID
-            source_instance_id: Filter by source instance ID
-            start_time: Start time for graph filtering (milliseconds since report start)
-            target_auras_absent: Filter by absent target auras
-            target_auras_present: Filter by present target auras
-            target_class: Filter by target character class
-            target_id: Filter by target actor ID
-            target_instance_id: Filter by target instance ID
-            translate: Whether to translate IDs to human-readable names
-            view_options: View options bitmask
-            view_by: How to group/view the graph data (Source, Target, etc.)
-            wipe_cutoff: Cutoff time for wipe detection
-            **kwargs: Additional arguments passed to the GraphQL client
-
-        Returns:
-            GetReportGraph: Time-series graph data for visualization
-
-        Raises:
-            ValidationError: If parameters are invalid
-
-        Example:
-            >>> graph = await client.get_report_graph(
-            ...     code="ABC123",
-            ...     data_type=GraphDataType.DamageDone,
-            ...     view_by=ViewType.Source,
-            ...     start_time=0,
-            ...     end_time=300000
-            ... )
-            >>> print(f"Graph has {len(graph.report_data.report.graph.data)} data points")
-        """
-        # Validate parameters
-        validate_report_code(code)
-        validate_ability_id(ability_id if ability_id is not UNSET else None)
-        validate_time_range(
-            start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None,
-        )
-        validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-
-        # Validate positive integer parameters
-        for param_name, param_value in [
-            ("encounter_id", encounter_id),
-            ("source_id", source_id),
-            ("target_id", target_id),
-            ("source_instance_id", source_instance_id),
-            ("target_instance_id", target_instance_id),
-            ("death", death),
-            ("difficulty", difficulty),
-            ("view_options", view_options),
-            ("wipe_cutoff", wipe_cutoff),
-        ]:
-            if param_value is not UNSET:
-                validate_positive_integer(param_value, param_name)
         query = gql(
             """
             query getReportGraph($code: String!, $abilityID: Float, $dataType: GraphDataType, $death: Int, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $filterExpression: String, $hostilityType: HostilityType, $killType: KillType, $sourceAurasAbsent: String, $sourceAurasPresent: String, $sourceClass: String, $sourceID: Int, $sourceInstanceID: Int, $startTime: Float, $targetAurasAbsent: String, $targetAurasPresent: String, $targetClass: String, $targetID: Int, $targetInstanceID: Int, $translate: Boolean, $viewOptions: Int, $viewBy: ViewType, $wipeCutoff: Int) {
@@ -1312,82 +1153,8 @@ class Client(AsyncBaseClient):
         view_options: Union[Optional[int], UnsetType] = UNSET,
         view_by: Union[Optional[ViewType], UnsetType] = UNSET,
         wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetReportTable:
-        """
-        Retrieve tabular data for damage, healing, and other metrics from a specific report.
-
-        This method provides access to aggregated tabular data that can be used for
-        detailed analysis, comparisons, and report generation. Perfect for leaderboard
-        views and statistical analysis.
-
-        Args:
-            code: The report code (e.g., 'ABC123')
-            ability_id: Filter table by specific ability ID
-            data_type: Type of table data to retrieve (DamageDone, Healing, etc.)
-            death: Death event index to filter by
-            difficulty: Encounter difficulty level
-            encounter_id: Specific encounter ID to filter by
-            end_time: End time for table filtering (milliseconds since report start)
-            fight_i_ds: List of fight IDs to include in table
-            filter_expression: Advanced filter expression
-            hostility_type: Filter by hostility type (Enemies, Friendlies, etc.)
-            kill_type: Filter by kill type (Kills, Wipes, etc.)
-            source_auras_absent: Filter by absent source auras
-            source_auras_present: Filter by present source auras
-            source_class: Filter by source character class
-            source_id: Filter by source actor ID
-            source_instance_id: Filter by source instance ID
-            start_time: Start time for table filtering (milliseconds since report start)
-            target_auras_absent: Filter by absent target auras
-            target_auras_present: Filter by present target auras
-            target_class: Filter by target character class
-            target_id: Filter by target actor ID
-            target_instance_id: Filter by target instance ID
-            translate: Whether to translate IDs to human-readable names
-            view_options: View options bitmask
-            view_by: How to group/view the table data (Source, Target, etc.)
-            wipe_cutoff: Cutoff time for wipe detection
-            **kwargs: Additional arguments passed to the GraphQL client
-
-        Returns:
-            GetReportTable: Tabular data with aggregated metrics
-
-        Raises:
-            ValidationError: If parameters are invalid
-
-        Example:
-            >>> table = await client.get_report_table(
-            ...     code="ABC123",
-            ...     data_type=TableDataType.DamageDone,
-            ...     view_by=ViewType.Source,
-            ...     encounter_id=27
-            ... )
-            >>> print(f"Table has {len(table.report_data.report.table.data)} rows")
-        """
-        # Validate parameters
-        validate_report_code(code)
-        validate_ability_id(ability_id if ability_id is not UNSET else None)
-        validate_time_range(
-            start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None,
-        )
-        validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-
-        # Validate positive integer parameters
-        for param_name, param_value in [
-            ("encounter_id", encounter_id),
-            ("source_id", source_id),
-            ("target_id", target_id),
-            ("source_instance_id", source_instance_id),
-            ("target_instance_id", target_instance_id),
-            ("death", death),
-            ("difficulty", difficulty),
-            ("view_options", view_options),
-            ("wipe_cutoff", wipe_cutoff),
-        ]:
-            if param_value is not UNSET:
-                validate_positive_integer(param_value, param_name)
         query = gql(
             """
             query getReportTable($code: String!, $abilityID: Float, $dataType: TableDataType, $death: Int, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $filterExpression: String, $hostilityType: HostilityType, $killType: KillType, $sourceAurasAbsent: String, $sourceAurasPresent: String, $sourceClass: String, $sourceID: Int, $sourceInstanceID: Int, $startTime: Float, $targetAurasAbsent: String, $targetAurasPresent: String, $targetClass: String, $targetID: Int, $targetInstanceID: Int, $translate: Boolean, $viewOptions: Int, $viewBy: ViewType, $wipeCutoff: Int) {
@@ -1468,51 +1235,8 @@ class Client(AsyncBaseClient):
         fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
         player_metric: Union[Optional[ReportRankingMetricType], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetReportRankings:
-        """
-        Retrieve ranking data for players within a specific report.
-
-        This method provides access to player rankings and performance comparisons
-        within the context of a single report, allowing for detailed analysis of
-        individual and team performance.
-
-        Args:
-            code: The report code (e.g., 'ABC123')
-            compare: How to compare rankings (Rankings, Parses, etc.)
-            difficulty: Encounter difficulty level to filter by
-            encounter_id: Specific encounter ID to get rankings for
-            fight_i_ds: List of fight IDs to include in rankings
-            player_metric: Specific metric for player rankings (dps, hps, etc.)
-            timeframe: Time period for ranking comparison
-            **kwargs: Additional arguments passed to the GraphQL client
-
-        Returns:
-            GetReportRankings: Player ranking data within the report
-
-        Raises:
-            ValidationError: If parameters are invalid
-
-        Example:
-            >>> rankings = await client.get_report_rankings(
-            ...     code="ABC123",
-            ...     encounter_id=27,
-            ...     player_metric=ReportRankingMetricType.dps,
-            ...     compare=RankingCompareType.Rankings
-            ... )
-            >>> print(f"Rankings available for {len(rankings.report_data.report.rankings)} players")
-        """
-        # Validate parameters
-        validate_report_code(code)
-        validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-
-        # Validate positive integer parameters
-        for param_name, param_value in [
-            ("encounter_id", encounter_id),
-            ("difficulty", difficulty),
-        ]:
-            if param_value is not UNSET:
-                validate_positive_integer(param_value, param_name)
         query = gql(
             """
             query getReportRankings($code: String!, $compare: RankingCompareType, $difficulty: Int, $encounterID: Int, $fightIDs: [Int], $playerMetric: ReportRankingMetricType, $timeframe: RankingTimeframeType) {
@@ -1544,7 +1268,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getReportRankings",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetReportRankings.model_validate(data)
@@ -1560,56 +1284,8 @@ class Client(AsyncBaseClient):
         start_time: Union[Optional[float], UnsetType] = UNSET,
         translate: Union[Optional[bool], UnsetType] = UNSET,
         include_combatant_info: Union[Optional[bool], UnsetType] = UNSET,
-        **kwargs: Any,
+        **kwargs: Any
     ) -> GetReportPlayerDetails:
-        """
-        Retrieve detailed player information and combatant data from a specific report.
-
-        This method provides access to comprehensive player details including gear,
-        specs, and combat statistics for detailed character analysis and report
-        understanding.
-
-        Args:
-            code: The report code (e.g., 'ABC123')
-            difficulty: Encounter difficulty level to filter by
-            encounter_id: Specific encounter ID to get player details for
-            end_time: End time for filtering (milliseconds since report start)
-            fight_i_ds: List of fight IDs to include in details
-            kill_type: Filter by kill type (Kills, Wipes, etc.)
-            start_time: Start time for filtering (milliseconds since report start)
-            translate: Whether to translate IDs to human-readable names
-            include_combatant_info: Include detailed combatant information
-            **kwargs: Additional arguments passed to the GraphQL client
-
-        Returns:
-            GetReportPlayerDetails: Detailed player and combatant information
-
-        Raises:
-            ValidationError: If parameters are invalid
-
-        Example:
-            >>> details = await client.get_report_player_details(
-            ...     code="ABC123",
-            ...     encounter_id=27,
-            ...     include_combatant_info=True
-            ... )
-            >>> print(f"Found details for {len(details.report_data.report.player_details)} players")
-        """
-        # Validate parameters
-        validate_report_code(code)
-        validate_time_range(
-            start_time if start_time is not UNSET else None,
-            end_time if end_time is not UNSET else None,
-        )
-        validate_fight_ids(fight_i_ds if fight_i_ds is not UNSET else None)
-
-        # Validate positive integer parameters
-        for param_name, param_value in [
-            ("encounter_id", encounter_id),
-            ("difficulty", difficulty),
-        ]:
-            if param_value is not UNSET:
-                validate_positive_integer(param_value, param_name)
         query = gql(
             """
             query getReportPlayerDetails($code: String!, $difficulty: Int, $encounterID: Int, $endTime: Float, $fightIDs: [Int], $killType: KillType, $startTime: Float, $translate: Boolean, $includeCombatantInfo: Boolean) {
@@ -1645,7 +1321,245 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getReportPlayerDetails",
             variables=variables,
-            **kwargs,
+            **kwargs
         )
         data = self.get_data(response)
         return GetReportPlayerDetails.model_validate(data)
+
+    async def get_reports(
+        self,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        guild_id: Union[Optional[int], UnsetType] = UNSET,
+        guild_name: Union[Optional[str], UnsetType] = UNSET,
+        guild_server_slug: Union[Optional[str], UnsetType] = UNSET,
+        guild_server_region: Union[Optional[str], UnsetType] = UNSET,
+        guild_tag_id: Union[Optional[int], UnsetType] = UNSET,
+        user_id: Union[Optional[int], UnsetType] = UNSET,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        game_zone_id: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any
+    ) -> GetReports:
+        query = gql(
+            """
+            query getReports($endTime: Float, $guildID: Int, $guildName: String, $guildServerSlug: String, $guildServerRegion: String, $guildTagID: Int, $userID: Int, $limit: Int, $page: Int, $startTime: Float, $zoneID: Int, $gameZoneID: Int) {
+              reportData {
+                reports(
+                  endTime: $endTime
+                  guildID: $guildID
+                  guildName: $guildName
+                  guildServerSlug: $guildServerSlug
+                  guildServerRegion: $guildServerRegion
+                  guildTagID: $guildTagID
+                  userID: $userID
+                  limit: $limit
+                  page: $page
+                  startTime: $startTime
+                  zoneID: $zoneID
+                  gameZoneID: $gameZoneID
+                ) {
+                  data {
+                    code
+                    title
+                    startTime
+                    endTime
+                    zone {
+                      id
+                      name
+                    }
+                    guild {
+                      id
+                      name
+                      server {
+                        name
+                        slug
+                        region {
+                          name
+                          slug
+                        }
+                      }
+                    }
+                    owner {
+                      id
+                      name
+                    }
+                  }
+                  total
+                  per_page
+                  current_page
+                  from
+                  to
+                  last_page
+                  has_more_pages
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "endTime": end_time,
+            "guildID": guild_id,
+            "guildName": guild_name,
+            "guildServerSlug": guild_server_slug,
+            "guildServerRegion": guild_server_region,
+            "guildTagID": guild_tag_id,
+            "userID": user_id,
+            "limit": limit,
+            "page": page,
+            "startTime": start_time,
+            "zoneID": zone_id,
+            "gameZoneID": game_zone_id,
+        }
+        response = await self.execute(
+            query=query, operation_name="getReports", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetReports.model_validate(data)
+
+    async def search_reports(
+        self,
+        guild_id: Union[Optional[int], UnsetType] = UNSET,
+        guild_name: Union[Optional[str], UnsetType] = UNSET,
+        guild_server_slug: Union[Optional[str], UnsetType] = UNSET,
+        guild_server_region: Union[Optional[str], UnsetType] = UNSET,
+        guild_tag_id: Union[Optional[int], UnsetType] = UNSET,
+        user_id: Union[Optional[int], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        game_zone_id: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReports:
+        """
+        Search for reports with flexible filtering options.
+        
+        Args:
+            guild_id: Filter by specific guild ID
+            guild_name: Filter by guild name (requires guild_server_slug and guild_server_region)
+            guild_server_slug: Guild server slug (required with guild_name)
+            guild_server_region: Guild server region (required with guild_name)
+            guild_tag_id: Filter by guild tag/team ID
+            user_id: Filter by specific user ID
+            zone_id: Filter by zone ID
+            game_zone_id: Filter by game zone ID
+            start_time: Start time filter (UNIX timestamp with milliseconds)
+            end_time: End time filter (UNIX timestamp with milliseconds)
+            limit: Number of reports per page (1-25, default 16)
+            page: Page number (default 1)
+            
+        Returns:
+            GetReports: Paginated list of reports matching the criteria
+            
+        Examples:
+            # Search by guild ID
+            reports = await client.search_reports(guild_id=123)
+            
+            # Search by guild name
+            reports = await client.search_reports(
+                guild_name="My Guild", 
+                guild_server_slug="server-name",
+                guild_server_region="NA"
+            )
+            
+            # Search with date range
+            reports = await client.search_reports(
+                user_id=456,
+                start_time=1640995200000,  # Jan 1, 2022
+                end_time=1672531200000     # Jan 1, 2023
+            )
+        """
+        return await self.get_reports(
+            end_time=end_time,
+            guild_id=guild_id,
+            guild_name=guild_name,
+            guild_server_slug=guild_server_slug,
+            guild_server_region=guild_server_region,
+            guild_tag_id=guild_tag_id,
+            user_id=user_id,
+            limit=limit,
+            page=page,
+            start_time=start_time,
+            zone_id=zone_id,
+            game_zone_id=game_zone_id,
+            **kwargs,
+        )
+
+    async def get_guild_reports(
+        self,
+        guild_id: int,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReports:
+        """
+        Convenience method to get reports for a specific guild.
+        
+        Args:
+            guild_id: The guild ID to search for
+            limit: Number of reports per page (1-25, default 16)
+            page: Page number (default 1)
+            start_time: Start time filter (UNIX timestamp with milliseconds)
+            end_time: End time filter (UNIX timestamp with milliseconds)
+            zone_id: Filter by specific zone
+            
+        Returns:
+            GetReports: Paginated list of guild reports
+            
+        Example:
+            # Get recent reports for guild
+            reports = await client.get_guild_reports(guild_id=123, limit=25)
+        """
+        return await self.search_reports(
+            guild_id=guild_id,
+            limit=limit,
+            page=page,
+            start_time=start_time,
+            end_time=end_time,
+            zone_id=zone_id,
+            **kwargs,
+        )
+
+    async def get_user_reports(
+        self,
+        user_id: int,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        start_time: Union[Optional[float], UnsetType] = UNSET,
+        end_time: Union[Optional[float], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetReports:
+        """
+        Convenience method to get reports for a specific user.
+        
+        Args:
+            user_id: The user ID to search for
+            limit: Number of reports per page (1-25, default 16)
+            page: Page number (default 1)
+            start_time: Start time filter (UNIX timestamp with milliseconds)
+            end_time: End time filter (UNIX timestamp with milliseconds)
+            zone_id: Filter by specific zone
+            
+        Returns:
+            GetReports: Paginated list of user reports
+            
+        Example:
+            # Get recent reports for user
+            reports = await client.get_user_reports(user_id=456, limit=25)
+        """
+        return await self.search_reports(
+            user_id=user_id,
+            limit=limit,
+            page=page,
+            start_time=start_time,
+            end_time=end_time,
+            zone_id=zone_id,
+            **kwargs,
+        )

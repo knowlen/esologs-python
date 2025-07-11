@@ -150,6 +150,17 @@ from .get_report_table import (
     GetReportTableReportData,
     GetReportTableReportDataReport,
 )
+from .get_reports import (
+    GetReports,
+    GetReportsReportData,
+    GetReportsReportDataReports,
+    GetReportsReportDataReportsData,
+    GetReportsReportDataReportsDataGuild,
+    GetReportsReportDataReportsDataGuildServer,
+    GetReportsReportDataReportsDataGuildServerRegion,
+    GetReportsReportDataReportsDataOwner,
+    GetReportsReportDataReportsDataZone,
+)
 from .get_world_data import (
     GetWorldData,
     GetWorldDataWorldData,
@@ -292,6 +303,15 @@ __all__ = [
     "GetReportTable",
     "GetReportTableReportData",
     "GetReportTableReportDataReport",
+    "GetReports",
+    "GetReportsReportData",
+    "GetReportsReportDataReports",
+    "GetReportsReportDataReportsData",
+    "GetReportsReportDataReportsDataGuild",
+    "GetReportsReportDataReportsDataGuildServer",
+    "GetReportsReportDataReportsDataGuildServerRegion",
+    "GetReportsReportDataReportsDataOwner",
+    "GetReportsReportDataReportsDataZone",
     "GetWorldData",
     "GetWorldDataWorldData",
     "GetWorldDataWorldDataEncounter",
