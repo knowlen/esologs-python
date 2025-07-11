@@ -1,9 +1,9 @@
 name: Claude Code Review
 
 on:
-  # Run only on PR creation (not on every push)
+  # Run on PR creation, skip on drafts and minor updates
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
   # Allow manual triggering from GitHub UI
   workflow_dispatch:
     # Optional: Only run on specific file changes
@@ -15,6 +15,8 @@ on:
 
 jobs:
   claude-review:
+    # Skip Claude review on synchronize unless specifically requested
+    if: github.event.action == 'opened' || contains(github.event.head_commit.message, '[review]')
     # Optional: Filter by PR author
     # if: |
     #   github.event.pull_request.user.login == 'external-contributor' ||

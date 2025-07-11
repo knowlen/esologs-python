@@ -1,9 +1,9 @@
 name: CI/CD Pipeline
 
 on:
-  # Run on PR creation only (not on every push)
+  # Run on PR creation and updates, but with conditions to reduce waste
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches: [ main, v2-dev ]
   # Allow manual triggering from GitHub UI
   workflow_dispatch:
