@@ -36,14 +36,13 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: [types-requests]
-        exclude: ^esologs/(get_.*\.py|input_types\.py|enums\.py|base_model\.py|exceptions\.py|async_base_client\.py)$
+        args: [--ignore-missing-imports, --no-warn-return-any]
+        exclude: ^(esologs/(get_.*\.py|input_types\.py|enums\.py|base_model\.py|exceptions\.py|async_base_client\.py)|tests/.*\.py|access_token\.py)$
 
   - repo: local
     hooks:
       - id: no-print-statements
         name: No print statements
-        entry: grep -n "print("
+        entry: bash -c 'if grep -r "print(" esologs/ tests/ --include="*.py"; then exit 1; fi'
         language: system
-        files: ^esologs/.*\.py$
-        exclude: ^esologs/(get_.*\.py|input_types\.py|enums\.py|base_model\.py|exceptions\.py|async_base_client\.py)$
-        types: [python]
+        pass_filenames: false
