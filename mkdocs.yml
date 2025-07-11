@@ -55,6 +55,7 @@ theme:
     - content.tooltips
     - content.action.edit
     - content.action.view
+    - toc.integrate
   
   # Icons
   icon:

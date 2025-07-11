@@ -27,22 +27,22 @@
   --md-typeset-mark-color:      #fef3c7;  /* Subtle highlight */
 }
 
-/* Dark mode colors - much softer, easier on eyes */
+/* Dark mode colors - balanced for readability */
 [data-md-color-scheme="slate"] {
   /* Primary colors in dark mode - muted */
   --md-primary-fg-color:        #64748b;  /* Muted gray */
   --md-primary-fg-color--light: #94a3b8;  /* Muted light gray */
   --md-primary-fg-color--dark:  #475569;  /* Muted dark gray */
   
-  /* Background colors in dark mode - warmer, much softer text */
+  /* Background colors in dark mode - better contrast */
   --md-default-bg-color:        #1e293b;  /* Dark background */
-  --md-default-fg-color:        #cbd5e1;  /* Much softer text - not bright white */
-  --md-default-fg-color--light: #94a3b8;  /* Muted medium text */
-  --md-default-fg-color--lighter: #64748b; /* Subtle gray text */
+  --md-default-fg-color:        #e2e8f0;  /* Balanced light text - readable but not harsh */
+  --md-default-fg-color--light: #cbd5e1;  /* Medium light text */
+  --md-default-fg-color--lighter: #94a3b8; /* Subtle gray text */
   
   /* Code colors in dark mode */
   --md-code-bg-color:           #334155;  /* Dark code bg */
-  --md-code-fg-color:           #cbd5e1;  /* Muted code text */
+  --md-code-fg-color:           #e2e8f0;  /* Readable code text */
   
   /* Border colors in dark mode */
   --md-typeset-table-color:     #475569;  /* Muted borders */
@@ -156,6 +156,11 @@
 .md-tabs__link:hover,
 .md-tabs__link--active {
   color: white;
+}
+
+/* Hide Home tab - users can click logo */
+.md-tabs__item:first-child {
+  display: none;
 }
 
 /* Softer tabs in dark mode */
@@ -395,4 +400,66 @@
 [data-md-color-scheme="slate"] .status-badge--planned {
   background-color: #1e40af;
   color: #dbeafe;
+}
+
+/* Custom TOC with edit/view buttons */
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  margin: 0;
+}
+
+/* Hide default "ON THIS PAGE" title */
+.md-nav--secondary .md-nav__title {
+  display: none;
+}
+
+/* Custom header for TOC with edit/view buttons */
+.md-nav--secondary::before {
+  content: "";
+  display: block;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--md-typeset-table-color);
+  margin-bottom: 0.8rem;
+}
+
+/* Style the action buttons in TOC area */
+.md-content__button {
+  display: inline-block;
+  margin: 0 0.2rem;
+  padding: 0.3rem 0.6rem;
+  background: transparent;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.25rem;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+  font-size: 0.7rem;
+  transition: all 0.2s ease;
+}
+
+.md-content__button:hover {
+  background: var(--md-default-fg-color--lighter);
+  color: var(--md-default-bg-color);
+}
+
+/* Move content buttons to TOC area */
+.md-content__inner .md-content__button {
+  display: none;
+}
+
+/* Create custom button container in TOC */
+.md-nav--secondary {
+  position: relative;
+}
+
+.md-nav--secondary::after {
+  content: "📝 Edit page  👁 View source";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--md-typeset-table-color);
+  background: var(--md-default-bg-color);
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+  z-index: 1;
 }
