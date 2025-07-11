@@ -30,22 +30,22 @@
 /* Dark mode colors */
 [data-md-color-scheme="slate"] {
   /* Primary colors in dark mode */
-  --md-primary-fg-color:        #d1d5db;  /* Light gray */
-  --md-primary-fg-color--light: #e5e7eb;  /* Lighter gray */
-  --md-primary-fg-color--dark:  #9ca3af;  /* Medium gray */
+  --md-primary-fg-color:        #6b7280;  /* Medium gray */
+  --md-primary-fg-color--light: #9ca3af;  /* Light gray */
+  --md-primary-fg-color--dark:  #4b5563;  /* Dark gray */
   
   /* Background colors in dark mode */
-  --md-default-bg-color:        #111827;  /* Dark gray bg */
-  --md-default-fg-color:        #f9fafb;  /* Light text */
+  --md-default-bg-color:        #1f2937;  /* Dark background */
+  --md-default-fg-color:        #f3f4f6;  /* Light text */
   --md-default-fg-color--light: #d1d5db;  /* Medium light text */
   --md-default-fg-color--lighter: #9ca3af; /* Gray text */
   
   /* Code colors in dark mode */
-  --md-code-bg-color:           #1f2937;  /* Dark code bg */
+  --md-code-bg-color:           #374151;  /* Dark code bg */
   --md-code-fg-color:           #e5e7eb;  /* Light code text */
   
   /* Border colors in dark mode */
-  --md-typeset-table-color:     #374151;  /* Dark table borders */
+  --md-typeset-table-color:     #4b5563;  /* Dark table borders */
 }
 
 /* Typography enhancements */
@@ -230,12 +230,12 @@
 
 /* Clean home page hero section - like Modular */
 .hero-section {
-  background: #ffffff;
+  background: var(--md-default-bg-color);
   color: var(--md-default-fg-color);
   padding: 3rem 2rem;
   text-align: left;
   margin: 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--md-typeset-table-color);
 }
 
 .hero-section h1 {
@@ -252,6 +252,20 @@
   max-width: 600px;
 }
 
+/* Dark mode hero section */
+[data-md-color-scheme="slate"] .hero-section {
+  background: var(--md-default-bg-color);
+  border-bottom-color: var(--md-typeset-table-color);
+}
+
+[data-md-color-scheme="slate"] .hero-section h1 {
+  color: var(--md-default-fg-color);
+}
+
+[data-md-color-scheme="slate"] .hero-section p {
+  color: var(--md-default-fg-color--light);
+}
+
 /* Simple feature cards - clean like Modular */
 .feature-grid {
   display: grid;
@@ -262,14 +276,14 @@
 
 .feature-card {
   background: var(--md-default-bg-color);
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--md-typeset-table-color);
   border-radius: 0.375rem;
   padding: 1.25rem;
   transition: border-color 0.2s ease;
 }
 
 .feature-card:hover {
-  border-color: #d1d5db;
+  border-color: var(--md-default-fg-color--lighter);
 }
 
 .feature-card h3 {
@@ -284,6 +298,16 @@
   color: var(--md-default-fg-color--light);
   margin-bottom: 0.5rem;
   line-height: 1.5;
+}
+
+/* Dark mode feature cards */
+[data-md-color-scheme="slate"] .feature-card {
+  background: var(--md-default-bg-color);
+  border-color: var(--md-typeset-table-color);
+}
+
+[data-md-color-scheme="slate"] .feature-card:hover {
+  border-color: var(--md-default-fg-color--lighter);
 }
 
 /* Status badges */
@@ -313,8 +337,8 @@
 }
 
 [data-md-color-scheme="slate"] .status-badge--completed {
-  background-color: #166534;
-  color: #dcfce7;
+  background-color: #065f46;
+  color: #d1fae5;
 }
 
 [data-md-color-scheme="slate"] .status-badge--in-progress {
@@ -323,6 +347,6 @@
 }
 
 [data-md-color-scheme="slate"] .status-badge--planned {
-  background-color: #3730a3;
-  color: #e0e7ff;
+  background-color: #1e40af;
+  color: #dbeafe;
 }
