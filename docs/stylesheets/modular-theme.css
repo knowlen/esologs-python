@@ -27,25 +27,25 @@
   --md-typeset-mark-color:      #fef3c7;  /* Subtle highlight */
 }
 
-/* Dark mode colors */
+/* Dark mode colors - softer, easier on eyes */
 [data-md-color-scheme="slate"] {
-  /* Primary colors in dark mode */
-  --md-primary-fg-color:        #6b7280;  /* Medium gray */
-  --md-primary-fg-color--light: #9ca3af;  /* Light gray */
-  --md-primary-fg-color--dark:  #4b5563;  /* Dark gray */
+  /* Primary colors in dark mode - less harsh */
+  --md-primary-fg-color:        #64748b;  /* Softer gray */
+  --md-primary-fg-color--light: #94a3b8;  /* Softer light gray */
+  --md-primary-fg-color--dark:  #475569;  /* Softer dark gray */
   
-  /* Background colors in dark mode */
-  --md-default-bg-color:        #1f2937;  /* Dark background */
-  --md-default-fg-color:        #f3f4f6;  /* Light text */
-  --md-default-fg-color--light: #d1d5db;  /* Medium light text */
-  --md-default-fg-color--lighter: #9ca3af; /* Gray text */
+  /* Background colors in dark mode - warmer, less harsh */
+  --md-default-bg-color:        #1e293b;  /* Slightly warmer dark background */
+  --md-default-fg-color:        #e2e8f0;  /* Softer light text */
+  --md-default-fg-color--light: #cbd5e1;  /* Softer medium light text */
+  --md-default-fg-color--lighter: #94a3b8; /* Softer gray text */
   
   /* Code colors in dark mode */
-  --md-code-bg-color:           #374151;  /* Dark code bg */
-  --md-code-fg-color:           #e5e7eb;  /* Light code text */
+  --md-code-bg-color:           #334155;  /* Softer dark code bg */
+  --md-code-fg-color:           #e2e8f0;  /* Softer light code text */
   
   /* Border colors in dark mode */
-  --md-typeset-table-color:     #4b5563;  /* Dark table borders */
+  --md-typeset-table-color:     #475569;  /* Softer dark table borders */
 }
 
 /* Typography enhancements */
@@ -60,20 +60,34 @@
   font-weight: 700;
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
-  color: var(--md-primary-fg-color);
+  color: var(--md-default-fg-color);
 }
 
 .md-typeset h2 {
   font-weight: 600;
   font-size: 2rem;
   margin: 2rem 0 1rem 0;
-  color: var(--md-primary-fg-color);
+  color: var(--md-default-fg-color);
 }
 
 .md-typeset h3 {
   font-weight: 600;
   font-size: 1.5rem;
   margin: 1.5rem 0 0.75rem 0;
+  color: var(--md-default-fg-color);
+}
+
+/* Dark mode heading adjustments for easier reading */
+[data-md-color-scheme="slate"] .md-typeset h1,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3 {
+  color: var(--md-default-fg-color);
+}
+
+/* Softer bold text in dark mode */
+[data-md-color-scheme="slate"] .md-typeset strong {
+  color: var(--md-default-fg-color);
+  font-weight: 600;
 }
 
 /* Code blocks with better styling */
@@ -144,29 +158,61 @@
   color: white;
 }
 
+/* Softer tabs in dark mode */
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: var(--md-primary-fg-color);
+  border-bottom-color: var(--md-typeset-table-color);
+}
+
+[data-md-color-scheme="slate"] .md-tabs__link {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[data-md-color-scheme="slate"] .md-tabs__link:hover,
+[data-md-color-scheme="slate"] .md-tabs__link--active {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* Button styling */
 .md-button {
-  background-color: var(--md-primary-fg-color);
-  color: white;
-  border-radius: 0.5rem;
+  background-color: transparent;
+  color: var(--md-primary-fg-color);
+  border: 1px solid var(--md-primary-fg-color);
+  border-radius: 0.375rem;
   padding: 0.75rem 1.5rem;
   font-weight: 500;
   transition: all 0.2s ease;
-  border: none;
+  text-decoration: none;
 }
 
 .md-button:hover {
-  background-color: var(--md-primary-fg-color--dark);
+  background-color: var(--md-primary-fg-color);
+  color: white;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .md-button--primary {
   background-color: var(--md-accent-fg-color);
+  color: white;
+  border-color: var(--md-accent-fg-color);
 }
 
 .md-button--primary:hover {
   background-color: var(--md-accent-fg-color--dark);
+  border-color: var(--md-accent-fg-color--dark);
+  color: white;
+}
+
+/* Dark mode button fixes */
+[data-md-color-scheme="slate"] .md-button {
+  color: var(--md-default-fg-color--light);
+  border-color: var(--md-default-fg-color--light);
+}
+
+[data-md-color-scheme="slate"] .md-button:hover {
+  background-color: var(--md-default-fg-color--light);
+  color: var(--md-default-bg-color);
 }
 
 /* Admonitions styling */
