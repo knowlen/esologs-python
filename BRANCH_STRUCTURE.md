@@ -31,7 +31,7 @@ git checkout v1-api
 ### `v2-dev` (Primary Development Branch)
 - **Purpose**: Main development branch for v2 API implementation
 - **Status**: ✅ Active development
-- **Features**: 
+- **Features**:
   - Modern ESO Logs v2 GraphQL API implementation
   - OAuth2 authentication
   - pyproject.toml packaging
@@ -42,8 +42,8 @@ git checkout v1-api
 
 ## 📜 Archive Branches
 
-### `main` 
-- **Purpose**: Current default branch (LTS / release) 
+### `main`
+- **Purpose**: Current default branch (LTS / release)
 - **Status**: ⚠️ Syncing with v2-dev
 - **Features**: Production ready v2 GraphQL API with OAuth2
 - **Use**: Stable release branch
@@ -57,7 +57,7 @@ git checkout v1-api
   - API key authentication
   - Basic JSON responses
 - **Use**: Historical reference only - **DO NOT USE FOR NEW DEVELOPMENT**
-- **Documentation**: See `V1_API_ARCHIVE.md` in this branch 
+- **Documentation**: See `V1_API_ARCHIVE.md` in this branch
 
 ## 📋 Branch Usage Guidelines
 
@@ -74,5 +74,5 @@ git checkout v1-api
 
 ---
 
-**Last Updated**: July 9, 2025  
+**Last Updated**: July 9, 2025
 **Documentation**: This file is maintained in the `v2-dev` branch

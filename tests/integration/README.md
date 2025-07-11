@@ -7,8 +7,9 @@ This directory contains comprehensive integration tests for the esologs-python l
 ### Core Test Files
 
 - **`test_core_api.py`**: Tests for fundamental API endpoints (game data, character data, world data, etc.)
-- **`test_character_rankings.py`**: Tests for character rankings functionality (PR #4)
-- **`test_report_analysis.py`**: Tests for report analysis functionality (PR #5)
+- **`test_character_rankings.py`**: Tests for character rankings functionality (PR #1)
+- **`test_report_analysis.py`**: Tests for report analysis functionality (PR #2)
+- **`test_report_search.py`**: Tests for advanced report search functionality (PR #4)
 - **`test_error_handling.py`**: Tests for error handling and edge cases
 - **`conftest.py`**: Shared fixtures and configuration
 
@@ -88,18 +89,17 @@ Tests use fixed test data defined in `conftest.py`:
 
 ## API Coverage Testing
 
-Integration tests verify ~45% API coverage across:
+Integration tests verify ~65% API coverage across:
 
 ### ✅ Currently Tested
 - **Game Data**: abilities, classes, factions, items, maps, NPCs
 - **Character Data**: profiles, reports, rankings (encounter & zone)
 - **World Data**: regions, zones, encounters
 - **Guild Data**: basic guild information
-- **Report Data**: individual reports, comprehensive analysis
+- **Report Data**: individual reports, comprehensive analysis, advanced search
 - **System Data**: rate limiting
 
 ### 🚧 Future Coverage
-- Advanced report search
 - User account integration
 - Progress race tracking
 - Enhanced guild features

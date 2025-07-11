@@ -1,14 +1,12 @@
 """Integration tests for Character Rankings API methods."""
 
 import asyncio
-import pytest
-import os
-from typing import Optional
 
+import pytest
+
+from access_token import get_access_token
 from esologs.client import Client
 from esologs.enums import CharacterRankingMetricType
-from access_token import get_access_token
-
 
 # Fixtures are now centralized in conftest.py
 
@@ -23,16 +21,18 @@ class TestCharacterRankingsIntegration:
             response = await client.get_character_encounter_rankings(
                 character_id=test_data["character_id"],
                 encounter_id=test_data["encounter_id"],
-                metric=CharacterRankingMetricType.dps
+                metric=CharacterRankingMetricType.dps,
             )
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
             if response.character_data and response.character_data.character:
                 assert response.character_data.character.encounter_rankings is not None
 
     @pytest.mark.asyncio
-    async def test_get_character_encounter_rankings_with_filters(self, client, test_data):
+    async def test_get_character_encounter_rankings_with_filters(
+        self, client, test_data
+    ):
         """Test character encounter rankings with additional filters."""
         async with client:
             response = await client.get_character_encounter_rankings(
@@ -40,11 +40,11 @@ class TestCharacterRankingsIntegration:
                 encounter_id=test_data["encounter_id"],
                 metric=CharacterRankingMetricType.hps,
                 difficulty=1,
-                size=8
+                size=8,
             )
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
 
     @pytest.mark.asyncio
     async def test_get_character_zone_rankings_basic(self, client, test_data):
@@ -53,11 +53,11 @@ class TestCharacterRankingsIntegration:
             response = await client.get_character_zone_rankings(
                 character_id=test_data["character_id"],
                 zone_id=test_data["zone_id"],
-                metric=CharacterRankingMetricType.playerscore
+                metric=CharacterRankingMetricType.playerscore,
             )
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
             if response.character_data and response.character_data.character:
                 assert response.character_data.character.zone_rankings is not None
 
@@ -70,99 +70,101 @@ class TestCharacterRankingsIntegration:
                 zone_id=test_data["zone_id"],
                 metric=CharacterRankingMetricType.dps,
                 difficulty=1,
-                size=8
+                size=8,
             )
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
 
     @pytest.mark.asyncio
-    async def test_get_character_encounter_rankings_all_metrics(self, client, test_data):
+    async def test_get_character_encounter_rankings_all_metrics(
+        self, client, test_data
+    ):
         """Test character encounter rankings with different metrics."""
         metrics_to_test = [
             CharacterRankingMetricType.dps,
             CharacterRankingMetricType.hps,
-            CharacterRankingMetricType.playerscore
+            CharacterRankingMetricType.playerscore,
         ]
-        
+
         async with client:
             for metric in metrics_to_test:
                 response = await client.get_character_encounter_rankings(
                     character_id=test_data["character_id"],
                     encounter_id=test_data["encounter_id"],
-                    metric=metric
+                    metric=metric,
                 )
-                
+
                 assert response is not None
-                assert hasattr(response, 'character_data')
+                assert hasattr(response, "character_data")
 
     @pytest.mark.asyncio
     async def test_get_character_zone_rankings_all_metrics(self, client, test_data):
         """Test character zone rankings with different metrics."""
         metrics_to_test = [
             CharacterRankingMetricType.dps,
-            CharacterRankingMetricType.hps, 
-            CharacterRankingMetricType.playerscore
+            CharacterRankingMetricType.hps,
+            CharacterRankingMetricType.playerscore,
         ]
-        
+
         async with client:
             for metric in metrics_to_test:
                 response = await client.get_character_zone_rankings(
                     character_id=test_data["character_id"],
                     zone_id=test_data["zone_id"],
-                    metric=metric
+                    metric=metric,
                 )
-                
+
                 assert response is not None
-                assert hasattr(response, 'character_data')
+                assert hasattr(response, "character_data")
 
     @pytest.mark.asyncio
     async def test_rankings_with_invalid_character_id(self, client, test_data):
         """Test rankings with invalid character ID."""
         invalid_character_id = 999999999
-        
+
         async with client:
             response = await client.get_character_encounter_rankings(
                 character_id=invalid_character_id,
                 encounter_id=test_data["encounter_id"],
-                metric=CharacterRankingMetricType.dps
+                metric=CharacterRankingMetricType.dps,
             )
-            
+
             # Should return valid response structure even with invalid ID
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
 
     @pytest.mark.asyncio
     async def test_rankings_with_invalid_encounter_id(self, client, test_data):
         """Test rankings with invalid encounter ID."""
         invalid_encounter_id = 999999999
-        
+
         async with client:
             response = await client.get_character_encounter_rankings(
                 character_id=test_data["character_id"],
                 encounter_id=invalid_encounter_id,
-                metric=CharacterRankingMetricType.dps
+                metric=CharacterRankingMetricType.dps,
             )
-            
+
             # Should return valid response structure even with invalid ID
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
 
     @pytest.mark.asyncio
     async def test_rankings_with_invalid_zone_id(self, client, test_data):
         """Test rankings with invalid zone ID."""
         invalid_zone_id = 999999999
-        
+
         async with client:
             response = await client.get_character_zone_rankings(
                 character_id=test_data["character_id"],
                 zone_id=invalid_zone_id,
-                metric=CharacterRankingMetricType.playerscore
+                metric=CharacterRankingMetricType.playerscore,
             )
-            
+
             # Should return valid response structure even with invalid ID
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
 
 
 if __name__ == "__main__":
@@ -170,15 +172,15 @@ if __name__ == "__main__":
     async def main():
         client = Client(
             url="https://www.esologs.com/api/v2/client",
-            headers={"Authorization": f"Bearer {get_access_token()}"}
+            headers={"Authorization": f"Bearer {get_access_token()}"},
         )
-        
+
         async with client:
-            response = await client.get_character_encounter_rankings(
+            await client.get_character_encounter_rankings(
                 character_id=34663,
                 encounter_id=27,
-                metric=CharacterRankingMetricType.dps
+                metric=CharacterRankingMetricType.dps,
             )
-            print("Character Rankings Integration Test Result:", response)
-    
+            # Character Rankings Integration Test Result logged via pytest
+
     asyncio.run(main())

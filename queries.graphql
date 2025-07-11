@@ -734,3 +734,68 @@ query getReportPlayerDetails(
   }
 }
 
+query getReports(
+  $endTime: Float
+  $guildID: Int
+  $guildName: String
+  $guildServerSlug: String
+  $guildServerRegion: String
+  $guildTagID: Int
+  $userID: Int
+  $limit: Int
+  $page: Int
+  $startTime: Float
+  $zoneID: Int
+  $gameZoneID: Int
+) {
+  reportData {
+    reports(
+      endTime: $endTime
+      guildID: $guildID
+      guildName: $guildName
+      guildServerSlug: $guildServerSlug
+      guildServerRegion: $guildServerRegion
+      guildTagID: $guildTagID
+      userID: $userID
+      limit: $limit
+      page: $page
+      startTime: $startTime
+      zoneID: $zoneID
+      gameZoneID: $gameZoneID
+    ) {
+      data {
+        code
+        title
+        startTime
+        endTime
+        zone {
+          id
+          name
+        }
+        guild {
+          id
+          name
+          server {
+            name
+            slug
+            region {
+              name
+              slug
+            }
+          }
+        }
+        owner {
+          id
+          name
+        }
+      }
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+    }
+  }
+}

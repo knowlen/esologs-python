@@ -1,5 +1,13 @@
 # Testing Guide
 
+## Test Suites Overview
+
+| Test Suite | Purpose | API Required | Speed | Coverage |
+|-----------|---------|--------------|-------|----------|
+| **Unit Tests** | Logic validation | No | Fast | Narrow, deep |
+| **Integration Tests** | Detailed API testing | Yes | Medium | Focused, thorough |
+| **Sanity Tests** | Broad API coverage | Yes | Medium | Wide, shallow |
+
 ## Running Tests
 
 ### Unit Tests
@@ -13,13 +21,29 @@ For integration tests that require API access, set environment variables:
 ```bash
 export ESOLOGS_ID="your_client_id"
 export ESOLOGS_SECRET="your_client_secret"
+pytest tests/integration/ -v
+```
+
+### Sanity Tests
+Comprehensive API coverage tests (requires API credentials):
+```bash
+export ESOLOGS_ID="your_client_id"
+export ESOLOGS_SECRET="your_client_secret"
+pytest tests/sanity/ -v
+```
+
+### Legacy Simple Test
+Quick validation script (requires API credentials):
+```bash
+export ESOLOGS_ID="your_client_id"
+export ESOLOGS_SECRET="your_client_secret"
 python test.py
 ```
 
 ### Validation Testing
 The parameter validation is thoroughly tested in `tests/unit/test_validators.py` with 22 test cases covering:
 - Report code validation
-- Ability ID validation  
+- Ability ID validation
 - Time range validation
 - Fight IDs validation
 - Limit parameter validation
@@ -44,6 +68,26 @@ echo "ESOLOGS_SECRET=your_secret" >> .env
 ## Test Coverage
 
 Current test coverage:
-- **52 unit tests** - All validation and API methods
-- **67% overall coverage** - With 100% coverage on validation module
-- **22 validation tests** - Comprehensive parameter validation testing
+- **76 unit tests** - Parameter validation and method logic
+- **85 integration tests** - Detailed API functionality testing
+- **19 sanity tests** - Comprehensive API coverage validation
+- **1 legacy test script** - Simple validation and examples
+
+### Sanity Test Details
+
+The sanity tests provide broad API coverage and serve as living documentation:
+
+```bash
+# Run API coverage report
+pytest tests/sanity/test_api_sanity.py::TestAPICoverageReport::test_api_coverage_summary -v -s
+```
+
+**Coverage Areas:**
+- **Game Data**: abilities, classes, factions, items, NPCs (5 features)
+- **World Data**: zones, regions (2 features)
+- **Character Data**: profiles, rankings (2 features)
+- **Guild Data**: basic info (1 feature)
+- **Report Data**: individual reports, analysis, search (3 features)
+- **System Data**: rate limiting (1 feature)
+
+**Total: 14+ major API features tested**

@@ -3,8 +3,8 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with this repository.
 
 ## Project Overview
-Python client library for ESO Logs API v2. GraphQL-based interface using `ariadne-codegen`. 
-- **Status**: v0.2.0-alpha, ~45% API coverage (Report Analysis recently added)
+Python client library for ESO Logs API v2. GraphQL-based interface using `ariadne-codegen`.
+- **Status**: v0.2.0-alpha, ~65% API coverage (Advanced Report Search recently added)
 - **Target**: 95%+ API coverage
 - **Authentication**: OAuth2 with `ESOLOGS_ID` and `ESOLOGS_SECRET` environment variables
 
@@ -35,21 +35,21 @@ black . && isort . && ruff check --fix . && mypy .
 ```
 
 ## API Coverage & Architecture
-**Current (~45%)**:
+**Current (~65%)**:
 - **Game Data**: abilities, classes, factions, items, maps, NPCs
 - **Character Data**: profiles, reports, rankings
 - **World Data**: regions, zones, encounters
 - **Guild Data**: basic info
-- **Report Data**: individual reports, **analysis (NEW)**
+- **Report Data**: individual reports, analysis, **search (NEW)**
 - **System**: rate limiting
 
-**Recently Added**: Report Analysis API with comprehensive event, graph, table, ranking, and player detail analysis
+**Recently Added**: Advanced Report Search API with flexible filtering, pagination, and convenience methods
 
-**Missing (~55%)**: Advanced search, user accounts, progress tracking, report collections
+**Missing (~35%)**: User accounts, progress tracking, enhanced guild features
 
 ## Configuration Files
 - **`pyproject.toml`**: Dependencies, dev tools, code quality config
-- **`mini.toml`**: ariadne-codegen configuration  
+- **`mini.toml`**: ariadne-codegen configuration
 - **`schema.graphql`**: GraphQL schema
 - **`queries.graphql`**: GraphQL queries for code generation
 
@@ -65,8 +65,8 @@ black . && isort . && ruff check --fix . && mypy .
 - ✅ **PR 1**: Character Rankings (COMPLETED - merged)
 - ✅ **PR 2**: Report Analysis (COMPLETED - events, graphs, tables, rankings, player details)
 - ✅ **PR 3**: Integration Test Suite (COMPLETED - 70+ comprehensive tests)
-- 🚧 **PR 4**: Advanced Report Search (NEXT PRIORITY)
-- 🚧 **PR 5**: Client Architecture Refactor (PLANNED)
+- ✅ **PR 4**: Advanced Report Search (COMPLETED - search, filtering, pagination)
+- 🚧 **PR 5**: Client Architecture Refactor (NEXT PRIORITY)
 
 ## Environment Variables
 ```bash
@@ -75,7 +75,7 @@ export ESOLOGS_SECRET="your_client_secret"
 ```
 
 ## Development Workflow
-1. Branch from `v2-dev` 
+1. Branch from `v2-dev`
 2. Implement with comprehensive tests
 3. Update documentation
 4. PR to `v2-dev` for review

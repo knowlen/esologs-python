@@ -1,13 +1,11 @@
 """Integration tests for Core API methods (Game Data, Character Data, etc.)."""
 
 import asyncio
+
 import pytest
-import os
-from typing import Optional
 
-from esologs.client import Client
 from access_token import get_access_token
-
+from esologs.client import Client
 
 # Fixtures are now centralized in conftest.py
 
@@ -20,9 +18,9 @@ class TestGameDataIntegration:
         """Test ability retrieval by ID."""
         async with client:
             response = await client.get_ability(id=1084)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.ability is not None
 
@@ -31,9 +29,9 @@ class TestGameDataIntegration:
         """Test abilities list retrieval."""
         async with client:
             response = await client.get_abilities(limit=10, page=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.abilities is not None
 
@@ -42,9 +40,9 @@ class TestGameDataIntegration:
         """Test class retrieval by ID."""
         async with client:
             response = await client.get_class(id=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.class_ is not None
 
@@ -53,9 +51,9 @@ class TestGameDataIntegration:
         """Test classes list retrieval."""
         async with client:
             response = await client.get_classes()
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.classes is not None
 
@@ -64,9 +62,9 @@ class TestGameDataIntegration:
         """Test factions list retrieval."""
         async with client:
             response = await client.get_factions()
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.factions is not None
 
@@ -75,9 +73,9 @@ class TestGameDataIntegration:
         """Test item retrieval by ID."""
         async with client:
             response = await client.get_item(id=19)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.item is not None
 
@@ -86,9 +84,9 @@ class TestGameDataIntegration:
         """Test items list retrieval."""
         async with client:
             response = await client.get_items(limit=10, page=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.items is not None
 
@@ -97,9 +95,9 @@ class TestGameDataIntegration:
         """Test item set retrieval by ID."""
         async with client:
             response = await client.get_item_set(id=19)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.item_set is not None
 
@@ -108,9 +106,9 @@ class TestGameDataIntegration:
         """Test item sets list retrieval."""
         async with client:
             response = await client.get_item_sets(limit=10, page=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.item_sets is not None
 
@@ -119,9 +117,9 @@ class TestGameDataIntegration:
         """Test map retrieval by ID."""
         async with client:
             response = await client.get_map(id=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             # Map data might be None for invalid IDs, just check structure
             assert response.game_data is not None
 
@@ -130,9 +128,9 @@ class TestGameDataIntegration:
         """Test maps list retrieval."""
         async with client:
             response = await client.get_maps(limit=10, page=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             # Maps data might be None, just check structure
             assert response.game_data is not None
 
@@ -141,9 +139,9 @@ class TestGameDataIntegration:
         """Test NPC retrieval by ID."""
         async with client:
             response = await client.get_npc(id=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.npc is not None
 
@@ -152,9 +150,9 @@ class TestGameDataIntegration:
         """Test NPCs list retrieval."""
         async with client:
             response = await client.get_npcs(limit=10, page=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'game_data')
+            assert hasattr(response, "game_data")
             if response.game_data:
                 assert response.game_data.npcs is not None
 
@@ -167,9 +165,9 @@ class TestWorldDataIntegration:
         """Test regions list retrieval."""
         async with client:
             response = await client.get_regions()
-            
+
             assert response is not None
-            assert hasattr(response, 'world_data')
+            assert hasattr(response, "world_data")
             if response.world_data:
                 assert response.world_data.regions is not None
 
@@ -178,9 +176,9 @@ class TestWorldDataIntegration:
         """Test zones list retrieval."""
         async with client:
             response = await client.get_zones()
-            
+
             assert response is not None
-            assert hasattr(response, 'world_data')
+            assert hasattr(response, "world_data")
             if response.world_data:
                 assert response.world_data.zones is not None
 
@@ -189,9 +187,9 @@ class TestWorldDataIntegration:
         """Test encounters by zone retrieval."""
         async with client:
             response = await client.get_encounters_by_zone(zone_id=1)
-            
+
             assert response is not None
-            assert hasattr(response, 'world_data')
+            assert hasattr(response, "world_data")
             if response.world_data:
                 assert response.world_data.zone is not None
 
@@ -204,9 +202,9 @@ class TestCharacterDataIntegration:
         """Test character retrieval by ID."""
         async with client:
             response = await client.get_character_by_id(id=test_data["character_id"])
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
             if response.character_data:
                 assert response.character_data.character is not None
 
@@ -215,12 +213,11 @@ class TestCharacterDataIntegration:
         """Test character reports retrieval."""
         async with client:
             response = await client.get_character_reports(
-                character_id=test_data["character_id"],
-                limit=10
+                character_id=test_data["character_id"], limit=10
             )
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
             # Reports might be None, just check structure
             if response.character_data:
                 assert response.character_data.character is not None
@@ -230,12 +227,11 @@ class TestCharacterDataIntegration:
         """Test character encounter ranking retrieval."""
         async with client:
             response = await client.get_character_encounter_ranking(
-                character_id=test_data["character_id"],
-                encounter_id=27
+                character_id=test_data["character_id"], encounter_id=27
             )
-            
+
             assert response is not None
-            assert hasattr(response, 'character_data')
+            assert hasattr(response, "character_data")
             if response.character_data and response.character_data.character:
                 assert response.character_data.character.encounter_rankings is not None
 
@@ -248,9 +244,9 @@ class TestGuildDataIntegration:
         """Test guild retrieval by ID."""
         async with client:
             response = await client.get_guild_by_id(guild_id=test_data["guild_id"])
-            
+
             assert response is not None
-            assert hasattr(response, 'guild_data')
+            assert hasattr(response, "guild_data")
             if response.guild_data:
                 assert response.guild_data.guild is not None
 
@@ -263,9 +259,9 @@ class TestReportDataIntegration:
         """Test report retrieval by code."""
         async with client:
             response = await client.get_report_by_code(code=test_data["report_code"])
-            
+
             assert response is not None
-            assert hasattr(response, 'report_data')
+            assert hasattr(response, "report_data")
             if response.report_data:
                 assert response.report_data.report is not None
 
@@ -278,7 +274,7 @@ class TestSystemDataIntegration:
         """Test rate limit data retrieval."""
         async with client:
             response = await client.get_rate_limit_data()
-            
+
             assert response is not None
             # Rate limit data structure varies, just check basic response
             assert response is not None
@@ -295,18 +291,16 @@ class TestComprehensiveWorkflow:
             # Get character info
             character = await client.get_character_by_id(id=test_data["character_id"])
             assert character is not None
-            
+
             # Get character reports
             reports = await client.get_character_reports(
-                character_id=test_data["character_id"],
-                limit=5
+                character_id=test_data["character_id"], limit=5
             )
             assert reports is not None
-            
+
             # Get character encounter ranking
             encounter_ranking = await client.get_character_encounter_ranking(
-                character_id=test_data["character_id"],
-                encounter_id=27
+                character_id=test_data["character_id"], encounter_id=27
             )
             assert encounter_ranking is not None
 
@@ -318,15 +312,15 @@ class TestComprehensiveWorkflow:
             # Get classes
             classes = await client.get_classes()
             assert classes is not None
-            
+
             # Get factions
             factions = await client.get_factions()
             assert factions is not None
-            
+
             # Get zones
             zones = await client.get_zones()
             assert zones is not None
-            
+
             # Get some abilities
             abilities = await client.get_abilities(limit=5, page=1)
             assert abilities is not None
@@ -342,15 +336,15 @@ class TestComprehensiveWorkflow:
             except Exception:
                 # Rate limit endpoint may not be available - skip this validation
                 pass
-            
+
             # Perform several operations with delays to respect rate limits
-            for i in range(3):
+            for _i in range(3):
                 response = await client.get_classes()
                 assert response is not None
-                
+
                 # Add delay between requests to be respectful of API limits
                 await asyncio.sleep(0.5)
-                
+
                 # Optional rate limit check - don't fail if unavailable
                 try:
                     rate_limit = await client.get_rate_limit_data()
@@ -365,11 +359,11 @@ if __name__ == "__main__":
     async def main():
         client = Client(
             url="https://www.esologs.com/api/v2/client",
-            headers={"Authorization": f"Bearer {get_access_token()}"}
+            headers={"Authorization": f"Bearer {get_access_token()}"},
         )
-        
+
         async with client:
-            response = await client.get_classes()
-            print("Core API Integration Test Result:", response)
-    
+            await client.get_classes()
+            # Core API Integration Test Result logged via pytest
+
     asyncio.run(main())
