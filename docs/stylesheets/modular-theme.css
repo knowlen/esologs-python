@@ -402,26 +402,7 @@
   color: #dbeafe;
 }
 
-/* Custom TOC with edit/view buttons */
-.md-sidebar--secondary .md-sidebar__scrollwrap {
-  margin: 0;
-}
-
-/* Hide default "ON THIS PAGE" title */
-.md-nav--secondary .md-nav__title {
-  display: none;
-}
-
-/* Custom header for TOC with edit/view buttons */
-.md-nav--secondary::before {
-  content: "";
-  display: block;
-  padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid var(--md-typeset-table-color);
-  margin-bottom: 0.8rem;
-}
-
-/* Style the action buttons in TOC area */
+/* Keep edit/view buttons in their original location */
 .md-content__button {
   display: inline-block;
   margin: 0 0.2rem;
@@ -438,28 +419,4 @@
 .md-content__button:hover {
   background: var(--md-default-fg-color--lighter);
   color: var(--md-default-bg-color);
-}
-
-/* Move content buttons to TOC area */
-.md-content__inner .md-content__button {
-  display: none;
-}
-
-/* Create custom button container in TOC */
-.md-nav--secondary {
-  position: relative;
-}
-
-.md-nav--secondary::after {
-  content: "📝 Edit page  👁 View source";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0.6rem 0.8rem;
-  border-bottom: 1px solid var(--md-typeset-table-color);
-  background: var(--md-default-bg-color);
-  font-size: 0.75rem;
-  color: var(--md-default-fg-color--light);
-  z-index: 1;
 }
