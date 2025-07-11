@@ -52,8 +52,15 @@ websockets = [
 pandas = [
     "pandas>=1.3.0",
 ]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.4.0",
+    "mkdocs-minify-plugin>=0.7.0",
+    "mkdocs-git-revision-date-localized-plugin>=1.2.0",
+    "pymdown-extensions>=10.0.0",
+]
 all = [
-    "esologs-python[dev,websockets,pandas]",
+    "esologs-python[dev,websockets,pandas,docs]",
 ]
 
 [project.urls]

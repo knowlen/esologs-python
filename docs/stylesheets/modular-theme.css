@@ -1,0 +1,319 @@
+/* Modular-inspired theme for ESO Logs Python documentation */
+
+/* Color Variables - Inspired by Modular docs */
+:root {
+  /* Primary colors */
+  --md-primary-fg-color:        #1e3a8a;  /* Deep blue */
+  --md-primary-fg-color--light: #3b82f6;  /* Medium blue */
+  --md-primary-fg-color--dark:  #1e40af;  /* Darker blue */
+  
+  /* Accent colors */
+  --md-accent-fg-color:         #06b6d4;  /* Cyan accent */
+  --md-accent-fg-color--light:  #67e8f9;  /* Light cyan */
+  --md-accent-fg-color--dark:   #0891b2;  /* Dark cyan */
+  
+  /* Background colors */
+  --md-default-bg-color:        #ffffff;  /* White background */
+  --md-default-fg-color:        #1f2937;  /* Dark gray text */
+  --md-default-fg-color--light: #6b7280;  /* Light gray text */
+  --md-default-fg-color--lighter: #9ca3af; /* Lighter gray text */
+  
+  /* Code colors */
+  --md-code-bg-color:           #f8fafc;  /* Light gray code bg */
+  --md-code-fg-color:           #1e293b;  /* Dark code text */
+  
+  /* Border and divider colors */
+  --md-typeset-table-color:     #e5e7eb;  /* Table borders */
+  --md-typeset-mark-color:      #fef3c7;  /* Highlight color */
+}
+
+/* Dark mode colors */
+[data-md-color-scheme="slate"] {
+  /* Primary colors in dark mode */
+  --md-primary-fg-color:        #60a5fa;  /* Light blue */
+  --md-primary-fg-color--light: #93c5fd;  /* Lighter blue */
+  --md-primary-fg-color--dark:  #3b82f6;  /* Medium blue */
+  
+  /* Background colors in dark mode */
+  --md-default-bg-color:        #0f172a;  /* Dark blue-gray bg */
+  --md-default-fg-color:        #f8fafc;  /* Light text */
+  --md-default-fg-color--light: #cbd5e1;  /* Medium light text */
+  --md-default-fg-color--lighter: #94a3b8; /* Gray text */
+  
+  /* Code colors in dark mode */
+  --md-code-bg-color:           #1e293b;  /* Dark code bg */
+  --md-code-fg-color:           #e2e8f0;  /* Light code text */
+  
+  /* Border colors in dark mode */
+  --md-typeset-table-color:     #334155;  /* Dark table borders */
+}
+
+/* Typography enhancements */
+.md-typeset {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Headings with better spacing */
+.md-typeset h1 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--md-primary-fg-color);
+}
+
+.md-typeset h2 {
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 2rem 0 1rem 0;
+  color: var(--md-primary-fg-color);
+}
+
+.md-typeset h3 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 1.5rem 0 0.75rem 0;
+}
+
+/* Code blocks with better styling */
+.md-typeset code {
+  background-color: var(--md-code-bg-color);
+  color: var(--md-code-fg-color);
+  padding: 0.2em 0.4em;
+  border-radius: 0.375rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  font-size: 0.875em;
+}
+
+.md-typeset pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Enhanced code blocks */
+.highlight {
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.highlight pre {
+  padding: 1rem 1.25rem;
+  margin: 0;
+  background-color: var(--md-code-bg-color);
+  border-radius: 0.5rem;
+}
+
+/* Navigation styling */
+.md-nav__title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.md-nav__link {
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.md-nav__link:hover {
+  color: var(--md-primary-fg-color);
+}
+
+/* Active navigation item */
+.md-nav__link--active {
+  color: var(--md-primary-fg-color);
+  font-weight: 500;
+}
+
+/* Tabs styling */
+.md-tabs {
+  background-color: var(--md-primary-fg-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.md-tabs__link {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  color: white;
+}
+
+/* Button styling */
+.md-button {
+  background-color: var(--md-primary-fg-color);
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.md-button:hover {
+  background-color: var(--md-primary-fg-color--dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.md-button--primary {
+  background-color: var(--md-accent-fg-color);
+}
+
+.md-button--primary:hover {
+  background-color: var(--md-accent-fg-color--dark);
+}
+
+/* Admonitions styling */
+.md-typeset .admonition {
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--md-primary-fg-color);
+  margin: 1.5rem 0;
+}
+
+.md-typeset .admonition-title {
+  font-weight: 600;
+  padding: 0.75rem 1rem 0 1rem;
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color);
+  color: white;
+  font-weight: 600;
+  padding: 1rem;
+}
+
+.md-typeset table:not([class]) td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--md-typeset-table-color);
+}
+
+/* Search styling */
+.md-search__input {
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.md-search__input:focus {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2);
+}
+
+/* Footer */
+.md-footer {
+  background-color: var(--md-primary-fg-color--dark);
+}
+
+.md-footer-meta {
+  background-color: var(--md-primary-fg-color);
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 76.1875em) {
+  .md-nav--primary .md-nav__title {
+    background-color: var(--md-primary-fg-color);
+  }
+}
+
+/* Custom home page hero section */
+.hero-section {
+  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: -1.5rem -1rem 2rem -1rem;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+/* Feature cards */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-typeset-table-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--md-primary-fg-color);
+}
+
+.feature-card h3 {
+  color: var(--md-primary-fg-color);
+  margin-top: 0;
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge--completed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-badge--in-progress {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge--planned {
+  background-color: #e0e7ff;
+  color: #3730a3;
+}
+
+[data-md-color-scheme="slate"] .status-badge--completed {
+  background-color: #166534;
+  color: #dcfce7;
+}
+
+[data-md-color-scheme="slate"] .status-badge--in-progress {
+  background-color: #92400e;
+  color: #fef3c7;
+}
+
+[data-md-color-scheme="slate"] .status-badge--planned {
+  background-color: #3730a3;
+  color: #e0e7ff;
+}

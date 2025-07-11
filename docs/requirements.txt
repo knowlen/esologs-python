@@ -1,0 +1,14 @@
+# Documentation requirements for Read the Docs
+# These dependencies are needed to build the documentation
+
+mkdocs>=1.5.0
+mkdocs-material>=9.4.0
+mkdocs-minify-plugin>=0.7.0
+mkdocs-git-revision-date-localized-plugin>=1.2.0
+pymdown-extensions>=10.0.0
+
+# Required for the ESO Logs Python package itself
+requests>=2.25.0
+ariadne-codegen>=0.6.0
+pydantic>=2.0.0
+httpx>=0.24.0
