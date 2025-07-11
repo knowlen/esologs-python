@@ -237,6 +237,109 @@ async def test_queries():
             print(f"An error occurred during get_rate_limit_data: {e}")
         print(separator)
 
+        try:
+            # Test Report Analysis - getReportEvents
+            report_code = "VfxqaX47HGC98rAp"
+            from esologs.enums import EventDataType
+            
+            events_response = await client.get_report_events(
+                code=report_code,
+                data_type=EventDataType.damage_done,
+                limit=10
+            )
+            print("Get Report Events Response:", events_response)
+        except Exception as e:
+            print(f"An error occurred during get_report_events: {e}")
+        print(separator)
+
+        try:
+            # Test Report Analysis - getReportTable
+            from esologs.enums import TableDataType
+            
+            table_response = await client.get_report_table(
+                code=report_code,
+                data_type=TableDataType.damage_done,
+                limit=10
+            )
+            print("Get Report Table Response:", table_response)
+        except Exception as e:
+            print(f"An error occurred during get_report_table: {e}")
+        print(separator)
+
+        try:
+            # Test Report Analysis - getReportRankings
+            from esologs.enums import ReportRankingMetricType
+            
+            rankings_response = await client.get_report_rankings(
+                code=report_code,
+                player_metric=ReportRankingMetricType.dps
+            )
+            print("Get Report Rankings Response:", rankings_response)
+        except Exception as e:
+            print(f"An error occurred during get_report_rankings: {e}")
+        print(separator)
+
+        try:
+            # Test Report Analysis - getReportPlayerDetails
+            player_details_response = await client.get_report_player_details(
+                code=report_code
+            )
+            print("Get Report Player Details Response:", player_details_response)
+        except Exception as e:
+            print(f"An error occurred during get_report_player_details: {e}")
+        print(separator)
+
+        try:
+            # Test Advanced Report Search - searchReports
+            search_response = await client.search_reports(
+                guild_id=guild_id,
+                limit=5
+            )
+            print("Search Reports Response:", search_response)
+        except Exception as e:
+            print(f"An error occurred during search_reports: {e}")
+        print(separator)
+
+        try:
+            # Test Advanced Report Search - getGuildReports convenience method
+            guild_reports_response = await client.get_guild_reports(
+                guild_id=guild_id,
+                limit=3
+            )
+            print("Get Guild Reports Response:", guild_reports_response)
+        except Exception as e:
+            print(f"An error occurred during get_guild_reports: {e}")
+        print(separator)
+
+        try:
+            # Test Advanced Report Search - getUserReports convenience method
+            user_reports_response = await client.get_user_reports(
+                user_id=1,  # Generic user ID
+                limit=3
+            )
+            print("Get User Reports Response:", user_reports_response)
+        except Exception as e:
+            print(f"An error occurred during get_user_reports: {e}")
+        print(separator)
+
+        try:
+            # Test Advanced Report Search with date filtering
+            from datetime import datetime, timedelta
+            
+            end_time = datetime.now().timestamp() * 1000
+            start_time = (datetime.now() - timedelta(days=30)).timestamp() * 1000
+            
+            date_filtered_response = await client.search_reports(
+                guild_id=guild_id,
+                start_time=start_time,
+                end_time=end_time,
+                limit=3
+            )
+            print("Search Reports with Date Filter Response:", date_filtered_response)
+        except Exception as e:
+            print(f"An error occurred during search_reports with date filter: {e}")
+        print(separator)
+
 
 # Run the async test function
 if __name__ == "__main__":
