@@ -27,25 +27,25 @@
   --md-typeset-mark-color:      #fef3c7;  /* Subtle highlight */
 }
 
-/* Dark mode colors - softer, easier on eyes */
+/* Dark mode colors - much softer, easier on eyes */
 [data-md-color-scheme="slate"] {
-  /* Primary colors in dark mode - less harsh */
-  --md-primary-fg-color:        #64748b;  /* Softer gray */
-  --md-primary-fg-color--light: #94a3b8;  /* Softer light gray */
-  --md-primary-fg-color--dark:  #475569;  /* Softer dark gray */
+  /* Primary colors in dark mode - muted */
+  --md-primary-fg-color:        #64748b;  /* Muted gray */
+  --md-primary-fg-color--light: #94a3b8;  /* Muted light gray */
+  --md-primary-fg-color--dark:  #475569;  /* Muted dark gray */
   
-  /* Background colors in dark mode - warmer, less harsh */
-  --md-default-bg-color:        #1e293b;  /* Slightly warmer dark background */
-  --md-default-fg-color:        #e2e8f0;  /* Softer light text */
-  --md-default-fg-color--light: #cbd5e1;  /* Softer medium light text */
-  --md-default-fg-color--lighter: #94a3b8; /* Softer gray text */
+  /* Background colors in dark mode - warmer, much softer text */
+  --md-default-bg-color:        #1e293b;  /* Dark background */
+  --md-default-fg-color:        #cbd5e1;  /* Much softer text - not bright white */
+  --md-default-fg-color--light: #94a3b8;  /* Muted medium text */
+  --md-default-fg-color--lighter: #64748b; /* Subtle gray text */
   
   /* Code colors in dark mode */
-  --md-code-bg-color:           #334155;  /* Softer dark code bg */
-  --md-code-fg-color:           #e2e8f0;  /* Softer light code text */
+  --md-code-bg-color:           #334155;  /* Dark code bg */
+  --md-code-fg-color:           #cbd5e1;  /* Muted code text */
   
   /* Border colors in dark mode */
-  --md-typeset-table-color:     #475569;  /* Softer dark table borders */
+  --md-typeset-table-color:     #475569;  /* Muted borders */
 }
 
 /* Typography enhancements */
