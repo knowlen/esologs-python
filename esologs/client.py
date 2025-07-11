@@ -2,6 +2,12 @@ from typing import Any, Dict, List, Optional, Union
 
 from .async_base_client import AsyncBaseClient
 from .base_model import UNSET, UnsetType
+from .validators import (
+    sanitize_api_key_from_error,
+    validate_limit_parameter,
+    validate_positive_integer,
+    validate_report_search_params,
+)
 from .enums import (
     CharacterRankingMetricType,
     EventDataType,
@@ -53,6 +59,19 @@ def gql(q: str) -> str:
 
 
 class Client(AsyncBaseClient):
+    """
+    ESO Logs API client with comprehensive validation and security features.
+    
+    Security Features:
+    - Input validation with length limits to prevent DoS attacks
+    - API key sanitization in error messages  
+    - Parameter validation before API calls
+    
+    Rate Limiting:
+    - ESO Logs API has rate limits (typically 300 requests/minute)
+    - Users should implement rate limiting in production applications
+    - Consider using exponential backoff for failed requests
+    """
     async def get_ability(self, id: int, **kwargs: Any) -> GetAbility:
         query = gql(
             """
@@ -1472,6 +1491,18 @@ class Client(AsyncBaseClient):
                 end_time=1672531200000     # Jan 1, 2023
             )
         """
+        # Validate parameters before making API call
+        validate_report_search_params(
+            guild_name=guild_name,
+            guild_server_slug=guild_server_slug, 
+            guild_server_region=guild_server_region,
+            limit=limit,
+            page=page,
+            start_time=start_time,
+            end_time=end_time,
+            **kwargs
+        )
+        
         return await self.get_reports(
             end_time=end_time,
             guild_id=guild_id,
@@ -1516,6 +1547,13 @@ class Client(AsyncBaseClient):
             # Get recent reports for guild
             reports = await client.get_guild_reports(guild_id=123, limit=25)
         """
+        # Validate guild-specific parameters
+        validate_positive_integer(guild_id, "guild_id")
+        if limit is not UNSET:
+            validate_limit_parameter(limit)
+        if page is not UNSET:
+            validate_positive_integer(page, "page")
+        
         return await self.search_reports(
             guild_id=guild_id,
             limit=limit,
@@ -1554,6 +1592,13 @@ class Client(AsyncBaseClient):
             # Get recent reports for user
             reports = await client.get_user_reports(user_id=456, limit=25)
         """
+        # Validate user-specific parameters
+        validate_positive_integer(user_id, "user_id")
+        if limit is not UNSET:
+            validate_limit_parameter(limit)
+        if page is not UNSET:
+            validate_positive_integer(page, "page")
+        
         return await self.search_reports(
             user_id=user_id,
             limit=limit,

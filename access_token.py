@@ -1,6 +1,7 @@
 import base64
 import logging
 import os
+import re
 from typing import Optional
 
 import requests
@@ -61,8 +62,10 @@ def get_access_token(
         return access_token
     else:
         logging.error(f"OAuth request failed with status {response.status_code}")
+        # Sanitize response text to prevent credential exposure
+        sanitized_response = re.sub(r'[a-zA-Z0-9]{32,}', '[REDACTED]', response.text)
         raise Exception(
-            f"OAuth request failed with status {response.status_code}: {response.text}"
+            f"OAuth request failed with status {response.status_code}: {sanitized_response}"
         )
 
 

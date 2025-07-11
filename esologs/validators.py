@@ -6,6 +6,49 @@ from typing import Any, Dict, Optional, Union
 
 from .exceptions import ValidationError
 
+# Security constants
+MAX_STRING_LENGTH = 1000  # Prevent DoS via large strings
+MAX_GUILD_NAME_LENGTH = 100  # Reasonable guild name limit
+MAX_SERVER_SLUG_LENGTH = 50   # Reasonable server slug limit
+
+
+def validate_string_length(value: str, field_name: str, max_length: int = MAX_STRING_LENGTH) -> None:
+    """
+    Validate string length to prevent DoS attacks and ensure reasonable input sizes.
+    
+    Args:
+        value: String value to validate
+        field_name: Name of the field for error messages
+        max_length: Maximum allowed length
+        
+    Raises:
+        ValidationError: If string is too long
+    """
+    if len(value) > max_length:
+        raise ValidationError(f"{field_name} exceeds maximum length of {max_length} characters")
+
+
+def sanitize_api_key_from_error(error_message: str) -> str:
+    """
+    Sanitize error messages to prevent API key exposure.
+    
+    Args:
+        error_message: Original error message
+        
+    Returns:
+        Sanitized error message with potential API keys masked
+    """
+    # Pattern to match potential API keys (32+ character alphanumeric strings)
+    api_key_pattern = r'[a-zA-Z0-9]{32,}'
+    
+    def mask_key(match):
+        key = match.group(0)
+        if len(key) >= 32:  # Likely an API key
+            return f"{key[:4]}...{key[-4:]}"
+        return key
+    
+    return re.sub(api_key_pattern, mask_key, error_message)
+
 
 def validate_report_code(code: str) -> None:
     """
@@ -193,14 +236,16 @@ def validate_report_search_params(
     Raises:
         ValidationError: If parameters are invalid
     """
-    # Validate guild name requirements
+    # Validate guild name requirements with security checks
     if guild_name is not None:
         if guild_server_slug is None or guild_server_region is None:
             raise ValidationError(
                 "guild_name requires both guild_server_slug and guild_server_region"
             )
         validate_required_string(guild_name, "guild_name")
+        validate_string_length(guild_name, "guild_name", MAX_GUILD_NAME_LENGTH)
         validate_required_string(guild_server_slug, "guild_server_slug")
+        validate_string_length(guild_server_slug, "guild_server_slug", MAX_SERVER_SLUG_LENGTH)
         validate_required_string(guild_server_region, "guild_server_region")
 
     # Validate limit (ESO Logs API allows 1-25 for reports)
@@ -247,11 +292,25 @@ def parse_date_to_timestamp(date_input: Union[str, datetime, float, int]) -> flo
         parse_date_to_timestamp(1672531200000)
     """
     if isinstance(date_input, (int, float)):
+        # Validate timestamp bounds
+        # ESO released in 2014, so reject timestamps before 2000
+        MIN_TIMESTAMP_SECONDS = 946684800  # Jan 1, 2000 UTC
+        MAX_TIMESTAMP_SECONDS = 4102444800  # Jan 1, 2100 UTC
+        
         # Assume it's already a timestamp
         # If it's too small, assume it's in seconds and convert to milliseconds
-        if date_input < 1e10:  # Less than ~2001 in milliseconds
+        if date_input < 1e10:  # Less than 10 billion (seconds format)
+            if date_input < MIN_TIMESTAMP_SECONDS:
+                raise ValueError(f"Timestamp {date_input} is before year 2000")
+            if date_input > MAX_TIMESTAMP_SECONDS:
+                raise ValueError(f"Timestamp {date_input} is after year 2100")
             return float(date_input * 1000)
-        return float(date_input)
+        else:  # Milliseconds format
+            if date_input < MIN_TIMESTAMP_SECONDS * 1000:
+                raise ValueError(f"Timestamp {date_input} is before year 2000")
+            if date_input > MAX_TIMESTAMP_SECONDS * 1000:
+                raise ValueError(f"Timestamp {date_input} is after year 2100")
+            return float(date_input)
 
     if isinstance(date_input, datetime):
         return date_input.timestamp() * 1000
@@ -323,6 +382,7 @@ def validate_guild_search_params(
         validate_positive_integer(guild_id, "guild_id")
 
     if guild_name is not None:
+        validate_string_length(guild_name, "guild_name", MAX_GUILD_NAME_LENGTH)
         validate_report_search_params(
             guild_name=guild_name,
             guild_server_slug=guild_server_slug,
