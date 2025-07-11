@@ -6,9 +6,9 @@ Comprehensive testing framework for the esologs-python library, providing three 
 
 | Test Suite | Purpose | API Required | Speed | Coverage | Test Count |
 |-----------|---------|--------------|-------|----------|------------|
-| **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 81 tests |
-| **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 67 tests |
-| **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 18 tests |
+| **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 76 tests |
+| **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 85 tests |
+| **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 19 tests |
 
 ## Quick Start
 
@@ -151,15 +151,15 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~60% API endpoint coverage
+- **Integration Tests**: ~65% API endpoint coverage
 - **Sanity Tests**: 13+ major API features validated
-- **Overall**: 67% code coverage with high-quality tests
+- **Overall**: 70% code coverage with high-quality tests
 
 ### Target Coverage
 - **Unit Tests**: Maintain 100% validation coverage
-- **Integration Tests**: Expand to 95% API coverage
+- **Integration Tests**: Expand to 90% API coverage
 - **Sanity Tests**: Cover all major API categories
-- **Overall**: Achieve 85%+ code coverage
+- **Overall**: Achieve 80%+ code coverage
 
 ## Contributing
 
@@ -215,6 +215,6 @@ black . && isort . && ruff check --fix . && mypy .
 | Unit | < 5 seconds | 81 | Development feedback |
 | Integration | ~30 seconds | 67 | API validation |
 | Sanity | ~15 seconds | 18 | Health check |
-| **Total** | **~50 seconds** | **166** | **Complete validation** |
+| **Total** | **~60 seconds** | **180** | **Complete validation** |
 
 The test suite provides comprehensive coverage while maintaining fast execution times for efficient development workflows.

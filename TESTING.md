@@ -68,9 +68,9 @@ echo "ESOLOGS_SECRET=your_secret" >> .env
 ## Test Coverage
 
 Current test coverage:
-- **21 unit tests** - Parameter validation and method logic
-- **14 integration tests** - Detailed API functionality testing
-- **7 sanity test classes** - Comprehensive API coverage validation
+- **76 unit tests** - Parameter validation and method logic
+- **85 integration tests** - Detailed API functionality testing
+- **19 sanity tests** - Comprehensive API coverage validation
 - **1 legacy test script** - Simple validation and examples
 
 ### Sanity Test Details
@@ -90,4 +90,4 @@ pytest tests/sanity/test_api_sanity.py::TestAPICoverageReport::test_api_coverage
 - **Report Data**: individual reports, analysis, search (3 features)
 - **System Data**: rate limiting (1 feature)
 
-**Total: 13+ major API features tested**
+**Total: 14+ major API features tested**

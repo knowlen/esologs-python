@@ -9,7 +9,7 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 ## 🎯 Project Status
 
 **Current Version:** 0.2.0-alpha
-**API Coverage:** ~35% (expanding to 95%+ coverage)
+**API Coverage:** ~60% (expanding to 95%+ coverage)
 **Development Stage:** Active development - Phase 2 implementation in progress
 
 ### What's Working
@@ -25,9 +25,13 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
   - ✅ Time-series performance graphs
   - ✅ Tabular analysis data
   - ✅ Report rankings and player details
+- ✅ **Advanced report search and filtering** (PR #4 - Merged)
+  - ✅ Flexible report search with multiple criteria
+  - ✅ Guild and user report convenience methods
+  - ✅ Comprehensive filtering and pagination
+  - ✅ Parameter validation and security features
 
 ### Coming Soon
-- 🚧 Advanced report search and filtering
 - 🚧 Progress race tracking
 - 🚧 User account integration
 - 🚧 Pandas DataFrame integration for data analysis
@@ -170,6 +174,52 @@ async def main():
 asyncio.run(main())
 ```
 
+### Advanced Report Search (NEW)
+
+```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
+async def main():
+    token = get_access_token()
+
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Search reports with flexible criteria
+        reports = await client.search_reports(
+            guild_id=123,
+            zone_id=456,
+            start_time=1672531200000,  # Jan 1, 2023
+            end_time=1672617600000,    # Jan 2, 2023
+            limit=25,
+            page=1
+        )
+
+        # Convenience methods for common searches
+        guild_reports = await client.get_guild_reports(
+            guild_id=123,
+            limit=50
+        )
+        
+        user_reports = await client.get_user_reports(
+            user_id=789,
+            zone_id=456,
+            limit=20
+        )
+
+        # Process search results
+        if reports.report_data and reports.report_data.reports:
+            for report in reports.report_data.reports.data:
+                print(f"Report: {report.code} - {report.zone.name}")
+                print(f"Duration: {report.end_time - report.start_time}ms")
+
+asyncio.run(main())
+```
+
 ## 📊 Available API Methods
 
 ### Game Data
@@ -205,11 +255,15 @@ asyncio.run(main())
 
 ### Report Data
 - `get_report_by_code(code)` - Get specific report by code
-- `get_report_events(code, **kwargs)` - **NEW**: Get event-by-event combat log data with comprehensive filtering
-- `get_report_graph(code, **kwargs)` - **NEW**: Get time-series performance graphs and metrics
-- `get_report_table(code, **kwargs)` - **NEW**: Get tabular analysis data with sorting and filtering
-- `get_report_rankings(code, **kwargs)` - **NEW**: Get report rankings and leaderboard data
-- `get_report_player_details(code, **kwargs)` - **NEW**: Get detailed player performance data from reports
+- `get_reports(**kwargs)` - **NEW**: Advanced report search with comprehensive filtering
+- `search_reports(**kwargs)` - **NEW**: Flexible report search with multiple criteria
+- `get_guild_reports(guild_id, **kwargs)` - **NEW**: Convenience method for guild reports
+- `get_user_reports(user_id, **kwargs)` - **NEW**: Convenience method for user reports
+- `get_report_events(code, **kwargs)` - Get event-by-event combat log data with comprehensive filtering
+- `get_report_graph(code, **kwargs)` - Get time-series performance graphs and metrics
+- `get_report_table(code, **kwargs)` - Get tabular analysis data with sorting and filtering
+- `get_report_rankings(code, **kwargs)` - Get report rankings and leaderboard data
+- `get_report_player_details(code, **kwargs)` - Get detailed player performance data from reports
 
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
@@ -298,10 +352,11 @@ We welcome contributions! Please see our contributing guidelines:
 
 - **Phase 1** ✅: Security fixes and foundation improvements
 - **Phase 2** 🚧: Core architecture and missing API functionality
-  - ✅ PR #4: Character Rankings Implementation (Merged)
-  - ✅ PR #5: Report Analysis Implementation (Merged)
-  - 🚧 PR #6: Advanced Report Search (Next)
-  - 🚧 PR #7: Client Architecture Refactor (Planned)
+  - ✅ PR #1: Character Rankings Implementation (Merged)
+  - ✅ PR #2: Report Analysis Implementation (Merged)
+  - ✅ PR #3: Integration Test Suite (Merged)
+  - ✅ PR #4: Advanced Report Search (Merged)
+  - 🚧 PR #5: Client Architecture Refactor (Next)
 - **Phase 3** 🚧: Data transformation and pandas integration
 - **Phase 4** 🚧: Comprehensive testing and documentation
 - **Phase 5** 🚧: Performance optimization and caching

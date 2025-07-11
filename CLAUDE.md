@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ## Project Overview
 Python client library for ESO Logs API v2. GraphQL-based interface using `ariadne-codegen`.
-- **Status**: v0.2.0-alpha, ~60% API coverage (Advanced Report Search recently added)
+- **Status**: v0.2.0-alpha, ~65% API coverage (Advanced Report Search recently added)
 - **Target**: 95%+ API coverage
 - **Authentication**: OAuth2 with `ESOLOGS_ID` and `ESOLOGS_SECRET` environment variables
 
@@ -35,7 +35,7 @@ black . && isort . && ruff check --fix . && mypy .
 ```
 
 ## API Coverage & Architecture
-**Current (~60%)**:
+**Current (~65%)**:
 - **Game Data**: abilities, classes, factions, items, maps, NPCs
 - **Character Data**: profiles, reports, rankings
 - **World Data**: regions, zones, encounters
@@ -45,7 +45,7 @@ black . && isort . && ruff check --fix . && mypy .
 
 **Recently Added**: Advanced Report Search API with flexible filtering, pagination, and convenience methods
 
-**Missing (~40%)**: User accounts, progress tracking, enhanced guild features
+**Missing (~35%)**: User accounts, progress tracking, enhanced guild features
 
 ## Configuration Files
 - **`pyproject.toml`**: Dependencies, dev tools, code quality config
