@@ -4,7 +4,7 @@
 
 **Goal**: Transform the current basic GraphQL client into a comprehensive, well-architected library with significantly expanded API coverage.
 
-**Current State**: ~45% API coverage, major report analysis features complete  
+**Current State**: ~45% API coverage, major report analysis features complete
 **Target State**: ~60-70% API coverage, production-ready architecture
 
 ## 📊 **Current API Coverage Analysis**
@@ -13,7 +13,7 @@
 - Basic game data (abilities, classes, items, NPCs, maps, factions)
 - Simple character info and reports
 - **Character rankings & performance** (get_character_encounter_rankings, get_character_zone_rankings)
-- Basic guild information  
+- Basic guild information
 - World data (regions, zones, encounters)
 - Rate limiting information
 - Single report retrieval
@@ -57,7 +57,7 @@ Based on schema analysis, we're missing:
 
 ### **1. Client Architecture Redesign**
 
-**Current Issue**: Single monolithic client class with 20+ methods  
+**Current Issue**: Single monolithic client class with 20+ methods
 **Proposed Solution**: Modular client hierarchy
 
 ```python
@@ -65,7 +65,7 @@ Based on schema analysis, we're missing:
 class EsoLogsClient:
     def __init__(self, token: str):
         self.game_data = GameDataClient(self._base_client)
-        self.character_data = CharacterDataClient(self._base_client) 
+        self.character_data = CharacterDataClient(self._base_client)
         self.report_data = ReportDataClient(self._base_client)
         self.rankings = RankingsClient(self._base_client)
         self.world_data = WorldDataClient(self._base_client)
@@ -80,7 +80,7 @@ reports = await client.report_data.search_reports(guild_id=123, start_date="2025
 
 ### **2. Data Transformation Layer**
 
-**Current Issue**: Raw GraphQL responses, no data transformation  
+**Current Issue**: Raw GraphQL responses, no data transformation
 **Proposed Solution**: Built-in transformation utilities
 
 ```python
@@ -97,7 +97,7 @@ rankings_df.to_csv('character_performance.csv')
 
 ### **3. Query Builder Pattern**
 
-**Current Issue**: Fixed queries, no flexibility  
+**Current Issue**: Fixed queries, no flexibility
 **Proposed Solution**: Flexible query building
 
 ```python
@@ -112,7 +112,7 @@ reports = await client.report_data.search() \
 
 ### **4. Caching & Performance**
 
-**Current Issue**: No caching, repeated API calls  
+**Current Issue**: No caching, repeated API calls
 **Proposed Solution**: Intelligent caching system
 
 ```python
@@ -125,8 +125,8 @@ class CacheManager:
 ## 📋 **Detailed Implementation Plan**
 
 ### **PR 1: Character Rankings Implementation** ✅
-**Branch**: `v2/character-rankings-api` (PR #4)  
-**Status**: ✅ **Completed & Merged**  
+**Branch**: `v2/character-rankings-api` (PR #4)
+**Status**: ✅ **Completed & Merged**
 **Estimated Size**: Medium
 
 **Tasks**:
@@ -140,7 +140,7 @@ class CacheManager:
 **New Methods**:
 ```python
 async def get_character_encounter_rankings(character_id: int, encounter_id: int, **kwargs)
-async def get_character_zone_rankings(character_id: int, zone_id: int, **kwargs)  
+async def get_character_zone_rankings(character_id: int, zone_id: int, **kwargs)
 ```
 
 **Implementation Details**:
@@ -151,8 +151,8 @@ async def get_character_zone_rankings(character_id: int, zone_id: int, **kwargs)
 - Proper GraphQL query generation with ariadne-codegen
 
 ### **PR 2: Report Analysis Implementation** ✅
-**Branch**: `v2/report-analysis-api` (PR #5)  
-**Status**: ✅ **Completed & Merged**  
+**Branch**: `v2/report-analysis-api` (PR #5)
+**Status**: ✅ **Completed & Merged**
 **Estimated Size**: Large
 
 **Tasks**:
@@ -174,7 +174,7 @@ async def get_report_player_details(code: str, **kwargs)
 
 ### **PR 3: Integration Test Suite** ✅
 **Branch**: `v2/integration-tests` (PR #7)
-**Status**: ✅ **Completed & Merged**  
+**Status**: ✅ **Completed & Merged**
 **Estimated Size**: Medium
 
 **Tasks**:
@@ -194,8 +194,8 @@ async def get_report_player_details(code: str, **kwargs)
 - Complete test documentation and examples
 
 ### **PR 4: Advanced Report Search**
-**Branch**: `v2/report-search-api`  
-**Status**: 🚧 **Next Priority**  
+**Branch**: `v2/report-search-api`
+**Status**: 🚧 **Next Priority**
 **Estimated Size**: Medium
 
 **Tasks**:
@@ -213,8 +213,8 @@ async def get_user_reports(user_id: int, limit: int = 50, **kwargs)
 ```
 
 ### **PR 5: Client Architecture Refactor**
-**Branch**: `v2/client-architecture-refactor`  
-**Status**: 🚧 **Planned**  
+**Branch**: `v2/client-architecture-refactor`
+**Status**: 🚧 **Planned**
 **Estimated Size**: Large (Breaking Changes)
 
 **Tasks**:
@@ -237,8 +237,8 @@ await client.character_data.get_by_id(123)
 ```
 
 ### **PR 6: Data Transformation Layer**
-**Branch**: `v2/data-transformation`  
-**Status**: 🚧 **Planned**  
+**Branch**: `v2/data-transformation`
+**Status**: 🚧 **Planned**
 **Estimated Size**: Medium
 
 **Tasks**:
@@ -249,8 +249,8 @@ await client.character_data.get_by_id(123)
 5. Update documentation with data analysis examples
 
 ### **PR 7: User Account Integration**
-**Branch**: `v2/user-account-api`  
-**Status**: 🚧 **Planned**  
+**Branch**: `v2/user-account-api`
+**Status**: 🚧 **Planned**
 **Estimated Size**: Medium
 
 **Tasks**:
@@ -260,8 +260,8 @@ await client.character_data.get_by_id(123)
 4. Add authentication-based features
 
 ### **PR 8: Progress Race Tracking**
-**Branch**: `v2/progress-race-api`  
-**Status**: 🚧 **Planned**  
+**Branch**: `v2/progress-race-api`
+**Status**: 🚧 **Planned**
 **Estimated Size**: Small
 
 **Tasks**:
@@ -317,7 +317,7 @@ await client.character_data.get_by_id(123)
 - **Breaking Changes**: Client architecture refactor will break existing code
 - **API Complexity**: Report analysis has complex nested data structures
 
-### **Medium Risk** 
+### **Medium Risk**
 - **Performance**: Large datasets might cause memory issues
 - **Rate Limiting**: Increased API usage might hit limits
 
@@ -355,10 +355,10 @@ await client.character_data.get_by_id(123)
 
 ---
 
-**Next Steps**: 
+**Next Steps**:
 1. Review this plan and provide feedback
 2. Approve/modify the proposed approach
 3. Begin implementation with PR 1 (Character Rankings)
 
-**Plan Created**: July 9, 2025  
+**Plan Created**: July 9, 2025
 **Author**: Claude Code Assistant

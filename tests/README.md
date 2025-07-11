@@ -48,7 +48,7 @@ pytest tests/ --cov=esologs --cov-report=html
 
 **Key Areas**:
 - Parameter validation (49 tests)
-- OAuth2 authentication logic (8 tests) 
+- OAuth2 authentication logic (8 tests)
 - Method signatures and logic (24 tests)
 - Date parsing and transformation
 - Input sanitization and error handling
@@ -102,7 +102,7 @@ pytest tests/ --cov=esologs --cov-report=html
 # During development - fast feedback
 pytest tests/unit/
 
-# Before committing - verify API integration  
+# Before committing - verify API integration
 pytest tests/integration/
 
 # Before deployment - overall health check
@@ -151,7 +151,7 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~60% API endpoint coverage  
+- **Integration Tests**: ~60% API endpoint coverage
 - **Sanity Tests**: 13+ major API features validated
 - **Overall**: 67% code coverage with high-quality tests
 
@@ -195,7 +195,7 @@ black . && isort . && ruff check --fix . && mypy .
 - name: Run Unit Tests
   run: pytest tests/unit/ -v
 
-- name: Run Integration Tests  
+- name: Run Integration Tests
   env:
     ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
     ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}

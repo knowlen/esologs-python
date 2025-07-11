@@ -6,7 +6,7 @@ Isolated unit tests for the esologs-python library that verify individual functi
 
 The unit tests provide:
 - **Logic Validation**: Ensure individual functions work correctly in isolation
-- **Parameter Validation**: Test input validation and error handling 
+- **Parameter Validation**: Test input validation and error handling
 - **Fast Feedback**: Quick execution without API calls or external dependencies
 - **Edge Case Coverage**: Test boundary conditions and error scenarios
 - **Mocking & Isolation**: Verify behavior using mocks and stubs
@@ -126,7 +126,7 @@ pytest tests/unit/ -n auto
 ## Benefits
 
 1. **Fast Execution**: Complete test suite runs in seconds
-2. **Reliable**: No external dependencies to cause flaky tests  
+2. **Reliable**: No external dependencies to cause flaky tests
 3. **Comprehensive**: High coverage of validation and logic paths
 4. **Maintainable**: Isolated tests are easy to understand and modify
 5. **Development Aid**: Quick feedback during development
@@ -154,15 +154,15 @@ When adding new functionality:
 ```python
 class TestNewFeature:
     """Test new feature validation and logic."""
-    
+
     def test_valid_inputs(self):
         """Test that valid inputs work correctly."""
         # Test implementation
-    
+
     def test_invalid_inputs(self):
         """Test that invalid inputs raise appropriate errors."""
         # Test implementation
-    
+
     @pytest.mark.parametrize("input,expected", [
         ("valid1", True),
         ("valid2", True),

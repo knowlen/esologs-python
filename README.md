@@ -139,12 +139,12 @@ from access_token import get_access_token
 
 async def main():
     token = get_access_token()
-    
+
     async with Client(
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get character encounter rankings with filtering
         encounter_rankings = await client.get_character_encounter_rankings(
             character_id=12345,
@@ -153,14 +153,14 @@ async def main():
             role=RoleType.DPS,
             difficulty=125
         )
-        
+
         # Get zone-wide character leaderboards
         zone_rankings = await client.get_character_zone_rankings(
             character_id=12345,
             zone_id=1,
             metric=CharacterRankingMetricType.playerscore
         )
-        
+
         # Access ranking data
         if encounter_rankings.character_data.character.encounter_rankings:
             rankings_data = encounter_rankings.character_data.character.encounter_rankings

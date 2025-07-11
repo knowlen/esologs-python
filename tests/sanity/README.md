@@ -26,7 +26,7 @@ The sanity tests provide:
 
 ✅ **Game Data (5 features)**
 - Abilities API (single + list)
-- Classes API (single + list)  
+- Classes API (single + list)
 - Factions API
 - Items API (single + list)
 - NPCs API (single + list)
@@ -89,7 +89,7 @@ pytest tests/sanity/test_api_sanity.py::TestAPICoverageReport::test_api_coverage
 ## Benefits
 
 1. **Development Tool**: Quick way to verify API connectivity across all endpoints
-2. **Documentation**: Shows working examples of every major API method  
+2. **Documentation**: Shows working examples of every major API method
 3. **Debugging**: Helps identify which API areas are working vs. broken
 4. **Onboarding**: New developers can see the full scope of library functionality
 5. **CI/CD**: Can be used as smoke tests in deployment pipelines
@@ -99,7 +99,7 @@ pytest tests/sanity/test_api_sanity.py::TestAPICoverageReport::test_api_coverage
 ```
 === API Coverage Report ===
 game_data: 5 features - ['abilities', 'classes', 'factions', 'items', 'npcs']
-world_data: 2 features - ['zones', 'regions'] 
+world_data: 2 features - ['zones', 'regions']
 character_data: 2 features - ['character_profiles', 'character_rankings']
 guild_data: 1 features - ['guild_basic_info']
 report_data: 3 features - ['individual_reports', 'report_analysis', 'report_search']

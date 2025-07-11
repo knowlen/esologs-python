@@ -43,7 +43,7 @@ python test.py
 ### Validation Testing
 The parameter validation is thoroughly tested in `tests/unit/test_validators.py` with 22 test cases covering:
 - Report code validation
-- Ability ID validation  
+- Ability ID validation
 - Time range validation
 - Fight IDs validation
 - Limit parameter validation
@@ -69,7 +69,7 @@ echo "ESOLOGS_SECRET=your_secret" >> .env
 
 Current test coverage:
 - **21 unit tests** - Parameter validation and method logic
-- **14 integration tests** - Detailed API functionality testing  
+- **14 integration tests** - Detailed API functionality testing
 - **7 sanity test classes** - Comprehensive API coverage validation
 - **1 legacy test script** - Simple validation and examples
 
@@ -85,7 +85,7 @@ pytest tests/sanity/test_api_sanity.py::TestAPICoverageReport::test_api_coverage
 **Coverage Areas:**
 - **Game Data**: abilities, classes, factions, items, NPCs (5 features)
 - **World Data**: zones, regions (2 features)
-- **Character Data**: profiles, rankings (2 features)  
+- **Character Data**: profiles, rankings (2 features)
 - **Guild Data**: basic info (1 feature)
 - **Report Data**: individual reports, analysis, search (3 features)
 - **System Data**: rate limiting (1 feature)

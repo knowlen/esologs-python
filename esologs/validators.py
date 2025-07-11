@@ -2,7 +2,7 @@
 
 import re
 from datetime import datetime
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from .base_model import UNSET, UnsetType
 from .exceptions import ValidationError
@@ -10,44 +10,48 @@ from .exceptions import ValidationError
 # Security constants
 MAX_STRING_LENGTH = 1000  # Prevent DoS via large strings
 MAX_GUILD_NAME_LENGTH = 100  # Reasonable guild name limit
-MAX_SERVER_SLUG_LENGTH = 50   # Reasonable server slug limit
+MAX_SERVER_SLUG_LENGTH = 50  # Reasonable server slug limit
 
 
-def validate_string_length(value: str, field_name: str, max_length: int = MAX_STRING_LENGTH) -> None:
+def validate_string_length(
+    value: str, field_name: str, max_length: int = MAX_STRING_LENGTH
+) -> None:
     """
     Validate string length to prevent DoS attacks and ensure reasonable input sizes.
-    
+
     Args:
         value: String value to validate
         field_name: Name of the field for error messages
         max_length: Maximum allowed length
-        
+
     Raises:
         ValidationError: If string is too long
     """
     if len(value) > max_length:
-        raise ValidationError(f"{field_name} exceeds maximum length of {max_length} characters")
+        raise ValidationError(
+            f"{field_name} exceeds maximum length of {max_length} characters"
+        )
 
 
 def sanitize_api_key_from_error(error_message: str) -> str:
     """
     Sanitize error messages to prevent API key exposure.
-    
+
     Args:
         error_message: Original error message
-        
+
     Returns:
         Sanitized error message with potential API keys masked
     """
     # Pattern to match potential API keys (32+ character alphanumeric strings)
-    api_key_pattern = r'[a-zA-Z0-9]{32,}'
-    
-    def mask_key(match):
+    api_key_pattern = r"[a-zA-Z0-9]{32,}"
+
+    def mask_key(match: re.Match[str]) -> str:
         key = match.group(0)
         if len(key) >= 32:  # Likely an API key
             return f"{key[:4]}...{key[-4:]}"
         return key
-    
+
     return re.sub(api_key_pattern, mask_key, error_message)
 
 
@@ -99,7 +103,10 @@ def validate_ability_id(ability_id: Optional[Union[float, int]]) -> None:
         raise ValidationError("Ability ID should be a whole number")
 
 
-def validate_time_range(start_time: Union[Optional[float], UnsetType], end_time: Union[Optional[float], UnsetType]) -> None:
+def validate_time_range(
+    start_time: Union[Optional[float], UnsetType],
+    end_time: Union[Optional[float], UnsetType],
+) -> None:
     """
     Validate time range parameters.
 
@@ -110,21 +117,45 @@ def validate_time_range(start_time: Union[Optional[float], UnsetType], end_time:
     Raises:
         ValidationError: If the time range is invalid
     """
-    if start_time is not None and start_time is not UNSET and not isinstance(start_time, (int, float)):
+    if (
+        start_time is not None
+        and start_time is not UNSET
+        and not isinstance(start_time, (int, float))
+    ):
         raise ValidationError("Start time must be a number")
 
-    if end_time is not None and end_time is not UNSET and not isinstance(end_time, (int, float)):
+    if (
+        end_time is not None
+        and end_time is not UNSET
+        and not isinstance(end_time, (int, float))
+    ):
         raise ValidationError("End time must be a number")
 
-    if start_time is not None and start_time is not UNSET and start_time < 0:
+    if (
+        start_time is not None
+        and start_time is not UNSET
+        and isinstance(start_time, (int, float))
+        and start_time < 0
+    ):
         raise ValidationError("Start time cannot be negative")
 
-    if end_time is not None and end_time is not UNSET and end_time < 0:
+    if (
+        end_time is not None
+        and end_time is not UNSET
+        and isinstance(end_time, (int, float))
+        and end_time < 0
+    ):
         raise ValidationError("End time cannot be negative")
 
-    if (start_time is not None and start_time is not UNSET and 
-        end_time is not None and end_time is not UNSET and 
-        start_time >= end_time):
+    if (
+        start_time is not None
+        and start_time is not UNSET
+        and isinstance(start_time, (int, float))
+        and end_time is not None
+        and end_time is not UNSET
+        and isinstance(end_time, (int, float))
+        and start_time >= end_time
+    ):
         raise ValidationError("Start time must be less than end time")
 
 
@@ -241,15 +272,23 @@ def validate_report_search_params(
     """
     # Validate guild name requirements with security checks
     if guild_name is not None and guild_name is not UNSET:
-        if (guild_server_slug is None or guild_server_slug is UNSET or 
-            guild_server_region is None or guild_server_region is UNSET):
+        if (
+            guild_server_slug is None
+            or guild_server_slug is UNSET
+            or guild_server_region is None
+            or guild_server_region is UNSET
+        ):
             raise ValidationError(
                 "guild_name requires both guild_server_slug and guild_server_region"
             )
         validate_required_string(guild_name, "guild_name")
-        validate_string_length(guild_name, "guild_name", MAX_GUILD_NAME_LENGTH)
+        if isinstance(guild_name, str):
+            validate_string_length(guild_name, "guild_name", MAX_GUILD_NAME_LENGTH)
         validate_required_string(guild_server_slug, "guild_server_slug")
-        validate_string_length(guild_server_slug, "guild_server_slug", MAX_SERVER_SLUG_LENGTH)
+        if isinstance(guild_server_slug, str):
+            validate_string_length(
+                guild_server_slug, "guild_server_slug", MAX_SERVER_SLUG_LENGTH
+            )
         validate_required_string(guild_server_region, "guild_server_region")
 
     # Validate limit (ESO Logs API allows 1-25 for reports)
@@ -261,13 +300,15 @@ def validate_report_search_params(
 
     # Validate page number
     if page is not None and page is not UNSET:
-        validate_positive_integer(page, "page")
+        if isinstance(page, int):
+            validate_positive_integer(page, "page")
 
     # Validate time range if either are provided
     start_time = kwargs.get("start_time", UNSET)
     end_time = kwargs.get("end_time", UNSET)
-    if ((start_time is not None and start_time is not UNSET) or 
-        (end_time is not None and end_time is not UNSET)):
+    if (start_time is not None and start_time is not UNSET) or (
+        end_time is not None and end_time is not UNSET
+    ):
         validate_time_range(start_time, end_time)
 
 
@@ -288,20 +329,20 @@ def parse_date_to_timestamp(date_input: Union[str, datetime, float, int]) -> flo
         # String dates
         parse_date_to_timestamp("2023-01-01")
         parse_date_to_timestamp("2023-01-01T12:00:00")
-        
+
         # Datetime object
         parse_date_to_timestamp(datetime(2023, 1, 1))
-        
+
         # Timestamp (seconds or milliseconds)
         parse_date_to_timestamp(1672531200)
         parse_date_to_timestamp(1672531200000)
     """
     if isinstance(date_input, (int, float)):
         # Validate timestamp bounds (allow Unix epoch for testing)
-        # Allow from Unix epoch (1970) to future dates  
+        # Allow from Unix epoch (1970) to future dates
         MIN_TIMESTAMP_SECONDS = 0  # Unix epoch (Jan 1, 1970 UTC)
         MAX_TIMESTAMP_SECONDS = 4102444800  # Jan 1, 2100 UTC
-        
+
         # Assume it's already a timestamp
         # If it's too small, assume it's in seconds and convert to milliseconds
         if date_input < 1e10:  # Less than 10 billion (seconds format)
@@ -340,11 +381,11 @@ def parse_date_to_timestamp(date_input: Union[str, datetime, float, int]) -> flo
             timestamp = float(date_input)
             return parse_date_to_timestamp(timestamp)
 
-        except (ValueError, TypeError):
+        except (ValueError, TypeError) as e:
             raise ValidationError(
                 f"Invalid date format: {date_input}. "
                 "Use YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or timestamp"
-            )
+            ) from e
 
     raise ValidationError(f"Unsupported date type: {type(date_input)}")
 

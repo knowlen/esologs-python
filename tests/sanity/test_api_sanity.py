@@ -5,13 +5,13 @@ These tests exercise all major API endpoints to ensure basic functionality
 and serve as living documentation of the API surface area.
 """
 
-import pytest
 from datetime import datetime, timedelta
+
+import pytest
 
 from esologs.enums import (
     CharacterRankingMetricType,
     EventDataType,
-    GraphDataType,
     ReportRankingMetricType,
     TableDataType,
 )
@@ -158,7 +158,7 @@ class TestCharacterDataAPISanity:
         # Test encounter ranking (basic)
         encounter_ranking = await client.get_character_encounter_ranking(
             character_id=test_data["character_id"],
-            encounter_id=test_data["encounter_id"]
+            encounter_id=test_data["encounter_id"],
         )
         assert encounter_ranking.character_data.character is not None
 
@@ -166,7 +166,7 @@ class TestCharacterDataAPISanity:
         encounter_rankings = await client.get_character_encounter_rankings(
             character_id=test_data["character_id"],
             encounter_id=test_data["encounter_id"],
-            metric=CharacterRankingMetricType.dps
+            metric=CharacterRankingMetricType.dps,
         )
         assert encounter_rankings.character_data.character is not None
 
@@ -174,7 +174,7 @@ class TestCharacterDataAPISanity:
         zone_rankings = await client.get_character_zone_rankings(
             character_id=test_data["character_id"],
             zone_id=test_data["zone_id"],
-            metric=CharacterRankingMetricType.playerscore
+            metric=CharacterRankingMetricType.playerscore,
         )
         assert zone_rankings.character_data.character is not None
 
@@ -213,7 +213,7 @@ class TestReportDataAPISanity:
             data_type=EventDataType.DamageDone,
             start_time=0.0,
             end_time=60000.0,
-            limit=10
+            limit=10,
         )
         assert events.report_data.report is not None
         assert events.report_data.report.events is not None
@@ -223,22 +223,19 @@ class TestReportDataAPISanity:
             code=report_code,
             data_type=TableDataType.DamageDone,
             start_time=0.0,
-            end_time=60000.0
+            end_time=60000.0,
         )
         assert table.report_data.report is not None
 
         # Test report rankings
         rankings = await client.get_report_rankings(
-            code=report_code,
-            player_metric=ReportRankingMetricType.dps
+            code=report_code, player_metric=ReportRankingMetricType.dps
         )
         assert rankings.report_data.report is not None
 
         # Test report player details
         player_details = await client.get_report_player_details(
-            code=report_code,
-            start_time=0.0,
-            end_time=60000.0
+            code=report_code, start_time=0.0, end_time=60000.0
         )
         assert player_details.report_data.report is not None
 
@@ -266,10 +263,7 @@ class TestReportDataAPISanity:
         start_time = (datetime.now() - timedelta(days=30)).timestamp() * 1000
 
         date_filtered = await client.search_reports(
-            guild_id=guild_id,
-            start_time=start_time,
-            end_time=end_time,
-            limit=3
+            guild_id=guild_id, start_time=start_time, end_time=end_time, limit=3
         )
         assert date_filtered.report_data.reports is not None
 
@@ -283,8 +277,8 @@ class TestSystemAPISanity:
         """Test rate limit API endpoint."""
         rate_limit = await client.get_rate_limit_data()
         assert rate_limit.rate_limit_data is not None
-        assert hasattr(rate_limit.rate_limit_data, 'limit_per_hour')
-        assert hasattr(rate_limit.rate_limit_data, 'points_spent_this_hour')
+        assert hasattr(rate_limit.rate_limit_data, "limit_per_hour")
+        assert hasattr(rate_limit.rate_limit_data, "points_spent_this_hour")
 
 
 @pytest.mark.integration
@@ -300,7 +294,7 @@ class TestAPICoverageReport:
             "character_data": [],
             "guild_data": [],
             "report_data": [],
-            "system_data": []
+            "system_data": [],
         }
 
         # Game Data API
@@ -357,7 +351,7 @@ class TestAPICoverageReport:
         try:
             await client.get_character_encounter_rankings(
                 character_id=test_data["character_id"],
-                encounter_id=test_data["encounter_id"]
+                encounter_id=test_data["encounter_id"],
             )
             coverage_report["character_data"].append("character_rankings")
         except Exception:
@@ -398,12 +392,8 @@ class TestAPICoverageReport:
 
         # Calculate coverage metrics
         total_features = sum(len(features) for features in coverage_report.values())
-        
+
         # Assert we have good coverage
         assert total_features >= 10, f"API coverage too low: {coverage_report}"
-        
-        # Print coverage report for visibility
-        print(f"\n=== API Coverage Report ===")
-        for category, features in coverage_report.items():
-            print(f"{category}: {len(features)} features - {features}")
-        print(f"Total API features working: {total_features}")
+
+        # Coverage report logged via pytest output capture

@@ -1,9 +1,8 @@
 """Integration tests for report search functionality."""
 
-import pytest
 from datetime import datetime, timedelta
 
-from esologs.exceptions import ValidationError
+import pytest
 
 
 @pytest.mark.integration
@@ -55,7 +54,10 @@ class TestReportSearchIntegration:
         assert page2.report_data.reports.current_page == 2
 
         # Pages should have different data (if enough reports exist)
-        if len(page1.report_data.reports.data) > 0 and len(page2.report_data.reports.data) > 0:
+        if (
+            len(page1.report_data.reports.data) > 0
+            and len(page2.report_data.reports.data) > 0
+        ):
             page1_codes = {r.code for r in page1.report_data.reports.data}
             page2_codes = {r.code for r in page2.report_data.reports.data}
             assert page1_codes != page2_codes
@@ -66,7 +68,7 @@ class TestReportSearchIntegration:
         # Search for recent reports (last 30 days)
         now = datetime.now()
         thirty_days_ago = now - timedelta(days=30)
-        
+
         start_time = thirty_days_ago.timestamp() * 1000
         end_time = now.timestamp() * 1000
 
@@ -74,7 +76,7 @@ class TestReportSearchIntegration:
             guild_id=test_data["guild_id"],
             start_time=start_time,
             end_time=end_time,
-            limit=5
+            limit=5,
         )
 
         assert result is not None
@@ -88,9 +90,7 @@ class TestReportSearchIntegration:
     async def test_search_reports_with_zone_filter(self, client, test_data):
         """Test report search with zone filtering."""
         result = await client.search_reports(
-            guild_id=test_data["guild_id"],
-            zone_id=test_data["zone_id"],
-            limit=5
+            guild_id=test_data["guild_id"], zone_id=test_data["zone_id"], limit=5
         )
 
         assert result is not None
@@ -112,7 +112,7 @@ class TestReportSearchIntegration:
         result = await client.search_reports(
             guild_id=test_data["guild_id"],  # Use valid guild ID
             start_time=start_time,  # But very old date range
-            end_time=end_time
+            end_time=end_time,
         )
 
         assert result is not None
@@ -123,9 +123,7 @@ class TestReportSearchIntegration:
     @pytest.mark.asyncio
     async def test_get_guild_reports_convenience(self, client, test_data):
         """Test get_guild_reports convenience method."""
-        result = await client.get_guild_reports(
-            guild_id=test_data["guild_id"], limit=3
-        )
+        result = await client.get_guild_reports(guild_id=test_data["guild_id"], limit=3)
 
         assert result is not None
         reports = result.report_data.reports
@@ -152,17 +150,13 @@ class TestReportSearchIntegration:
     async def test_search_reports_limit_boundaries(self, client, test_data):
         """Test search with limit boundary values."""
         # Test minimum limit
-        result = await client.search_reports(
-            guild_id=test_data["guild_id"], limit=1
-        )
+        result = await client.search_reports(guild_id=test_data["guild_id"], limit=1)
         assert result is not None
         reports = result.report_data.reports
         assert len(reports.data) <= 1
 
         # Test maximum limit
-        result = await client.search_reports(
-            guild_id=test_data["guild_id"], limit=25
-        )
+        result = await client.search_reports(guild_id=test_data["guild_id"], limit=25)
         assert result is not None
         reports = result.report_data.reports
         assert len(reports.data) <= 25
@@ -225,11 +219,11 @@ class TestReportSearchErrorHandling:
     async def test_search_reports_invalid_guild_id(self, client):
         """Test search with invalid guild ID."""
         from esologs.exceptions import GraphQLClientGraphQLMultiError
-        
+
         # Very large guild ID that likely doesn't exist
         with pytest.raises(GraphQLClientGraphQLMultiError) as exc_info:
             await client.search_reports(guild_id=999999999)
-        
+
         # Should raise an error about guild not existing
         assert "No guild exists for this id" in str(exc_info.value)
 
@@ -248,7 +242,9 @@ class TestReportSearchErrorHandling:
 
         # All should succeed or handle rate limiting gracefully
         for result in results:
-            assert not isinstance(result, Exception) or "rate limit" in str(result).lower()
+            assert (
+                not isinstance(result, Exception) or "rate limit" in str(result).lower()
+            )
 
     @pytest.mark.asyncio
     async def test_search_reports_with_invalid_dates(self, client, test_data):
@@ -257,9 +253,7 @@ class TestReportSearchErrorHandling:
         future_time = (datetime.now() + timedelta(days=3650)).timestamp() * 1000
 
         result = await client.search_reports(
-            guild_id=test_data["guild_id"],
-            start_time=future_time,
-            limit=1
+            guild_id=test_data["guild_id"], start_time=future_time, limit=1
         )
 
         # Should handle gracefully and return no results
@@ -268,16 +262,14 @@ class TestReportSearchErrorHandling:
         assert reports.total == 0
 
 
-@pytest.mark.integration 
+@pytest.mark.integration
 class TestReportSearchPerformance:
     """Integration tests for performance aspects of report search."""
 
     @pytest.mark.asyncio
     async def test_search_large_result_set(self, client, test_data):
         """Test search that returns maximum allowed results."""
-        result = await client.search_reports(
-            guild_id=test_data["guild_id"], limit=25
-        )
+        result = await client.search_reports(guild_id=test_data["guild_id"], limit=25)
 
         assert result is not None
         reports = result.report_data.reports

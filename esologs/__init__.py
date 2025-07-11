@@ -103,13 +103,13 @@ from .get_maps import (
     GetMapsGameDataMaps,
     GetMapsGameDataMapsData,
 )
+from .get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
 from .get_npcs import (
     GetNPCs,
     GetNPCsGameData,
     GetNPCsGameDataNpcs,
     GetNPCsGameDataNpcsData,
 )
-from .get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
 from .get_rate_limit_data import GetRateLimitData, GetRateLimitDataRateLimitData
 from .get_regions import (
     GetRegions,

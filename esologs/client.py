@@ -2,12 +2,6 @@ from typing import Any, Dict, List, Optional, Union
 
 from .async_base_client import AsyncBaseClient
 from .base_model import UNSET, UnsetType
-from .validators import (
-    sanitize_api_key_from_error,
-    validate_limit_parameter,
-    validate_positive_integer,
-    validate_report_search_params,
-)
 from .enums import (
     CharacterRankingMetricType,
     EventDataType,
@@ -39,8 +33,8 @@ from .get_item_sets import GetItemSets
 from .get_items import GetItems
 from .get_map import GetMap
 from .get_maps import GetMaps
-from .get_npcs import GetNPCs
 from .get_npc import GetNPC
+from .get_npcs import GetNPCs
 from .get_rate_limit_data import GetRateLimitData
 from .get_regions import GetRegions
 from .get_report_by_code import GetReportByCode
@@ -52,6 +46,11 @@ from .get_report_table import GetReportTable
 from .get_reports import GetReports
 from .get_world_data import GetWorldData
 from .get_zones import GetZones
+from .validators import (
+    validate_limit_parameter,
+    validate_positive_integer,
+    validate_report_search_params,
+)
 
 
 def gql(q: str) -> str:
@@ -61,17 +60,18 @@ def gql(q: str) -> str:
 class Client(AsyncBaseClient):
     """
     ESO Logs API client with comprehensive validation and security features.
-    
+
     Security Features:
     - Input validation with length limits to prevent DoS attacks
-    - API key sanitization in error messages  
+    - API key sanitization in error messages
     - Parameter validation before API calls
-    
+
     Rate Limiting:
     - ESO Logs API has rate limits (typically 300 requests/minute)
     - Users should implement rate limiting in production applications
     - Consider using exponential backoff for failed requests
     """
+
     async def get_ability(self, id: int, **kwargs: Any) -> GetAbility:
         query = gql(
             """
@@ -98,7 +98,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetAbilities:
         query = gql(
             """
@@ -276,7 +276,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterById",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterById.model_validate(data)
@@ -285,7 +285,7 @@ class Client(AsyncBaseClient):
         self,
         character_id: int,
         limit: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetCharacterReports:
         query = gql(
             """
@@ -319,7 +319,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterReports",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterReports.model_validate(data)
@@ -382,7 +382,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getEncountersByZone",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetEncountersByZone.model_validate(data)
@@ -466,7 +466,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterEncounterRanking",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterEncounterRanking.model_validate(data)
@@ -487,7 +487,7 @@ class Client(AsyncBaseClient):
         size: Union[Optional[int], UnsetType] = UNSET,
         spec_name: Union[Optional[str], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetCharacterEncounterRankings:
         query = gql(
             """
@@ -534,7 +534,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterEncounterRankings",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterEncounterRankings.model_validate(data)
@@ -554,7 +554,7 @@ class Client(AsyncBaseClient):
         size: Union[Optional[int], UnsetType] = UNSET,
         spec_name: Union[Optional[str], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetCharacterZoneRankings:
         query = gql(
             """
@@ -599,7 +599,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getCharacterZoneRankings",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetCharacterZoneRankings.model_validate(data)
@@ -648,7 +648,7 @@ class Client(AsyncBaseClient):
         self,
         faction_id: Union[Optional[int], UnsetType] = UNSET,
         zone_id: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetClasses:
         query = gql(
             """
@@ -735,7 +735,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetItemSets:
         query = gql(
             """
@@ -769,7 +769,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetItems:
         query = gql(
             """
@@ -824,7 +824,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetMaps:
         query = gql(
             """
@@ -878,7 +878,7 @@ class Client(AsyncBaseClient):
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetNPCs:
         query = gql(
             """
@@ -925,7 +925,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getRateLimitData",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetRateLimitData.model_validate(data)
@@ -961,7 +961,7 @@ class Client(AsyncBaseClient):
         use_actor_i_ds: Union[Optional[bool], UnsetType] = UNSET,
         view_options: Union[Optional[int], UnsetType] = UNSET,
         wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetReportEvents:
         query = gql(
             """
@@ -1071,7 +1071,7 @@ class Client(AsyncBaseClient):
         view_options: Union[Optional[int], UnsetType] = UNSET,
         view_by: Union[Optional[ViewType], UnsetType] = UNSET,
         wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetReportGraph:
         query = gql(
             """
@@ -1172,7 +1172,7 @@ class Client(AsyncBaseClient):
         view_options: Union[Optional[int], UnsetType] = UNSET,
         view_by: Union[Optional[ViewType], UnsetType] = UNSET,
         wipe_cutoff: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetReportTable:
         query = gql(
             """
@@ -1254,7 +1254,7 @@ class Client(AsyncBaseClient):
         fight_i_ds: Union[Optional[List[Optional[int]]], UnsetType] = UNSET,
         player_metric: Union[Optional[ReportRankingMetricType], UnsetType] = UNSET,
         timeframe: Union[Optional[RankingTimeframeType], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetReportRankings:
         query = gql(
             """
@@ -1287,7 +1287,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getReportRankings",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetReportRankings.model_validate(data)
@@ -1303,7 +1303,7 @@ class Client(AsyncBaseClient):
         start_time: Union[Optional[float], UnsetType] = UNSET,
         translate: Union[Optional[bool], UnsetType] = UNSET,
         include_combatant_info: Union[Optional[bool], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetReportPlayerDetails:
         query = gql(
             """
@@ -1340,7 +1340,7 @@ class Client(AsyncBaseClient):
             query=query,
             operation_name="getReportPlayerDetails",
             variables=variables,
-            **kwargs
+            **kwargs,
         )
         data = self.get_data(response)
         return GetReportPlayerDetails.model_validate(data)
@@ -1359,7 +1359,7 @@ class Client(AsyncBaseClient):
         start_time: Union[Optional[float], UnsetType] = UNSET,
         zone_id: Union[Optional[int], UnsetType] = UNSET,
         game_zone_id: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> GetReports:
         query = gql(
             """
@@ -1455,7 +1455,7 @@ class Client(AsyncBaseClient):
     ) -> GetReports:
         """
         Search for reports with flexible filtering options.
-        
+
         Args:
             guild_id: Filter by specific guild ID
             guild_name: Filter by guild name (requires guild_server_slug and guild_server_region)
@@ -1469,21 +1469,21 @@ class Client(AsyncBaseClient):
             end_time: End time filter (UNIX timestamp with milliseconds)
             limit: Number of reports per page (1-25, default 16)
             page: Page number (default 1)
-            
+
         Returns:
             GetReports: Paginated list of reports matching the criteria
-            
+
         Examples:
             # Search by guild ID
             reports = await client.search_reports(guild_id=123)
-            
+
             # Search by guild name
             reports = await client.search_reports(
-                guild_name="My Guild", 
+                guild_name="My Guild",
                 guild_server_slug="server-name",
                 guild_server_region="NA"
             )
-            
+
             # Search with date range
             reports = await client.search_reports(
                 user_id=456,
@@ -1494,15 +1494,15 @@ class Client(AsyncBaseClient):
         # Validate parameters before making API call
         validate_report_search_params(
             guild_name=guild_name,
-            guild_server_slug=guild_server_slug, 
+            guild_server_slug=guild_server_slug,
             guild_server_region=guild_server_region,
             limit=limit,
             page=page,
             start_time=start_time,
             end_time=end_time,
-            **kwargs
+            **kwargs,
         )
-        
+
         return await self.get_reports(
             end_time=end_time,
             guild_id=guild_id,
@@ -1531,7 +1531,7 @@ class Client(AsyncBaseClient):
     ) -> GetReports:
         """
         Convenience method to get reports for a specific guild.
-        
+
         Args:
             guild_id: The guild ID to search for
             limit: Number of reports per page (1-25, default 16)
@@ -1539,10 +1539,10 @@ class Client(AsyncBaseClient):
             start_time: Start time filter (UNIX timestamp with milliseconds)
             end_time: End time filter (UNIX timestamp with milliseconds)
             zone_id: Filter by specific zone
-            
+
         Returns:
             GetReports: Paginated list of guild reports
-            
+
         Example:
             # Get recent reports for guild
             reports = await client.get_guild_reports(guild_id=123, limit=25)
@@ -1553,7 +1553,7 @@ class Client(AsyncBaseClient):
             validate_limit_parameter(limit)
         if page is not UNSET and page is not None:
             validate_positive_integer(page, "page")
-        
+
         return await self.search_reports(
             guild_id=guild_id,
             limit=limit,
@@ -1576,7 +1576,7 @@ class Client(AsyncBaseClient):
     ) -> GetReports:
         """
         Convenience method to get reports for a specific user.
-        
+
         Args:
             user_id: The user ID to search for
             limit: Number of reports per page (1-25, default 16)
@@ -1584,10 +1584,10 @@ class Client(AsyncBaseClient):
             start_time: Start time filter (UNIX timestamp with milliseconds)
             end_time: End time filter (UNIX timestamp with milliseconds)
             zone_id: Filter by specific zone
-            
+
         Returns:
             GetReports: Paginated list of user reports
-            
+
         Example:
             # Get recent reports for user
             reports = await client.get_user_reports(user_id=456, limit=25)
@@ -1598,7 +1598,7 @@ class Client(AsyncBaseClient):
             validate_limit_parameter(limit)
         if page is not UNSET and page is not None:
             validate_positive_integer(page, "page")
-        
+
         return await self.search_reports(
             user_id=user_id,
             limit=limit,

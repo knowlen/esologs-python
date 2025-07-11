@@ -1,15 +1,16 @@
 """Unit tests for report search functionality."""
 
-import pytest
 from datetime import datetime
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
+
+import pytest
 
 from esologs.client import Client
 from esologs.exceptions import ValidationError
 from esologs.validators import (
-    validate_report_search_params,
     parse_date_to_timestamp,
     validate_guild_search_params,
+    validate_report_search_params,
 )
 
 

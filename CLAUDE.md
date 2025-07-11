@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with this repository.
 
 ## Project Overview
-Python client library for ESO Logs API v2. GraphQL-based interface using `ariadne-codegen`. 
+Python client library for ESO Logs API v2. GraphQL-based interface using `ariadne-codegen`.
 - **Status**: v0.2.0-alpha, ~60% API coverage (Advanced Report Search recently added)
 - **Target**: 95%+ API coverage
 - **Authentication**: OAuth2 with `ESOLOGS_ID` and `ESOLOGS_SECRET` environment variables
@@ -49,7 +49,7 @@ black . && isort . && ruff check --fix . && mypy .
 
 ## Configuration Files
 - **`pyproject.toml`**: Dependencies, dev tools, code quality config
-- **`mini.toml`**: ariadne-codegen configuration  
+- **`mini.toml`**: ariadne-codegen configuration
 - **`schema.graphql`**: GraphQL schema
 - **`queries.graphql`**: GraphQL queries for code generation
 
@@ -75,7 +75,7 @@ export ESOLOGS_SECRET="your_client_secret"
 ```
 
 ## Development Workflow
-1. Branch from `v2-dev` 
+1. Branch from `v2-dev`
 2. Implement with comprehensive tests
 3. Update documentation
 4. PR to `v2-dev` for review
