@@ -300,8 +300,9 @@ def validate_report_search_params(
 
     # Validate page number
     if page is not None and page is not UNSET:
-        if isinstance(page, int):
-            validate_positive_integer(page, "page")
+        if not isinstance(page, int):
+            raise ValidationError("page must be an integer")
+        validate_positive_integer(page, "page")
 
     # Validate time range if either are provided
     start_time = kwargs.get("start_time", UNSET)
