@@ -8,56 +8,56 @@
   <a href="api-reference/game-data/" class="md-button">API Reference</a>
 </div>
 
-## 🎯 Project Status
+## Project Status
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>📊 Current Version</h3>
+    <h3>Current Version</h3>
     <p><strong>v0.2.0-alpha</strong><br>
     <span class="status-badge status-badge--completed">65% API Coverage</span></p>
     <p>Active development with comprehensive testing and documentation.</p>
   </div>
   
   <div class="feature-card">
-    <h3>🚀 Production Ready</h3>
+    <h3>Production Ready</h3>
     <p><span class="status-badge status-badge--completed">OAuth2 Authentication</span><br>
     <span class="status-badge status-badge--completed">Rate Limiting</span></p>
     <p>Built with enterprise-grade security and reliability features.</p>
   </div>
   
   <div class="feature-card">
-    <h3>🔧 Developer Experience</h3>
+    <h3>Developer Experience</h3>
     <p><span class="status-badge status-badge--completed">Type Safety</span><br>
     <span class="status-badge status-badge--completed">Async Support</span></p>
     <p>Full type hints, comprehensive error handling, and async/await patterns.</p>
   </div>
 </div>
 
-## ✨ Key Features
+## Key Features
 
-### 🏆 Character Analysis
+### Character Analysis
 - **Rankings & Performance**: Character encounter rankings with comprehensive filtering
 - **Historical Data**: Zone-wide leaderboards and performance metrics
 - **Progress Tracking**: Character progression and achievement analysis
 
-### 📈 Report Analysis
+### Report Analysis
 - **Event Data**: Event-by-event combat log analysis
 - **Performance Graphs**: Time-series data with customizable metrics
 - **Tabular Analysis**: Structured data with sorting and filtering
 - **Player Details**: In-depth performance breakdowns
 
-### 🔍 Advanced Search
+### Advanced Search
 - **Flexible Filtering**: Multi-criteria report search with validation
 - **Convenience Methods**: Guild and user-specific report retrieval
 - **Pagination Support**: Efficient data handling for large datasets
 - **Parameter Validation**: Built-in security and data integrity
 
-### 🎮 Game Data Access
+### Game Data Access
 - **Comprehensive Coverage**: Abilities, classes, items, NPCs, maps, and zones
 - **Real-time Data**: Direct access to current ESO Logs database
 - **Structured Response**: Type-safe Pydantic models for all data
 
-## 🚀 Quick Start
+## Quick Start
 
 Get up and running in minutes:
 
@@ -109,11 +109,11 @@ Get up and running in minutes:
     asyncio.run(main())
     ```
 
-## 📊 API Coverage
+## API Coverage
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>✅ Implemented (65%)</h3>
+    <h3>Implemented (65%)</h3>
     <ul>
       <li><span class="status-badge status-badge--completed">Game Data</span> Abilities, classes, items, NPCs, maps</li>
       <li><span class="status-badge status-badge--completed">Character Data</span> Profiles, reports, rankings</li>
@@ -125,7 +125,7 @@ Get up and running in minutes:
   </div>
   
   <div class="feature-card">
-    <h3>🚧 Coming Soon (35%)</h3>
+    <h3>Coming Soon (35%)</h3>
     <ul>
       <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings</li>
       <li><span class="status-badge status-badge--planned">Progress Tracking</span> Race & achievement tracking</li>
@@ -136,7 +136,7 @@ Get up and running in minutes:
   </div>
 </div>
 
-## 🏗️ Architecture
+## Architecture
 
 Built with modern Python best practices:
 
@@ -147,7 +147,7 @@ Built with modern Python best practices:
 - **Testing**: 180+ tests with comprehensive coverage
 - **Code Quality**: Pre-commit hooks, linting, and formatting
 
-## 🤝 Community & Support
+## Community & Support
 
 - **Documentation**: Comprehensive guides and API reference
 - **GitHub**: [Issues and discussions](https://github.com/knowlen/esologs-python)
@@ -156,8 +156,8 @@ Built with modern Python best practices:
 
 ---
 
-<div style="text-align: center; margin-top: 3rem; padding: 2rem; background-color: var(--md-code-bg-color); border-radius: 0.5rem;">
-  <h3>Ready to dive in?</h3>
+<div style="text-align: center; margin-top: 3rem; padding: 2rem; background-color: var(--md-code-bg-color); border-radius: 0.375rem;">
+  <h3>Ready to get started?</h3>
   <p>Start building with ESO Logs data in just a few minutes.</p>
   <a href="installation/" class="md-button md-button--primary">Get Started</a>
   <a href="examples/basic-usage/" class="md-button">View Examples</a>

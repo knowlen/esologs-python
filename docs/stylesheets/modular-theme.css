@@ -1,51 +1,51 @@
-/* Modular-inspired theme for ESO Logs Python documentation */
+/* Clean, professional theme inspired by Modular docs */
 
-/* Color Variables - Inspired by Modular docs */
+/* Color Variables - Clean and subtle like Modular */
 :root {
-  /* Primary colors */
-  --md-primary-fg-color:        #1e3a8a;  /* Deep blue */
-  --md-primary-fg-color--light: #3b82f6;  /* Medium blue */
-  --md-primary-fg-color--dark:  #1e40af;  /* Darker blue */
+  /* Primary colors - subtle grays and blues */
+  --md-primary-fg-color:        #374151;  /* Dark gray */
+  --md-primary-fg-color--light: #6b7280;  /* Medium gray */
+  --md-primary-fg-color--dark:  #1f2937;  /* Darker gray */
   
-  /* Accent colors */
-  --md-accent-fg-color:         #06b6d4;  /* Cyan accent */
-  --md-accent-fg-color--light:  #67e8f9;  /* Light cyan */
-  --md-accent-fg-color--dark:   #0891b2;  /* Dark cyan */
+  /* Accent colors - minimal blue accent */
+  --md-accent-fg-color:         #3b82f6;  /* Clean blue */
+  --md-accent-fg-color--light:  #60a5fa;  /* Light blue */
+  --md-accent-fg-color--dark:   #2563eb;  /* Dark blue */
   
-  /* Background colors */
-  --md-default-bg-color:        #ffffff;  /* White background */
-  --md-default-fg-color:        #1f2937;  /* Dark gray text */
-  --md-default-fg-color--light: #6b7280;  /* Light gray text */
-  --md-default-fg-color--lighter: #9ca3af; /* Lighter gray text */
+  /* Background colors - clean whites and light grays */
+  --md-default-bg-color:        #ffffff;  /* Pure white */
+  --md-default-fg-color:        #111827;  /* Dark text */
+  --md-default-fg-color--light: #6b7280;  /* Gray text */
+  --md-default-fg-color--lighter: #9ca3af; /* Light gray text */
   
-  /* Code colors */
-  --md-code-bg-color:           #f8fafc;  /* Light gray code bg */
-  --md-code-fg-color:           #1e293b;  /* Dark code text */
+  /* Code colors - subtle */
+  --md-code-bg-color:           #f9fafb;  /* Very light gray */
+  --md-code-fg-color:           #374151;  /* Dark gray */
   
   /* Border and divider colors */
-  --md-typeset-table-color:     #e5e7eb;  /* Table borders */
-  --md-typeset-mark-color:      #fef3c7;  /* Highlight color */
+  --md-typeset-table-color:     #e5e7eb;  /* Light borders */
+  --md-typeset-mark-color:      #fef3c7;  /* Subtle highlight */
 }
 
 /* Dark mode colors */
 [data-md-color-scheme="slate"] {
   /* Primary colors in dark mode */
-  --md-primary-fg-color:        #60a5fa;  /* Light blue */
-  --md-primary-fg-color--light: #93c5fd;  /* Lighter blue */
-  --md-primary-fg-color--dark:  #3b82f6;  /* Medium blue */
+  --md-primary-fg-color:        #d1d5db;  /* Light gray */
+  --md-primary-fg-color--light: #e5e7eb;  /* Lighter gray */
+  --md-primary-fg-color--dark:  #9ca3af;  /* Medium gray */
   
   /* Background colors in dark mode */
-  --md-default-bg-color:        #0f172a;  /* Dark blue-gray bg */
-  --md-default-fg-color:        #f8fafc;  /* Light text */
-  --md-default-fg-color--light: #cbd5e1;  /* Medium light text */
-  --md-default-fg-color--lighter: #94a3b8; /* Gray text */
+  --md-default-bg-color:        #111827;  /* Dark gray bg */
+  --md-default-fg-color:        #f9fafb;  /* Light text */
+  --md-default-fg-color--light: #d1d5db;  /* Medium light text */
+  --md-default-fg-color--lighter: #9ca3af; /* Gray text */
   
   /* Code colors in dark mode */
-  --md-code-bg-color:           #1e293b;  /* Dark code bg */
-  --md-code-fg-color:           #e2e8f0;  /* Light code text */
+  --md-code-bg-color:           #1f2937;  /* Dark code bg */
+  --md-code-fg-color:           #e5e7eb;  /* Light code text */
   
   /* Border colors in dark mode */
-  --md-typeset-table-color:     #334155;  /* Dark table borders */
+  --md-typeset-table-color:     #374151;  /* Dark table borders */
 }
 
 /* Typography enhancements */
@@ -228,53 +228,62 @@
   }
 }
 
-/* Custom home page hero section */
+/* Clean home page hero section - like Modular */
 .hero-section {
-  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
-  color: white;
-  padding: 4rem 2rem;
-  text-align: center;
-  margin: -1.5rem -1rem 2rem -1rem;
-  border-radius: 0 0 1rem 1rem;
+  background: #ffffff;
+  color: var(--md-default-fg-color);
+  padding: 3rem 2rem;
+  text-align: left;
+  margin: 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .hero-section h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: white;
+  color: var(--md-default-fg-color);
+  font-weight: 600;
 }
 
 .hero-section p {
-  font-size: 1.25rem;
-  opacity: 0.9;
-  margin-bottom: 2rem;
+  font-size: 1.125rem;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1.5rem;
+  max-width: 600px;
 }
 
-/* Feature cards */
+/* Simple feature cards - clean like Modular */
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
 .feature-card {
   background: var(--md-default-bg-color);
-  border: 1px solid var(--md-typeset-table-color);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 1.25rem;
+  transition: border-color 0.2s ease;
 }
 
 .feature-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: var(--md-primary-fg-color);
+  border-color: #d1d5db;
 }
 
 .feature-card h3 {
-  color: var(--md-primary-fg-color);
+  color: var(--md-default-fg-color);
   margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
 }
 
 /* Status badges */
