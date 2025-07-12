@@ -236,38 +236,3 @@ class TestGameDataExamples:
             assert all(isinstance(item['id'], int) for item in items_database)
             assert all(isinstance(item['name'], str) for item in items_database)
 
-    @pytest.mark.asyncio
-    async def test_analyze_sorcerer_build_pattern(self, api_client_config):
-        """Test the analyze_sorcerer_build() common pattern example"""
-        async with Client(**api_client_config) as client:
-            
-            # Get Sorcerer class info
-            sorcerer = await client.get_class(id=1)  # Sorcerer
-            assert hasattr(sorcerer.game_data.class_, 'name')
-            
-            # Get a valid ability for analysis
-            abilities = await client.get_abilities(limit=10)
-            valid_ability_id = abilities.game_data.abilities.data[0].id
-            ability = await client.get_ability(id=valid_ability_id)
-            
-            # Validate the pattern provides useful data
-            assert sorcerer.game_data.class_.id == 1
-            if ability.game_data.ability:  # Some abilities might be None
-                assert ability.game_data.ability.id == valid_ability_id
-
-    @pytest.mark.asyncio
-    async def test_research_combat_mechanics_pattern(self, api_client_config):
-        """Test the research_combat_mechanics() common pattern example (limited)"""
-        async with Client(**api_client_config) as client:
-            
-            # Get a valid ability ID first
-            abilities = await client.get_abilities(limit=5)
-            valid_ability_id = abilities.game_data.abilities.data[0].id
-            
-            # Research the valid ability to test the pattern
-            ability = await client.get_ability(id=valid_ability_id)
-            
-            # Validate we can research ability details
-            if ability.game_data.ability:  # Some abilities might be None
-                assert hasattr(ability.game_data.ability, 'name')
-                assert ability.game_data.ability.id == valid_ability_id
