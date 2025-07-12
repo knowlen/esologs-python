@@ -92,7 +92,7 @@ except GraphQLClientHttpError as e:
 | game_data.ability.id | int | Ability ID |
 | game_data.ability.name | str | Ability name |
 | game_data.ability.description | str \| None | Ability description (may be None) |
-| game_data.ability.icon | str \| None | Icon filename (may be None) |
+| game_data.ability.icon | str | Icon filename |
 
 **Example**:
 ```python

@@ -22,7 +22,6 @@ Monitor API usage, handle rate limits, and manage authentication with the ESO Lo
 |-------|------|-------------|
 | rate_limit_data.points_spent_this_hour | float | Points consumed in current hour |
 | rate_limit_data.limit_per_hour | int | Maximum points allowed per hour (18000) |
-| rate_limit_data.reset_time | str \| None | When the limit resets (if available) |
 
 **Example**:
 ```python
