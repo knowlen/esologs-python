@@ -15,24 +15,44 @@ Before you can authenticate, you need:
 ### Step 1: Register Your Application
 
 1. Visit [ESO Logs API Clients](https://www.esologs.com/api/clients/)
-2. Click **"Create New Client"**
+2. Click **"+ Create Client"** (top right corner)
 3. Fill out the application form:
 
    | Field | Value | Notes |
    |-------|-------|-------|
-   | **Name** | Your Application Name | e.g., "My ESO Analysis Tool" |
-   | **Description** | Brief description | What your app does |
-   | **Type** | **Public Client** | For most use cases |
-   | **Redirect URI** | Not required | Leave blank for server-side apps |
+   | **Application Name** | Your Application Name | e.g., "My ESO Analysis Tool" - be descriptive |
+   | **Redirect URLs** | Leave blank | For server-side/CLI apps, enter comma-separated URLs if needed |
+   | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
 
-4. Click **"Create Client"**
+   !!! tip "Application Naming"
+       Be descriptive with your application name. As noted in the form: "If we can't understand what the application is, we're more likely to cancel the key."
+
+   !!! info "Public Client vs Private Client"
+       - **Private Client (Recommended)**: Can securely store client secret. Use for server-side applications, CLI tools, and scripts.
+       - **Public Client**: Cannot store client secret securely. Uses PKCE (Proof Key for Code Exchange) flow. Mainly for mobile apps or browser-based applications.
+       
+       For ESO Logs Python library usage, keep "Public Client" **unchecked** unless you have specific security constraints.
+
+4. Click **"Create"**
 
 ### Step 2: Get Your Credentials
 
-After creating your client, you'll receive:
+After creating your client, you'll be returned to the "Manage Your Clients" page where your new client will be listed. Each client displays:
 
-- **Client ID**: Public identifier (like a username)
-- **Client Secret**: Private key (keep this secure!)
+- **Client Name**: The name you provided
+- **Client ID**: The public identifier (visible in the listing)
+- **Homepage URL**: If you provided one during creation
+- **Edit/Delete buttons**: For managing your client
+
+To access your credentials:
+
+1. Click **"Edit"** on your client
+2. You'll see your **Client ID** and **Client Secret**
+3. Copy both values for use in your application
+
+**Credentials you'll receive:**
+- **Client ID**: Public identifier (like a username) - visible in listings
+- **Client Secret**: Private key (only visible when editing) - keep this secure!
 
 !!! warning "Keep Your Secret Safe"
     **Never** commit your Client Secret to version control or share it publicly. 
@@ -154,17 +174,35 @@ asyncio.run(main())
 ### Error Handling
 
 ```python
+import asyncio
 from access_token import get_access_token
-from esologs.exceptions import AuthenticationError
+from esologs.client import Client
+from esologs.exceptions import GraphQLClientHttpError
 
-try:
-    token = get_access_token()
-    print("✅ Authentication successful")
-except AuthenticationError as e:
-    print(f"❌ Authentication failed: {e}")
-    print("Check your ESOLOGS_ID and ESOLOGS_SECRET environment variables")
-except Exception as e:
-    print(f"❌ Unexpected error: {e}")
+async def test_authentication():
+    try:
+        token = get_access_token()
+        print("✅ Token obtained successfully")
+        
+        # Test token with API call
+        async with Client(
+            url="https://www.esologs.com/api/v2/client",
+            headers={"Authorization": f"Bearer {token}"}
+        ) as client:
+            rate_limit = await client.get_rate_limit_data()
+            print("✅ Authentication successful")
+            print(f"Rate limit: {rate_limit.rate_limit_data.limit_per_hour}/hour")
+            
+    except GraphQLClientHttpError as e:
+        if e.status_code == 401:
+            print("❌ Authentication failed: Invalid credentials")
+            print("Check your ESOLOGS_ID and ESOLOGS_SECRET environment variables")
+        else:
+            print(f"❌ HTTP error: {e.status_code}")
+    except Exception as e:
+        print(f"❌ Unexpected error: {e}")
+
+asyncio.run(test_authentication())
 ```
 
 ## Authentication Flow
@@ -283,19 +321,19 @@ For production environments:
 #### Invalid Client Credentials
 
 ```
-AuthenticationError: Invalid client credentials
+Exception: OAuth request failed with status 401: {"error":"invalid_client","error_description":"Client authentication failed","message":"Client authentication failed"}
 ```
 
 **Solutions**:
 1. Verify your Client ID and Secret are correct
 2. Check for extra spaces or hidden characters
 3. Ensure environment variables are set properly
-4. Try regenerating your Client Secret
+4. Try regenerating your Client Secret on the ESO Logs website
 
 #### Rate Limit Exceeded
 
 ```
-RateLimitError: API rate limit exceeded
+GraphQLClientHttpError: HTTP status code: 429
 ```
 
 **Solutions**:
@@ -307,7 +345,11 @@ RateLimitError: API rate limit exceeded
 #### Network Connection Issues
 
 ```
-ConnectionError: Unable to connect to ESO Logs API
+GraphQLClientHttpError: HTTP status code: 503
+```
+or
+```
+httpx.ConnectError: [Errno -2] Name or service not known
 ```
 
 **Solutions**:
@@ -336,8 +378,8 @@ token = get_access_token()
 With authentication configured:
 
 1. **[Start with Quick Start](quickstart.md)** - Make your first API calls
-2. **[Explore Examples](examples/basic-usage.md)** - Learn common patterns
-3. **[Read API Reference](api-reference/game-data.md)** - Understand available methods
+2. **[Read API Reference](api-reference/game-data.md)** - Understand available methods with examples
+3. **[Development Guide](development/setup.md)** - Set up for contributing
 
 !!! tip "Rate Limits"
     ESO Logs API has rate limits based on points per hour. Use `get_rate_limit_data()` 

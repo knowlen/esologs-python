@@ -1,5 +1,3 @@
-# ESO Logs Python
-
 <div class="hero-section">
   <h1>ESO Logs Python</h1>
   <p>A comprehensive Python client library for the ESO Logs API v2</p>
@@ -8,58 +6,7 @@
   <a href="api-reference/game-data/" class="md-button">API Reference</a>
 </div>
 
-## Project Status
-
-<div class="feature-grid">
-  <div class="feature-card">
-    <h3>Current Version</h3>
-    <p><strong>v0.2.0-alpha</strong><br>
-    <span class="status-badge status-badge--completed">65% API Coverage</span></p>
-    <p>Active development with comprehensive testing and documentation.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>Production Ready</h3>
-    <p><span class="status-badge status-badge--completed">OAuth2 Authentication</span><br>
-    <span class="status-badge status-badge--completed">Rate Limiting</span></p>
-    <p>Built with enterprise-grade security and reliability features.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>Developer Experience</h3>
-    <p><span class="status-badge status-badge--completed">Type Safety</span><br>
-    <span class="status-badge status-badge--completed">Async Support</span></p>
-    <p>Full type hints, comprehensive error handling, and async/await patterns.</p>
-  </div>
-</div>
-
-## Key Features
-
-### Character Analysis
-- **Rankings & Performance**: Character encounter rankings with comprehensive filtering
-- **Historical Data**: Zone-wide leaderboards and performance metrics
-- **Progress Tracking**: Character progression and achievement analysis
-
-### Report Analysis
-- **Event Data**: Event-by-event combat log analysis
-- **Performance Graphs**: Time-series data with customizable metrics
-- **Tabular Analysis**: Structured data with sorting and filtering
-- **Player Details**: In-depth performance breakdowns
-
-### Advanced Search
-- **Flexible Filtering**: Multi-criteria report search with validation
-- **Convenience Methods**: Guild and user-specific report retrieval
-- **Pagination Support**: Efficient data handling for large datasets
-- **Parameter Validation**: Built-in security and data integrity
-
-### Game Data Access
-- **Comprehensive Coverage**: Abilities, classes, items, NPCs, maps, and zones
-- **Real-time Data**: Direct access to current ESO Logs database
-- **Structured Response**: Type-safe Pydantic models for all data
-
 ## Quick Start
-
-Get up and running in minutes:
 
 === "Installation"
 
@@ -109,6 +56,25 @@ Get up and running in minutes:
     asyncio.run(main())
     ```
 
+
+## Project Status
+
+<div class="feature-grid">
+  <div class="feature-card">
+    <h3>Current Version</h3>
+    <p><strong>v0.2.0-alpha</strong><br>
+    <span class="status-badge status-badge--completed">65% API Coverage</span></p>
+    <p>Active development with comprehensive testing and documentation.</p>
+  </div>
+  
+  <div class="feature-card">
+    <h3>Developer Experience</h3>
+    <p><span class="status-badge status-badge--completed">Type Safety</span><br>
+    <span class="status-badge status-badge--completed">Async Support</span></p>
+    <p>Full type hints, comprehensive error handling, and async/await patterns.</p>
+  </div>
+</div>
+
 ## API Coverage
 
 <div class="feature-grid">
@@ -137,9 +103,6 @@ Get up and running in minutes:
 </div>
 
 ## Architecture
-
-Built with modern Python best practices:
-
 - **Type Safety**: Full type hints with Pydantic models
 - **Async First**: Native async/await support with HTTP and WebSocket
 - **GraphQL Integration**: Code generation with `ariadne-codegen`
@@ -147,21 +110,7 @@ Built with modern Python best practices:
 - **Testing**: 180+ tests with comprehensive coverage
 - **Code Quality**: Pre-commit hooks, linting, and formatting
 
-## Community & Support
-
-- **Documentation**: Comprehensive guides and API reference
-- **GitHub**: [Issues and discussions](https://github.com/knowlen/esologs-python)
-- **Testing**: Extensive test suite with real API integration
-- **Contributing**: Welcoming contributions from the community
-
 ---
-
-<div style="text-align: center; margin-top: 3rem; padding: 2rem; background-color: var(--md-code-bg-color); border-radius: 0.375rem;">
-  <h3>Ready to get started?</h3>
-  <p>Start building with ESO Logs data in just a few minutes.</p>
-  <a href="installation/" class="md-button md-button--primary">Get Started</a>
-  <a href="examples/basic-usage/" class="md-button">View Examples</a>
-</div>
 
 !!! note "Development Status"
     This library is in active development. While the core functionality is stable and tested, 

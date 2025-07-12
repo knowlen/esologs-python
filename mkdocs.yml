@@ -82,18 +82,12 @@ nav:
     - Report Analysis: api-reference/report-analysis.md
     - Report Search: api-reference/report-search.md
     - System APIs: api-reference/system.md
-  - Examples:
-    - Basic Usage: examples/basic-usage.md
-    - Character Rankings: examples/character-rankings.md
-    - Report Analysis: examples/report-analysis.md
-    - Report Search: examples/report-search.md
-    - Error Handling: examples/error-handling.md
   - Development:
     - Setup: development/setup.md
     - Testing: development/testing.md
     - Contributing: development/contributing.md
     - Architecture: development/architecture.md
-  - Changelog: changelog.md
+    - Changelog: changelog.md
 
 # Extensions
 markdown_extensions:

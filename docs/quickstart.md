@@ -7,8 +7,22 @@ Get up and running with ESO Logs Python in 5 minutes.
 Before starting, ensure you have:
 
 1. ✅ [Installed ESO Logs Python](installation.md)
-2. ✅ [Set up authentication](authentication.md)
+2. ✅ [Set up authentication](authentication.md) with valid API credentials
 3. ✅ Python 3.8+ environment
+
+!!! note "Prerequisites for Code Examples"
+    All code examples require:
+    
+    1. **Valid API credentials** set as environment variables:
+       ```bash
+       export ESOLOGS_ID="your_client_id"
+       export ESOLOGS_SECRET="your_client_secret"
+       ```
+       Get your credentials from [esologs.com/v2-api-docs](https://www.esologs.com/v2-api-docs)
+    
+    2. **Access to `access_token.py`** - Examples assume this module is available in your project.
+       If running outside the project directory, replace `from access_token import get_access_token`
+       with your own authentication implementation.
 
 ## Your First API Call
 
@@ -48,11 +62,19 @@ ESO Logs Python is built for async programming:
 
 ```python
 import asyncio
+from esologs.client import Client
+from access_token import get_access_token
 
 async def main():
+    token = get_access_token()
+    
     # All API calls are async
-    async with Client(...) as client:
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
         result = await client.get_abilities()
+        print(f"✅ Got {len(result.game_data.abilities.data)} abilities")
     
 # Always use asyncio.run() for the main entry point
 asyncio.run(main())
@@ -63,12 +85,22 @@ asyncio.run(main())
 Use the client as a context manager for proper resource cleanup:
 
 ```python
-async with Client(
-    url="https://www.esologs.com/api/v2/client",
-    headers={"Authorization": f"Bearer {token}"}
-) as client:
-    # Client automatically closes connections when done
-    result = await client.get_character_by_id(12345)
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
+async def main():
+    token = get_access_token()
+    
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        # Client automatically closes connections when done
+        result = await client.get_character_by_id(12345)
+        print(f"✅ Got character: {result.character_data.character.name}")
+
+asyncio.run(main())
 ```
 
 ### Error Handling
@@ -76,21 +108,39 @@ async with Client(
 ESO Logs Python provides detailed error information:
 
 ```python
-from esologs.exceptions import AuthenticationError, RateLimitError, NotFoundError
+import asyncio
+from esologs.client import Client
+from esologs.exceptions import GraphQLClientHttpError, GraphQLClientGraphQLError, ValidationError
+from access_token import get_access_token
 
 async def safe_api_call():
+    token = get_access_token()
+    
     try:
-        async with Client(...) as client:
+        async with Client(
+            url="https://www.esologs.com/api/v2/client",
+            headers={"Authorization": f"Bearer {token}"}
+        ) as client:
             character = await client.get_character_by_id(12345)
+            print(f"✅ Got character: {character.character_data.character.name}")
             
-    except AuthenticationError:
-        print("Check your API credentials")
-    except RateLimitError:
-        print("Rate limit exceeded - try again later")
-    except NotFoundError:
-        print("Character not found")
+    except GraphQLClientHttpError as e:
+        if e.status_code == 401:
+            print("Check your API credentials")
+        elif e.status_code == 429:
+            print("Rate limit exceeded - try again later")
+        elif e.status_code == 404:
+            print("Character not found")
+        else:
+            print(f"HTTP error {e.status_code}: {e}")
+    except GraphQLClientGraphQLError as e:
+        print(f"GraphQL error: {e}")
+    except ValidationError as e:
+        print(f"Parameter validation error: {e}")
     except Exception as e:
         print(f"Unexpected error: {e}")
+
+asyncio.run(safe_api_call())
 ```
 
 ## Common Usage Patterns
@@ -117,13 +167,13 @@ async def explore_game_data():
         # Get character classes
         classes = await client.get_classes()
         print(f"\nCharacter classes:")
-        for cls in classes.game_data.classes.data:
+        for cls in classes.game_data.classes:
             print(f"  - {cls.name}")
         
         # Get zones
         zones = await client.get_zones()
-        print(f"\nZones ({len(zones.world_data.zones.data)} total):")
-        for zone in zones.world_data.zones.data[:5]:  # Show first 5
+        print(f"\nZones ({len(zones.world_data.zones)} total):")
+        for zone in zones.world_data.zones[:5]:  # Show first 5
             print(f"  - {zone.name}")
 
 asyncio.run(explore_game_data())
@@ -149,7 +199,8 @@ async def analyze_character():
         
         print(f"Character: {char_data.name}")
         print(f"Server: {char_data.server.name}")
-        print(f"Faction: {char_data.faction.name}")
+        print(f"Class ID: {char_data.class_id}")
+        print(f"Race ID: {char_data.race_id}")
         
         # Get recent reports
         reports = await client.get_character_reports(
@@ -203,6 +254,10 @@ asyncio.run(search_reports())
 All responses use Pydantic models for type safety:
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def type_safe_example():
     """Demonstrate type safety with Pydantic models."""
     token = get_access_token()
@@ -220,6 +275,8 @@ async def type_safe_example():
             print(f"Ability: {ability.name}")
             print(f"  Icon: {ability.icon}")
             # ability.unknown_field  # This would cause a type error
+
+asyncio.run(type_safe_example())
 ```
 
 ### Data Validation
@@ -227,6 +284,11 @@ async def type_safe_example():
 ESO Logs Python validates all parameters:
 
 ```python
+import asyncio
+from esologs.client import Client
+from esologs.exceptions import ValidationError
+from access_token import get_access_token
+
 async def validation_example():
     """Show parameter validation in action."""
     token = get_access_token()
@@ -239,12 +301,15 @@ async def validation_example():
         try:
             # This will validate parameters before making the API call
             reports = await client.search_reports(
-                limit=100,        # Valid: 1-100
-                page=1,           # Valid: >= 1
+                limit=25,        # Valid: 1-25
+                page=1,          # Valid: >= 1
                 start_time=1640995200000  # Valid timestamp
             )
-        except ValueError as e:
+            print("✅ Parameter validation passed")
+        except ValidationError as e:
             print(f"Parameter validation error: {e}")
+
+asyncio.run(validation_example())
 ```
 
 ## Practical Examples
@@ -274,7 +339,8 @@ async def character_dashboard(character_id: int):
         
         print(f"Name: {char_data.name}")
         print(f"Server: {char_data.server.name}")
-        print(f"Faction: {char_data.faction.name}")
+        print(f"Class ID: {char_data.class_id}")
+        print(f"Race ID: {char_data.race_id}")
         
         # Get recent activity
         reports = await client.get_character_reports(character_id=character_id, limit=3)
@@ -294,6 +360,10 @@ asyncio.run(character_dashboard(12345))
 ### Monitor Guild Activity
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def guild_monitor(guild_id: int):
     """Monitor recent guild activity."""
     token = get_access_token()
@@ -327,17 +397,13 @@ asyncio.run(guild_monitor(123))
 
 Now that you're familiar with the basics:
 
-### Explore Advanced Features
+### API Reference & Examples
 
-- **[Character Rankings](examples/character-rankings.md)** - Performance analysis
-- **[Report Analysis](examples/report-analysis.md)** - Combat log deep-dives  
-- **[Error Handling](examples/error-handling.md)** - Robust error management
-
-### API Reference
-
-- **[Game Data API](api-reference/game-data.md)** - Abilities, items, classes
-- **[Character Data API](api-reference/character-data.md)** - Profiles and reports
-- **[Report Search API](api-reference/report-search.md)** - Advanced filtering
+- **[Game Data API](api-reference/game-data.md)** - Abilities, items, classes with examples
+- **[Character Data API](api-reference/character-data.md)** - Profiles, reports, and rankings with examples
+- **[Report Analysis API](api-reference/report-analysis.md)** - Combat log deep-dives with examples
+- **[Report Search API](api-reference/report-search.md)** - Advanced filtering with examples
+- **[System APIs](api-reference/system.md)** - Rate limiting and error handling with examples
 
 ### Development
 

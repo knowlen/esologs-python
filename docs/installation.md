@@ -65,34 +65,6 @@ Get ESO Logs Python up and running in your environment.
     pip install -e .
     ```
 
-## Optional Dependencies
-
-ESO Logs Python includes optional dependency groups for specific use cases:
-
-### WebSocket Support
-
-For real-time data streaming:
-
-```bash
-pip install -e ".[websockets]"
-```
-
-### Pandas Integration
-
-For data analysis with pandas DataFrames:
-
-```bash
-pip install -e ".[pandas]"
-```
-
-### Complete Installation
-
-Install everything including development tools:
-
-```bash
-pip install -e ".[all]"
-```
-
 ## Verification
 
 Verify your installation by running a simple test:
@@ -112,12 +84,6 @@ try:
 except Exception as e:
     print(f"❌ Authentication failed: {e}")
     print("Make sure to set ESOLOGS_ID and ESOLOGS_SECRET environment variables")
-```
-
-Run the test:
-
-```bash
-python test_installation.py
 ```
 
 ## Core Dependencies
@@ -239,7 +205,7 @@ Once installation is complete:
 
 1. **[Set up authentication](authentication.md)** - Configure your ESO Logs API credentials
 2. **[Follow the quick start guide](quickstart.md)** - Make your first API calls
-3. **[Explore the examples](examples/basic-usage.md)** - Learn common usage patterns
+3. **[Explore the API reference](api-reference/game-data.md)** - Learn methods and usage patterns
 
 !!! tip "Development Environment"
     If you plan to contribute to the project, see our [development setup guide](development/setup.md) 

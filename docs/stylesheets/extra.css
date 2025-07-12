@@ -27,6 +27,64 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Enhanced table styling for better readability */
+.md-typeset table:not([class]) {
+  border-collapse: collapse;
+  border: none;
+  width: 100%;
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  border-left: 1px solid var(--md-default-fg-color--lighter);
+  border-right: 1px solid var(--md-default-fg-color--lighter);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) th:first-child,
+.md-typeset table:not([class]) td:first-child {
+  border-left: none;
+}
+
+.md-typeset table:not([class]) th:last-child,
+.md-typeset table:not([class]) td:last-child {
+  border-right: none;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-default-fg-color--lightest);
+  font-weight: 600;
+  border-bottom: 2px solid var(--md-default-fg-color--lighter);
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: var(--md-code-bg-color);
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background-color: var(--md-accent-fg-color--transparent);
+}
+
+/* Enhanced parameter table styling */
+.md-typeset table:not([class]) th:first-child,
+.md-typeset table:not([class]) td:first-child {
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) td:nth-child(2) {
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  color: var(--md-code-fg-color);
+  font-size: 0.85em;
+}
+
+.md-typeset table:not([class]) td:nth-child(3) {
+  text-align: center;
+  font-weight: 500;
+}
+
 /* Print styles */
 @media print {
   .md-header,
@@ -37,5 +95,21 @@ html {
   
   .md-content {
     margin: 0;
+  }
+  
+  .md-typeset table:not([class]) th,
+  .md-typeset table:not([class]) td {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+  
+  .md-typeset table:not([class]) th:first-child,
+  .md-typeset table:not([class]) td:first-child {
+    border-left: none;
+  }
+  
+  .md-typeset table:not([class]) th:last-child,
+  .md-typeset table:not([class]) td:last-child {
+    border-right: none;
   }
 }
