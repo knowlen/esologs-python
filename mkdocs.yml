@@ -10,27 +10,16 @@ theme:
   name: material
   language: en
   
-  # Color scheme inspired by Modular/Mojo docs
+  # Vim-style color scheme - dark only
   palette:
-    # Light mode
-    - scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    
-    # Dark mode  
+    # Dark mode only (vim style)
     - scheme: slate
       primary: custom
       accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
   
-  # Typography - Inter font like Modular
+  # Typography - Monospace for vim feel
   font:
-    text: Inter
+    text: JetBrains Mono
     code: JetBrains Mono
   
   # Features
@@ -149,7 +138,7 @@ plugins:
 # Customization
 extra_css:
   - stylesheets/extra.css
-  - stylesheets/modular-theme.css
+  - stylesheets/vim-dark-theme.css
 
 extra_javascript:
   - javascripts/mathjax.js
