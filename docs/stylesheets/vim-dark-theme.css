@@ -15,11 +15,11 @@
   
   /* Code block colors - matching your desired example exactly */
   --code-keyword:     #569cd6;  /* Blue keywords (async, def, import, etc.) */
-  --code-string:      #d63384;  /* Magenta/purple strings */
+  --code-string:      #ce9178;  /* Orange/brown strings */
   --code-number:      #b5cea8;  /* Light green numbers */
   --code-comment:     #6a9955;  /* Green comments */
-  --code-function:    #4ec9b0;  /* Cyan/aqua function names */
-  --code-variable:    #4ec9b0;  /* Cyan/aqua variables/attributes */
+  --code-function:    #dcdcaa;  /* Yellow/gold function names */
+  --code-variable:    #9cdcfe;  /* Light blue variables */
   --code-operator:    #d4d4d4;  /* White operators/punctuation */
   --code-text:        #d4d4d4;  /* Default white text */
   
@@ -187,24 +187,27 @@
   color: var(--code-comment) !important;
 }
 
-.highlight .nf,    /* Function names - cyan/aqua */
-.highlight .n,     /* Names/variables - cyan/aqua */
-.highlight .nv,    /* Variables - cyan/aqua */
-.highlight .na {   /* Attributes - cyan/aqua */
+.highlight .nf {   /* Function names - yellow/gold */
   color: var(--code-function) !important;
 }
 
-.highlight .nb,    /* Built-ins */
-.highlight .nc,    /* Classes */
-.highlight .nd,    /* Decorators */
-.highlight .ni,    /* Inherited */
-.highlight .ne,    /* Exception */
-.highlight .nl,    /* Labels */
-.highlight .nn,    /* Namespaces */
-.highlight .nt,    /* Tags */
-.highlight .nx,    /* Other names */
-.highlight .no,    /* Constants */
-.highlight .bp {   /* Built-in pseudo */
+.highlight .n,     /* Names/variables - light blue */
+.highlight .nv,    /* Variables - light blue */
+.highlight .na {   /* Attributes - light blue */
+  color: var(--code-variable) !important;
+}
+
+.highlight .nb,    /* Built-ins - light blue */
+.highlight .nc,    /* Classes - light blue */
+.highlight .nd,    /* Decorators - light blue */
+.highlight .ni,    /* Inherited - light blue */
+.highlight .ne,    /* Exception - light blue */
+.highlight .nl,    /* Labels - light blue */
+.highlight .nn,    /* Namespaces - light blue */
+.highlight .nt,    /* Tags - light blue */
+.highlight .nx,    /* Other names - light blue */
+.highlight .no,    /* Constants - light blue */
+.highlight .bp {   /* Built-in pseudo - light blue */
   color: var(--code-variable) !important;
 }
 
