@@ -104,7 +104,7 @@ class TestCharacterDataExamples:
             # Use a known valid character ID and encounter ID
             ranking = await client.get_character_encounter_ranking(
                 character_id=314050,
-                encounter_id=48  # Ossein Cage encounter
+                encounter_id=63  # Rockgrove encounter
             )
             
             # Validate response structure
@@ -124,8 +124,7 @@ class TestCharacterDataExamples:
             # Use a known valid character ID and encounter ID
             rankings = await client.get_character_encounter_rankings(
                 character_id=314050,
-                encounter_id=48,  # Ossein Cage encounter
-                size=10,
+                encounter_id=63,  # Rockgrove encounter
                 include_combatant_info=True
             )
             
@@ -193,14 +192,13 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Test the performance tracking pattern
             character_id = 314050
-            encounter_id = 48  # Ossein Cage encounter
+            encounter_id = 63  # Rockgrove encounter
             
             # Get encounter rankings
             rankings = await client.get_character_encounter_rankings(
                 character_id=character_id,
                 encounter_id=encounter_id,
-                include_combatant_info=True,
-                size=20
+                include_combatant_info=True
             )
             
             # Validate response structure
@@ -246,8 +244,7 @@ class TestCharacterDataExamples:
             # Test with multiple filter parameters
             rankings = await client.get_character_encounter_rankings(
                 character_id=314050,
-                encounter_id=48,  # Ossein Cage encounter
-                size=5,
+                encounter_id=63,  # Rockgrove encounter
                 include_combatant_info=True,
                 by_bracket=True,
                 include_private_logs=False

@@ -162,7 +162,7 @@ async def get_character_encounter_ranking():
         
         ranking = await client.get_character_encounter_ranking(
             character_id=314050,
-            encounter_id=48  # Ossein Cage encounter
+            encounter_id=63  # Rockgrove encounter
         )
         
         if ranking.character_data and ranking.character_data.character:
@@ -224,8 +224,7 @@ async def get_character_encounter_rankings():
         
         rankings = await client.get_character_encounter_rankings(
             character_id=314050,
-            encounter_id=48,  # Ossein Cage encounter
-            size=10,
+            encounter_id=63,  # Rockgrove encounter
             include_combatant_info=True
         )
         
@@ -236,6 +235,10 @@ async def get_character_encounter_rankings():
                 print(f"Best score: {encounter_rankings.get('bestAmount', 0)}")
                 print(f"Total kills: {encounter_rankings.get('totalKills', 0)}")
                 print(f"Number of ranks: {len(encounter_rankings.get('ranks', []))}")
+                if encounter_rankings.get('ranks'):
+                    first_rank = encounter_rankings['ranks'][0]
+                    print(f"Latest performance: {first_rank.get('amount', 0)} points")
+                    print(f"Rank percentile: {first_rank.get('rankPercent', 0):.1f}%")
             else:
                 print("No detailed rankings found")
 
@@ -245,9 +248,11 @@ asyncio.run(get_character_encounter_rankings())
 **Output**:
 ```
 Character has detailed encounter rankings
-Best score: 0
-Total kills: 0
-Number of ranks: 0
+Best score: 296773
+Total kills: 11
+Number of ranks: 11
+Latest performance: 296773 points
+Rank percentile: 68.0%
 ```
 
 ### get_character_zone_rankings()
@@ -374,40 +379,41 @@ async def track_character_performance(character_id: int, encounter_id: int):
         rankings = await client.get_character_encounter_rankings(
             character_id=character_id,
             encounter_id=encounter_id,
-            include_combatant_info=True,
-            size=20
+            include_combatant_info=True
         )
         
         if rankings.character_data and rankings.character_data.character:
             encounter_rankings = rankings.character_data.character.encounter_rankings
             if encounter_rankings:
                 print("Performance data available for analysis")
-                print(f"Data structure: {list(encounter_rankings.keys())[:6]}")
                 print(f"Best score: {encounter_rankings.get('bestAmount', 0)}")
                 print(f"Total kills: {encounter_rankings.get('totalKills', 0)}")
                 print(f"Difficulty: {encounter_rankings.get('difficulty', 'Unknown')}")
-                print(f"Metric type: {encounter_rankings.get('metric', 'Unknown')}")
                 ranks = encounter_rankings.get('ranks', [])
-                print(f"Number of ranks: {len(ranks)}")
-                if not ranks:
-                    print("Note: No competitive rankings for this character/encounter combination")
+                print(f"Number of ranking entries: {len(ranks)}")
+                
+                if ranks:
+                    # Show recent performance trend
+                    recent_scores = [rank.get('amount', 0) for rank in ranks[:3]]
+                    print(f"Recent scores: {recent_scores}")
+                    avg_recent = sum(recent_scores) / len(recent_scores) if recent_scores else 0
+                    print(f"Average recent performance: {avg_recent:.0f}")
             else:
                 print("No performance data found for this encounter")
 
 # Run the performance tracking
-asyncio.run(track_character_performance(314050, 48))
+asyncio.run(track_character_performance(314050, 63))
 ```
 
 **Output**:
 ```
 Performance data available for analysis
-Data structure: ['bestAmount', 'medianPerformance', 'averagePerformance', 'totalKills', 'fastestKill', 'difficulty']
-Best score: 0
-Total kills: 0
+Best score: 296773
+Total kills: 11
 Difficulty: 122
-Metric type: playerscore
-Number of ranks: 0
-Note: No competitive rankings for this character/encounter combination
+Number of ranking entries: 11
+Recent scores: [296773, 295705, 294120]
+Average recent performance: 295533
 ```
 
 ## Error Handling
