@@ -66,42 +66,18 @@
     <span class="status-badge status-badge--completed">75% API Coverage</span></p>
     <p>Active development with comprehensive testing and documentation.</p>
   </div>
-  
-  <div class="feature-card">
-    <h3>Developer Experience</h3>
-    <p><span class="status-badge status-badge--completed">Type Safety</span><br>
-    <span class="status-badge status-badge--completed">Async Support</span></p>
-    <p>Full type hints, comprehensive error handling, and async/await patterns.</p>
-  </div>
-</div>
-
-## API Coverage
-
-<div class="feature-grid">
-  <div class="feature-card">
-    <h3>Implemented (75%)</h3>
-    <ul>
-      <li><span class="status-badge status-badge--completed">Game Data</span> Abilities, classes, items, NPCs, maps</li>
-      <li><span class="status-badge status-badge--completed">Character Data</span> Profiles, reports, rankings</li>
-      <li><span class="status-badge status-badge--completed">Report Analysis</span> Events, graphs, tables, player details</li>
-      <li><span class="status-badge status-badge--completed">Advanced Search</span> Multi-criteria filtering & pagination</li>
-      <li><span class="status-badge status-badge--completed">World Data</span> Regions, zones, encounters</li>
-      <li><span class="status-badge status-badge--completed">System APIs</span> Rate limiting, authentication</li>
-    </ul>
-  </div>
-  
   <div class="feature-card">
     <h3>Coming Soon (25%)</h3>
     <ul>
       <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings</li>
       <li><span class="status-badge status-badge--planned">Progress Tracking</span> Race & achievement tracking</li>
       <li><span class="status-badge status-badge--planned">Enhanced Guilds</span> Advanced guild management</li>
-      <li><span class="status-badge status-badge--planned">Data Integration</span> Pandas DataFrame support</li>
       <li><span class="status-badge status-badge--planned">Caching</span> Performance optimization</li>
     </ul>
   </div>
 </div>
 
+## API Coverage
 ## Architecture
 - **Type Safety**: Full type hints with Pydantic models
 - **Async First**: Native async/await support with HTTP and WebSocket
