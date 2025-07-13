@@ -63,7 +63,7 @@
   <div class="feature-card">
     <h3>Current Version</h3>
     <p><strong>v0.2.0-alpha</strong><br>
-    <span class="status-badge status-badge--completed">65% API Coverage</span></p>
+    <span class="status-badge status-badge--completed">75% API Coverage</span></p>
     <p>Active development with comprehensive testing and documentation.</p>
   </div>
   
@@ -79,7 +79,7 @@
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>Implemented (65%)</h3>
+    <h3>Implemented (75%)</h3>
     <ul>
       <li><span class="status-badge status-badge--completed">Game Data</span> Abilities, classes, items, NPCs, maps</li>
       <li><span class="status-badge status-badge--completed">Character Data</span> Profiles, reports, rankings</li>
@@ -91,7 +91,7 @@
   </div>
   
   <div class="feature-card">
-    <h3>Coming Soon (35%)</h3>
+    <h3>Coming Soon (25%)</h3>
     <ul>
       <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings</li>
       <li><span class="status-badge status-badge--planned">Progress Tracking</span> Race & achievement tracking</li>
@@ -107,7 +107,7 @@
 - **Async First**: Native async/await support with HTTP and WebSocket
 - **GraphQL Integration**: Code generation with `ariadne-codegen`
 - **Security**: OAuth2 authentication with parameter validation
-- **Testing**: 180+ tests with comprehensive coverage
+- **Testing**: 278 tests with comprehensive coverage
 - **Code Quality**: Pre-commit hooks, linting, and formatting
 
 ---
