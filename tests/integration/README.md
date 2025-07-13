@@ -89,7 +89,7 @@ Tests use fixed test data defined in `conftest.py`:
 
 ## API Coverage Testing
 
-Integration tests verify ~65% API coverage across:
+Integration tests verify ~75% API coverage across:
 
 ### ✅ Currently Tested
 - **Game Data**: abilities, classes, factions, items, maps, NPCs

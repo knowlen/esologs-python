@@ -9,7 +9,7 @@ Comprehensive testing framework for the esologs-python library, providing three 
 | **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 76 tests |
 | **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 85 tests |
 | **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 19 tests |
-| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 23 tests |
+| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 98 tests |
 
 ## Quick Start
 
@@ -105,8 +105,11 @@ pytest tests/ --cov=esologs --cov-report=html
 - **🤖 CI/CD Integration**: Automated validation of documentation accuracy
 
 **Key Areas**:
-- Quickstart guide examples (14 tests)
-- Authentication guide examples (9 tests)
+- All API reference documentation examples (98 tests)
+- Quickstart guide examples
+- Authentication guide examples  
+- Game data, character data, guild data, world data examples
+- Report analysis and search examples
 - Error handling patterns
 - Module import validation
 
@@ -177,7 +180,7 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~65% API endpoint coverage
+- **Integration Tests**: ~75% API endpoint coverage
 - **Sanity Tests**: 13+ major API features validated
 - **Overall**: 70% code coverage with high-quality tests
 
@@ -247,8 +250,8 @@ black . && isort . && ruff check --fix . && mypy .
 |-------|---------------|-------|---------|
 | Unit | < 5 seconds | 76 | Development feedback |
 | Integration | ~30 seconds | 85 | API validation |
-| Documentation | ~15 seconds | 23 | Examples validation |
+| Documentation | ~25 seconds | 98 | Examples validation |
 | Sanity | ~15 seconds | 19 | Health check |
-| **Total** | **~65 seconds** | **203** | **Complete validation** |
+| **Total** | **~75 seconds** | **278** | **Complete validation** |
 
 The test suite provides comprehensive coverage while maintaining fast execution times for efficient development workflows.

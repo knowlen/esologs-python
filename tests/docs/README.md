@@ -7,7 +7,9 @@ Tests to verify that code examples in documentation work correctly.
 This directory contains tests that validate code examples from:
 - `docs/quickstart.md` - Ensures all code blocks execute without errors
 - `docs/authentication.md` - Validates authentication setup and error handling
-- Future documentation files as needed
+- `docs/api-reference/` - All 7 API reference documentation files with comprehensive examples
+  - `game-data.md`, `character-data.md`, `guild-data.md`, `world-data.md`
+  - `report-analysis.md`, `report-search.md`, `system.md`
 
 ## Purpose
 
@@ -17,9 +19,18 @@ This directory contains tests that validate code examples from:
 
 ## Test Structure
 
-- `test_quickstart_examples.py` - Tests all code blocks from quickstart guide (14 tests)
-- `test_authentication_examples.py` - Tests all code blocks from authentication guide (9 tests)
+- `test_quickstart_examples.py` - Tests all code blocks from quickstart guide
+- `test_authentication_examples.py` - Tests all code blocks from authentication guide
+- `test_game_data_examples.py` - Tests all examples from game data API reference
+- `test_character_data_examples.py` - Tests all examples from character data API reference
+- `test_guild_data_examples.py` - Tests all examples from guild data API reference
+- `test_world_data_examples.py` - Tests all examples from world data API reference
+- `test_report_analysis_examples.py` - Tests all examples from report analysis API reference
+- `test_report_search_examples.py` - Tests all examples from report search API reference
+- `test_system_examples.py` - Tests all examples from system API reference
 - `conftest.py` - Shared test fixtures and configuration
+
+**Total: 98 tests** across all documentation files
 
 ## Running Tests
 

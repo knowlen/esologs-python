@@ -104,7 +104,7 @@ character_data: 2 features - ['character_profiles', 'character_rankings']
 guild_data: 1 features - ['guild_basic_info']
 report_data: 3 features - ['individual_reports', 'report_analysis', 'report_search']
 system_data: 1 features - ['rate_limiting']
-Total API features working: 13
+Total API features working: 14+
 ```
 
-This shows that 13 major API features are working correctly, providing confidence in the overall library health.
+This shows that 14+ major API features are working correctly, providing confidence in the overall library health.
