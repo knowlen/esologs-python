@@ -3,7 +3,7 @@
 /* Import JetBrains Mono for that terminal feel */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
-/* Vim Color Palette */
+/* Vim Color Palette - matching your desired code block theme */
 :root {
   /* Core vim colors */
   --vim-bg:           #1c1c1c;  /* Dark gray background like vim */
@@ -13,14 +13,22 @@
   --vim-fg-dim:       #808080;  /* Dimmed text */
   --vim-fg-bright:    #ffffff;  /* Bright white */
   
-  /* Vim syntax colors */
+  /* Code block colors - matching your example */
+  --code-keyword:     #569cd6;  /* Blue keywords (async, def, import, etc.) */
+  --code-string:      #ce9178;  /* Orange/brown strings */
+  --code-number:      #b5cea8;  /* Light green numbers */
+  --code-comment:     #6a9955;  /* Green comments */
+  --code-function:    #dcdcaa;  /* Yellow function names */
+  --code-variable:    #9cdcfe;  /* Light blue variables/types */
+  --code-operator:    #d4d4d4;  /* White operators */
+  --code-text:        #d4d4d4;  /* Default white text */
+  
+  /* Vim accent colors */
   --vim-red:          #ff5f5f;  /* Error red */
-  --vim-green:        #87ff87;  /* String green */
   --vim-yellow:       #ffff87;  /* Warning yellow */
-  --vim-blue:         #87ceeb;  /* Keyword blue */
+  --vim-blue:         #87ceeb;  /* UI blue */
   --vim-magenta:      #ff87ff;  /* Special magenta */
-  --vim-cyan:         #87ffff;  /* Type cyan */
-  --vim-orange:       #ff8700;  /* Number orange */
+  --vim-cyan:         #87ffff;  /* UI cyan */
   
   /* Status line colors */
   --vim-statusline:   #444444;  /* Status line background */
@@ -53,7 +61,7 @@
   
   /* Code colors */
   --md-code-bg-color:           var(--vim-bg-light);
-  --md-code-fg-color:           var(--vim-green);
+  --md-code-fg-color:           var(--code-text);*/
   
   /* Table and border colors */
   --md-typeset-table-color:     var(--vim-comment);
@@ -69,11 +77,11 @@
   background-color: var(--vim-bg) !important;
 }
 
-/* Typography - monospace everything for that terminal feel */
+/* Typography - keep regular text readable, monospace for code */
 .md-typeset {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--vim-fg);
   background-color: var(--vim-bg);
 }
@@ -113,10 +121,10 @@
   color: var(--vim-cyan) !important;
 }
 
-/* Code with vim syntax highlighting feel */
+/* Code with exact colors from your example */
 .md-typeset code {
   background-color: var(--vim-bg-light) !important;
-  color: var(--vim-green) !important;
+  color: var(--code-text) !important;
   border: 1px solid var(--vim-comment);
   border-radius: 3px;
   padding: 0.2em 0.4em;
@@ -145,9 +153,65 @@
 
 .highlight pre {
   background-color: var(--vim-bg-light) !important;
-  color: var(--vim-fg) !important;
+  color: var(--code-text) !important;
   padding: 1rem;
   margin: 0;
+}
+
+/* Syntax highlighting to match your example exactly */
+.highlight .k,     /* Keywords like async, def, import, from */
+.highlight .kn,    /* import/from keywords */
+.highlight .kt,    /* type keywords */
+.highlight .kd {   /* declaration keywords */
+  color: var(--code-keyword) !important;
+}
+
+.highlight .s,     /* Strings */
+.highlight .s1,    /* Single quoted strings */
+.highlight .s2,    /* Double quoted strings */
+.highlight .se {   /* String escapes */
+  color: var(--code-string) !important;
+}
+
+.highlight .m,     /* Numbers */
+.highlight .mi,    /* Integer numbers */
+.highlight .mf,    /* Float numbers */
+.highlight .mb,    /* Binary numbers */
+.highlight .mo {   /* Octal numbers */
+  color: var(--code-number) !important;
+}
+
+.highlight .c,     /* Comments */
+.highlight .c1,    /* Single line comments */
+.highlight .cm {   /* Multi-line comments */
+  color: var(--code-comment) !important;
+}
+
+.highlight .n,     /* Names/variables */
+.highlight .nv,    /* Variables */
+.highlight .nb,    /* Built-ins */
+.highlight .nc,    /* Classes */
+.highlight .nd,    /* Decorators */
+.highlight .ni,    /* Inherited */
+.highlight .ne,    /* Exception */
+.highlight .nf,    /* Function names */
+.highlight .nl,    /* Labels */
+.highlight .nn,    /* Namespaces */
+.highlight .nt,    /* Tags */
+.highlight .nx {   /* Other names */
+  color: var(--code-function) !important;
+}
+
+.highlight .o,     /* Operators */
+.highlight .ow,    /* Operator words */
+.highlight .p {    /* Punctuation */
+  color: var(--code-operator) !important;
+}
+
+.highlight .na,    /* Attributes */
+.highlight .no,    /* Constants */
+.highlight .bp {   /* Built-in pseudo */
+  color: var(--code-variable) !important;
 }
 
 /* Navigation with vim statusline feel */
@@ -166,7 +230,7 @@
 
 .md-nav__link {
   color: var(--vim-fg) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   transition: all 0.2s ease;
 }
 
@@ -189,7 +253,7 @@
 
 .md-tabs__link {
   color: var(--vim-fg) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -213,7 +277,7 @@
 
 .md-header__title {
   color: var(--vim-fg-bright) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
 }
 
@@ -223,7 +287,7 @@
   color: var(--vim-fg) !important;
   border: 1px solid var(--vim-comment) !important;
   border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
 }
 
 .md-search__input:focus {
@@ -255,7 +319,7 @@
 .md-typeset table:not([class]) td {
   color: var(--vim-fg) !important;
   border-bottom: 1px solid var(--vim-comment);
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
 }
 
 .md-typeset table:not([class]) tr:nth-child(even) {
@@ -272,7 +336,7 @@
   color: var(--vim-fg) !important;
   border: 2px solid var(--vim-comment) !important;
   border-radius: 3px;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -372,7 +436,7 @@
 
 .hero-section h1 {
   color: var(--vim-fg-bright) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--vim-blue);
@@ -381,13 +445,13 @@
 
 .hero-section p {
   color: var(--vim-fg) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   margin-bottom: 1rem;
 }
 
 .hero-section ul {
   color: var(--vim-fg) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
 }
 
 .hero-section li {
@@ -427,7 +491,7 @@
   color: var(--vim-fg-bright) !important;
   margin: 0;
   padding: 0.75rem 1rem;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -438,7 +502,7 @@
 .feature-card ul,
 .feature-card li {
   color: var(--vim-fg) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   padding: 0 1rem;
 }
 
@@ -449,7 +513,7 @@
 
 /* Status badges with vim colors */
 .status-badge {
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -498,7 +562,7 @@
 
 .tabbed-labels > label {
   color: var(--vim-fg) !important;
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;

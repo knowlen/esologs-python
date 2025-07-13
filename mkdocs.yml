@@ -17,9 +17,9 @@ theme:
       primary: custom
       accent: custom
   
-  # Typography - Monospace for vim feel
+  # Typography - Regular font for UI, monospace for code
   font:
-    text: JetBrains Mono
+    text: Inter
     code: JetBrains Mono
   
   # Features
