@@ -26,7 +26,7 @@ class TestReportAnalysisExamples:
     @pytest.fixture
     def test_report_code(self):
         """Report code used in documentation examples"""
-        return "VfxqaX47HGC98rAp"
+        return "VFnNYQjxC3RwGqg1"
 
     @pytest.mark.asyncio
     async def test_get_report_events_example(self, api_client_config, test_report_code):

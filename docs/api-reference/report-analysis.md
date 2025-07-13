@@ -69,13 +69,20 @@ async def analyze_report_events():
         
         # Analyze damage events from a specific report
         events = await client.get_report_events(
-            code="VfxqaX47HGC98rAp",
+            code="VFnNYQjxC3RwGqg1",
             data_type=EventDataType.DamageDone,
             start_time=0.0,
             end_time=60000.0  # First minute
         )
         
-        print(f"Retrieved events data: {type(events.report_data.report.events.data)}")
+        if events.report_data.report.events.data:
+            print(f"Found {len(events.report_data.report.events.data)} events")
+            # Show first few events
+            for i, event in enumerate(events.report_data.report.events.data[:3]):
+                print(f"Event {i+1}: {event}")
+        else:
+            print("No event data available for this time range")
+            
         if events.report_data.report.events.next_page_timestamp:
             print(f"More data available after: {events.report_data.report.events.next_page_timestamp}")
 
@@ -84,7 +91,7 @@ asyncio.run(analyze_report_events())
 
 **Output**:
 ```
-Retrieved events data: <class 'list'>
+No event data available for this time range
 ```
 
 ### get_report_graph()
@@ -142,23 +149,30 @@ async def get_damage_graph():
         
         # Get DPS graph data
         graph = await client.get_report_graph(
-            code="VfxqaX47HGC98rAp",
+            code="VFnNYQjxC3RwGqg1",
             data_type=GraphDataType.DamageDone,
             start_time=0.0,
             end_time=300000.0  # First 5 minutes
         )
         
-        print(f"Graph data keys: {list(graph.report_data.report.graph.keys())}")
-        if 'data' in graph.report_data.report.graph:
-            print(f"Graph data type: {type(graph.report_data.report.graph['data'])}")
+        graph_data = graph.report_data.report.graph['data']
+        print(f"Number of player series: {len(graph_data['series'])}")
+        
+        # Show first player's data
+        first_player = graph_data['series'][0]
+        print(f"Player: {first_player['name']} ({first_player['type']})")
+        print(f"Total damage: {first_player['total']:,}")
+        print(f"Data points: {len(first_player['data'])}")
 
 asyncio.run(get_damage_graph())
 ```
 
 **Output**:
 ```
-Graph data keys: ['data']
-Graph data type: <class 'dict'>
+Number of player series: 8
+Player: Rünebladés-Beam-Sister (Arcanist)
+Total damage: 8,947,598
+Data points: 240
 ```
 
 ### get_report_table()
@@ -216,23 +230,28 @@ async def get_damage_table():
         
         # Get damage summary table
         table = await client.get_report_table(
-            code="VfxqaX47HGC98rAp",
+            code="VFnNYQjxC3RwGqg1",
             data_type=TableDataType.DamageDone,
             start_time=0.0,
             end_time=300000.0
         )
         
-        print(f"Table data keys: {list(table.report_data.report.table.keys())}")
-        if 'data' in table.report_data.report.table:
-            print(f"Table data type: {type(table.report_data.report.table['data'])}")
+        entries = table.report_data.report.table['data']['entries']
+        print(f"Number of players: {len(entries)}")
+        
+        # Show top 3 damage dealers
+        for i, player in enumerate(entries[:3]):
+            print(f"{i+1}. {player['name']} ({player['type']}): {player['total']:,} damage")
 
 asyncio.run(get_damage_table())
 ```
 
 **Output**:
 ```
-Table data keys: ['data']
-Table data type: <class 'dict'>
+Number of players: 10
+1. Rÿañ Røsè (Nightblade): 1,521,248 damage
+2. Gabibich (Necromancer): 949,418 damage
+3. Zalduk Nightsky (DragonKnight): 498,434 damage
 ```
 
 ### get_report_rankings()
@@ -271,25 +290,33 @@ async def get_dps_rankings():
         
         # Get DPS rankings for the report
         rankings = await client.get_report_rankings(
-            code="VfxqaX47HGC98rAp",
+            code="VFnNYQjxC3RwGqg1",
             player_metric=ReportRankingMetricType.dps
         )
         
-        print(f"Rankings data keys: {list(rankings.report_data.report.rankings.keys())}")
-        if 'data' in rankings.report_data.report.rankings:
-            data = rankings.report_data.report.rankings['data']
-            print(f"Rankings data type: {type(data)}")
-            if isinstance(data, list):
-                print(f"Number of ranking entries: {len(data)}")
+        ranking_data = rankings.report_data.report.rankings['data'][0]
+        encounter = ranking_data['encounter']
+        print(f"Encounter: {encounter['name']}")
+        print(f"Duration: {ranking_data['duration'] / 1000:.1f} seconds")
+        
+        # Show top DPS players
+        dps_players = ranking_data['roles']['dps']['characters'][:3]
+        print("\nTop DPS Players:")
+        for i, player in enumerate(dps_players):
+            print(f"{i+1}. {player['name']} ({player['class']}): {player['amount']:,.0f} DPS")
 
 asyncio.run(get_dps_rankings())
 ```
 
 **Output**:
 ```
-Rankings data keys: ['data']
-Rankings data type: <class 'list'>
-Number of ranking entries: 10
+Encounter: Hall of Fleshcraft
+Duration: 172.8 seconds
+
+Top DPS Players:
+1. Gzerrog (Arcanist): 170,266 DPS
+2. Ugabugaugabugaugabugaugab (Arcanist): 158,153 DPS
+3. Maciek osmiornica (Arcanist): 150,955 DPS
 ```
 
 ### get_report_player_details()
@@ -329,23 +356,28 @@ async def get_player_performance():
         
         # Get detailed player performance data
         player_details = await client.get_report_player_details(
-            code="VfxqaX47HGC98rAp",
+            code="VFnNYQjxC3RwGqg1",
             start_time=0.0,
             end_time=300000.0,
             include_combatant_info=True
         )
         
-        print(f"Player details keys: {list(player_details.report_data.report.player_details.keys())}")
-        if 'data' in player_details.report_data.report.player_details:
-            print(f"Player details data type: {type(player_details.report_data.report.player_details['data'])}")
+        details = player_details.report_data.report.player_details['data']['playerDetails']
+        
+        # Show healers
+        healers = details['healers']
+        print(f"Healers ({len(healers)}):")
+        for healer in healers:
+            print(f"  {healer['name']} (@{healer['displayName']}) - {healer['type']}")
 
 asyncio.run(get_player_performance())
 ```
 
 **Output**:
 ```
-Player details keys: ['data']
-Player details data type: <class 'dict'>
+Healers (2):
+  Rÿañ Røsè (@RyanRose) - Nightblade
+  Gabibich (@gabibich) - Necromancer
 ```
 
 ## Error Handling
@@ -359,7 +391,9 @@ from pydantic import ValidationError
 try:
     events = await client.get_report_events(
         code="invalid_code",
-        data_type=EventDataType.DamageDone
+        data_type=EventDataType.DamageDone,
+        start_time=0.0,
+        end_time=60000.0
     )
 except GraphQLClientHttpError as e:
     if e.status_code == 403:
@@ -381,40 +415,75 @@ except ValidationError as e:
 Combine different analysis methods for comprehensive performance review:
 
 ```python
-async def comprehensive_analysis(client, report_code):
-    # Get basic report info
-    report = await client.get_report_by_code(code=report_code)
-    
-    # Analyze damage over time
-    damage_graph = await client.get_report_graph(
-        code=report_code,
-        data_type=GraphDataType.DamageDone
-    )
-    
-    # Get damage summary statistics
-    damage_table = await client.get_report_table(
-        code=report_code,
-        data_type=TableDataType.DamageDone
-    )
-    
-    # Compare performance rankings
-    rankings = await client.get_report_rankings(
-        code=report_code,
-        player_metric=ReportRankingMetricType.dps
-    )
-    
-    # Get individual player breakdowns
-    player_details = await client.get_report_player_details(
-        code=report_code
-    )
-    
-    return {
-        'report': report,
-        'damage_graph': damage_graph,
-        'damage_table': damage_table,
-        'rankings': rankings,
-        'player_details': player_details
-    }
+import asyncio
+from esologs.client import Client
+from esologs.enums import GraphDataType, TableDataType, ReportRankingMetricType
+from access_token import get_access_token
+
+async def comprehensive_analysis():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        report_code = "VFnNYQjxC3RwGqg1"
+        
+        # Get basic report info
+        report = await client.get_report_by_code(code=report_code)
+        print(f"Report: {report.report_data.report.title}")
+        print(f"Zone: {report.report_data.report.zone.name}")
+        
+        # Analyze damage over time
+        damage_graph = await client.get_report_graph(
+            code=report_code,
+            data_type=GraphDataType.DamageDone,
+            start_time=0.0,
+            end_time=300000.0
+        )
+        
+        # Get damage summary statistics  
+        damage_table = await client.get_report_table(
+            code=report_code,
+            data_type=TableDataType.DamageDone,
+            start_time=0.0,
+            end_time=300000.0
+        )
+        
+        # Compare performance rankings
+        rankings = await client.get_report_rankings(
+            code=report_code,
+            player_metric=ReportRankingMetricType.dps
+        )
+        
+        # Get individual player breakdowns
+        player_details = await client.get_report_player_details(
+            code=report_code,
+            start_time=0.0,
+            end_time=300000.0
+        )
+        
+        # Analyze results
+        entries = damage_table.report_data.report.table['data']['entries']
+        top_dps = entries[0]
+        print(f"Top DPS: {top_dps['name']} with {top_dps['total']:,} damage")
+        
+        return {
+            'report': report,
+            'damage_graph': damage_graph,
+            'damage_table': damage_table,
+            'rankings': rankings,
+            'player_details': player_details
+        }
+
+asyncio.run(comprehensive_analysis())
+```
+
+**Output**:
+```
+Report: 12/26/24 - Lucent Citadel
+Zone: Lucent Citadel
+Top DPS: Rÿañ Røsè with 1,521,248 damage
 ```
 
 ### Encounter Phase Analysis
@@ -422,26 +491,55 @@ async def comprehensive_analysis(client, report_code):
 Analyze specific phases of boss encounters:
 
 ```python
-async def analyze_encounter_phase(client, report_code, encounter_id, phase_start, phase_end):
-    # Get events for specific phase
-    events = await client.get_report_events(
-        code=report_code,
-        encounter_id=encounter_id,
-        start_time=phase_start,
-        end_time=phase_end,
-        data_type=EventDataType.DamageDone
-    )
-    
-    # Get phase performance graph
-    graph = await client.get_report_graph(
-        code=report_code,
-        encounter_id=encounter_id,
-        start_time=phase_start,
-        end_time=phase_end,
-        data_type=GraphDataType.DamageDone
-    )
-    
-    return {'events': events, 'graph': graph}
+import asyncio
+from esologs.client import Client
+from esologs.enums import EventDataType, GraphDataType
+from access_token import get_access_token
+
+async def analyze_encounter_phase():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        report_code = "VFnNYQjxC3RwGqg1"
+        encounter_id = 61  # Hall of Fleshcraft
+        phase_start = 0.0
+        phase_end = 60000.0  # First minute
+        
+        # Get events for specific phase
+        events = await client.get_report_events(
+            code=report_code,
+            encounter_id=encounter_id,
+            start_time=phase_start,
+            end_time=phase_end,
+            data_type=EventDataType.DamageDone
+        )
+        
+        # Get phase performance graph
+        graph = await client.get_report_graph(
+            code=report_code,
+            encounter_id=encounter_id,
+            start_time=phase_start,
+            end_time=phase_end,
+            data_type=GraphDataType.DamageDone
+        )
+        
+        print(f"Phase analysis complete: {phase_start/1000}-{phase_end/1000}s")
+        if graph.report_data.report.graph['data']['series']:
+            player_count = len(graph.report_data.report.graph['data']['series'])
+            print(f"Analyzed {player_count} players during this phase")
+        
+        return {'events': events, 'graph': graph}
+
+asyncio.run(analyze_encounter_phase())
+```
+
+**Output**:
+```
+Phase analysis complete: 0.0-60.0s
+Analyzed 8 players during this phase
 ```
 
 ## Rate Limiting Considerations
