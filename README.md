@@ -17,18 +17,18 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ### Current API Coverage
 **Implemented (6/8 sections):**
-1. ✅ **gameData** - 13 methods (COMPLETE)
-2. ✅ **characterData** - 5 methods (COMPLETE) 
-3. ✅ **reportData** - 9 methods (COMPLETE)
-4. ✅ **worldData** - 4 methods (COMPLETE)
-5. ✅ **rateLimitData** - 1 method (COMPLETE)
+1. ✅ **gameData** - 13 methods 
+2. ✅ **characterData** - 5 methods
+3. ✅ **reportData** - 9 methods 
+4. ✅ **worldData** - 4 methods
+5. ✅ **rateLimitData** - 1 method 
 6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
 
 **Missing (2/8 sections):**
 - ❌ **userData** - 0/3 methods (MISSING - requires user auth)
 - ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
 
-### Next Steps 
+### Roadmap 
 - 🚧 Progress race tracking
 - 🚧 User account integration
 - 🚧 Client architecture refactor (modular design)
