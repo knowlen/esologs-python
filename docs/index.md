@@ -1,9 +1,14 @@
 <div class="hero-section">
   <h1>ESO Logs Python</h1>
   <p>A comprehensive Python client library for the ESO Logs API v2</p>
-  <p>Access Elder Scrolls Online combat logging data with both synchronous and asynchronous interfaces, built-in data transformation, and analysis capabilities.</p>
-  <a href="installation/" class="md-button md-button--primary">Get Started</a>
-  <a href="api-reference/game-data/" class="md-button">API Reference</a>
+  <ul>
+		<li> <b>Type Safety</b>: Full type hints with Pydantic models</li>
+		<li> <b>Async First</b>: Native async/await support with HTTP and WebSocket</li>
+		<li> <b>GraphQL Integration</b>: Code generation with `ariadne-codegen`</li>
+		<li> <b>Security</b>: OAuth2 authentication with parameter validation</li>
+		<li> <b>Testing</b>: 278 tests with comprehensive coverage</li>
+		<li> <b>Code Quality</b>: Pre-commit hooks, linting, and formatting</li>
+  </ul>
 </div>
 
 ## Quickstart
@@ -58,7 +63,7 @@
 
 
 ## Project Status
-
+---
 <div class="feature-grid">
   <div class="feature-card">
     <h3>Current Version</h3>
@@ -78,6 +83,7 @@
 </div>
 
 ## Architecture
+---
 ```mermaid
 graph TB
     A[User Application] --> B[ESO Logs Python Client]
@@ -98,13 +104,6 @@ graph TB
         G
     end
 ```
-
-- **Type Safety**: Full type hints with Pydantic models
-- **Async First**: Native async/await support with HTTP and WebSocket
-- **GraphQL Integration**: Code generation with `ariadne-codegen`
-- **Security**: OAuth2 authentication with parameter validation
-- **Testing**: 278 tests with comprehensive coverage
-- **Code Quality**: Pre-commit hooks, linting, and formatting
 
 ---
 
