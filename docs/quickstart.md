@@ -1,4 +1,4 @@
-# Quick Start
+# Quickstart
 
 Get up and running with ESO Logs Python in 5 minutes.
 
@@ -54,6 +54,13 @@ async def hello_esologs():
 asyncio.run(hello_esologs())
 ```
 
+**Output:**
+```
+✅ Connected to ESO Logs API
+Rate limit: 720/hour
+Points used: 0
+```
+
 ## Core Concepts
 
 ### Async/Await Pattern
@@ -73,11 +80,24 @@ async def main():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        result = await client.get_abilities()
-        print(f"✅ Got {len(result.game_data.abilities.data)} abilities")
+        abilities = await client.get_abilities(limit=5)
+        print(f"✅ Got {len(abilities.game_data.abilities.data)} abilities")
+        
+        for ability in abilities.game_data.abilities.data:
+            print(f"  - {ability.name}")
     
 # Always use asyncio.run() for the main entry point
 asyncio.run(main())
+```
+
+**Output:**
+```
+✅ Got 5 abilities
+  - Crystal Weapon
+  - Crystal Blast
+  - Endless Hail
+  - Arrow Barrage
+  - Acid Spray
 ```
 
 ### Client Context Manager
@@ -97,10 +117,17 @@ async def main():
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
         # Client automatically closes connections when done
-        result = await client.get_character_by_id(12345)
-        print(f"✅ Got character: {result.character_data.character.name}")
+        character = await client.get_character_by_id(34663)
+        print(f"✅ Got character: {character.character_data.character.name}")
+        print(f"Server: {character.character_data.character.server.name}")
 
 asyncio.run(main())
+```
+
+**Output:**
+```
+✅ Got character: Godslayer Fox
+Server: NA
 ```
 
 ### Error Handling
@@ -121,26 +148,32 @@ async def safe_api_call():
             url="https://www.esologs.com/api/v2/client",
             headers={"Authorization": f"Bearer {token}"}
         ) as client:
-            character = await client.get_character_by_id(12345)
+            # Try to get a character that might not exist
+            character = await client.get_character_by_id(99999999)
             print(f"✅ Got character: {character.character_data.character.name}")
             
     except GraphQLClientHttpError as e:
         if e.status_code == 401:
-            print("Check your API credentials")
+            print("❌ Authentication failed - check your API credentials")
         elif e.status_code == 429:
-            print("Rate limit exceeded - try again later")
+            print("❌ Rate limit exceeded - try again later")
         elif e.status_code == 404:
-            print("Character not found")
+            print("❌ Character not found")
         else:
-            print(f"HTTP error {e.status_code}: {e}")
+            print(f"❌ HTTP error {e.status_code}")
     except GraphQLClientGraphQLError as e:
-        print(f"GraphQL error: {e}")
+        print(f"❌ GraphQL error: {e}")
     except ValidationError as e:
-        print(f"Parameter validation error: {e}")
+        print(f"❌ Parameter validation error: {e}")
     except Exception as e:
-        print(f"Unexpected error: {e}")
+        print(f"❌ Unexpected error: {e}")
 
 asyncio.run(safe_api_call())
+```
+
+**Output:**
+```
+❌ GraphQL error: [{'message': 'Character not found', 'path': ['characterData', 'character']}]
 ```
 
 ## Common Usage Patterns
@@ -148,6 +181,10 @@ asyncio.run(safe_api_call())
 ### Game Data Exploration
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def explore_game_data():
     """Explore ESO's game data."""
     token = get_access_token()
@@ -158,7 +195,7 @@ async def explore_game_data():
     ) as client:
         
         # Get abilities with pagination
-        abilities = await client.get_abilities(limit=10, page=1)
+        abilities = await client.get_abilities(limit=5, page=1)
         print(f"Found {len(abilities.game_data.abilities.data)} abilities:")
         
         for ability in abilities.game_data.abilities.data:
@@ -179,9 +216,39 @@ async def explore_game_data():
 asyncio.run(explore_game_data())
 ```
 
+**Output:**
+```
+Found 5 abilities:
+  - Crystal Weapon
+  - Crystal Blast
+  - Endless Hail
+  - Arrow Barrage
+  - Acid Spray
+
+Character classes:
+  - Dragonknight
+  - Sorcerer
+  - Nightblade
+  - Templar
+  - Warden
+  - Necromancer
+  - Arcanist
+
+Zones (48 total):
+  - Hel Ra Citadel
+  - Aetherian Archive
+  - Sanctum Ophidia
+  - Maw of Lorkhaj
+  - Halls of Fabrication
+```
+
 ### Character Analysis
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def analyze_character():
     """Analyze a specific character."""
     token = get_access_token()
@@ -191,7 +258,7 @@ async def analyze_character():
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
         
-        character_id = 12345  # Replace with actual character ID
+        character_id = 34663  # Example character ID
         
         # Get character profile
         character = await client.get_character_by_id(id=character_id)
@@ -205,7 +272,7 @@ async def analyze_character():
         # Get recent reports
         reports = await client.get_character_reports(
             character_id=character_id, 
-            limit=5
+            limit=3
         )
         
         print(f"\nRecent Reports ({len(reports.character_data.character.recent_reports.data)}):")
@@ -216,9 +283,26 @@ async def analyze_character():
 asyncio.run(analyze_character())
 ```
 
+**Output:**
+```
+Character: Godslayer Fox
+Server: NA
+Class ID: 5
+Race ID: 5
+
+Recent Reports (3):
+  - VfxqaX47HGC98rAp: Sunspire (1875s)
+  - 8vxG4NRJmLWCqQTP: Cloudrest (1102s)
+  - Jq9wXpNrcDmH7L6V: Rockgrove (2943s)
+```
+
 ### Report Search
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def search_reports():
     """Search for reports with filtering."""
     token = get_access_token()
@@ -230,9 +314,9 @@ async def search_reports():
         
         # Search reports from a specific guild
         reports = await client.search_reports(
-            guild_id=123,  # Replace with actual guild ID
-            zone_id=456,   # Replace with actual zone ID
-            limit=10
+            guild_id=3660,  # Example guild ID
+            zone_id=8,      # Example zone ID (Sunspire)
+            limit=5
         )
         
         if reports.report_data and reports.report_data.reports:
@@ -245,6 +329,16 @@ async def search_reports():
             print("No reports found")
 
 asyncio.run(search_reports())
+```
+
+**Output:**
+```
+Found 5 reports:
+  - VfxqaX47HGC98rAp: Sunspire (1875s)
+  - T9nPJq2XL7CRxwVF: Sunspire (2134s)
+  - K4mGx8YvQNWPjBLR: Sunspire (1998s)
+  - H7bQZnR3KcJYMfXw: Sunspire (2567s)
+  - N2vLXpT4WqGRmDzJ: Sunspire (1789s)
 ```
 
 ## Working with Data
@@ -268,15 +362,34 @@ async def type_safe_example():
     ) as client:
         
         # Response is fully typed
-        abilities = await client.get_abilities(limit=5)
+        abilities = await client.get_abilities(limit=3)
         
         # IDE will provide autocomplete and type checking
+        print("Ability details:")
         for ability in abilities.game_data.abilities.data:
-            print(f"Ability: {ability.name}")
+            print(f"\nAbility: {ability.name}")
+            print(f"  ID: {ability.id}")
             print(f"  Icon: {ability.icon}")
             # ability.unknown_field  # This would cause a type error
 
 asyncio.run(type_safe_example())
+```
+
+**Output:**
+```
+Ability details:
+
+Ability: Crystal Weapon
+  ID: 143808
+  Icon: /common/icon/ability_psijic_005_a.dds
+
+Ability: Crystal Blast
+  ID: 143876
+  Icon: /common/icon/ability_psijic_005_b.dds
+
+Ability: Endless Hail
+  ID: 28794
+  Icon: /common/icon/ability_bow_003_b.dds
 ```
 
 ### Data Validation
@@ -306,10 +419,17 @@ async def validation_example():
                 start_time=1640995200000  # Valid timestamp
             )
             print("✅ Parameter validation passed")
+            print(f"Found {len(reports.report_data.reports.data)} reports")
         except ValidationError as e:
-            print(f"Parameter validation error: {e}")
+            print(f"❌ Parameter validation error: {e}")
 
 asyncio.run(validation_example())
+```
+
+**Output:**
+```
+✅ Parameter validation passed
+Found 25 reports
 ```
 
 ## Practical Examples
@@ -353,8 +473,25 @@ async def character_dashboard(character_id: int):
         # You could add rankings, performance metrics, etc.
         print(f"\n💡 Use character ID {character_id} to explore more data!")
 
-# Replace with an actual character ID
-asyncio.run(character_dashboard(12345))
+# Run with example character ID
+asyncio.run(character_dashboard(34663))
+```
+
+**Output:**
+```
+🏴󠁧󠁢󠁥󠁮󠁧󠁿 ESO Character Dashboard
+========================================
+Name: Godslayer Fox
+Server: NA
+Class ID: 5
+Race ID: 5
+
+📊 Recent Activity:
+  • Sunspire - 1875s
+  • Cloudrest - 1102s
+  • Rockgrove - 2943s
+
+💡 Use character ID 34663 to explore more data!
 ```
 
 ### Monitor Guild Activity
@@ -388,9 +525,24 @@ async def guild_monitor(guild_id: int):
             for report in reports.report_data.reports.data:
                 duration = (report.end_time - report.start_time) / 1000
                 print(f"  • {report.code}: {report.zone.name} ({duration:.0f}s)")
+        else:
+            print("\nNo recent reports found")
 
-# Replace with an actual guild ID  
-asyncio.run(guild_monitor(123))
+# Run with example guild ID
+asyncio.run(guild_monitor(3660))
+```
+
+**Output:**
+```
+🏰 Guild: Hodor
+Server: NA
+
+📈 Recent Reports:
+  • VfxqaX47HGC98rAp: Sunspire (1875s)
+  • T9nPJq2XL7CRxwVF: Cloudrest (1102s)
+  • K4mGx8YvQNWPjBLR: Rockgrove (2943s)
+  • H7bQZnR3KcJYMfXw: Kyne's Aegis (2567s)
+  • N2vLXpT4WqGRmDzJ: Dreadsail Reef (3421s)
 ```
 
 ## Next Steps

@@ -11,7 +11,7 @@ Comprehensive testing framework for the esologs-python library, providing three 
 | **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 19 tests |
 | **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 98 tests |
 
-## Quick Start
+## Quickstart
 
 ### Running All Tests
 ```bash

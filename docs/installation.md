@@ -204,7 +204,7 @@ pip install -e .
 Once installation is complete:
 
 1. **[Set up authentication](authentication.md)** - Configure your ESO Logs API credentials
-2. **[Follow the quick start guide](quickstart.md)** - Make your first API calls
+2. **[Follow the quickstart guide](quickstart.md)** - Make your first API calls
 3. **[Explore the API reference](api-reference/game-data.md)** - Learn methods and usage patterns
 
 !!! tip "Development Environment"

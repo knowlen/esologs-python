@@ -84,7 +84,7 @@ pip install -e ".[dev]"
    echo "ESOLOGS_SECRET=your_client_secret_here" >> .env
    ```
 
-## Quick Start
+## Quickstart
 
 For comprehensive documentation, visit [esologs-python.readthedocs.io](https://esologs-python.readthedocs.io/)
 

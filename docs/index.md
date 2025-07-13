@@ -6,7 +6,7 @@
   <a href="api-reference/game-data/" class="md-button">API Reference</a>
 </div>
 
-## Quick Start
+## Quickstart
 
 === "Installation"
 

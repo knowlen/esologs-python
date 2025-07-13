@@ -73,7 +73,7 @@ nav:
   - Getting Started:
     - Installation: installation.md
     - Authentication: authentication.md
-    - Quick Start: quickstart.md
+    - Quickstart: quickstart.md
   - API Reference:
     - Game Data: api-reference/game-data.md
     - Character Data: api-reference/character-data.md

@@ -8,7 +8,7 @@ Get your development environment ready for contributing to ESO Logs Python.
 - Git
 - ESO Logs API credentials (see [Authentication Guide](../authentication.md))
 
-## Quick Start
+## Quickstart
 
 ```bash
 # Fork and clone

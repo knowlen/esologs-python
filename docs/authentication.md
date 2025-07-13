@@ -377,7 +377,7 @@ token = get_access_token()
 
 With authentication configured:
 
-1. **[Start with Quick Start](quickstart.md)** - Make your first API calls
+1. **[Start with Quickstart](quickstart.md)** - Make your first API calls
 2. **[Read API Reference](api-reference/game-data.md)** - Understand available methods with examples
 3. **[Development Guide](development/setup.md)** - Set up for contributing
 
