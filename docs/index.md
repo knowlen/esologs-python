@@ -79,6 +79,26 @@
 
 ## API Coverage
 ## Architecture
+```mermaid
+graph TB
+    A[User Application] --> B[ESO Logs Python Client]
+    B --> C[Authentication Layer]
+    B --> D[GraphQL Client]
+    B --> E[Data Models]
+    C --> F[OAuth2 Provider]
+    D --> G[ESO Logs API v2]
+    E --> H[Pydantic Validation]
+
+    subgraph "Generated Code"
+        D
+        E
+    end
+
+    subgraph "ESO Logs Infrastructure"
+        F
+        G
+    end
+```
 - **Type Safety**: Full type hints with Pydantic models
 - **Async First**: Native async/await support with HTTP and WebSocket
 - **GraphQL Integration**: Code generation with `ariadne-codegen`
