@@ -260,17 +260,40 @@ async def discover_all_encounters():
 asyncio.run(discover_all_encounters())
 ```
 
-### Difficulty Analysis
+**Output**:
+```
+Dungeons: 56 encounters
+Maelstrom Arena: 9 encounters
+Iron Atronach: 1 encounters
+Ossein Cage: 3 encounters
+Lucent Citadel: 3 encounters
+Sanity's Edge: 3 encounters
+Dreadsail Reef: 3 encounters
+Rockgrove: 3 encounters
+Kyne's Aegis: 3 encounters
+Sunspire: 3 encounters
+Cloudrest: 4 encounters
+Asylum Sanctorium: 3 encounters
+The Halls of Fabrication: 5 encounters
+Maw of Lorkhaj: 3 encounters
+Sanctum Ophidia: 4 encounters
+Hel Ra Citadel: 3 encounters
+Aetherian Archive: 4 encounters
+Arenas (Group): 2 encounters
 
-Analyze difficulty levels across zones:
+Total encounters across all zones: 115
+```
+
+### Veteran Hard Mode Analysis
+
+Find all zones that offer Veteran Hard Mode difficulty:
 
 ```python
 import asyncio
 from esologs.client import Client
 from access_token import get_access_token
-from collections import defaultdict
 
-async def analyze_difficulties():
+async def analyze_veteran_hard_mode_zones():
     token = get_access_token()
     async with Client(
         url="https://www.esologs.com/api/v2/client",
@@ -279,15 +302,40 @@ async def analyze_difficulties():
         
         zones = await client.get_zones()
         
-        difficulty_counts = defaultdict(int)
+        print("Zones with Veteran Hard Mode difficulty:")
+        veteran_hm_zones = []
+        
         for zone in zones.world_data.zones:
             if zone.difficulties:
                 for difficulty in zone.difficulties:
-                    difficulty_counts[difficulty.name] += 1
+                    if difficulty.name == "Veteran Hard Mode":
+                        veteran_hm_zones.append(zone)
+                        break
         
-        print("Difficulty distribution across zones:")
-        for difficulty, count in sorted(difficulty_counts.items()):
-            print(f"  {difficulty}: {count} zones")
+        if veteran_hm_zones:
+            for zone in veteran_hm_zones:
+                print(f"  - {zone.name} (ID: {zone.id})")
+        else:
+            print("  No zones found with Veteran Hard Mode difficulty")
 
-asyncio.run(analyze_difficulties())
+asyncio.run(analyze_veteran_hard_mode_zones())
+```
+
+**Output**:
+```
+Zones with Veteran Hard Mode difficulty:
+  - Dungeons (ID: 10)
+  - Ossein Cage (ID: 19)
+  - Lucent Citadel (ID: 18)
+  - Sanity's Edge (ID: 17)
+  - Dreadsail Reef (ID: 16)
+  - Rockgrove (ID: 15)
+  - Kyne's Aegis (ID: 14)
+  - Sunspire (ID: 12)
+  - The Halls of Fabrication (ID: 6)
+  - Maw of Lorkhaj (ID: 5)
+  - Sanctum Ophidia (ID: 3)
+  - Hel Ra Citadel (ID: 2)
+  - Aetherian Archive (ID: 1)
+  - Arenas (Group) (ID: 9)
 ```

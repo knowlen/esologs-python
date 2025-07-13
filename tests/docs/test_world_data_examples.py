@@ -140,27 +140,39 @@ class TestWorldDataExamples:
             assert total_encounters > 0
 
     @pytest.mark.asyncio
-    async def test_analyze_difficulties_pattern(self, api_client_config):
-        """Test the difficulty analysis common pattern"""
+    async def test_analyze_veteran_hard_mode_zones_pattern(self, api_client_config):
+        """Test the veteran hard mode analysis common pattern"""
         async with Client(**api_client_config) as client:
             zones = await client.get_zones()
             
-            difficulty_counts = defaultdict(int)
+            veteran_hm_zones = []
             for zone in zones.world_data.zones:
                 if zone.difficulties:
                     assert isinstance(zone.difficulties, list)
                     for difficulty in zone.difficulties:
                         assert hasattr(difficulty, 'name')
                         assert isinstance(difficulty.name, str)
-                        difficulty_counts[difficulty.name] += 1
+                        if difficulty.name == "Veteran Hard Mode":
+                            veteran_hm_zones.append(zone)
+                            break
             
-            # Should have found some difficulties
-            assert len(difficulty_counts) > 0
+            # Should have found some zones with Veteran Hard Mode
+            assert len(veteran_hm_zones) > 0
             
-            # Common ESO difficulties should be present
-            difficulty_names = set(difficulty_counts.keys())
-            expected_difficulties = {"Normal", "Veteran"}
-            assert any(diff in difficulty_names for diff in expected_difficulties)
+            # Validate the zones found
+            for zone in veteran_hm_zones:
+                assert hasattr(zone, 'id')
+                assert hasattr(zone, 'name')
+                assert isinstance(zone.id, int)
+                assert isinstance(zone.name, str)
+                
+                # Verify this zone actually has Veteran Hard Mode
+                has_vhm = False
+                for difficulty in zone.difficulties:
+                    if difficulty.name == "Veteran Hard Mode":
+                        has_vhm = True
+                        break
+                assert has_vhm, f"Zone {zone.name} should have Veteran Hard Mode difficulty"
 
     @pytest.mark.asyncio
     async def test_get_encounters_by_zone_with_invalid_id(self, api_client_config):
