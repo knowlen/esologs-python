@@ -14,7 +14,7 @@ build:
       # You can add any other files or directories that you'd like here as well,
       # like your docs requirements file, or other files that will change your docs build.
       - |
-        if [ "$READTHEDOCS_VERSION_TYPE" = "external" ] && git diff --quiet origin/main HEAD -- docs/ .readthedocs.yml requirements.txt; then
+        if [ "$READTHEDOCS_VERSION_TYPE" = "external" ] && git diff --quiet origin/v2/update-main-before-refactor HEAD -- docs/ .readthedocs.yml requirements.txt; then
           echo "No documentation changes found in PR, cancelling build."
           exit 183
         fi
