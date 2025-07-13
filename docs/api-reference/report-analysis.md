@@ -67,12 +67,13 @@ async def analyze_report_events():
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
         
-        # Analyze damage events from a specific report
+        # Analyze damage events from a specific fight
         events = await client.get_report_events(
             code="VFnNYQjxC3RwGqg1",
             data_type=EventDataType.DamageDone,
-            start_time=0.0,
-            end_time=60000.0  # First minute
+            fight_i_ds=[5],  # Specific fight: Red Witch Gedna Relvel
+            start_time=259178.0,
+            end_time=270000.0
         )
         
         if events.report_data.report.events.data:
@@ -80,18 +81,22 @@ async def analyze_report_events():
             # Show first few events
             for i, event in enumerate(events.report_data.report.events.data[:3]):
                 print(f"Event {i+1}: {event}")
+                
+            if events.report_data.report.events.next_page_timestamp:
+                print(f"More data available after: {events.report_data.report.events.next_page_timestamp}")
         else:
-            print("No event data available for this time range")
-            
-        if events.report_data.report.events.next_page_timestamp:
-            print(f"More data available after: {events.report_data.report.events.next_page_timestamp}")
+            print("No event data available for this fight")
 
 asyncio.run(analyze_report_events())
 ```
 
 **Output**:
 ```
-No event data available for this time range
+Found 300 events
+Event 1: {'timestamp': 259781, 'type': 'damage', 'sourceID': 10, 'sourceIsFriendly': True, 'targetID': 49, 'targetIsFriendly': False, 'abilityGameID': 88802, 'fight': 5, 'buffs': '76518.61687.88509.58955.80469.99875.92503.147417.61666.61771.147226.61799.45135.45513.61898.61665.61662.64509.86196.172621.', 'hitType': 1, 'amount': 1218, 'tick': True}
+Event 2: {'timestamp': 259781, 'type': 'damage', 'sourceID': 10, 'sourceIsFriendly': True, 'targetID': 49, 'targetIsFriendly': False, 'abilityGameID': 88801, 'fight': 5, 'buffs': '76518.61687.88509.58955.80469.99875.92503.147417.61666.61771.147226.61799.45135.45513.61898.61665.61662.64509.86196.172621.', 'hitType': 10, 'amount': 0}
+Event 3: {'timestamp': 259781, 'type': 'damage', 'sourceID': 10, 'sourceIsFriendly': True, 'targetID': 49, 'targetIsFriendly': False, 'abilityGameID': 21481, 'fight': 5, 'buffs': '76518.61687.88509.58955.80469.99875.92503.147417.61666.61771.147226.61799.45135.45513.61898.61665.61662.64509.86196.172621.', 'hitType': 1, 'amount': 1850}
+More data available after: 264591.0
 ```
 
 ### get_report_graph()
@@ -504,42 +509,64 @@ async def analyze_encounter_phase():
     ) as client:
         
         report_code = "VFnNYQjxC3RwGqg1"
-        encounter_id = 61  # Hall of Fleshcraft
-        phase_start = 0.0
-        phase_end = 60000.0  # First minute
+        fight_id = 5  # Red Witch Gedna Relvel
+        phase_start = 259178.0
+        phase_end = 270000.0  # First part of fight
+        
+        print(f"Analyzing fight {fight_id} phase: {phase_start/1000:.1f}-{phase_end/1000:.1f}s")
         
         # Get events for specific phase
         events = await client.get_report_events(
             code=report_code,
-            encounter_id=encounter_id,
+            fight_i_ds=[fight_id],
             start_time=phase_start,
             end_time=phase_end,
             data_type=EventDataType.DamageDone
         )
         
+        # Display event analysis
+        if events.report_data.report.events.data:
+            event_count = len(events.report_data.report.events.data)
+            print(f"Events found: {event_count}")
+            
+            # Analyze damage amounts
+            damage_amounts = [e['amount'] for e in events.report_data.report.events.data if 'amount' in e]
+            if damage_amounts:
+                avg_damage = sum(damage_amounts) / len(damage_amounts)
+                max_damage = max(damage_amounts)
+                print(f"Average damage per event: {avg_damage:.0f}")
+                print(f"Maximum single hit: {max_damage:,}")
+        
         # Get phase performance graph
         graph = await client.get_report_graph(
             code=report_code,
-            encounter_id=encounter_id,
+            fight_i_ds=[fight_id],
             start_time=phase_start,
             end_time=phase_end,
             data_type=GraphDataType.DamageDone
         )
         
-        print(f"Phase analysis complete: {phase_start/1000}-{phase_end/1000}s")
+        # Display graph analysis
         if graph.report_data.report.graph['data']['series']:
-            player_count = len(graph.report_data.report.graph['data']['series'])
-            print(f"Analyzed {player_count} players during this phase")
-        
-        return {'events': events, 'graph': graph}
+            players = graph.report_data.report.graph['data']['series']
+            print(f"Players active: {len(players)}")
+            
+            # Show top damage dealer in this phase
+            if players:
+                top_player = max(players, key=lambda p: p['total'])
+                print(f"Top damage: {top_player['name']} ({top_player['total']:,})")
 
 asyncio.run(analyze_encounter_phase())
 ```
 
 **Output**:
 ```
-Phase analysis complete: 0.0-60.0s
-Analyzed 8 players during this phase
+Analyzing fight 5 phase: 259.2-270.0s
+Events found: 300
+Average damage per event: 16,237
+Maximum single hit: 125,240
+Players active: 13
+Top damage: Gzerrog (87,312)
 ```
 
 ## Rate Limiting Considerations

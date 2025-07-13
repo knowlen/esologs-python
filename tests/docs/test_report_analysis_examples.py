@@ -32,12 +32,13 @@ class TestReportAnalysisExamples:
     async def test_get_report_events_example(self, api_client_config, test_report_code):
         """Test the get_report_events() basic example"""
         async with Client(**api_client_config) as client:
-            # From documentation example
+            # From documentation example - with fight_i_ds for real data
             events = await client.get_report_events(
                 code=test_report_code,
                 data_type=EventDataType.DamageDone,
-                start_time=0.0,
-                end_time=60000.0  # First minute
+                fight_i_ds=[5],  # Specific fight: Red Witch Gedna Relvel
+                start_time=259178.0,
+                end_time=270000.0
             )
             
             # Validate structure matches documentation
@@ -52,8 +53,10 @@ class TestReportAnalysisExamples:
             # next_page_timestamp may be None, which is valid
             assert hasattr(events.report_data.report.events, 'next_page_timestamp')
             
-            # Verify the type assertion from example output
-            assert type(events.report_data.report.events.data).__name__ in ['list', 'NoneType']
+            # With the specific fight, we should have data
+            if events.report_data.report.events.data:
+                assert isinstance(events.report_data.report.events.data, list)
+                assert len(events.report_data.report.events.data) > 0
 
     @pytest.mark.asyncio
     async def test_get_report_graph_example(self, api_client_config, test_report_code):
@@ -241,15 +244,15 @@ class TestReportAnalysisExamples:
     async def test_encounter_phase_analysis_pattern(self, api_client_config, test_report_code):
         """Test the encounter phase analysis pattern"""
         async with Client(**api_client_config) as client:
-            # Test encounter phase analysis with a general encounter
-            encounter_id = 27  # From test data
-            phase_start = 0.0
-            phase_end = 60000.0  # First minute
+            # Test encounter phase analysis with specific fight
+            fight_id = 5  # Red Witch Gedna Relvel
+            phase_start = 259178.0
+            phase_end = 270000.0  # First part of fight
             
             # Get events for specific phase
             events = await client.get_report_events(
                 code=test_report_code,
-                encounter_id=encounter_id,
+                fight_i_ds=[fight_id],
                 start_time=phase_start,
                 end_time=phase_end,
                 data_type=EventDataType.DamageDone
@@ -262,16 +265,24 @@ class TestReportAnalysisExamples:
             # Get phase performance graph
             graph = await client.get_report_graph(
                 code=test_report_code,
-                encounter_id=encounter_id,
+                fight_i_ds=[fight_id],
                 start_time=phase_start,
                 end_time=phase_end,
                 data_type=GraphDataType.DamageDone
             )
             assert graph is not None
             
-            # Verify analysis result structure
-            phase_analysis = {'events': events, 'graph': graph}
-            assert all(component is not None for component in phase_analysis.values())
+            # Verify we can analyze the data like the example does
+            if events.report_data.report.events.data:
+                damage_amounts = [e['amount'] for e in events.report_data.report.events.data if 'amount' in e]
+                assert len(damage_amounts) > 0
+            
+            if graph.report_data.report.graph['data']['series']:
+                players = graph.report_data.report.graph['data']['series']
+                assert len(players) > 0
+                # Verify player structure has expected keys
+                assert 'name' in players[0]
+                assert 'total' in players[0]
 
     @pytest.mark.asyncio
     async def test_rate_limiting_considerations(self, api_client_config, test_report_code):
