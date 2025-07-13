@@ -168,11 +168,171 @@ asyncio.run(search_guild_reports())
 Found 10 reports
 ```
 
-# Error Handling
+## Common Usage Patterns
+
+### Guild Performance Analysis
+
+Track guild performance over time:
+
+```python
+import asyncio
+from datetime import datetime, timedelta
+from esologs.client import Client
+from access_token import get_access_token
+
+async def analyze_guild_performance():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        # Get guild info
+        guild = await client.get_guild_by_id(guild_id=1583)
+        print(f"Analyzing guild: {guild.guild_data.guild.name}")
+        
+        # Get reports from last 30 days
+        end_time = datetime.now().timestamp() * 1000
+        start_time = (datetime.now() - timedelta(days=30)).timestamp() * 1000
+        
+        reports = await client.get_guild_reports(
+            guild_id=1583,
+            start_time=start_time,
+            end_time=end_time,
+            limit=25
+        )
+        
+        print(f"Reports in last 30 days: {len(reports.report_data.reports.data)}")
+        
+        # Analyze by zone
+        zones = {}
+        for report in reports.report_data.reports.data:
+            if hasattr(report, 'zone') and report.zone:
+                zone_name = report.zone.name
+                zones[zone_name] = zones.get(zone_name, 0) + 1
+        
+        print("Activity by zone:")
+        for zone, count in sorted(zones.items(), key=lambda x: x[1], reverse=True):
+            print(f"  {zone}: {count} reports")
+
+asyncio.run(analyze_guild_performance())
+```
+
+**Output**:
+```
+Analyzing guild: Entropy Rising
+Reports in last 30 days: 12
+Activity by zone:
+  Veteran Maw of Lorkhaj: 5 reports
+  Veteran Cloudrest: 3 reports
+  Veteran Sunspire: 2 reports
+  Veteran Kyne's Aegis: 2 reports
+```
+
+### Guild Member Activity Tracking
+
+Monitor guild member participation using report rankings data:
+
+```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
+async def track_member_activity():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        # Get recent guild reports
+        reports = await client.get_guild_reports(guild_id=1583, limit=5)
+        
+        # Collect unique participants across reports
+        all_members = {}
+        
+        for report in reports.report_data.reports.data:
+            print(f"\nReport: {report.title}")
+            
+            # Get report rankings to see participant details
+            rankings = await client.get_report_rankings(code=report.code)
+            
+            if rankings.report_data and rankings.report_data.report.rankings:
+                fights = rankings.report_data.report.rankings['data']
+                
+                # Process first fight to get participants
+                if fights:
+                    fight = fights[0]
+                    roles = fight.get('roles', {})
+                    
+                    # Extract members from all roles
+                    for role_name, role_data in roles.items():
+                        if 'characters' in role_data:
+                            for char in role_data['characters']:
+                                char_name = char['name']
+                                char_class = char['class']
+                                char_spec = char['spec']
+                                
+                                # Track member participation
+                                if char_name not in all_members:
+                                    all_members[char_name] = {
+                                        'class': char_class,
+                                        'spec': char_spec,
+                                        'reports': []
+                                    }
+                                all_members[char_name]['reports'].append(report.title)
+                                
+                                print(f"  - {char_name} ({char_class} {char_spec})")
+            
+            # Add delay for rate limiting
+            await asyncio.sleep(0.2)
+        
+        # Summary of most active members
+        print(f"\n=== Guild Activity Summary ===")
+        print(f"Total unique members: {len(all_members)}")
+        
+        # Sort by participation count
+        sorted_members = sorted(all_members.items(), 
+                              key=lambda x: len(x[1]['reports']), 
+                              reverse=True)
+        
+        print("\nMost active members:")
+        for name, data in sorted_members[:5]:
+            report_count = len(data['reports'])
+            print(f"  {name}: {report_count} reports ({data['class']} {data['spec']})")
+
+asyncio.run(track_member_activity())
+```
+
+**Output**:
+```
+
+Report: vMoL HM Progress - 7/13/25
+  - Rosenwynn (DragonKnight Tank)
+  - Korwyn Sky (Warden Healer)
+  - Elara Stormhaven (DragonKnight MagickaDPS)
+  - Vera Caisser (Arcanist StaminaDPS)
+  - R-can-ist (Arcanist StaminaDPS)
+
+Report: Cloudrest Clear - 7/12/25
+  - Rosenwynn (DragonKnight Tank)
+  - A Kat Has No Name (Nightblade Healer)
+  - Guzica Klovn (Necromancer MagickaDPS)
+  - Unleash The Beam (Arcanist StaminaDPS)
+
+=== Guild Activity Summary ===
+Total unique members: 12
+Most active members:
+  Rosenwynn: 5 reports (DragonKnight Tank)
+  Vera Caisser: 4 reports (Arcanist StaminaDPS)
+  Korwyn Sky: 3 reports (Warden Healer)
+  R-can-ist: 3 reports (Arcanist StaminaDPS)
+  Elara Stormhaven: 2 reports (DragonKnight MagickaDPS)
+```
+
+## Error Handling
 
 Guild data API methods have specific error handling patterns that differ from other endpoints.
-
-## Common Error Scenarios
 
 ### Non-existent Guild IDs
 
@@ -254,110 +414,6 @@ Successfully retrieved 5 reports
 - **Validate parameters**: Use the built-in validators before making API calls
 - **Graceful degradation**: Design your application to handle missing guild data
 
-# Common Usage Patterns
-
-### Guild Performance Analysis
-
-Track guild performance over time:
-
-```python
-import asyncio
-from datetime import datetime, timedelta
-from esologs.client import Client
-from access_token import get_access_token
-
-async def analyze_guild_performance():
-    token = get_access_token()
-    async with Client(
-        url="https://www.esologs.com/api/v2/client",
-        headers={"Authorization": f"Bearer {token}"}
-    ) as client:
-        
-        # Get guild info
-        guild = await client.get_guild_by_id(guild_id=1583)
-        print(f"Analyzing guild: {guild.guild_data.guild.name}")
-        
-        # Get reports from last 30 days
-        end_time = datetime.now().timestamp() * 1000
-        start_time = (datetime.now() - timedelta(days=30)).timestamp() * 1000
-        
-        reports = await client.get_guild_reports(
-            guild_id=1583,
-            start_time=start_time,
-            end_time=end_time,
-            limit=25
-        )
-        
-        print(f"Reports in last 30 days: {len(reports.report_data.reports.data)}")
-        
-        # Analyze by zone
-        zones = {}
-        for report in reports.report_data.reports.data:
-            if hasattr(report, 'zone') and report.zone:
-                zone_name = report.zone.name
-                zones[zone_name] = zones.get(zone_name, 0) + 1
-        
-        print("Activity by zone:")
-        for zone, count in sorted(zones.items(), key=lambda x: x[1], reverse=True):
-            print(f"  {zone}: {count} reports")
-
-asyncio.run(analyze_guild_performance())
-```
-
-**Output**:
-```
-Analyzing guild: Entropy Rising
-Reports in last 30 days: 12
-Activity by zone:
-  Veteran Maw of Lorkhaj: 5 reports
-  Veteran Cloudrest: 3 reports
-  Veteran Sunspire: 2 reports
-  Veteran Kyne's Aegis: 2 reports
-```
-
-### Guild Member Activity Tracking
-
-Monitor guild member participation:
-
-```python
-import asyncio
-from esologs.client import Client
-from access_token import get_access_token
-
-async def track_member_activity():
-    token = get_access_token()
-    async with Client(
-        url="https://www.esologs.com/api/v2/client",
-        headers={"Authorization": f"Bearer {token}"}
-    ) as client:
-        
-        # Get recent guild reports
-        reports = await client.get_guild_reports(guild_id=1583, limit=20)
-        
-        # Collect unique participants across reports
-        members = set()
-        for report in reports.report_data.reports.data:
-            # Get detailed report data to see participants
-            report_details = await client.get_report_by_code(code=report.code)
-            if report_details.report_data and report_details.report_data.report:
-                # Note: This example shows the pattern - actual member extraction
-                # would depend on the specific report structure
-                print(f"Report: {report.title}")
-            
-            # Add small delay for rate limiting
-            await asyncio.sleep(0.1)
-
-asyncio.run(track_member_activity())
-```
-
-**Output**:
-```
-Report: vMoL HM Progress - 7/13/25
-Report: Cloudrest Clear - 7/12/25  
-Report: Sunspire Weekly - 7/11/25
-Report: Saturday Training Run - 7/10/25
-Report: vKA Progression - 7/09/25
-```
 
 ## Rate Limiting Considerations
 
