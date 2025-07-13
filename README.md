@@ -28,14 +28,13 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
 
 **Missing Sections (2/8 sections):**
-7. ❌ **userData** - 0/3 methods (MISSING - requires user auth)
-8. ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
+- ❌ **userData** - 0/3 methods (MISSING - requires user auth)
+- ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
 
-### Coming Soon
+### Roadmap
 - 🚧 Progress race tracking
 - 🚧 User account integration
-- 🚧 Pandas DataFrame integration for data analysis
-- 🚧 Enhanced client architecture (modular design)
+- 🚧 Client architecture refactor (modular design)
 
 ## Installation
 
