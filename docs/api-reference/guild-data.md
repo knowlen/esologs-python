@@ -60,30 +60,6 @@ Server: Megaserver
 Region: North America
 ```
 
-**Error Handling**:
-```python
-from esologs.exceptions import GraphQLClientHttpError, GraphQLClientGraphQLMultiError
-from pydantic import ValidationError
-
-try:
-    guild = await client.get_guild_by_id(guild_id=999999)  # Non-existent guild
-    
-    # Check if guild exists
-    if guild.guild_data.guild is None:
-        print("Guild not found")
-    else:
-        print(f"Found guild: {guild.guild_data.guild.name}")
-        
-except GraphQLClientGraphQLMultiError as e:
-    print(f"GraphQL error: {e}")
-except ValidationError as e:
-    print(f"Invalid parameters: {e}")
-except GraphQLClientHttpError as e:
-    if e.status_code == 403:
-        print("Guild data is private")
-    elif e.status_code == 429:
-        print("Rate limit exceeded")
-```
 
 ### get_guild_reports()
 
@@ -142,25 +118,6 @@ Found 5 reports
   Guild: The Shadow Court
 ```
 
-**Error Handling**:
-```python
-from esologs.exceptions import GraphQLClientHttpError, GraphQLClientGraphQLMultiError
-from esologs.validators import validate_positive_integer, validate_limit_parameter
-
-try:
-    # Validate parameters before making request
-    validate_positive_integer(guild_id, "guild_id")
-    validate_limit_parameter(limit)
-    
-    reports = await client.get_guild_reports(guild_id=guild_id, limit=limit)
-except GraphQLClientGraphQLMultiError as e:
-    print(f"GraphQL error: {e}")
-except ValidationError as e:
-    print(f"Invalid parameters: {e}")
-except GraphQLClientHttpError as e:
-    if e.status_code == 403:
-        print("Access to guild reports denied")
-```
 
 ## Guild Filtering in Search Methods
 
@@ -206,7 +163,98 @@ async def search_guild_reports():
 asyncio.run(search_guild_reports())
 ```
 
-## Common Usage Patterns
+**Output**:
+```
+Found 10 reports
+```
+
+# Error Handling
+
+Guild data API methods have specific error handling patterns that differ from other endpoints.
+
+## Common Error Scenarios
+
+### Non-existent Guild IDs
+
+Unlike some APIs that throw exceptions for missing data, guild methods return `None` for non-existent guilds:
+
+```python
+from esologs.client import Client
+from access_token import get_access_token
+
+async def handle_missing_guild():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        guild = await client.get_guild_by_id(guild_id=999999)  # Non-existent guild
+        
+        # Check if guild exists
+        if guild.guild_data.guild is None:
+            print("Guild not found")
+        else:
+            print(f"Found guild: {guild.guild_data.guild.name}")
+
+asyncio.run(handle_missing_guild())
+```
+
+**Output**:
+```
+Guild not found
+```
+
+### Parameter Validation
+
+```python
+from esologs.exceptions import GraphQLClientHttpError, GraphQLClientGraphQLMultiError
+from esologs.validators import validate_positive_integer, validate_limit_parameter
+from pydantic import ValidationError
+
+async def validate_guild_parameters():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+        
+        try:
+            # Validate parameters before making request
+            guild_id = 3468
+            limit = 25
+            validate_positive_integer(guild_id, "guild_id")
+            validate_limit_parameter(limit)
+            
+            reports = await client.get_guild_reports(guild_id=guild_id, limit=limit)
+            print(f"Successfully retrieved {len(reports.report_data.reports.data)} reports")
+            
+        except GraphQLClientGraphQLMultiError as e:
+            print(f"GraphQL error: {e}")
+        except ValidationError as e:
+            print(f"Invalid parameters: {e}")
+        except GraphQLClientHttpError as e:
+            if e.status_code == 403:
+                print("Access to guild reports denied")
+            elif e.status_code == 429:
+                print("Rate limit exceeded")
+
+asyncio.run(validate_guild_parameters())
+```
+
+**Output**:
+```
+Successfully retrieved 5 reports
+```
+
+## Best Practices
+
+- **Always check for None**: Guild data can be `None` for non-existent or private guilds
+- **Handle rate limits**: Guild operations can be expensive, especially with historical data
+- **Validate parameters**: Use the built-in validators before making API calls
+- **Graceful degradation**: Design your application to handle missing guild data
+
+# Common Usage Patterns
 
 ### Guild Performance Analysis
 
@@ -226,7 +274,7 @@ async def analyze_guild_performance():
     ) as client:
         
         # Get guild info
-        guild = await client.get_guild_by_id(guild_id=3468)
+        guild = await client.get_guild_by_id(guild_id=1583)
         print(f"Analyzing guild: {guild.guild_data.guild.name}")
         
         # Get reports from last 30 days
@@ -234,7 +282,7 @@ async def analyze_guild_performance():
         start_time = (datetime.now() - timedelta(days=30)).timestamp() * 1000
         
         reports = await client.get_guild_reports(
-            guild_id=3468,
+            guild_id=1583,
             start_time=start_time,
             end_time=end_time,
             limit=25
@@ -256,6 +304,17 @@ async def analyze_guild_performance():
 asyncio.run(analyze_guild_performance())
 ```
 
+**Output**:
+```
+Analyzing guild: Entropy Rising
+Reports in last 30 days: 12
+Activity by zone:
+  Veteran Maw of Lorkhaj: 5 reports
+  Veteran Cloudrest: 3 reports
+  Veteran Sunspire: 2 reports
+  Veteran Kyne's Aegis: 2 reports
+```
+
 ### Guild Member Activity Tracking
 
 Monitor guild member participation:
@@ -273,7 +332,7 @@ async def track_member_activity():
     ) as client:
         
         # Get recent guild reports
-        reports = await client.get_guild_reports(guild_id=3468, limit=20)
+        reports = await client.get_guild_reports(guild_id=1583, limit=20)
         
         # Collect unique participants across reports
         members = set()
@@ -289,6 +348,15 @@ async def track_member_activity():
             await asyncio.sleep(0.1)
 
 asyncio.run(track_member_activity())
+```
+
+**Output**:
+```
+Report: vMoL HM Progress - 7/13/25
+Report: Cloudrest Clear - 7/12/25  
+Report: Sunspire Weekly - 7/11/25
+Report: Saturday Training Run - 7/10/25
+Report: vKA Progression - 7/09/25
 ```
 
 ## Rate Limiting Considerations
