@@ -331,6 +331,8 @@ async def get_all_guild_reports(guild_id: int):
     return all_reports
 ```
 
+> **Why use pagination?** When a guild has hundreds or thousands of reports, you can't retrieve them all in a single request due to API limits (max 25 per page). This pattern automatically handles pagination by checking `has_more_pages` and incrementing the page number until all reports are retrieved. The sleep delay prevents hitting rate limits.
+
 ### Date Range Filtering
 ```python
 import time
@@ -352,40 +354,135 @@ reports = await client.search_reports(
 )
 ```
 
+> **Understanding timestamps:** ESO Logs uses UNIX timestamps in milliseconds (not seconds). The first example calculates 30 days ago by subtracting seconds from current time, then multiplying by 1000 to convert to milliseconds. Date ranges are useful for analyzing performance trends over specific periods or studying historical data.
+
 ### Common Use Cases
 
 **Guild Performance Tracking**:
 ```python
 # Monitor guild activity in specific zones
 reports = await client.search_reports(
-    guild_id=123,
+    guild_id=5363,
     zone_id=16,  # Dreadsail Reef
-    limit=20
+    limit=5
 )
+
+print(f"Found {len(reports.report_data.reports.data)} guild reports in Dreadsail Reef")
+for report in reports.report_data.reports.data:
+    print(f"- {report.title}")
+    if report.guild:
+        print(f"  Guild: {report.guild.name}")
+    if report.zone:
+        print(f"  Zone: {report.zone.name}")
+```
+
+**Output**:
+```
+Found 0 guild reports in Dreadsail Reef
 ```
 
 **Player Activity Analysis**:
 ```python
 # Track user's recent activity
 reports = await client.get_user_reports(
-    user_id=456,
-    limit=15
+    user_id=43829,
+    limit=5
 )
+
+print(f"User has {len(reports.report_data.reports.data)} recent reports")
+for report in reports.report_data.reports.data:
+    print(f"- {report.title}")
+    if report.zone:
+        print(f"  Zone: {report.zone.name}")
+    if report.owner:
+        print(f"  Owner: {report.owner.name}")
+```
+
+**Output**:
+```
+User has 5 recent reports
+- Dungeons
+  Zone: Dungeons
+  Owner: jay
+- Rockgrove
+  Zone: Rockgrove
+  Owner: jay
+- Ossein Cage
+  Zone: Ossein Cage
+  Owner: jay
+- (Untitled Report)
+  Owner: jay
+- (Untitled Report)
+  Owner: jay
 ```
 
 **Zone-Specific Research**:
 ```python
 # Study activity in a specific zone
 reports = await client.search_reports(
-    zone_id=16,
-    limit=25
+    zone_id=16,  # Dreadsail Reef
+    limit=5
 )
+
+print(f"Found {len(reports.report_data.reports.data)} reports in Dreadsail Reef")
+for report in reports.report_data.reports.data:
+    print(f"- {report.title}")
+    if report.zone:
+        print(f"  Zone: {report.zone.name}")
+    if report.owner:
+        print(f"  Owner: {report.owner.name}")
+```
+
+**Output**:
+```
+Found 5 reports in Dreadsail Reef
+- Checkbox Crusaders 2 DSR HM Day 6
+  Zone: Dreadsail Reef
+  Owner: banyux
+- vDSR
+  Zone: Dreadsail Reef
+  Owner: nor'easter
+- Dreadsail Reef
+  Zone: Dreadsail Reef
+  Owner: No.Skill
+- ETU II - Dreadsail Reef Trial
+  Zone: Dreadsail Reef
+  Owner: nurrender
+- Dreadsail Reef
+  Zone: Dreadsail Reef
+  Owner: No.Skill
 ```
 
 **Recent Activity Monitoring**:
 ```python
 # Get latest reports across all criteria
-reports = await client.search_reports(limit=10)
+reports = await client.search_reports(limit=5)
+
+print(f"Found {len(reports.report_data.reports.data)} recent reports")
+for report in reports.report_data.reports.data:
+    print(f"- {report.title}")
+    if report.zone:
+        print(f"  Zone: {report.zone.name}")
+    if report.owner:
+        print(f"  Owner: {report.owner.name}")
+```
+
+**Output**:
+```
+Found 5 recent reports
+- vOC 7/12
+  Zone: Ossein Cage
+  Owner: IRiceKrispies
+- Dungeons
+  Zone: Dungeons
+  Owner: jay
+- vSS HM Prog
+  Zone: Sunspire
+  Owner: tomstock
+- Wolfy PB
+  Owner: mrmuffin210
+- Frog Prog Day 67 portal 2
+  Owner: mudosheep
 ```
 
 ## Best Practices

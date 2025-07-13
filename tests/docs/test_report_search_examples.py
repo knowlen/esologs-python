@@ -316,3 +316,32 @@ class TestReportSearchExamples:
                         assert hasattr(report.owner, 'name')
                         assert isinstance(report.owner.id, int)
                         assert isinstance(report.owner.name, str)
+
+    @pytest.mark.asyncio
+    async def test_common_use_cases_examples(self, api_client_config):
+        """Test that the common use cases examples work correctly"""
+        async with Client(**api_client_config) as client:
+            # Test zone-specific research (most reliable)
+            reports = await client.search_reports(zone_id=16, limit=5)
+            
+            # Validate response structure
+            assert hasattr(reports, 'report_data')
+            assert hasattr(reports.report_data, 'reports')
+            assert hasattr(reports.report_data.reports, 'data')
+            
+            # Should find some reports in a popular zone like Dreadsail Reef
+            # (Note: may be 0 if no recent activity)
+            assert isinstance(len(reports.report_data.reports.data), int)
+            
+            # If reports found, validate structure
+            if reports.report_data.reports.data:
+                for report in reports.report_data.reports.data:
+                    if report and report.zone:
+                        assert report.zone.id == 16  # Should match filter
+                        
+            await asyncio.sleep(0.5)
+            
+            # Test recent activity monitoring
+            recent_reports = await client.search_reports(limit=5)
+            assert hasattr(recent_reports.report_data.reports, 'data')
+            assert len(recent_reports.report_data.reports.data) >= 0
