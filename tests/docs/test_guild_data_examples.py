@@ -87,18 +87,24 @@ class TestGuildDataExamples:
     async def test_get_guild_reports_example(self, api_client_config):
         """Test the get_guild_reports() basic example"""
         async with Client(**api_client_config) as client:
-            # First find a valid guild ID
-            reports = await client.search_reports(limit=10)
-            guild_id = None
+            # Use the guild ID we found during validation
+            guild_id = 3468  # From our validation script
             
-            for report in reports.report_data.reports.data:
-                if report.guild and report.guild.id:
-                    guild_id = report.guild.id
-                    break
-            
-            # Skip test if no guild found
-            if not guild_id:
-                pytest.skip("No guild ID found in recent reports")
+            # Verify it still exists
+            test_guild = await client.get_guild_by_id(guild_id=guild_id)
+            if test_guild.guild_data.guild is None:
+                # Fall back to searching for a valid guild ID
+                reports = await client.search_reports(limit=10)
+                guild_id = None
+                
+                for report in reports.report_data.reports.data:
+                    if report.guild and report.guild.id:
+                        guild_id = report.guild.id
+                        break
+                
+                # Skip test if no guild found
+                if not guild_id:
+                    pytest.skip("No guild ID found in recent reports")
             
             # Test the main example
             guild_reports = await client.get_guild_reports(guild_id=guild_id, limit=5)
@@ -140,18 +146,24 @@ class TestGuildDataExamples:
     async def test_search_guild_reports_example(self, api_client_config):
         """Test the search_reports() with guild filters example"""
         async with Client(**api_client_config) as client:
-            # First find a valid guild ID
-            reports = await client.search_reports(limit=5)
-            guild_id = None
+            # Use the guild ID we found during validation
+            guild_id = 3468  # From our validation script
             
-            for report in reports.report_data.reports.data:
-                if report.guild and report.guild.id:
-                    guild_id = report.guild.id
-                    break
-            
-            # Skip test if no guild found
-            if not guild_id:
-                pytest.skip("No guild ID found in recent reports")
+            # Verify it still exists
+            test_guild = await client.get_guild_by_id(guild_id=guild_id)
+            if test_guild.guild_data.guild is None:
+                # Fall back to searching for a valid guild ID
+                reports = await client.search_reports(limit=10)
+                guild_id = None
+                
+                for report in reports.report_data.reports.data:
+                    if report.guild and report.guild.id:
+                        guild_id = report.guild.id
+                        break
+                
+                # Skip test if no guild found
+                if not guild_id:
+                    pytest.skip("No guild ID found in recent reports")
             
             # Test guild ID search
             guild_reports = await client.search_reports(guild_id=guild_id, limit=5)
@@ -169,18 +181,24 @@ class TestGuildDataExamples:
     async def test_guild_performance_analysis_pattern(self, api_client_config):
         """Test the guild performance analysis pattern example"""
         async with Client(**api_client_config) as client:
-            # Find a valid guild ID
-            reports = await client.search_reports(limit=5)
-            guild_id = None
+            # Use the guild ID we found during validation
+            guild_id = 3468  # From our validation script
             
-            for report in reports.report_data.reports.data:
-                if report.guild and report.guild.id:
-                    guild_id = report.guild.id
-                    break
-            
-            # Skip test if no guild found
-            if not guild_id:
-                pytest.skip("No guild ID found in recent reports")
+            # Verify it still exists
+            test_guild = await client.get_guild_by_id(guild_id=guild_id)
+            if test_guild.guild_data.guild is None:
+                # Fall back to searching for a valid guild ID
+                reports = await client.search_reports(limit=10)
+                guild_id = None
+                
+                for report in reports.report_data.reports.data:
+                    if report.guild and report.guild.id:
+                        guild_id = report.guild.id
+                        break
+                
+                # Skip test if no guild found
+                if not guild_id:
+                    pytest.skip("No guild ID found in recent reports")
             
             # Test guild info retrieval
             guild = await client.get_guild_by_id(guild_id=guild_id)
@@ -208,18 +226,24 @@ class TestGuildDataExamples:
     async def test_member_activity_tracking_pattern(self, api_client_config):
         """Test the member activity tracking pattern (simplified version)"""
         async with Client(**api_client_config) as client:
-            # Find a valid guild ID
-            reports = await client.search_reports(limit=3)
-            guild_id = None
+            # Use the guild ID we found during validation
+            guild_id = 3468  # From our validation script
             
-            for report in reports.report_data.reports.data:
-                if report.guild and report.guild.id:
-                    guild_id = report.guild.id
-                    break
-            
-            # Skip test if no guild found
-            if not guild_id:
-                pytest.skip("No guild ID found in recent reports")
+            # Verify it still exists
+            test_guild = await client.get_guild_by_id(guild_id=guild_id)
+            if test_guild.guild_data.guild is None:
+                # Fall back to searching for a valid guild ID
+                reports = await client.search_reports(limit=10)
+                guild_id = None
+                
+                for report in reports.report_data.reports.data:
+                    if report.guild and report.guild.id:
+                        guild_id = report.guild.id
+                        break
+                
+                # Skip test if no guild found
+                if not guild_id:
+                    pytest.skip("No guild ID found in recent reports")
             
             # Test getting guild reports (simplified version of the pattern)
             guild_reports = await client.get_guild_reports(guild_id=guild_id, limit=3)
