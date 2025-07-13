@@ -77,7 +77,6 @@
   </div>
 </div>
 
-## API Coverage
 ## Architecture
 ```mermaid
 graph TB
@@ -99,6 +98,7 @@ graph TB
         G
     end
 ```
+
 - **Type Safety**: Full type hints with Pydantic models
 - **Async First**: Native async/await support with HTTP and WebSocket
 - **GraphQL Integration**: Code generation with `ariadne-codegen`
