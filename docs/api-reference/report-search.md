@@ -54,30 +54,32 @@ Search and filter ESO combat reports with advanced criteria including guilds, en
 | guild | Guild \| None | Guild information (if available) |
 | owner | Owner \| None | Report owner information (if available) |
 
-**Zone Structure**:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| id | int | Zone ID |
-| name | str | Zone name |
-
-**Guild Structure**:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| id | int | Guild ID |
-| name | str | Guild name |
-| server.name | str | Server name |
-| server.slug | str | Server slug |
-| server.region.name | str | Region name |
-| server.region.slug | str | Region slug |
-
-**Owner Structure**:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| id | int | User ID |
-| name | str | User name |
+> **Nested Object Structures:**
+> 
+> **Zone Structure**:
+> 
+> | Field | Type | Description |
+> |-------|------|-------------|
+> | id | int | Zone ID |
+> | name | str | Zone name |
+> 
+> **Guild Structure**:
+> 
+> | Field | Type | Description |
+> |-------|------|-------------|
+> | id | int | Guild ID |
+> | name | str | Guild name |
+> | server.name | str | Server name |
+> | server.slug | str | Server slug |
+> | server.region.name | str | Region name |
+> | server.region.slug | str | Region slug |
+> 
+> **Owner Structure**:
+> 
+> | Field | Type | Description |
+> |-------|------|-------------|
+> | id | int | User ID |
+> | name | str | User name |
 
 **Example**:
 ```python
