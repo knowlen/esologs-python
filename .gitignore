@@ -159,6 +159,10 @@ anthropic-*
 openai-*
 *.aider.log
 
+# Development and planning files (keep local only)
+COMMIT_HISTORY_CLEANUP.md
+PHASE2_DEVELOPMENT_PLAN.md
+
 # Coverage reports
 htmlcov/
 .coverage
