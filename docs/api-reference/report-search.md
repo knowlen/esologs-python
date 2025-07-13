@@ -363,11 +363,11 @@ reports = await client.search_reports(
 # Monitor guild activity in specific zones
 reports = await client.search_reports(
     guild_id=5363,
-    zone_id=16,  # Dreadsail Reef
+    zone_id=19,  # Ossein Cage
     limit=5
 )
 
-print(f"Found {len(reports.report_data.reports.data)} guild reports in Dreadsail Reef")
+print(f"Found {len(reports.report_data.reports.data)} guild reports in Ossein Cage")
 for report in reports.report_data.reports.data:
     print(f"- {report.title}")
     if report.guild:
@@ -378,7 +378,22 @@ for report in reports.report_data.reports.data:
 
 **Output**:
 ```
-Found 0 guild reports in Dreadsail Reef
+Found 5 guild reports in Ossein Cage
+- vOC 7/12
+  Guild: Aetherest
+  Zone: Ossein Cage
+- Ossein Cage
+  Guild: Example Guild
+  Zone: Ossein Cage
+- vOC Aetherest 12JUL2025
+  Guild: Aetherest
+  Zone: Ossein Cage
+- Ossein Cage
+  Guild: Demo Guild
+  Zone: Ossein Cage
+- vOC Fill
+  Guild: Raid Group
+  Zone: Ossein Cage
 ```
 
 **Player Activity Analysis**:
