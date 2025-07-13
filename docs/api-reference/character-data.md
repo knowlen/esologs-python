@@ -175,6 +175,11 @@ async def get_character_encounter_ranking():
 asyncio.run(get_character_encounter_ranking())
 ```
 
+**Output**:
+```
+Character has rankings for this encounter
+```
+
 ### get_character_encounter_rankings()
 
 **Purpose**: Get character's rankings for a specific encounter with filtering options
@@ -232,6 +237,11 @@ async def get_character_encounter_rankings():
 asyncio.run(get_character_encounter_rankings())
 ```
 
+**Output**:
+```
+Character has detailed encounter rankings
+```
+
 ### get_character_zone_rankings()
 
 **Purpose**: Get character's rankings for a specific zone with filtering options
@@ -287,11 +297,20 @@ async def get_character_zone_rankings():
 asyncio.run(get_character_zone_rankings())
 ```
 
+**Output**:
+```
+Character has zone rankings
+```
+
 ## Common Usage Patterns
 
 ### Character Profile Analysis
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def analyze_character(character_id: int):
     """Complete character analysis including profile and recent activity."""
     token = get_access_token()
@@ -314,11 +333,25 @@ async def analyze_character(character_id: int):
                 recent_reports = reports.character_data.character.recent_reports
                 if recent_reports:
                     print(f"Recent activity: {recent_reports.total} reports")
+
+# Run the analysis
+asyncio.run(analyze_character(123456))
+```
+
+**Output**:
+```
+Analyzing: Anonymous 122294
+Server: Megaserver (North America)
+Recent activity: 2 reports
 ```
 
 ### Performance Tracking
 
 ```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
 async def track_character_performance(character_id: int, encounter_id: int):
     """Track character performance for a specific encounter."""
     token = get_access_token()
@@ -341,6 +374,14 @@ async def track_character_performance(character_id: int, encounter_id: int):
                 print("Performance data available for analysis")
             else:
                 print("No performance data found for this encounter")
+
+# Run the performance tracking
+asyncio.run(track_character_performance(123456, 1051))
+```
+
+**Output**:
+```
+Performance data available for analysis
 ```
 
 ## Error Handling

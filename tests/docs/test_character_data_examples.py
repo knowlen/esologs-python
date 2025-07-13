@@ -161,8 +161,8 @@ class TestCharacterDataExamples:
             # Just verify the field exists - content varies by character/zone
 
     @pytest.mark.asyncio
-    async def test_analyze_character_example(self, api_client_config):
-        """Test the character profile analysis example"""
+    async def test_analyze_character_pattern_example(self, api_client_config):
+        """Test the character profile analysis pattern example from Common Usage Patterns"""
         async with Client(**api_client_config) as client:
             # Test the complete character analysis pattern
             character_id = 123456
@@ -188,8 +188,8 @@ class TestCharacterDataExamples:
                 assert isinstance(recent_reports.total, int)
 
     @pytest.mark.asyncio
-    async def test_track_character_performance_example(self, api_client_config):
-        """Test the performance tracking example"""
+    async def test_track_character_performance_pattern_example(self, api_client_config):
+        """Test the performance tracking pattern example from Common Usage Patterns"""
         async with Client(**api_client_config) as client:
             # Test the performance tracking pattern
             character_id = 123456
