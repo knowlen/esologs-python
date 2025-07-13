@@ -10,29 +10,26 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 ## Project Status
 
 **Current Version:** 0.2.0-alpha  
-**API Coverage:** ~75% (expanding to 95%+ coverage)  
+**API Coverage:** ~83% (comprehensive analysis shows 6/8 API sections fully implemented)  
 **Development Stage:** Active development  
 **Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)  
 **Tests:** 278 tests across unit, integration, documentation, and sanity suites
 
-### What's Working
-- ✅ OAuth2 authentication with ESO Logs API
-- ✅ Basic game data queries (abilities, classes, items, NPCs, maps)
-- ✅ Character and guild information retrieval
-- ✅ Basic report data access
-- ✅ Rate limiting information
-- ✅ Async/await support with HTTP and WebSocket connections
-- ✅ **Character rankings and performance metrics** (PR #4 - Merged)
-- ✅ **Comprehensive report analysis** (PR #5 - Merged)
-  - ✅ Event-by-event combat log data
-  - ✅ Time-series performance graphs
-  - ✅ Tabular analysis data
-  - ✅ Report rankings and player details
-- ✅ **Advanced report search and filtering** (PR #4 - Merged)
-  - ✅ Flexible report search with multiple criteria
-  - ✅ Guild and user report convenience methods
-  - ✅ Comprehensive filtering and pagination
-  - ✅ Parameter validation and security features
+### Updated API Coverage Assessment
+
+**Current Coverage: ~83% (up from ~75%)**
+
+**Fully Implemented (6/8 sections):**
+1. ✅ **gameData** - 13 methods (COMPLETE)
+2. ✅ **characterData** - 5 methods (COMPLETE) 
+3. ✅ **reportData** - 9 methods (COMPLETE)
+4. ✅ **worldData** - 4 methods (COMPLETE)
+5. ✅ **rateLimitData** - 1 method (COMPLETE)
+6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
+
+**Missing Sections (2/8 sections):**
+7. ❌ **userData** - 0/3 methods (MISSING - requires user auth)
+8. ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
 
 ### Coming Soon
 - 🚧 Progress race tracking
