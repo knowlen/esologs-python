@@ -142,7 +142,22 @@ Thumbs.db
 
 # Project specific
 schema.json
+
+# AI tools and configuration files
+CLAUDE.md
 CLAUDE.local.md
+.claude/
+.cursor/
+.cursorrules
+.github/copilot-instructions.md
+.aider*
+.codeium/
+.gemini/
+.anthropic/
+claude-*
+anthropic-*
+openai-*
+*.aider.log
 
 # Coverage reports
 htmlcov/
