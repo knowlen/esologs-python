@@ -3,14 +3,15 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
+[![CI/CD Pipeline](https://github.com/knowlen/esologs-python/actions/workflows/test.yml/badge.svg)](https://github.com/knowlen/esologs-python/actions/workflows/test.yml)
 
 A comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/). This library provides both synchronous and asynchronous interfaces to access Elder Scrolls Online combat logging data, with built-in support for data transformation and analysis.
 
-## 🎯 Project Status
+## Project Status
 
 **Current Version:** 0.2.0-alpha
-**API Coverage:** ~60% (expanding to 95%+ coverage)
-**Development Stage:** Active development - Phase 2 implementation in progress
+**API Coverage:** ~75% (expanding to 95%+ coverage)
+**Development Stage:** Active development - API documentation phase complete
 
 ### What's Working
 - ✅ OAuth2 authentication with ESO Logs API
@@ -37,7 +38,7 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 - 🚧 Pandas DataFrame integration for data analysis
 - 🚧 Enhanced client architecture (modular design)
 
-## 🚀 Installation
+## Installation
 
 **Note**: This package is currently in development and not yet published to PyPI.
 
@@ -61,7 +62,7 @@ For development with testing, linting, and pre-commit hooks:
 pip install -e ".[dev]"
 ```
 
-## 🔑 API Setup
+## API Setup
 
 1. **Create an ESO Logs API Client**
    - Visit [ESO Logs API Clients](https://www.esologs.com/api/clients/)
@@ -81,7 +82,7 @@ pip install -e ".[dev]"
    echo "ESOLOGS_SECRET=your_client_secret_here" >> .env
    ```
 
-## 📖 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -220,7 +221,7 @@ async def main():
 asyncio.run(main())
 ```
 
-## 📊 Available API Methods
+## Available API Methods
 
 ### Game Data
 - `get_ability(id)` - Get specific ability information
@@ -268,7 +269,7 @@ asyncio.run(main())
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
 
-## 🛠️ Development
+## Development
 
 ### Setup Development Environment
 
@@ -321,7 +322,7 @@ esologs-python/
 └── README.md             # This file
 ```
 
-## 🔗 API Reference
+## API Reference
 
 ### GraphQL Schema
 The complete GraphQL schema is available at: https://www.esologs.com/v2-api-docs/eso/
@@ -334,7 +335,7 @@ The complete GraphQL schema is available at: https://www.esologs.com/v2-api-docs
 ### Data Models
 All API responses are validated using Pydantic models for type safety and data validation.
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our contributing guidelines:
 
@@ -361,17 +362,17 @@ We welcome contributions! Please see our contributing guidelines:
 - **Phase 4** 🚧: Comprehensive testing and documentation
 - **Phase 5** 🚧: Performance optimization and caching
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [ESO Logs](https://www.esologs.com/) for providing the API
 - [ariadne-codegen](https://github.com/mirumee/ariadne-codegen) for GraphQL code generation
 - The Elder Scrolls Online community
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/knowlen/esologs-python/issues)
 - **Documentation**: [GitHub Repository](https://github.com/knowlen/esologs-python)
