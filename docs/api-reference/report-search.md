@@ -352,14 +352,6 @@ reports = await client.search_reports(
 )
 ```
 
-### Performance Considerations
-
-- **Search operations are expensive**: 5-15+ points per request depending on filter complexity
-- **Use pagination**: Limit results to conserve rate limit points
-- **Add delays**: Include `await asyncio.sleep(0.5)` between requests
-- **Filter wisely**: More specific filters may increase cost
-- **Monitor rate limits**: Use smaller limits during development and testing
-
 ### Common Use Cases
 
 **Guild Performance Tracking**:
@@ -395,3 +387,9 @@ reports = await client.search_reports(
 # Get latest reports across all criteria
 reports = await client.search_reports(limit=10)
 ```
+
+## Best Practices
+- **Use pagination**: Limit results to conserve rate limit points
+- **Add delays**: Include `await asyncio.sleep(0.5)` between requests
+- **Filter wisely**: More specific filters may increase cost
+- **Monitor rate limits**: Use smaller limits during development and testing
