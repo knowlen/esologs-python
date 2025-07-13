@@ -9,9 +9,11 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## Project Status
 
-**Current Version:** 0.2.0-alpha
-**API Coverage:** ~75% (expanding to 95%+ coverage)
-**Development Stage:** Active development - API documentation phase complete
+**Current Version:** 0.2.0-alpha  
+**API Coverage:** ~75% (expanding to 95%+ coverage)  
+**Development Stage:** Active development  
+**Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)  
+**Tests:** 278 tests across unit, integration, documentation, and sanity suites
 
 ### What's Working
 - ✅ OAuth2 authentication with ESO Logs API
@@ -83,6 +85,8 @@ pip install -e ".[dev]"
    ```
 
 ## Quick Start
+
+For comprehensive documentation, visit [esologs-python.readthedocs.io](https://esologs-python.readthedocs.io/)
 
 ### Basic Usage
 
@@ -312,9 +316,12 @@ esologs-python/
 │   ├── exceptions.py       # Custom exceptions
 │   ├── validators.py       # Parameter validation utilities
 │   └── get_*.py           # Generated GraphQL query modules
-├── tests/                  # Test suite
-│   ├── unit/              # Unit tests
-│   └── integration/       # Integration tests
+├── tests/                  # Test suite (278 tests)
+│   ├── unit/              # Unit tests (76 tests)
+│   ├── integration/       # Integration tests (85 tests)
+│   ├── docs/              # Documentation tests (98 tests)
+│   └── sanity/            # Sanity tests (19 tests)
+├── docs/                  # Documentation source
 ├── access_token.py        # OAuth2 authentication
 ├── schema.graphql         # GraphQL schema
 ├── queries.graphql        # GraphQL queries
@@ -359,7 +366,7 @@ We welcome contributions! Please see our contributing guidelines:
   - ✅ PR #4: Advanced Report Search (Merged)
   - 🚧 PR #5: Client Architecture Refactor (Next)
 - **Phase 3** 🚧: Data transformation and pandas integration
-- **Phase 4** 🚧: Comprehensive testing and documentation
+- **Phase 4** ✅: Comprehensive testing and documentation (278 tests)
 - **Phase 5** 🚧: Performance optimization and caching
 
 ## License
@@ -375,7 +382,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/knowlen/esologs-python/issues)
-- **Documentation**: [GitHub Repository](https://github.com/knowlen/esologs-python)
+- **Documentation**: [Read the Docs](https://esologs-python.readthedocs.io/)
 - **ESO Logs API**: [Official Documentation](https://www.esologs.com/v2-api-docs/eso/)
 
 ---
