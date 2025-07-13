@@ -42,7 +42,7 @@ Search and filter ESO combat reports with advanced criteria including guilds, en
 | report_data.reports.from_ | int | Starting record number |
 | report_data.reports.to | int | Ending record number |
 
-> <center>**Report**</center>
+> <div style="text-align: center; margin-bottom: 10px;"><strong>Report</strong></div>
 > 
 > | Field | Type | Description |
 > |-------|------|-------------|
@@ -54,14 +54,14 @@ Search and filter ESO combat reports with advanced criteria including guilds, en
 > | guild | Guild \| None | Guild information (if available) |
 > | owner | Owner \| None | Report owner information (if available) |
 > 
-> > <center>**Zone**</center>
+> > <div style="text-align: center; margin-bottom: 10px;"><strong>Zone</strong></div>
 > > 
 > > | Field | Type | Description |
 > > |-------|------|-------------|
 > > | id | int | Zone ID |
 > > | name | str | Zone name |
 > > 
-> > <center>**Guild**</center>
+> > <div style="text-align: center; margin-bottom: 10px;"><strong>Guild</strong></div>
 > > 
 > > | Field | Type | Description |
 > > |-------|------|-------------|
@@ -72,7 +72,7 @@ Search and filter ESO combat reports with advanced criteria including guilds, en
 > > | server.region.name | str | Region name |
 > > | server.region.slug | str | Region slug |
 > > 
-> > <center>**Owner**</center>
+> > <div style="text-align: center; margin-bottom: 10px;"><strong>Owner</strong></div>
 > > 
 > > | Field | Type | Description |
 > > |-------|------|-------------|
