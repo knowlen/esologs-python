@@ -53,6 +53,8 @@ Access detailed ESO combat log analysis including events, performance graphs, ta
 | report_data.report.events.data | Any | List of event objects containing timestamps, abilities, damage/healing values |
 | report_data.report.events.next_page_timestamp | float \| None | Timestamp for pagination to next page |
 
+> **Note**: The triple nesting (`report_data.report.events`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
+
 **Example**:
 ```python
 import asyncio
@@ -138,6 +140,8 @@ More data available after: 264591.0
 |-------|------|-------------|
 | report_data.report.graph | dict | Graph data containing time-series performance data |
 
+> **Note**: The triple nesting (`report_data.report.graph`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
+
 **Example**:
 ```python
 import asyncio
@@ -219,6 +223,8 @@ Data points: 240
 |-------|------|-------------|
 | report_data.report.table | dict | Table data containing aggregated statistics and performance metrics |
 
+> **Note**: The triple nesting (`report_data.report.table`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
+
 **Example**:
 ```python
 import asyncio
@@ -278,6 +284,8 @@ Number of players: 10
 | Field | Type | Description |
 |-------|------|-------------|
 | report_data.report.rankings | dict | Rankings data containing performance comparisons and percentiles |
+
+> **Note**: The triple nesting (`report_data.report.rankings`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
 **Example**:
 ```python
@@ -345,6 +353,8 @@ Top DPS Players:
 | Field | Type | Description |
 |-------|------|-------------|
 | report_data.report.player_details | dict | Player details containing individual performance breakdowns |
+
+> **Note**: The triple nesting (`report_data.report.player_details`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
 **Example**:
 ```python
