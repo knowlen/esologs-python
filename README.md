@@ -15,11 +15,8 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 **Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)  
 **Tests:** 278 tests across unit, integration, documentation, and sanity suites
 
-### Updated API Coverage Assessment
-
-**Current Coverage: ~83% (up from ~75%)**
-
-**Fully Implemented (6/8 sections):**
+### Current API Coverage
+**Implemented (6/8 sections):**
 1. ✅ **gameData** - 13 methods (COMPLETE)
 2. ✅ **characterData** - 5 methods (COMPLETE) 
 3. ✅ **reportData** - 9 methods (COMPLETE)
@@ -27,11 +24,11 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 5. ✅ **rateLimitData** - 1 method (COMPLETE)
 6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
 
-**Missing Sections (2/8 sections):**
+**Missing (2/8 sections):**
 - ❌ **userData** - 0/3 methods (MISSING - requires user auth)
 - ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
 
-### Roadmap
+### Next Steps 
 - 🚧 Progress race tracking
 - 🚧 User account integration
 - 🚧 Client architecture refactor (modular design)
