@@ -13,14 +13,14 @@
   --vim-fg-dim:       #808080;  /* Dimmed text */
   --vim-fg-bright:    #ffffff;  /* Bright white */
   
-  /* Code block colors - matching your example */
+  /* Code block colors - matching your desired example exactly */
   --code-keyword:     #569cd6;  /* Blue keywords (async, def, import, etc.) */
-  --code-string:      #ce9178;  /* Orange/brown strings */
+  --code-string:      #d63384;  /* Magenta/purple strings */
   --code-number:      #b5cea8;  /* Light green numbers */
   --code-comment:     #6a9955;  /* Green comments */
-  --code-function:    #dcdcaa;  /* Yellow function names */
-  --code-variable:    #9cdcfe;  /* Light blue variables/types */
-  --code-operator:    #d4d4d4;  /* White operators */
+  --code-function:    #4ec9b0;  /* Cyan/aqua function names */
+  --code-variable:    #4ec9b0;  /* Cyan/aqua variables/attributes */
+  --code-operator:    #d4d4d4;  /* White operators/punctuation */
   --code-text:        #d4d4d4;  /* Default white text */
   
   /* Vim accent colors */
@@ -158,7 +158,7 @@
   margin: 0;
 }
 
-/* Syntax highlighting to match your example exactly */
+/* Syntax highlighting to match your desired example exactly */
 .highlight .k,     /* Keywords like async, def, import, from */
 .highlight .kn,    /* import/from keywords */
 .highlight .kt,    /* type keywords */
@@ -187,31 +187,31 @@
   color: var(--code-comment) !important;
 }
 
-.highlight .n,     /* Names/variables */
-.highlight .nv,    /* Variables */
+.highlight .nf,    /* Function names - cyan/aqua */
+.highlight .n,     /* Names/variables - cyan/aqua */
+.highlight .nv,    /* Variables - cyan/aqua */
+.highlight .na {   /* Attributes - cyan/aqua */
+  color: var(--code-function) !important;
+}
+
 .highlight .nb,    /* Built-ins */
 .highlight .nc,    /* Classes */
 .highlight .nd,    /* Decorators */
 .highlight .ni,    /* Inherited */
 .highlight .ne,    /* Exception */
-.highlight .nf,    /* Function names */
 .highlight .nl,    /* Labels */
 .highlight .nn,    /* Namespaces */
 .highlight .nt,    /* Tags */
-.highlight .nx {   /* Other names */
-  color: var(--code-function) !important;
+.highlight .nx,    /* Other names */
+.highlight .no,    /* Constants */
+.highlight .bp {   /* Built-in pseudo */
+  color: var(--code-variable) !important;
 }
 
 .highlight .o,     /* Operators */
 .highlight .ow,    /* Operator words */
-.highlight .p {    /* Punctuation */
+.highlight .p {    /* Punctuation - white */
   color: var(--code-operator) !important;
-}
-
-.highlight .na,    /* Attributes */
-.highlight .no,    /* Constants */
-.highlight .bp {   /* Built-in pseudo */
-  color: var(--code-variable) !important;
 }
 
 /* Navigation with vim statusline feel */
