@@ -20,7 +20,7 @@ class TestCharacterDataExamples:
         """Test the get_character_by_id() basic example"""
         async with Client(**api_client_config) as client:
             # Use a known valid character ID
-            character = await client.get_character_by_id(id=123456)
+            character = await client.get_character_by_id(id=314050)
             
             # Validate response structure
             assert hasattr(character, 'character_data')
@@ -58,7 +58,7 @@ class TestCharacterDataExamples:
         """Test the get_character_reports() example"""
         async with Client(**api_client_config) as client:
             # Use a known valid character ID
-            reports = await client.get_character_reports(character_id=123456, limit=5)
+            reports = await client.get_character_reports(character_id=314050, limit=5)
             
             # Validate response structure
             assert hasattr(reports, 'character_data')
@@ -103,8 +103,8 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID and encounter ID
             ranking = await client.get_character_encounter_ranking(
-                character_id=123456,
-                encounter_id=1051  # Common trial encounter
+                character_id=314050,
+                encounter_id=48  # Ossein Cage encounter
             )
             
             # Validate response structure
@@ -123,8 +123,8 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID and encounter ID
             rankings = await client.get_character_encounter_rankings(
-                character_id=123456,
-                encounter_id=1051,
+                character_id=314050,
+                encounter_id=48,  # Ossein Cage encounter
                 size=10,
                 include_combatant_info=True
             )
@@ -145,8 +145,8 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID and zone ID
             rankings = await client.get_character_zone_rankings(
-                character_id=123456,
-                zone_id=1227,  # Halls of Fabrication
+                character_id=314050,
+                zone_id=19,  # Ossein Cage zone
                 size=5
             )
             
@@ -165,7 +165,7 @@ class TestCharacterDataExamples:
         """Test the character profile analysis pattern example from Common Usage Patterns"""
         async with Client(**api_client_config) as client:
             # Test the complete character analysis pattern
-            character_id = 123456
+            character_id = 314050
             
             # Get character profile
             character = await client.get_character_by_id(id=character_id)
@@ -192,8 +192,8 @@ class TestCharacterDataExamples:
         """Test the performance tracking pattern example from Common Usage Patterns"""
         async with Client(**api_client_config) as client:
             # Test the performance tracking pattern
-            character_id = 123456
-            encounter_id = 1000  # Use valid encounter ID that returns data
+            character_id = 314050
+            encounter_id = 48  # Ossein Cage encounter
             
             # Get encounter rankings
             rankings = await client.get_character_encounter_rankings(
@@ -229,7 +229,7 @@ class TestCharacterDataExamples:
         """Test character reports with different limit values"""
         async with Client(**api_client_config) as client:
             # Test with small limit
-            reports = await client.get_character_reports(character_id=123456, limit=1)
+            reports = await client.get_character_reports(character_id=314050, limit=1)
             
             assert reports.character_data is not None
             assert reports.character_data.character is not None
@@ -245,8 +245,8 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Test with multiple filter parameters
             rankings = await client.get_character_encounter_rankings(
-                character_id=123456,
-                encounter_id=1051,
+                character_id=314050,
+                encounter_id=48,  # Ossein Cage encounter
                 size=5,
                 include_combatant_info=True,
                 by_bracket=True,
@@ -264,7 +264,7 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Test without zone_id parameter (should get all zones)
             rankings = await client.get_character_zone_rankings(
-                character_id=123456,
+                character_id=314050,
                 size=10
             )
             

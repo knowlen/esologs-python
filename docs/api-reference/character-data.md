@@ -44,7 +44,7 @@ async def get_character_profile():
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
         
-        character = await client.get_character_by_id(id=123456)
+        character = await client.get_character_by_id(id=314050)
         
         if character.character_data and character.character_data.character:
             char = character.character_data.character
@@ -58,9 +58,9 @@ asyncio.run(get_character_profile())
 
 **Output**:
 ```
-Character: Anonymous 122294 (ID: 123456)
-Class ID: 5, Race ID: 1
-Server: Megaserver (North America)
+Character: Zalduk Nightsky (ID: 314050)
+Class ID: 1, Race ID: 5
+Server: Megaserver (Europe)
 Guild Rank: 0
 ```
 
@@ -108,7 +108,7 @@ async def get_character_recent_reports():
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
         
-        reports = await client.get_character_reports(character_id=123456, limit=5)
+        reports = await client.get_character_reports(character_id=314050, limit=5)
         
         if reports.character_data and reports.character_data.character:
             recent_reports = reports.character_data.character.recent_reports
@@ -126,10 +126,10 @@ asyncio.run(get_character_recent_reports())
 
 **Output**:
 ```
-Total reports: 2
-Showing 2 reports:
-- L2BwPHfnkmvzyR6G in Sunspire
-- w97LdzRNQHx8MVWf in Cloudrest
+Total reports: 286
+Showing 5 reports:
+- f2QKpYZdwTVGMq4R in Rockgrove
+- 7D2qyThHzv1wMdkQ in Aetherian Archive
 ```
 
 ### get_character_encounter_ranking()
@@ -161,14 +161,15 @@ async def get_character_encounter_ranking():
     ) as client:
         
         ranking = await client.get_character_encounter_ranking(
-            character_id=123456,
-            encounter_id=1051  # Common trial encounter
+            character_id=314050,
+            encounter_id=48  # Ossein Cage encounter
         )
         
         if ranking.character_data and ranking.character_data.character:
             rankings = ranking.character_data.character.encounter_rankings
             if rankings:
                 print("Character has rankings for this encounter")
+                print(f"Available data: {list(rankings.keys())[:5]}")
             else:
                 print("No rankings found for this encounter")
 
@@ -178,6 +179,7 @@ asyncio.run(get_character_encounter_ranking())
 **Output**:
 ```
 Character has rankings for this encounter
+Available data: ['bestAmount', 'medianPerformance', 'averagePerformance', 'totalKills', 'fastestKill']
 ```
 
 ### get_character_encounter_rankings()
@@ -221,8 +223,8 @@ async def get_character_encounter_rankings():
     ) as client:
         
         rankings = await client.get_character_encounter_rankings(
-            character_id=123456,
-            encounter_id=1051,
+            character_id=314050,
+            encounter_id=48,  # Ossein Cage encounter
             size=10,
             include_combatant_info=True
         )
@@ -231,6 +233,9 @@ async def get_character_encounter_rankings():
             encounter_rankings = rankings.character_data.character.encounter_rankings
             if encounter_rankings:
                 print("Character has detailed encounter rankings")
+                print(f"Best score: {encounter_rankings.get('bestAmount', 0)}")
+                print(f"Total kills: {encounter_rankings.get('totalKills', 0)}")
+                print(f"Number of ranks: {len(encounter_rankings.get('ranks', []))}")
             else:
                 print("No detailed rankings found")
 
@@ -240,6 +245,9 @@ asyncio.run(get_character_encounter_rankings())
 **Output**:
 ```
 Character has detailed encounter rankings
+Best score: 0
+Total kills: 0
+Number of ranks: 0
 ```
 
 ### get_character_zone_rankings()
@@ -282,8 +290,8 @@ async def get_character_zone_rankings():
     ) as client:
         
         rankings = await client.get_character_zone_rankings(
-            character_id=123456,
-            zone_id=1227,  # Halls of Fabrication
+            character_id=314050,
+            zone_id=19,  # Ossein Cage zone
             size=5
         )
         
@@ -291,6 +299,7 @@ async def get_character_zone_rankings():
             zone_rankings = rankings.character_data.character.zone_rankings
             if zone_rankings:
                 print("Character has zone rankings")
+                print(f"Available metrics: {list(zone_rankings.keys())[:3]}")
             else:
                 print("No zone rankings found")
 
@@ -300,6 +309,7 @@ asyncio.run(get_character_zone_rankings())
 **Output**:
 ```
 Character has zone rankings
+Available metrics: ['bestPerformanceAverage', 'medianPerformanceAverage', 'difficulty']
 ```
 
 ## Common Usage Patterns
@@ -335,14 +345,14 @@ async def analyze_character(character_id: int):
                     print(f"Recent activity: {recent_reports.total} reports")
 
 # Run the analysis
-asyncio.run(analyze_character(123456))
+asyncio.run(analyze_character(314050))
 ```
 
 **Output**:
 ```
-Analyzing: Anonymous 122294
-Server: Megaserver (North America)
-Recent activity: 2 reports
+Analyzing: Zalduk Nightsky
+Server: Megaserver (Europe)
+Recent activity: 286 reports
 ```
 
 ### Performance Tracking
@@ -380,7 +390,7 @@ async def track_character_performance(character_id: int, encounter_id: int):
                 print("No performance data found for this encounter")
 
 # Run the performance tracking
-asyncio.run(track_character_performance(123456, 1000))
+asyncio.run(track_character_performance(314050, 48))
 ```
 
 **Output**:
