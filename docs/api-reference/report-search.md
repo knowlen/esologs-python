@@ -42,44 +42,42 @@ Search and filter ESO combat reports with advanced criteria including guilds, en
 | report_data.reports.from_ | int | Starting record number |
 | report_data.reports.to | int | Ending record number |
 
-**Report Data Structure**:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| code | str | Unique report code |
-| title | str | Report title |
-| start_time | float | Report start timestamp |
-| end_time | float | Report end timestamp |
-| zone | Zone \| None | Zone information (if available) |
-| guild | Guild \| None | Guild information (if available) |
-| owner | Owner \| None | Report owner information (if available) |
-
-> **Nested Object Structures:**
-> 
-> **Zone Structure**:
+> <center>**Report**</center>
 > 
 > | Field | Type | Description |
 > |-------|------|-------------|
-> | id | int | Zone ID |
-> | name | str | Zone name |
+> | code | str | Unique report code |
+> | title | str | Report title |
+> | start_time | float | Report start timestamp |
+> | end_time | float | Report end timestamp |
+> | zone | Zone \| None | Zone information (if available) |
+> | guild | Guild \| None | Guild information (if available) |
+> | owner | Owner \| None | Report owner information (if available) |
 > 
-> **Guild Structure**:
-> 
-> | Field | Type | Description |
-> |-------|------|-------------|
-> | id | int | Guild ID |
-> | name | str | Guild name |
-> | server.name | str | Server name |
-> | server.slug | str | Server slug |
-> | server.region.name | str | Region name |
-> | server.region.slug | str | Region slug |
-> 
-> **Owner Structure**:
-> 
-> | Field | Type | Description |
-> |-------|------|-------------|
-> | id | int | User ID |
-> | name | str | User name |
+> > <center>**Zone**</center>
+> > 
+> > | Field | Type | Description |
+> > |-------|------|-------------|
+> > | id | int | Zone ID |
+> > | name | str | Zone name |
+> > 
+> > <center>**Guild**</center>
+> > 
+> > | Field | Type | Description |
+> > |-------|------|-------------|
+> > | id | int | Guild ID |
+> > | name | str | Guild name |
+> > | server.name | str | Server name |
+> > | server.slug | str | Server slug |
+> > | server.region.name | str | Region name |
+> > | server.region.slug | str | Region slug |
+> > 
+> > <center>**Owner**</center>
+> > 
+> > | Field | Type | Description |
+> > |-------|------|-------------|
+> > | id | int | User ID |
+> > | name | str | User name |
 
 **Example**:
 ```python
