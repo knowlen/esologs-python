@@ -12,7 +12,6 @@
 </div>
 
 ## Quickstart
-
 === "Installation"
 
     ```bash
@@ -61,8 +60,7 @@
     asyncio.run(main())
     ```
 
-
-## Project Status
+## Status
 ---
 <div class="feature-grid">
   <div class="feature-card">
