@@ -372,16 +372,24 @@ async def track_character_performance(character_id: int, encounter_id: int):
             encounter_rankings = rankings.character_data.character.encounter_rankings
             if encounter_rankings:
                 print("Performance data available for analysis")
+                print(f"Best score: {encounter_rankings.get('bestAmount', 0)}")
+                print(f"Total kills: {encounter_rankings.get('totalKills', 0)}")
+                print(f"Fastest kill: {encounter_rankings.get('fastestKill', 0)}ms")
+                print(f"Number of ranks: {len(encounter_rankings.get('ranks', []))}")
             else:
                 print("No performance data found for this encounter")
 
 # Run the performance tracking
-asyncio.run(track_character_performance(123456, 1051))
+asyncio.run(track_character_performance(123456, 1000))
 ```
 
 **Output**:
 ```
 Performance data available for analysis
+Best score: 0
+Total kills: 0
+Fastest kill: 0ms
+Number of ranks: 0
 ```
 
 ## Error Handling

@@ -193,7 +193,7 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Test the performance tracking pattern
             character_id = 123456
-            encounter_id = 1051
+            encounter_id = 1000  # Use valid encounter ID that returns data
             
             # Get encounter rankings
             rankings = await client.get_character_encounter_rankings(
