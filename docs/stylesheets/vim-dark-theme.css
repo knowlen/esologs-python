@@ -158,32 +158,26 @@
   margin: 0;
 }
 
-/* Syntax highlighting to match your desired example exactly */
-.highlight .k,     /* Keywords like async, def, import, from */
-.highlight .kn,    /* import/from keywords */
-.highlight .kt,    /* type keywords */
-.highlight .kd {   /* declaration keywords */
+/* Syntax highlighting based on actual Pygments classes found */
+.highlight .k,     /* Keywords like def, async, with, as, for, in */
+.highlight .kc,    /* Keyword constants like True, False */
+.highlight .kn {   /* Keywords like import, from */
   color: var(--code-keyword) !important;
 }
 
-.highlight .s,     /* Strings */
 .highlight .s1,    /* Single quoted strings */
 .highlight .s2,    /* Double quoted strings */
-.highlight .se {   /* String escapes */
+.highlight .sa,    /* String affixes */
+.highlight .si {   /* String interpolation */
   color: var(--code-string) !important;
 }
 
-.highlight .m,     /* Numbers */
 .highlight .mi,    /* Integer numbers */
-.highlight .mf,    /* Float numbers */
-.highlight .mb,    /* Binary numbers */
-.highlight .mo {   /* Octal numbers */
+.highlight .mf {   /* Float numbers */
   color: var(--code-number) !important;
 }
 
-.highlight .c,     /* Comments */
-.highlight .c1,    /* Single line comments */
-.highlight .cm {   /* Multi-line comments */
+.highlight .c1 {   /* Single line comments */
   color: var(--code-comment) !important;
 }
 
@@ -191,30 +185,29 @@
   color: var(--code-function) !important;
 }
 
-.highlight .n,     /* Names/variables - light blue */
-.highlight .nv,    /* Variables - light blue */
-.highlight .na {   /* Attributes - light blue */
+.highlight .n {    /* General names/variables - light blue */
   color: var(--code-variable) !important;
 }
 
-.highlight .nb,    /* Built-ins - light blue */
-.highlight .nc,    /* Classes - light blue */
-.highlight .nd,    /* Decorators - light blue */
-.highlight .ni,    /* Inherited - light blue */
-.highlight .ne,    /* Exception - light blue */
-.highlight .nl,    /* Labels - light blue */
-.highlight .nn,    /* Namespaces - light blue */
-.highlight .nt,    /* Tags - light blue */
-.highlight .nx,    /* Other names - light blue */
-.highlight .no,    /* Constants - light blue */
-.highlight .bp {   /* Built-in pseudo - light blue */
+.highlight .nn {   /* Module names like asyncio, esologs.client - light blue */
   color: var(--code-variable) !important;
 }
 
-.highlight .o,     /* Operators */
-.highlight .ow,    /* Operator words */
-.highlight .p {    /* Punctuation - white */
+.highlight .nb {   /* Built-ins like print, len - light blue */
+  color: var(--code-variable) !important;
+}
+
+.highlight .o,     /* Operators like =, + */
+.highlight .ow {   /* Operator words like and, or */
   color: var(--code-operator) !important;
+}
+
+.highlight .p {    /* Punctuation like (), [], {}, : */
+  color: var(--code-operator) !important;
+}
+
+.highlight .w {    /* Whitespace - inherit */
+  color: inherit !important;
 }
 
 /* Navigation with vim statusline feel */
