@@ -12,7 +12,7 @@
   --vim-fg:           #d0d0d0;  /* Light gray text */
   --vim-fg-dim:       #808080;  /* Dimmed text */
   --vim-fg-bright:    #ffffff;  /* Bright white */
-  
+
   /* Code block colors - adjusted colors matching desired.png */
   --code-keyword:     #f0dc8a;  /* Yellow for def, async, with, in, class, return - 10% brighter */
   --code-import:      #9cdcfe;  /* Light blue for import/from */
@@ -22,15 +22,16 @@
   --code-function:    #1affff;  /* Cyan - slightly brighter */
   --code-variable:    #ffffff;
   --code-operator:    #ffffff;
-  --code-text:        #ffffff;
-  
+  --code-text:        #d0d0d0;
+
   /* Vim accent colors */
   --vim-red:          #ff5f5f;  /* Error red */
+  --vim-green:        #87ff87;  /* Success green */
   --vim-yellow:       #ffff87;  /* Warning yellow */
   --vim-blue:         #87ceeb;  /* UI blue */
   --vim-magenta:      #ff87ff;  /* Special magenta */
   --vim-cyan:         #87ffff;  /* UI cyan */
-  
+
   /* Status line colors */
   --vim-statusline:   #444444;  /* Status line background */
   --vim-visual:       #5f5f87;  /* Visual selection */
@@ -44,26 +45,26 @@
   --md-default-bg-color:        var(--vim-bg);
   --md-default-bg-color--light: var(--vim-bg-light);
   --md-default-bg-color--lighter: var(--vim-bg-lighter);
-  
+
   /* Text colors */
   --md-default-fg-color:        var(--vim-fg);
   --md-default-fg-color--light: var(--vim-fg-dim);
   --md-default-fg-color--lighter: var(--vim-comment);
-  
+
   /* Primary colors (navigation, buttons) */
   --md-primary-fg-color:        var(--vim-statusline);
   --md-primary-fg-color--light: var(--vim-bg-lighter);
   --md-primary-fg-color--dark:  var(--vim-bg);
-  
+
   /* Accent colors (links, highlights) */
   --md-accent-fg-color:         var(--vim-blue);
   --md-accent-fg-color--light:  var(--vim-cyan);
   --md-accent-fg-color--dark:   var(--vim-magenta);
-  
+
   /* Code colors */
   --md-code-bg-color:           var(--vim-bg-light);
   --md-code-fg-color:           var(--code-text);
-  
+
   /* OVERRIDE Material theme's syntax highlighting variables - Part 1 */
   --md-code-hl-string-color:     var(--code-string) !important;
   --md-code-hl-constant-color:   var(--code-function) !important;
@@ -77,11 +78,11 @@
   --md-code-hl-number-color:     var(--code-number) !important;
   --md-code-hl-generic-color:    var(--code-variable) !important;
   --md-code-hl-variable-color:   var(--code-variable) !important;
-  
+
   /* Table and border colors */
   --md-typeset-table-color:     var(--vim-comment);
   --md-typeset-mark-color:      var(--vim-yellow);
-  
+
   /* Footer colors */
   --md-footer-bg-color:         var(--vim-bg);
   --md-footer-fg-color:         var(--vim-fg-dim);
@@ -169,6 +170,7 @@
 .highlight pre {
   background-color: var(--vim-bg-light) !important;
   color: var(--code-text) !important;
+  font-family: 'JetBrains Mono', monospace !important;
   padding: 1rem;
   margin: 0;
 }
@@ -661,9 +663,9 @@
   color: var(--vim-fg-bright) !important;
 }
 
-/* Strong/bold text with vim bright color */
+/* Strong/bold text with reduced brightness */
 .md-typeset strong {
-  color: var(--vim-fg-bright) !important;
+  color: var(--vim-fg) !important;
   font-weight: 700;
 }
 
@@ -686,9 +688,9 @@
 }
 */
 
-/* Emphasis/italic with vim special color */
+/* Emphasis/italic with normal text color */
 .md-typeset em {
-  color: var(--vim-magenta) !important;
+  color: var(--vim-fg) !important;
   font-style: italic;
 }
 
@@ -717,4 +719,69 @@
   border: none;
   border-top: 2px solid var(--vim-comment);
   margin: 2rem 0;
+}
+
+/* Hide generator text if it still appears */
+.md-footer-meta__inner .md-footer-meta__generator {
+  display: none !important;
+}
+
+/* Right-side Table of Contents styling */
+.md-sidebar--secondary {
+  background-color: var(--vim-bg) !important;
+  border: none !important;
+  border-left: none !important;
+}
+
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  background-color: var(--vim-bg) !important;
+  border: none !important;
+}
+
+/* TOC navigation styling */
+.md-nav--secondary {
+  background-color: var(--vim-bg) !important;
+  border: none !important;
+}
+
+.md-nav--secondary .md-nav__title {
+  display: none !important;
+}
+
+/* Remove any borders or separators from TOC items */
+.md-nav--secondary .md-nav__item {
+  border: none !important;
+}
+
+.md-nav--secondary::before,
+.md-nav--secondary::after {
+  display: none !important;
+}
+
+/* Additional border removal for any nested elements */
+.md-sidebar--secondary *,
+.md-nav--secondary * {
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+.md-nav--secondary .md-nav__link {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.md-nav--secondary .md-nav__link:hover {
+  color: var(--vim-cyan) !important;
+  background-color: var(--vim-bg-light) !important;
+  border-left-color: var(--vim-cyan);
+}
+
+.md-nav--secondary .md-nav__link--active {
+  color: var(--vim-yellow) !important;
+  background-color: var(--vim-visual) !important;
+  border-left-color: var(--vim-yellow);
+  font-weight: 600;
 }

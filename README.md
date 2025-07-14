@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="esologs_logo.png" alt="ESO Logs Python" width="600">
+</div>
+
 # ESO Logs Python Client
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -9,26 +13,26 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## Project Status
 
-**Current Version:** 0.2.0-alpha  
-**API Coverage:** ~83% (comprehensive analysis shows 6/8 API sections fully implemented)  
-**Development Stage:** Active development  
-**Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)  
+**Current Version:** 0.2.0-alpha
+**API Coverage:** ~83% (comprehensive analysis shows 6/8 API sections fully implemented)
+**Development Stage:** Active development
+**Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)
 **Tests:** 278 tests across unit, integration, documentation, and sanity suites
 
 ### Current API Coverage
 **Implemented (6/8 sections):**
-1. ✅ **gameData** - 13 methods 
+1. ✅ **gameData** - 13 methods
 2. ✅ **characterData** - 5 methods
-3. ✅ **reportData** - 9 methods 
+3. ✅ **reportData** - 9 methods
 4. ✅ **worldData** - 4 methods
-5. ✅ **rateLimitData** - 1 method 
+5. ✅ **rateLimitData** - 1 method
 6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
 
 **Missing (2/8 sections):**
 - ❌ **userData** - 0/3 methods (MISSING - requires user auth)
 - ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
 
-### Roadmap 
+### Roadmap
 - 🚧 Progress race tracking
 - 🚧 User account integration
 - 🚧 Client architecture refactor (modular design)

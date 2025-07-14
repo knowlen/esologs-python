@@ -1,10 +1,10 @@
-# Report Search API
+# Report Search
 
-Search and filter ESO combat reports with advanced criteria including guilds, encounters, players, and performance metrics through the ESO Logs API.
+Search and filter combat reports with advanced criteria including guilds, encounters, players, and performance metrics.
 
 ## Overview
 
-- **Coverage**: 3 endpoints implemented  
+- **Coverage**: 3 endpoints implemented
 - **Use Cases**: Finding specific reports, performance research, guild analysis
 - **Rate Limit Impact**: 5-15 points per request (varies by filter complexity)
 
@@ -16,68 +16,68 @@ Search and filter ESO combat reports with advanced criteria including guilds, en
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| guild_id | int | No | Filter by specific guild ID |
-| guild_name | str | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
-| guild_server_slug | str | No | Guild server slug (required with guild_name) |
-| guild_server_region | str | No | Guild server region (required with guild_name) |
-| guild_tag_id | int | No | Filter by guild tag/team ID |
-| user_id | int | No | Filter by specific user ID |
-| zone_id | int | No | Filter by zone ID |
-| game_zone_id | int | No | Filter by game zone ID |
-| start_time | float | No | Earliest report timestamp (UNIX timestamp with milliseconds) |
-| end_time | float | No | Latest report timestamp (UNIX timestamp with milliseconds) |
-| limit | int | No | Number of reports per page (1-25, default: 16) |
-| page | int | No | Page number for pagination (default: 1) |
+| **guild_id** | *int* | No | Filter by specific guild ID |
+| **guild_name** | *str* | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
+| **guild_server_slug** | *str* | No | Guild server slug (required with guild_name) |
+| **guild_server_region** | *str* | No | Guild server region (required with guild_name) |
+| **guild_tag_id** | *int* | No | Filter by guild tag/team ID |
+| **user_id** | *int* | No | Filter by specific user ID |
+| **zone_id** | *int* | No | Filter by zone ID |
+| **game_zone_id** | *int* | No | Filter by game zone ID |
+| **start_time** | *float* | No | Earliest report timestamp (UNIX timestamp with milliseconds) |
+| **end_time** | *float* | No | Latest report timestamp (UNIX timestamp with milliseconds) |
+| **limit** | *int* | No | Number of reports per page (1-25, default: 16) |
+| **page** | *int* | No | Page number for pagination (default: 1) |
 
 **Returns**: `GetReports` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| report_data.reports.data | List[Report] | List of matching reports |
-| report_data.reports.total | int | Total number of matching reports (-1 if unknown) |
-| report_data.reports.per_page | int | Number of reports per page |
-| report_data.reports.current_page | int | Current page number |
-| report_data.reports.last_page | int | Last page number (-1 if unknown) |
-| report_data.reports.has_more_pages | bool | Whether more pages are available |
-| report_data.reports.from_ | int | Starting record number |
-| report_data.reports.to | int | Ending record number |
+| **report_data.reports.data** | *List[Report]* | List of matching reports |
+| **report_data.reports.total** | *int* | Total number of matching reports (-1 if unknown) |
+| **report_data.reports.per_page** | *int* | Number of reports per page |
+| **report_data.reports.current_page** | *int* | Current page number |
+| **report_data.reports.last_page** | *int* | Last page number (-1 if unknown) |
+| **report_data.reports.has_more_pages** | *bool* | Whether more pages are available |
+| **report_data.reports.from_** | *int* | Starting record number |
+| **report_data.reports.to** | *int* | Ending record number |
 
 > **Report**:
-> 
+>
 > | Field | Type | Description |
 > |-------|------|-------------|
-> | code | str | Unique report code |
-> | title | str | Report title |
-> | start_time | float | Report start timestamp |
-> | end_time | float | Report end timestamp |
-> | zone | Zone \| None | Zone information (if available) |
-> | guild | Guild \| None | Guild information (if available) |
-> | owner | Owner \| None | Report owner information (if available) |
-> 
+> | **code** | *str* | Unique report code |
+> | **title** | *str* | Report title |
+> | **start_time** | *float* | Report start timestamp |
+> | **end_time** | *float* | Report end timestamp |
+> | **zone** | *Zone \| None* | Zone information (if available) |
+> | **guild** | *Guild \| None* | Guild information (if available) |
+> | **owner** | *Owner \| None* | Report owner information (if available) |
+>
 > > **Zone**:
-> > 
+> >
 > > | Field | Type | Description |
 > > |-------|------|-------------|
-> > | id | int | Zone ID |
-> > | name | str | Zone name |
-> > 
+> > | **id** | *int* | Zone ID |
+> > | **name** | *str* | Zone name |
+> >
 > > **Guild**:
-> > 
+> >
 > > | Field | Type | Description |
 > > |-------|------|-------------|
-> > | id | int | Guild ID |
-> > | name | str | Guild name |
-> > | server.name | str | Server name |
-> > | server.slug | str | Server slug |
-> > | server.region.name | str | Region name |
-> > | server.region.slug | str | Region slug |
-> > 
+> > | **id** | *int* | Guild ID |
+> > | **name** | *str* | Guild name |
+> > | **server.name** | *str* | Server name |
+> > | **server.slug** | *str* | Server slug |
+> > | **server.region.name** | *str* | Region name |
+> > | **server.region.slug** | *str* | Region slug |
+> >
 > > **Owner**:
-> > 
+> >
 > > | Field | Type | Description |
 > > |-------|------|-------------|
-> > | id | int | User ID |
-> > | name | str | User name |
+> > | **id** | *int* | User ID |
+> > | **name** | *str* | User name |
 
 **Example**:
 ```python
@@ -91,14 +91,14 @@ async def search_recent_reports():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Search for recent reports with pagination
         reports = await client.search_reports(limit=5)
-        
+
         print(f"Found {len(reports.report_data.reports.data)} reports")
         print(f"Page {reports.report_data.reports.current_page}")
         print(f"Has more pages: {reports.report_data.reports.has_more_pages}")
-        
+
         for report in reports.report_data.reports.data:
             print(f"- {report.title} ({report.code})")
             if report.zone:
@@ -144,18 +144,18 @@ async def search_with_filters():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Search for Dreadsail Reef reports from last 7 days
         seven_days_ago = (time.time() - 7 * 24 * 3600) * 1000
-        
+
         reports = await client.search_reports(
             zone_id=16,  # Dreadsail Reef
             start_time=seven_days_ago,
             limit=10
         )
-        
+
         print(f"Found {len(reports.report_data.reports.data)} recent Dreadsail Reef reports")
-        
+
         for report in reports.report_data.reports.data:
             print(f"- {report.title}")
             print(f"  Started: {report.start_time}")
@@ -201,12 +201,12 @@ except GraphQLClientHttpError as e:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| guild_id | int | Yes | The guild ID to search for |
-| limit | int | No | Number of reports per page (1-25, default: 16) |
-| page | int | No | Page number for pagination (default: 1) |
-| start_time | float | No | Start time filter (UNIX timestamp with milliseconds) |
-| end_time | float | No | End time filter (UNIX timestamp with milliseconds) |
-| zone_id | int | No | Filter by specific zone |
+| **guild_id** | *int* | Yes | The guild ID to search for |
+| **limit** | *int* | No | Number of reports per page (1-25, default: 16) |
+| **page** | *int* | No | Page number for pagination (default: 1) |
+| **start_time** | *float* | No | Start time filter (UNIX timestamp with milliseconds) |
+| **end_time** | *float* | No | End time filter (UNIX timestamp with milliseconds) |
+| **zone_id** | *int* | No | Filter by specific zone |
 
 **Returns**: `GetReports` object with the same structure as `search_reports()`
 
@@ -222,12 +222,12 @@ async def get_guild_activity():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get recent reports for a specific guild
         reports = await client.get_guild_reports(guild_id=123, limit=10)
-        
+
         print(f"Guild has {len(reports.report_data.reports.data)} recent reports")
-        
+
         for report in reports.report_data.reports.data:
             print(f"- {report.title}")
             if report.zone:
@@ -253,12 +253,12 @@ Guild has 10 recent reports
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| user_id | int | Yes | The user ID to search for |
-| limit | int | No | Number of reports per page (1-25, default: 16) |
-| page | int | No | Page number for pagination (default: 1) |
-| start_time | float | No | Start time filter (UNIX timestamp with milliseconds) |
-| end_time | float | No | End time filter (UNIX timestamp with milliseconds) |
-| zone_id | int | No | Filter by specific zone |
+| **user_id** | *int* | Yes | The user ID to search for |
+| **limit** | *int* | No | Number of reports per page (1-25, default: 16) |
+| **page** | *int* | No | Page number for pagination (default: 1) |
+| **start_time** | *float* | No | Start time filter (UNIX timestamp with milliseconds) |
+| **end_time** | *float* | No | End time filter (UNIX timestamp with milliseconds) |
+| **zone_id** | *int* | No | Filter by specific zone |
 
 **Returns**: `GetReports` object with the same structure as `search_reports()`
 
@@ -274,12 +274,12 @@ async def get_user_activity():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get recent reports for a specific user
         reports = await client.get_user_reports(user_id=1781, limit=5)
-        
+
         print(f"User has {len(reports.report_data.reports.data)} recent reports")
-        
+
         for report in reports.report_data.reports.data:
             print(f"- {report.title}")
             if report.zone:
@@ -311,23 +311,23 @@ async def get_all_guild_reports(guild_id: int):
     """Get all reports for a guild using pagination."""
     all_reports = []
     page = 1
-    
+
     while True:
         reports = await client.get_guild_reports(
             guild_id=guild_id,
             page=page,
             limit=25  # Maximum per page
         )
-        
+
         current_page_reports = reports.report_data.reports.data
         all_reports.extend(current_page_reports)
-        
+
         if not reports.report_data.reports.has_more_pages:
             break
-            
+
         page += 1
         await asyncio.sleep(0.5)  # Rate limiting courtesy
-    
+
     return all_reports
 ```
 

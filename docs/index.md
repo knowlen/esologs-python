@@ -18,7 +18,7 @@
     # Clone the repository
     git clone https://github.com/knowlen/esologs-python.git
     cd esologs-python
-    
+
     # Install the package
     pip install -e .
     ```
@@ -37,31 +37,30 @@
     import asyncio
     from esologs.client import Client
     from access_token import get_access_token
-    
+
     async def main():
         token = get_access_token()
-        
+
         async with Client(
             url="https://www.esologs.com/api/v2/client",
             headers={"Authorization": f"Bearer {token}"}
         ) as client:
-            
+
             # Get character information
             character = await client.get_character_by_id(id=12345)
             print(f"Character: {character.character_data.character.name}")
-            
+
             # Search for reports
             reports = await client.search_reports(
                 guild_id=123,
                 zone_id=456,
                 limit=10
             )
-    
+
     asyncio.run(main())
     ```
 
 ## Status
----
 <div class="feature-grid">
   <div class="feature-card">
     <h3>Current Version</h3>
@@ -81,7 +80,6 @@
 </div>
 
 ## Architecture
----
 ```mermaid
 graph TB
     A[User Application] --> B[ESO Logs Python Client]
@@ -103,8 +101,6 @@ graph TB
     end
 ```
 
----
-
 !!! note "Development Status"
-    This library is in active development. While the core functionality is stable and tested, 
+    This library is in active development. While the core functionality is stable and tested,
     the API may change before the 1.0 release. See our [changelog](changelog.md) for the latest updates.

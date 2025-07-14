@@ -1,6 +1,6 @@
-# World Data API
+# World Data
 
-Access ESO world information including encounters, zones, regions, and dungeon/trial data through the ESO Logs API.
+Access world information including encounters, zones, regions, and dungeon/trial data.
 
 ## Overview
 
@@ -20,21 +20,21 @@ Access ESO world information including encounters, zones, regions, and dungeon/t
 
 | Field | Type | Description |
 |-------|------|-------------|
-| world_data.zones | List[Zone] | List of zone objects |
-| world_data.zones[].id | int | Zone ID |
-| world_data.zones[].name | str | Zone name |
-| world_data.zones[].frozen | bool | Whether zone rankings are frozen |
-| world_data.zones[].expansion | Expansion | Expansion information |
-| world_data.zones[].expansion.id | int | Expansion ID |
-| world_data.zones[].expansion.name | str | Expansion name |
-| world_data.zones[].encounters | List[Encounter] \| None | List of encounters in this zone |
-| world_data.zones[].encounters[].id | int | Encounter ID |
-| world_data.zones[].encounters[].name | str | Encounter name |
-| world_data.zones[].difficulties | List[Difficulty] \| None | Available difficulty levels |
-| world_data.zones[].difficulties[].id | int | Difficulty ID |
-| world_data.zones[].difficulties[].name | str | Difficulty name (e.g., "Normal", "Veteran", "Veteran Hard Mode") |
-| world_data.zones[].difficulties[].sizes | List[int] | Group sizes for this difficulty |
-| world_data.zones[].brackets | Brackets \| None | Ranking brackets information |
+| **world_data.zones** | *List[Zone]* | List of zone objects |
+| **world_data.zones[].id** | *int* | Zone ID |
+| **world_data.zones[].name** | *str* | Zone name |
+| **world_data.zones[].frozen** | *bool* | Whether zone rankings are frozen |
+| **world_data.zones[].expansion** | *Expansion* | Expansion information |
+| **world_data.zones[].expansion.id** | *int* | Expansion ID |
+| **world_data.zones[].expansion.name** | *str* | Expansion name |
+| **world_data.zones[].encounters** | *List[Encounter] \| None* | List of encounters in this zone |
+| **world_data.zones[].encounters[].id** | *int* | Encounter ID |
+| **world_data.zones[].encounters[].name** | *str* | Encounter name |
+| **world_data.zones[].difficulties** | *List[Difficulty] \| None* | Available difficulty levels |
+| **world_data.zones[].difficulties[].id** | *int* | Difficulty ID |
+| **world_data.zones[].difficulties[].name** | *str* | Difficulty name (e.g., "Normal", "Veteran", "Veteran Hard Mode") |
+| **world_data.zones[].difficulties[].sizes** | *List[int]* | Group sizes for this difficulty |
+| **world_data.zones[].brackets** | *Brackets \| None* | Ranking brackets information |
 
 **Example**:
 ```python
@@ -48,19 +48,19 @@ async def list_zones():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         zones = await client.get_zones()
         print(f"Found {len(zones.world_data.zones)} zones")
-        
+
         # Show first few zones with their encounters
         for zone in zones.world_data.zones[:3]:
             print(f"\n{zone.name} (ID: {zone.id})")
             print(f"  Expansion: {zone.expansion.name}")
             print(f"  Frozen: {zone.frozen}")
-            
+
             if zone.difficulties:
                 print(f"  Difficulties: {', '.join([d.name for d in zone.difficulties])}")
-            
+
             if zone.encounters:
                 print(f"  Encounters ({len(zone.encounters)}):")
                 for encounter in zone.encounters[:3]:
@@ -116,12 +116,12 @@ Arenas (ID: 30)
 
 | Field | Type | Description |
 |-------|------|-------------|
-| world_data.regions | List[Region] | List of region objects |
-| world_data.regions[].id | int | Region ID |
-| world_data.regions[].name | str | Region name |
-| world_data.regions[].subregions | List[Subregion] \| None | List of subregions |
-| world_data.regions[].subregions[].id | int | Subregion ID |
-| world_data.regions[].subregions[].name | str | Subregion name |
+| **world_data.regions** | *List[Region]* | List of region objects |
+| **world_data.regions[].id** | *int* | Region ID |
+| **world_data.regions[].name** | *str* | Region name |
+| **world_data.regions[].subregions** | *List[Subregion] \| None* | List of subregions |
+| **world_data.regions[].subregions[].id** | *int* | Subregion ID |
+| **world_data.regions[].subregions[].name** | *str* | Subregion name |
 
 **Example**:
 ```python
@@ -135,10 +135,10 @@ async def list_regions():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         regions = await client.get_regions()
         print("Available regions:")
-        
+
         for region in regions.world_data.regions:
             print(f"\n{region.name} (ID: {region.id})")
             if region.subregions:
@@ -165,18 +165,18 @@ Europe (ID: 2)
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| zone_id | int | Yes | The zone ID to retrieve encounters for |
+| **zone_id** | *int* | Yes | The zone ID to retrieve encounters for |
 
 **Returns**: `GetEncountersByZone` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| world_data.zone | Zone | Zone information |
-| world_data.zone.id | int | Zone ID |
-| world_data.zone.name | str | Zone name |
-| world_data.zone.encounters | List[Encounter] \| None | List of encounters in this zone |
-| world_data.zone.encounters[].id | int | Encounter ID |
-| world_data.zone.encounters[].name | str | Encounter name |
+| **world_data.zone** | *Zone* | Zone information |
+| **world_data.zone.id** | *int* | Zone ID |
+| **world_data.zone.name** | *str* | Zone name |
+| **world_data.zone.encounters** | *List[Encounter] \| None* | List of encounters in this zone |
+| **world_data.zone.encounters[].id** | *int* | Encounter ID |
+| **world_data.zone.encounters[].name** | *str* | Encounter name |
 
 **Example**:
 ```python
@@ -190,21 +190,21 @@ async def get_dungeon_encounters():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # First, get all zones to find the Dungeons zone ID
         zones = await client.get_zones()
         dungeon_zone = next((z for z in zones.world_data.zones if z.name == "Dungeons"), None)
-        
+
         if dungeon_zone:
             # Get encounters for the Dungeons zone
             encounters_data = await client.get_encounters_by_zone(dungeon_zone.id)
             zone = encounters_data.world_data.zone
-            
+
             print(f"Encounters in {zone.name}:")
             if zone.encounters:
                 for encounter in zone.encounters[:10]:  # Show first 10
                     print(f"  - {encounter.name} (ID: {encounter.id})")
-                
+
                 if len(zone.encounters) > 10:
                     print(f"  ... and {len(zone.encounters) - 10} more encounters")
         else:
@@ -246,15 +246,15 @@ async def discover_all_encounters():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         zones = await client.get_zones()
-        
+
         total_encounters = 0
         for zone in zones.world_data.zones:
             if zone.encounters:
                 total_encounters += len(zone.encounters)
                 print(f"{zone.name}: {len(zone.encounters)} encounters")
-        
+
         print(f"\nTotal encounters across all zones: {total_encounters}")
 
 asyncio.run(discover_all_encounters())
@@ -299,19 +299,19 @@ async def analyze_veteran_hard_mode_zones():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         zones = await client.get_zones()
-        
+
         print("Zones with Veteran Hard Mode difficulty:")
         veteran_hm_zones = []
-        
+
         for zone in zones.world_data.zones:
             if zone.difficulties:
                 for difficulty in zone.difficulties:
                     if difficulty.name == "Veteran Hard Mode":
                         veteran_hm_zones.append(zone)
                         break
-        
+
         if veteran_hm_zones:
             for zone in veteran_hm_zones:
                 print(f"  - {zone.name} (ID: {zone.id})")

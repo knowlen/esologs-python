@@ -9,19 +9,19 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: en
-  
+
   # Vim-style color scheme - dark only
   palette:
     # Dark mode only (vim style)
     - scheme: slate
       primary: custom
       accent: custom
-  
+
   # Typography - Regular font for UI, monospace for code
   font:
     text: Inter
     code: JetBrains Mono
-  
+
   # Features
   features:
     - navigation.instant
@@ -44,14 +44,13 @@ theme:
     - content.tooltips
     - content.action.edit
     - content.action.view
-    - toc.integrate
-  
+
   # Icons
   icon:
     repo: fontawesome/brands/github
     edit: material/pencil
     view: material/eye
-    
+
   # Logo and favicon
   logo: assets/logo.png
   favicon: assets/favicon.ico
@@ -70,7 +69,7 @@ nav:
     - World Data: api-reference/world-data.md
     - Report Analysis: api-reference/report-analysis.md
     - Report Search: api-reference/report-search.md
-    - System APIs: api-reference/system.md
+    - System Enspoints: api-reference/system.md
   - Development:
     - Setup: development/setup.md
     - Testing: development/testing.md
@@ -154,7 +153,7 @@ extra:
       link: https://pypi.org/project/esologs-python/
   analytics:
     provider: google
-    property: !ENV [GOOGLE_ANALYTICS_KEY, ""]
+    property: G-XXXXXXXXXX  # Set via environment variable GOOGLE_ANALYTICS_KEY
     feedback:
       title: Was this page helpful?
       ratings:
@@ -166,11 +165,12 @@ extra:
         - icon: material/emoticon-sad-outline
           name: This page could be improved
           data: 0
-          note: >- 
+          note: >-
             Thanks for your feedback! Help us improve this page by
             <a href="https://github.com/knowlen/esologs-python/issues/new/?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">telling us what you found lacking</a>.
+  generator: false
 
 # Copyright
 copyright: |
-  &copy; 2024 Nick Knowles. 
+  &copy; 2024 esologs-python.
   <a href="#__consent">Change cookie settings</a>
