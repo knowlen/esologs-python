@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="esologs_logo.png" alt="ESO Logs Python" width="600">
+  <img src="esologs_logo.png" alt="ESO Logs Python" width="100%">
 </div>
 
 # ESO Logs Python Client
