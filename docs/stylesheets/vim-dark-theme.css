@@ -13,15 +13,16 @@
   --vim-fg-dim:       #808080;  /* Dimmed text */
   --vim-fg-bright:    #ffffff;  /* Bright white */
   
-  /* Code block colors - matching your desired example exactly */
-  --code-keyword:     #569cd6;  /* Blue keywords (async, def, import, etc.) */
-  --code-string:      #ce9178;  /* Orange/brown strings */
-  --code-number:      #b5cea8;  /* Light green numbers */
-  --code-comment:     #6a9955;  /* Green comments */
-  --code-function:    #dcdcaa;  /* Yellow/gold function names */
-  --code-variable:    #9cdcfe;  /* Light blue variables */
-  --code-operator:    #d4d4d4;  /* White operators/punctuation */
-  --code-text:        #d4d4d4;  /* Default white text */
+  /* Code block colors - adjusted colors matching desired.png */
+  --code-keyword:     #f0dc8a;  /* Yellow for def, async, with, in, class, return - 10% brighter */
+  --code-import:      #9cdcfe;  /* Light blue for import/from */
+  --code-string:      #ff88ff;
+  --code-number:      #ff88ff;
+  --code-comment:     #1affff;  /* Cyan - same as functions but not bold */
+  --code-function:    #1affff;  /* Cyan - slightly brighter */
+  --code-variable:    #ffffff;
+  --code-operator:    #ffffff;
+  --code-text:        #ffffff;
   
   /* Vim accent colors */
   --vim-red:          #ff5f5f;  /* Error red */
@@ -61,7 +62,21 @@
   
   /* Code colors */
   --md-code-bg-color:           var(--vim-bg-light);
-  --md-code-fg-color:           var(--code-text);*/
+  --md-code-fg-color:           var(--code-text);
+  
+  /* OVERRIDE Material theme's syntax highlighting variables - Part 1 */
+  --md-code-hl-string-color:     var(--code-string) !important;
+  --md-code-hl-constant-color:   var(--code-function) !important;
+  --md-code-hl-name-color:       var(--code-variable) !important;
+  --md-code-hl-operator-color:   var(--code-operator) !important;
+  --md-code-hl-punctuation-color: var(--code-operator) !important;
+  --md-code-hl-comment-color:    var(--code-comment) !important;
+  --md-code-hl-keyword-color:    var(--code-keyword) !important;
+  --md-code-hl-special-color:    var(--code-string) !important;
+  --md-code-hl-function-color:   var(--code-function) !important;
+  --md-code-hl-number-color:     var(--code-number) !important;
+  --md-code-hl-generic-color:    var(--code-variable) !important;
+  --md-code-hl-variable-color:   var(--code-variable) !important;
   
   /* Table and border colors */
   --md-typeset-table-color:     var(--vim-comment);
@@ -158,55 +173,91 @@
   margin: 0;
 }
 
-/* Syntax highlighting based on actual Pygments classes found */
-.highlight .k,     /* Keywords like def, async, with, as, for, in */
-.highlight .kc,    /* Keyword constants like True, False */
-.highlight .kn {   /* Keywords like import, from */
+/* Direct selector overrides for syntax highlighting */
+.md-typeset .highlight .k,     /* Keywords like def, async, with, as, for, in */
+.md-typeset .highlight .kc,    /* Keyword constants like True, False */
+.md-typeset .highlight .kw {   /* Built-in keywords like await */
   color: var(--code-keyword) !important;
 }
 
-.highlight .s1,    /* Single quoted strings */
-.highlight .s2,    /* Double quoted strings */
-.highlight .sa,    /* String affixes */
-.highlight .si {   /* String interpolation */
+.md-typeset .highlight .kn {   /* Import keywords like import, from */
+  color: var(--code-import) !important;
+}
+
+.md-typeset .highlight .s,
+.md-typeset .highlight .s1,
+.md-typeset .highlight .s2,
+.md-typeset .highlight .si,
+.md-typeset .highlight .se,
+.md-typeset .highlight .sb,
+.md-typeset .highlight .sc,
+.md-typeset .highlight .sd,
+.md-typeset .highlight .sh {
   color: var(--code-string) !important;
 }
 
-.highlight .mi,    /* Integer numbers */
-.highlight .mf {   /* Float numbers */
+.md-typeset .highlight .sa {   /* String affixes like f in f-strings - should be white */
+  color: var(--code-variable) !important;
+}
+
+.md-typeset .highlight .mi,
+.md-typeset .highlight .mf,
+.md-typeset .highlight .mh,
+.md-typeset .highlight .mo {
   color: var(--code-number) !important;
 }
 
-.highlight .c1 {   /* Single line comments */
+.md-typeset .highlight .c,
+.md-typeset .highlight .c1,
+.md-typeset .highlight .cm,
+.md-typeset .highlight .cp,
+.md-typeset .highlight .cs {
   color: var(--code-comment) !important;
 }
 
-.highlight .nf {   /* Function names - yellow/gold */
+.md-typeset .highlight .nf,    /* Function names */
+.md-typeset .highlight .fm {   /* Magic function names */
   color: var(--code-function) !important;
+  font-weight: bold !important;
 }
 
-.highlight .n {    /* General names/variables - light blue */
+.md-typeset .highlight .nb {   /* Built-ins like print - bold cyan */
+  color: var(--code-function) !important;
+  font-weight: bold !important;
+}
+
+.md-typeset .highlight .n,
+.md-typeset .highlight .na,
+.md-typeset .highlight .nd,
+.md-typeset .highlight .ne,
+.md-typeset .highlight .ni,
+.md-typeset .highlight .nl,
+.md-typeset .highlight .nn,
+.md-typeset .highlight .no,
+.md-typeset .highlight .nt,
+.md-typeset .highlight .nv,
+.md-typeset .highlight .nx {
   color: var(--code-variable) !important;
 }
 
-.highlight .nn {   /* Module names like asyncio, esologs.client - light blue */
-  color: var(--code-variable) !important;
+.md-typeset .highlight .nc {   /* Class names/types like int, str, object - bold cyan */
+  color: var(--code-function) !important;
+  font-weight: bold !important;
 }
 
-.highlight .nb {   /* Built-ins like print, len - light blue */
-  color: var(--code-variable) !important;
-}
-
-.highlight .o,     /* Operators like =, + */
-.highlight .ow {   /* Operator words like and, or */
+.md-typeset .highlight .o {     /* Operators like =, + */
   color: var(--code-operator) !important;
 }
 
-.highlight .p {    /* Punctuation like (), [], {}, : */
+.md-typeset .highlight .ow {    /* Operator words like in, and, or - should be yellow */
+  color: var(--code-keyword) !important;
+}
+
+.md-typeset .highlight .p {
   color: var(--code-operator) !important;
 }
 
-.highlight .w {    /* Whitespace - inherit */
+.md-typeset .highlight .w {
   color: inherit !important;
 }
 
@@ -615,6 +666,25 @@
   color: var(--vim-fg-bright) !important;
   font-weight: 700;
 }
+
+/* OVERRIDE Material theme syntax colors in media query - Part 2
+@media screen {
+  [data-md-color-scheme="slate"] {
+    --md-code-hl-string-color:     var(--code-string) !important;
+    --md-code-hl-constant-color:   var(--code-function) !important;
+    --md-code-hl-name-color:       var(--code-variable) !important;
+    --md-code-hl-operator-color:   var(--code-operator) !important;
+    --md-code-hl-punctuation-color: var(--code-operator) !important;
+    --md-code-hl-comment-color:    var(--code-comment) !important;
+    --md-code-hl-keyword-color:    var(--code-keyword) !important;
+    --md-code-hl-special-color:    var(--code-string) !important;
+    --md-code-hl-function-color:   var(--code-function) !important;
+    --md-code-hl-number-color:     var(--code-number) !important;
+    --md-code-hl-generic-color:    var(--code-variable) !important;
+    --md-code-hl-variable-color:   var(--code-variable) !important;
+  }
+}
+*/
 
 /* Emphasis/italic with vim special color */
 .md-typeset em {

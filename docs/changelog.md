@@ -111,19 +111,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### API Coverage Progress
 
-**Completed (65% → 75% API Coverage)**:
-- **Game Data APIs**: Abilities, classes, items, NPCs, maps, factions
-- **Character APIs**: Profiles, reports, rankings (enhanced)
-- **Report APIs**: Analysis, search, events, graphs, tables (new)
-- **Guild APIs**: Basic guild information and reports
-- **World APIs**: Regions, zones, encounters
-- **System APIs**: Rate limiting and authentication
+**Completed (65% → 83% API Coverage - 6/8 API sections, 33 methods)**:
+- **Game Data APIs**: 13 methods - abilities, classes, items, NPCs, maps, factions (COMPLETE)
+- **Character APIs**: 5 methods - profiles, reports, rankings (COMPLETE)
+- **Report APIs**: 9 methods - analysis, search, events, graphs, tables (COMPLETE)
+- **Guild APIs**: 2 methods - basic guild information and reports (PARTIAL)
+- **World APIs**: 4 methods - regions, zones, encounters (COMPLETE)
+- **System APIs**: 1 method - rate limiting and authentication (COMPLETE)
 
-**In Progress (Target: 95% by v1.0)**:
-- **User Account APIs**: Account management and preferences
-- **Progress Tracking**: Race and achievement tracking
-- **Enhanced Guild Features**: Advanced guild management
-- **Data Integration**: Pandas DataFrame support
+**Missing (17% - 2/8 API sections)**:
+- **User Account APIs**: 0/3 methods - requires user OAuth2 authentication
+- **Progress Race Data**: 0/1 method - niche racing feature
+- **Enhanced Guild Features**: 4 methods - advanced guild management
+- **Data Integration**: Pandas DataFrame support (planned enhancement)
 
 ### Breaking Changes
 

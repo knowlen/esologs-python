@@ -137,7 +137,6 @@ plugins:
 
 # Customization
 extra_css:
-  - stylesheets/extra.css
   - stylesheets/vim-dark-theme.css
 
 extra_javascript:
