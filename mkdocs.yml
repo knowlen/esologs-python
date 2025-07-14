@@ -53,7 +53,7 @@ theme:
 
   # Logo and favicon
   logo: assets/logo.png
-  favicon: assets/favicon.ico
+  favicon: assets/logo.png
 
 # Navigation
 nav:

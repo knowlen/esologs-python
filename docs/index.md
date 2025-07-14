@@ -1,5 +1,10 @@
 <div class="hero-section">
-  <h1>ESO Logs Python</h1>
+
+  <div style="text-align: center; margin-bottom: 2rem;">
+    <img src="assets/logo.png" alt="ESO Logs Python Logo" style="width: 240px; height: 240px; margin-bottom: 1rem;">
+  </div>
+
+  <center><h1>ESO Logs Python</h1></center>
   <p>A comprehensive Python client library for the ESO Logs API v2</p>
   <ul>
 		<li> <b>Type Safety</b>: Full type hints with Pydantic models</li>

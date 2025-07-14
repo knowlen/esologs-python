@@ -483,6 +483,17 @@
   padding: 2rem;
 }
 
+/* Hero logo styling */
+.hero-section img {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.hero-section img:hover {
+  transform: scale(1.05);
+}
+
 .hero-section h1 {
   color: var(--vim-fg-bright) !important;
   font-family: 'Inter', sans-serif;
