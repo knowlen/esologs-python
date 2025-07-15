@@ -904,3 +904,118 @@
     transform: none !important;
   }
 }
+
+/*
+ * Search Optimization - Vim Style
+ * ================================
+ * Enhanced search with vim-style highlighting and keyboard shortcuts
+ */
+
+/* Search Results - Vim Style */
+.md-search-result {
+  background-color: var(--vim-bg-light) !important;
+  border: 1px solid var(--vim-comment) !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: 0.2rem !important;
+}
+
+.md-search-result__link {
+  color: var(--vim-fg) !important;
+}
+
+.md-search-result__link:hover {
+  background-color: var(--vim-visual) !important;
+  color: var(--vim-yellow) !important;
+}
+
+/* Highlight search terms like vim's hlsearch */
+.md-search-result em,
+.md-search-result mark {
+  background-color: var(--vim-yellow) !important;
+  color: var(--vim-bg) !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  padding: 0 2px !important;
+}
+
+/* Search input - vim command mode style */
+.md-search__input {
+  background-color: var(--vim-bg) !important;
+  border-bottom: 2px solid var(--vim-green) !important;
+  color: var(--vim-fg) !important;
+  font-family: var(--md-code-font) !important;
+}
+
+.md-search__input::placeholder {
+  color: var(--vim-comment) !important;
+  font-style: italic;
+}
+
+/* Search icon */
+.md-search__icon {
+  color: var(--vim-green) !important;
+}
+
+/* Result count */
+.md-search-result__meta {
+  color: var(--vim-comment) !important;
+  font-family: var(--md-code-font) !important;
+  font-size: 0.8rem !important;
+}
+
+/* Type hints in results */
+.md-search-result__more summary {
+  color: var(--vim-blue) !important;
+}
+
+/* Search dialog background */
+.md-search__scrollwrap {
+  background-color: var(--vim-bg) !important;
+}
+
+/*
+ * Image Optimization
+ * ==================
+ * Lazy loading and responsive image support
+ */
+
+/* Lazy loading placeholder */
+img[loading="lazy"] {
+  background: var(--vim-bg-light);
+  min-height: 100px;
+}
+
+/* Prevent layout shift for images with dimensions */
+img[width][height] {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Responsive images */
+picture {
+  display: inline-block;
+}
+
+picture img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Error state for failed images */
+img.error {
+  position: relative;
+  min-height: 100px;
+  background: var(--vim-bg-light);
+  border: 1px dashed var(--vim-red);
+}
+
+img.error::after {
+  content: "Failed to load image";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--vim-red);
+  font-family: var(--md-code-font);
+  font-size: 0.8em;
+}

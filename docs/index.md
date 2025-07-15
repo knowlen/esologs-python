@@ -1,7 +1,10 @@
 <div class="hero-section">
 
   <div style="text-align: center; margin-bottom: 2rem;">
-    <img src="assets/logo.png" alt="ESO Logs Python Logo" style="width: 240px; height: 240px; margin-bottom: 1rem;">
+    <picture>
+      <source type="image/webp" srcset="assets/logo.webp">
+      <img src="assets/logo.png" alt="ESO Logs Python Logo" style="width: 240px; height: 240px; margin-bottom: 1rem;" loading="eager">
+    </picture>
   </div>
 
   <center><h1>ESO Logs Python</h1></center>

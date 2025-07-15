@@ -130,7 +130,20 @@ markdown_extensions:
 # Plugins
 plugins:
   - search:
+      # Language setting for better tokenization
+      lang: en
+
+      # Custom separator for better code/API tokenization
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+
+      # Search pipeline for better results
+      pipeline:
+        - stemmer         # Reduces words to root form (searching/searches → search)
+        - stopWordFilter  # Removes common words (the, is, at, which)
+        - trimmer        # Removes whitespace
+
+      # Prebuild index for faster initial load
+      prebuild_index: true
   - minify:
       minify_html: true
       minify_js: true
@@ -151,6 +164,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/mathjax.js
+  - javascripts/search-shortcuts.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 # Additional configuration

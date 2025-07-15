@@ -1,0 +1,52 @@
+name: Optimize Images
+
+on:
+  pull_request:
+    paths:
+      - '**.png'
+      - '**.jpg'
+      - '**.jpeg'
+      - 'docs/assets/**'
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install optimization tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pngquant optipng jpegoptim webp
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          pip install pillow
+
+      - name: Optimize images
+        run: |
+          python scripts/optimize_images.py
+
+      - name: Check if images were optimized
+        id: check_changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit optimized images
+        if: steps.check_changes.outputs.changes == 'true'
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'Optimize images [skip ci]'
+          add: '*.png *.jpg *.jpeg *.webp'
+          committer_name: 'GitHub Actions'
+          committer_email: 'actions@github.com'
