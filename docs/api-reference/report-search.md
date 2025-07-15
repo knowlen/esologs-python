@@ -16,31 +16,31 @@ Search and filter combat reports with advanced criteria including guilds, encoun
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **guild_id** | *int* | No | Filter by specific guild ID |
-| **guild_name** | *str* | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
-| **guild_server_slug** | *str* | No | Guild server slug (required with guild_name) |
-| **guild_server_region** | *str* | No | Guild server region (required with guild_name) |
-| **guild_tag_id** | *int* | No | Filter by guild tag/team ID |
-| **user_id** | *int* | No | Filter by specific user ID |
-| **zone_id** | *int* | No | Filter by zone ID |
-| **game_zone_id** | *int* | No | Filter by game zone ID |
-| **start_time** | *float* | No | Earliest report timestamp (UNIX timestamp with milliseconds) |
-| **end_time** | *float* | No | Latest report timestamp (UNIX timestamp with milliseconds) |
-| **limit** | *int* | No | Number of reports per page (1-25, default: 16) |
-| **page** | *int* | No | Page number for pagination (default: 1) |
+| `guild_id` | *int* | No | Filter by specific guild ID |
+| `guild_name` | *str* | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
+| `guild_server_slug` | *str* | No | Guild server slug (required with guild_name) |
+| `guild_server_region` | *str* | No | Guild server region (required with guild_name) |
+| `guild_tag_id` | *int* | No | Filter by guild tag/team ID |
+| `user_id` | *int* | No | Filter by specific user ID |
+| `zone_id` | *int* | No | Filter by zone ID |
+| `game_zone_id` | *int* | No | Filter by game zone ID |
+| `start_time` | *float* | No | Earliest report timestamp (UNIX timestamp with milliseconds) |
+| `end_time` | *float* | No | Latest report timestamp (UNIX timestamp with milliseconds) |
+| `limit` | *int* | No | Number of reports per page (1-25, default: 16) |
+| `page` | *int* | No | Page number for pagination (default: 1) |
 
 **Returns**: `GetReports` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.reports.data** | *List[Report]* | List of matching reports |
-| **report_data.reports.total** | *int* | Total number of matching reports (-1 if unknown) |
-| **report_data.reports.per_page** | *int* | Number of reports per page |
-| **report_data.reports.current_page** | *int* | Current page number |
-| **report_data.reports.last_page** | *int* | Last page number (-1 if unknown) |
-| **report_data.reports.has_more_pages** | *bool* | Whether more pages are available |
-| **report_data.reports.from_** | *int* | Starting record number |
-| **report_data.reports.to** | *int* | Ending record number |
+| `report_data.reports.data` | *List[Report]* | List of matching reports |
+| `report_data.reports.total` | *int* | Total number of matching reports (-1 if unknown) |
+| `report_data.reports.per_page` | *int* | Number of reports per page |
+| `report_data.reports.current_page` | *int* | Current page number |
+| `report_data.reports.last_page` | *int* | Last page number (-1 if unknown) |
+| `report_data.reports.has_more_pages` | *bool* | Whether more pages are available |
+| `report_data.reports.from_` | *int* | Starting record number |
+| `report_data.reports.to` | *int* | Ending record number |
 
 > **Report**:
 >
@@ -201,12 +201,12 @@ except GraphQLClientHttpError as e:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **guild_id** | *int* | Yes | The guild ID to search for |
-| **limit** | *int* | No | Number of reports per page (1-25, default: 16) |
-| **page** | *int* | No | Page number for pagination (default: 1) |
-| **start_time** | *float* | No | Start time filter (UNIX timestamp with milliseconds) |
-| **end_time** | *float* | No | End time filter (UNIX timestamp with milliseconds) |
-| **zone_id** | *int* | No | Filter by specific zone |
+| `guild_id` | *int* | Yes | The guild ID to search for |
+| `limit` | *int* | No | Number of reports per page (1-25, default: 16) |
+| `page` | *int* | No | Page number for pagination (default: 1) |
+| `start_time` | *float* | No | Start time filter (UNIX timestamp with milliseconds) |
+| `end_time` | *float* | No | End time filter (UNIX timestamp with milliseconds) |
+| `zone_id` | *int* | No | Filter by specific zone |
 
 **Returns**: `GetReports` object with the same structure as `search_reports()`
 
@@ -253,12 +253,12 @@ Guild has 10 recent reports
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **user_id** | *int* | Yes | The user ID to search for |
-| **limit** | *int* | No | Number of reports per page (1-25, default: 16) |
-| **page** | *int* | No | Page number for pagination (default: 1) |
-| **start_time** | *float* | No | Start time filter (UNIX timestamp with milliseconds) |
-| **end_time** | *float* | No | End time filter (UNIX timestamp with milliseconds) |
-| **zone_id** | *int* | No | Filter by specific zone |
+| `user_id` | *int* | Yes | The user ID to search for |
+| `limit` | *int* | No | Number of reports per page (1-25, default: 16) |
+| `page` | *int* | No | Page number for pagination (default: 1) |
+| `start_time` | *float* | No | Start time filter (UNIX timestamp with milliseconds) |
+| `end_time` | *float* | No | End time filter (UNIX timestamp with milliseconds) |
+| `zone_id` | *int* | No | Filter by specific zone |
 
 **Returns**: `GetReports` object with the same structure as `search_reports()`
 

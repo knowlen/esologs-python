@@ -16,19 +16,19 @@ Enables the retrieval of single guilds or filtered collections of guilds. Guild 
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **guild_id** | *int* | Yes | The guild ID to retrieve |
+| `guild_id` | *int* | Yes | The guild ID to retrieve |
 
 **Returns**: `GetGuildById` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **guild_data.guild.id** | *int* | Guild ID |
-| **guild_data.guild.name** | *str* | Guild name |
-| **guild_data.guild.description** | *str* | Guild description (may be empty) |
-| **guild_data.guild.faction.name** | *str* | Guild faction name |
-| **guild_data.guild.server.name** | *str* | Server name |
-| **guild_data.guild.server.region.name** | *str* | Server region name |
-| **guild_data.guild.tags** | *List[Tag] \| None* | Guild tags/teams (may be empty) |
+| `guild_data.guild.id` | *int* | Guild ID |
+| `guild_data.guild.name` | *str* | Guild name |
+| `guild_data.guild.description` | *str* | Guild description (may be empty) |
+| `guild_data.guild.faction.name` | *str* | Guild faction name |
+| `guild_data.guild.server.name` | *str* | Server name |
+| `guild_data.guild.server.region.name` | *str* | Server region name |
+| `guild_data.guild.tags` | *List[Tag] \| None* | Guild tags/teams (may be empty) |
 
 **Example**:
 ```python
@@ -67,22 +67,22 @@ Region: North America
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **guild_id** | *int* | Yes | The guild ID to search for |
-| **limit** | *int \| None* | No | Number of reports per page (1-25, default 16) |
-| **page** | *int \| None* | No | Page number (default 1) |
-| **start_time** | *float \| None* | No | Start time filter (UNIX timestamp with milliseconds) |
-| **end_time** | *float \| None* | No | End time filter (UNIX timestamp with milliseconds) |
-| **zone_id** | *int \| None* | No | Filter by specific zone |
+| `guild_id` | *int* | Yes | The guild ID to search for |
+| `limit` | *int \| None* | No | Number of reports per page (1-25, default 16) |
+| `page` | *int \| None* | No | Page number (default 1) |
+| `start_time` | *float \| None* | No | Start time filter (UNIX timestamp with milliseconds) |
+| `end_time` | *float \| None* | No | End time filter (UNIX timestamp with milliseconds) |
+| `zone_id` | *int \| None* | No | Filter by specific zone |
 
 **Returns**: `GetReports` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.reports.data** | *List[Report]* | List of report objects |
-| **report_data.reports.total** | *int* | Total number of reports |
-| **report_data.reports.per_page** | *int* | Number of reports per page |
-| **report_data.reports.current_page** | *int* | Current page number |
-| **report_data.reports.has_more_pages** | *bool* | Whether more pages are available |
+| `report_data.reports.data` | *List[Report]* | List of report objects |
+| `report_data.reports.total` | *int* | Total number of reports |
+| `report_data.reports.per_page` | *int* | Number of reports per page |
+| `report_data.reports.current_page` | *int* | Current page number |
+| `report_data.reports.has_more_pages` | *bool* | Whether more pages are available |
 
 **Example**:
 ```python
@@ -129,11 +129,11 @@ Guild-related filtering is also available in the main search methods:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **guild_id** | *int \| None* | No | Filter by specific guild ID |
-| **guild_name** | *str \| None* | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
-| **guild_server_slug** | *str \| None* | No | Guild server slug (required with guild_name) |
-| **guild_server_region** | *str \| None* | No | Guild server region (required with guild_name) |
-| **guild_tag_id** | *int \| None* | No | Filter by guild tag/team ID |
+| `guild_id` | *int \| None* | No | Filter by specific guild ID |
+| `guild_name` | *str \| None* | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
+| `guild_server_slug` | *str \| None* | No | Guild server slug (required with guild_name) |
+| `guild_server_region` | *str \| None* | No | Guild server region (required with guild_name) |
+| `guild_tag_id` | *int \| None* | No | Filter by guild tag/team ID |
 
 **Example**:
 ```python

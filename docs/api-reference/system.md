@@ -20,8 +20,8 @@ Monitor API usage, handle rate limits, and manage authentication.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **rate_limit_data.points_spent_this_hour** | *float* | Points consumed in current hour |
-| **rate_limit_data.limit_per_hour** | *int* | Maximum points allowed per hour (18000) |
+| `rate_limit_data.points_spent_this_hour` | *float* | Points consumed in current hour |
+| `rate_limit_data.limit_per_hour` | *int* | Maximum points allowed per hour (18000) |
 
 **Example**:
 ```python

@@ -20,21 +20,21 @@ Access world information including encounters, zones, regions, and dungeon/trial
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **world_data.zones** | *List[Zone]* | List of zone objects |
-| **world_data.zones[].id** | *int* | Zone ID |
-| **world_data.zones[].name** | *str* | Zone name |
-| **world_data.zones[].frozen** | *bool* | Whether zone rankings are frozen |
-| **world_data.zones[].expansion** | *Expansion* | Expansion information |
-| **world_data.zones[].expansion.id** | *int* | Expansion ID |
-| **world_data.zones[].expansion.name** | *str* | Expansion name |
-| **world_data.zones[].encounters** | *List[Encounter] \| None* | List of encounters in this zone |
-| **world_data.zones[].encounters[].id** | *int* | Encounter ID |
-| **world_data.zones[].encounters[].name** | *str* | Encounter name |
-| **world_data.zones[].difficulties** | *List[Difficulty] \| None* | Available difficulty levels |
-| **world_data.zones[].difficulties[].id** | *int* | Difficulty ID |
-| **world_data.zones[].difficulties[].name** | *str* | Difficulty name (e.g., "Normal", "Veteran", "Veteran Hard Mode") |
-| **world_data.zones[].difficulties[].sizes** | *List[int]* | Group sizes for this difficulty |
-| **world_data.zones[].brackets** | *Brackets \| None* | Ranking brackets information |
+| `world_data.zones` | *List[Zone]* | List of zone objects |
+| `world_data.zones[].id` | *int* | Zone ID |
+| `world_data.zones[].name` | *str* | Zone name |
+| `world_data.zones[].frozen` | *bool* | Whether zone rankings are frozen |
+| `world_data.zones[].expansion` | *Expansion* | Expansion information |
+| `world_data.zones[].expansion.id` | *int* | Expansion ID |
+| `world_data.zones[].expansion.name` | *str* | Expansion name |
+| `world_data.zones[].encounters` | *List[Encounter] \| None* | List of encounters in this zone |
+| `world_data.zones[].encounters[].id` | *int* | Encounter ID |
+| `world_data.zones[].encounters[].name` | *str* | Encounter name |
+| `world_data.zones[].difficulties` | *List[Difficulty] \| None* | Available difficulty levels |
+| `world_data.zones[].difficulties[].id` | *int* | Difficulty ID |
+| `world_data.zones[].difficulties[].name` | *str* | Difficulty name (e.g., "Normal", "Veteran", "Veteran Hard Mode") |
+| `world_data.zones[].difficulties[].sizes` | *List[int]* | Group sizes for this difficulty |
+| `world_data.zones[].brackets` | *Brackets \| None* | Ranking brackets information |
 
 **Example**:
 ```python
@@ -116,12 +116,12 @@ Arenas (ID: 30)
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **world_data.regions** | *List[Region]* | List of region objects |
-| **world_data.regions[].id** | *int* | Region ID |
-| **world_data.regions[].name** | *str* | Region name |
-| **world_data.regions[].subregions** | *List[Subregion] \| None* | List of subregions |
-| **world_data.regions[].subregions[].id** | *int* | Subregion ID |
-| **world_data.regions[].subregions[].name** | *str* | Subregion name |
+| `world_data.regions` | *List[Region]* | List of region objects |
+| `world_data.regions[].id` | *int* | Region ID |
+| `world_data.regions[].name` | *str* | Region name |
+| `world_data.regions[].subregions` | *List[Subregion] \| None* | List of subregions |
+| `world_data.regions[].subregions[].id` | *int* | Subregion ID |
+| `world_data.regions[].subregions[].name` | *str* | Subregion name |
 
 **Example**:
 ```python
@@ -165,18 +165,18 @@ Europe (ID: 2)
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **zone_id** | *int* | Yes | The zone ID to retrieve encounters for |
+| `zone_id` | *int* | Yes | The zone ID to retrieve encounters for |
 
 **Returns**: `GetEncountersByZone` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **world_data.zone** | *Zone* | Zone information |
-| **world_data.zone.id** | *int* | Zone ID |
-| **world_data.zone.name** | *str* | Zone name |
-| **world_data.zone.encounters** | *List[Encounter] \| None* | List of encounters in this zone |
-| **world_data.zone.encounters[].id** | *int* | Encounter ID |
-| **world_data.zone.encounters[].name** | *str* | Encounter name |
+| `world_data.zone` | *Zone* | Zone information |
+| `world_data.zone.id` | *int* | Zone ID |
+| `world_data.zone.name` | *str* | Zone name |
+| `world_data.zone.encounters` | *List[Encounter] \| None* | List of encounters in this zone |
+| `world_data.zone.encounters[].id` | *int* | Encounter ID |
+| `world_data.zone.encounters[].name` | *str* | Encounter name |
 
 **Example**:
 ```python

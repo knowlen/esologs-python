@@ -16,18 +16,18 @@ Access collections of data such as NPCs, classes, abilities, items, maps, etc. G
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **limit** | *int* | No | Number of abilities to return (default: 100, max: 100) |
-| **page** | *int* | No | Page number for pagination (default: 1) |
+| `limit` | *int* | No | Number of abilities to return (default: 100, max: 100) |
+| `page` | *int* | No | Page number for pagination (default: 1) |
 
 **Returns**: `GetAbilities` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.abilities.data** | *List[Ability]* | List of ability objects |
-| **game_data.abilities.total** | *int* | Total number of abilities available |
-| **game_data.abilities.per_page** | *int* | Number of abilities per page |
-| **game_data.abilities.current_page** | *int* | Current page number |
-| **game_data.abilities.has_more_pages** | *bool* | Whether more pages are available |
+| `game_data.abilities.data` | *List[Ability]* | List of ability objects |
+| `game_data.abilities.total` | *int* | Total number of abilities available |
+| `game_data.abilities.per_page` | *int* | Number of abilities per page |
+| `game_data.abilities.current_page` | *int* | Current page number |
+| `game_data.abilities.has_more_pages` | *bool* | Whether more pages are available |
 
 **Example**:
 ```python
@@ -83,16 +83,16 @@ except GraphQLClientHttpError as e:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **id** | *int* | Yes | The ability ID to retrieve |
+| `id` | *int* | Yes | The ability ID to retrieve |
 
 **Returns**: `GetAbility` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.ability.id** | *int* | Ability ID |
-| **game_data.ability.name** | *str* | Ability name |
-| **game_data.ability.description** | *str \| None* | Ability description (may be None) |
-| **game_data.ability.icon** | *str* | Icon filename |
+| `game_data.ability.id` | *int* | Ability ID |
+| `game_data.ability.name` | *str* | Ability name |
+| `game_data.ability.description` | *str \| None* | Ability description (may be None) |
+| `game_data.ability.icon` | *str* | Icon filename |
 
 **Example**:
 ```python
@@ -136,10 +136,10 @@ ID: 2
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.classes** | *List[Class]* | List of class objects (direct list, not paginated) |
-| **game_data.classes[].id** | *int* | Class ID |
-| **game_data.classes[].name** | *str* | Class name |
-| **game_data.classes[].slug** | *str* | URL-friendly class identifier |
+| `game_data.classes` | *List[Class]* | List of class objects (direct list, not paginated) |
+| `game_data.classes[].id` | *int* | Class ID |
+| `game_data.classes[].name` | *str* | Class name |
+| `game_data.classes[].slug` | *str* | URL-friendly class identifier |
 
 **Example**:
 ```python
@@ -182,15 +182,15 @@ Available character classes:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **id** | *int* | Yes | The class ID to retrieve |
+| `id` | *int* | Yes | The class ID to retrieve |
 
 **Returns**: `GetClass` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.class_.id** | *int* | Class ID |
-| **game_data.class_.name** | *str* | Class name |
-| **game_data.class_.slug** | *str* | URL-friendly class identifier |
+| `game_data.class_.id` | *int* | Class ID |
+| `game_data.class_.name` | *str* | Class name |
+| `game_data.class_.slug` | *str* | URL-friendly class identifier |
 
 **Example**:
 ```python
@@ -223,18 +223,18 @@ Class: Dragonknight
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **limit** | *int* | No | Number of items to return (default: 100, max: 100) |
-| **page** | *int* | No | Page number for pagination (default: 1) |
+| `limit` | *int* | No | Number of items to return (default: 100, max: 100) |
+| `page` | *int* | No | Page number for pagination (default: 1) |
 
 **Returns**: `GetItems` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.items.data** | *List[Item]* | List of item objects |
-| **game_data.items.total** | *int* | Total number of items available |
-| **game_data.items.per_page** | *int* | Number of items per page |
-| **game_data.items.current_page** | *int* | Current page number |
-| **game_data.items.has_more_pages** | *bool* | Whether more pages are available |
+| `game_data.items.data` | *List[Item]* | List of item objects |
+| `game_data.items.total` | *int* | Total number of items available |
+| `game_data.items.per_page` | *int* | Number of items per page |
+| `game_data.items.current_page` | *int* | Current page number |
+| `game_data.items.has_more_pages` | *bool* | Whether more pages are available |
 
 **Example**:
 ```python
@@ -275,16 +275,16 @@ Found 3 items
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **id** | *int* | Yes | The item ID to retrieve |
+| `id` | *int* | Yes | The item ID to retrieve |
 
 **Returns**: `GetItem` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.item.id** | *int* | Item ID |
-| **game_data.item.name** | *str \| None* | Item name (may be None) |
-| **game_data.item.icon** | *str \| None* | Icon filename (may be None) |
-| **Additional properties** | *varies* | Additional item properties depending on item type |
+| `game_data.item.id` | *int* | Item ID |
+| `game_data.item.name` | *str \| None* | Item name (may be None) |
+| `game_data.item.icon` | *str \| None* | Icon filename (may be None) |
+| `Additional properties` | *varies* | Additional item properties depending on item type |
 
 **Example**:
 ```python
@@ -325,18 +325,18 @@ ID: 3
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **limit** | *int* | No | Number of NPCs to return (default: 100, max: 100) |
-| **page** | *int* | No | Page number for pagination (default: 1) |
+| `limit` | *int* | No | Number of NPCs to return (default: 100, max: 100) |
+| `page` | *int* | No | Page number for pagination (default: 1) |
 
 **Returns**: `GetNPCs` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.npcs.data** | *List[NPC]* | List of NPC objects |
-| **game_data.npcs.total** | *int* | Total number of NPCs available |
-| **game_data.npcs.per_page** | *int* | Number of NPCs per page |
-| **game_data.npcs.current_page** | *int* | Current page number |
-| **game_data.npcs.has_more_pages** | *bool* | Whether more pages are available |
+| `game_data.npcs.data` | *List[NPC]* | List of NPC objects |
+| `game_data.npcs.total` | *int* | Total number of NPCs available |
+| `game_data.npcs.per_page` | *int* | Number of NPCs per page |
+| `game_data.npcs.current_page` | *int* | Current page number |
+| `game_data.npcs.has_more_pages` | *bool* | Whether more pages are available |
 
 **Example**:
 ```python
@@ -378,15 +378,15 @@ Found 5 NPCs
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **id** | *int* | Yes | The NPC ID to retrieve |
+| `id` | *int* | Yes | The NPC ID to retrieve |
 
 **Returns**: `GetNPC` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.npc.id** | *int* | NPC ID |
-| **game_data.npc.name** | *str* | NPC name |
-| **Additional properties** | *varies* | Additional NPC properties (varies by NPC type) |
+| `game_data.npc.id` | *int* | NPC ID |
+| `game_data.npc.name` | *str* | NPC name |
+| `Additional properties` | *varies* | Additional NPC properties (varies by NPC type) |
 
 **Example**:
 ```python
@@ -430,11 +430,11 @@ ID: 1
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.maps.data** | *List[Map]* | List of map objects |
-| **game_data.maps.total** | *int* | Total number of maps available |
-| **game_data.maps.per_page** | *int* | Number of maps per page |
-| **game_data.maps.current_page** | *int* | Current page number |
-| **game_data.maps.has_more_pages** | *bool* | Whether more pages are available |
+| `game_data.maps.data` | *List[Map]* | List of map objects |
+| `game_data.maps.total` | *int* | Total number of maps available |
+| `game_data.maps.per_page` | *int* | Number of maps per page |
+| `game_data.maps.current_page` | *int* | Current page number |
+| `game_data.maps.has_more_pages` | *bool* | Whether more pages are available |
 
 **Example**:
 ```python
@@ -476,15 +476,15 @@ Found 100 maps (first page)
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **id** | *int* | Yes | The map ID to retrieve |
+| `id` | *int* | Yes | The map ID to retrieve |
 
 **Returns**: `GetMap` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.map.id** | *int* | Map ID |
-| **game_data.map.name** | *str* | Map name |
-| **Additional properties** | *varies* | Additional map properties (varies by map type) |
+| `game_data.map.id` | *int* | Map ID |
+| `game_data.map.name` | *str* | Map name |
+| `Additional properties` | *varies* | Additional map properties (varies by map type) |
 
 **Example**:
 ```python
@@ -528,9 +528,9 @@ ID: 1
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **game_data.factions** | *List[Faction]* | List of faction objects (direct list, not paginated) |
-| **game_data.factions[].id** | *int* | Faction ID |
-| **game_data.factions[].name** | *str* | Faction name |
+| `game_data.factions` | *List[Faction]* | List of faction objects (direct list, not paginated) |
+| `game_data.factions[].id` | *int* | Faction ID |
+| `game_data.factions[].name` | *str* | Faction name |
 
 **Example**:
 ```python

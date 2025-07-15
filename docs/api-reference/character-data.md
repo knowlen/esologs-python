@@ -16,20 +16,20 @@ Enables the retrieval of single characters or filtered collections of characters
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **id** | *int* | Yes | The character ID to retrieve |
+| `id` | *int* | Yes | The character ID to retrieve |
 
 **Returns**: `GetCharacterById` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **character_data.character.id** | *int* | Character ID |
-| **character_data.character.name** | *str* | Character name |
-| **character_data.character.class_id** | *int* | Character class ID |
-| **character_data.character.race_id** | *int* | Character race ID |
-| **character_data.character.guild_rank** | *int* | Guild rank (0 if not in guild) |
-| **character_data.character.hidden** | *bool* | Whether character profile is hidden |
-| **character_data.character.server.name** | *str* | Server name |
-| **character_data.character.server.region.name** | *str* | Server region name |
+| `character_data.character.id` | *int* | Character ID |
+| `character_data.character.name` | *str* | Character name |
+| `character_data.character.class_id` | *int* | Character class ID |
+| `character_data.character.race_id` | *int* | Character race ID |
+| `character_data.character.guild_rank` | *int* | Guild rank (0 if not in guild) |
+| `character_data.character.hidden` | *bool* | Whether character profile is hidden |
+| `character_data.character.server.name` | *str* | Server name |
+| `character_data.character.server.region.name` | *str* | Server region name |
 
 **Example**:
 ```python
@@ -70,30 +70,30 @@ Guild Rank: 0
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **character_id** | *int* | Yes | The character ID to get reports for |
-| **limit** | *int* | No | Number of reports to return (default: 10) |
+| `character_id` | *int* | Yes | The character ID to get reports for |
+| `limit` | *int* | No | Number of reports to return (default: 10) |
 
 **Returns**: `GetCharacterReports` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **character_data.character.recent_reports.data** | *List[Report]* | List of report objects |
-| **character_data.character.recent_reports.total** | *int* | Total number of reports |
-| **character_data.character.recent_reports.per_page** | *int* | Reports per page |
-| **character_data.character.recent_reports.current_page** | *int* | Current page number |
-| **character_data.character.recent_reports.from_** | *int \| None* | Starting record number |
-| **character_data.character.recent_reports.to** | *int \| None* | Ending record number |
-| **character_data.character.recent_reports.last_page** | *int* | Last page number |
-| **character_data.character.recent_reports.has_more_pages** | *bool* | Whether more pages exist |
+| `character_data.character.recent_reports.data` | *List[Report]* | List of report objects |
+| `character_data.character.recent_reports.total` | *int* | Total number of reports |
+| `character_data.character.recent_reports.per_page` | *int* | Reports per page |
+| `character_data.character.recent_reports.current_page` | *int* | Current page number |
+| `character_data.character.recent_reports.from_` | *int \| None* | Starting record number |
+| `character_data.character.recent_reports.to` | *int \| None* | Ending record number |
+| `character_data.character.recent_reports.last_page` | *int* | Last page number |
+| `character_data.character.recent_reports.has_more_pages` | *bool* | Whether more pages exist |
 
 **Report Object Fields**:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **code** | *str* | Unique report code |
-| **start_time** | *float* | Report start timestamp |
-| **end_time** | *float* | Report end timestamp |
-| **zone.name** | *str* | Zone name where report was recorded |
+| `code` | *str* | Unique report code |
+| `start_time` | *float* | Report start timestamp |
+| `end_time` | *float* | Report end timestamp |
+| `zone.name` | *str* | Zone name where report was recorded |
 
 **Example**:
 ```python
@@ -138,14 +138,14 @@ Showing 5 reports:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **character_id** | *int* | Yes | The character ID |
-| **encounter_id** | *int* | Yes | The encounter ID to get rankings for |
+| `character_id` | *int* | Yes | The character ID |
+| `encounter_id` | *int* | Yes | The encounter ID to get rankings for |
 
 **Returns**: `GetCharacterEncounterRanking` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **character_data.character.encounter_rankings** | *Any* | Rankings data (structure varies by encounter) |
+| `character_data.character.encounter_rankings` | *Any* | Rankings data (structure varies by encounter) |
 
 **Example**:
 ```python
@@ -188,26 +188,26 @@ Available data: ['bestAmount', 'medianPerformance', 'averagePerformance', 'total
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **character_id** | *int* | Yes | The character ID |
-| **encounter_id** | *int* | Yes | The encounter ID to get rankings for |
-| **by_bracket** | *bool* | No | Group rankings by bracket |
-| **class_name** | *str* | No | Filter by class name |
-| **compare** | *RankingCompareType* | No | Comparison type for rankings |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **include_combatant_info** | *bool* | No | Include combatant information |
-| **include_private_logs** | *bool* | No | Include private logs in rankings |
-| **metric** | *CharacterRankingMetricType* | No | Ranking metric type |
-| **partition** | *int* | No | Partition number |
-| **role** | *RoleType* | No | Role filter (Tank, Healer, DPS) |
-| **size** | *int* | No | Number of results to return |
-| **spec_name** | *str* | No | Specialization name filter |
-| **timeframe** | *RankingTimeframeType* | No | Time period for rankings |
+| `character_id` | *int* | Yes | The character ID |
+| `encounter_id` | *int* | Yes | The encounter ID to get rankings for |
+| `by_bracket` | *bool* | No | Group rankings by bracket |
+| `class_name` | *str* | No | Filter by class name |
+| `compare` | *RankingCompareType* | No | Comparison type for rankings |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `include_combatant_info` | *bool* | No | Include combatant information |
+| `include_private_logs` | *bool* | No | Include private logs in rankings |
+| `metric` | *CharacterRankingMetricType* | No | Ranking metric type |
+| `partition` | *int* | No | Partition number |
+| `role` | *RoleType* | No | Role filter (Tank, Healer, DPS) |
+| `size` | *int* | No | Number of results to return |
+| `spec_name` | *str* | No | Specialization name filter |
+| `timeframe` | *RankingTimeframeType* | No | Time period for rankings |
 
 **Returns**: `GetCharacterEncounterRankings` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **character_data.character.encounter_rankings** | *Any* | Detailed rankings data with filters applied |
+| `character_data.character.encounter_rankings` | *Any* | Detailed rankings data with filters applied |
 
 **Example**:
 ```python
@@ -261,25 +261,25 @@ Rank percentile: 68.0%
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **character_id** | *int* | Yes | The character ID |
-| **zone_id** | *int* | No | The zone ID to get rankings for |
-| **by_bracket** | *bool* | No | Group rankings by bracket |
-| **class_name** | *str* | No | Filter by class name |
-| **compare** | *RankingCompareType* | No | Comparison type for rankings |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **include_private_logs** | *bool* | No | Include private logs in rankings |
-| **metric** | *CharacterRankingMetricType* | No | Ranking metric type |
-| **partition** | *int* | No | Partition number |
-| **role** | *RoleType* | No | Role filter (Tank, Healer, DPS) |
-| **size** | *int* | No | Number of results to return |
-| **spec_name** | *str* | No | Specialization name filter |
-| **timeframe** | *RankingTimeframeType* | No | Time period for rankings |
+| `character_id` | *int* | Yes | The character ID |
+| `zone_id` | *int* | No | The zone ID to get rankings for |
+| `by_bracket` | *bool* | No | Group rankings by bracket |
+| `class_name` | *str* | No | Filter by class name |
+| `compare` | *RankingCompareType* | No | Comparison type for rankings |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `include_private_logs` | *bool* | No | Include private logs in rankings |
+| `metric` | *CharacterRankingMetricType* | No | Ranking metric type |
+| `partition` | *int* | No | Partition number |
+| `role` | *RoleType* | No | Role filter (Tank, Healer, DPS) |
+| `size` | *int* | No | Number of results to return |
+| `spec_name` | *str* | No | Specialization name filter |
+| `timeframe` | *RankingTimeframeType* | No | Time period for rankings |
 
 **Returns**: `GetCharacterZoneRankings` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **character_data.character.zone_rankings** | *Any* | Zone-specific rankings data with filters applied |
+| `character_data.character.zone_rankings` | *Any* | Zone-specific rankings data with filters applied |
 
 **Example**:
 ```python

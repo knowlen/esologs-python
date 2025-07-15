@@ -16,42 +16,42 @@ Access detailed (behavioral) combat log data including events, performance graph
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **code** | *str* | Yes | The report code to analyze |
-| **ability_id** | *float* | No | Filter events by specific ability ID |
-| **data_type** | *EventDataType* | No | Type of events to retrieve (DamageDone, Healing, Deaths, etc.) |
-| **death** | *int* | No | Filter to specific death number |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **encounter_id** | *int* | No | Filter to specific encounter |
-| **end_time** | *float* | No | End time in milliseconds relative to report start |
-| **fight_i_ds** | *List[int]* | No | List of fight IDs to include |
-| **filter_expression** | *str* | No | Advanced filter expression |
-| **hostility_type** | *HostilityType* | No | Filter by hostility type (Enemies, Friendlies) |
-| **include_resources** | *bool* | No | Include resource events |
-| **kill_type** | *KillType* | No | Filter by kill type |
-| **limit** | *int* | No | Maximum number of events to return |
-| **source_auras_absent** | *str* | No | Filter events where source lacks specific auras |
-| **source_auras_present** | *str* | No | Filter events where source has specific auras |
-| **source_class** | *str* | No | Filter by source character class |
-| **source_id** | *int* | No | Filter by specific source actor ID |
-| **source_instance_id** | *int* | No | Filter by source instance ID |
-| **start_time** | *float* | No | Start time in milliseconds relative to report start |
-| **target_auras_absent** | *str* | No | Filter events where target lacks specific auras |
-| **target_auras_present** | *str* | No | Filter events where target has specific auras |
-| **target_class** | *str* | No | Filter by target character class |
-| **target_id** | *int* | No | Filter by specific target actor ID |
-| **target_instance_id** | *int* | No | Filter by target instance ID |
-| **translate** | *bool* | No | Translate ability names to localized strings |
-| **use_ability_i_ds** | *bool* | No | Use ability IDs instead of names |
-| **use_actor_i_ds** | *bool* | No | Use actor IDs instead of names |
-| **view_options** | *int* | No | View option flags |
-| **wipe_cutoff** | *int* | No | Wipe cutoff percentage |
+| `code` | *str* | Yes | The report code to analyze |
+| `ability_id` | *float* | No | Filter events by specific ability ID |
+| `data_type` | *EventDataType* | No | Type of events to retrieve (DamageDone, Healing, Deaths, etc.) |
+| `death` | *int* | No | Filter to specific death number |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `encounter_id` | *int* | No | Filter to specific encounter |
+| `end_time` | *float* | No | End time in milliseconds relative to report start |
+| `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
+| `filter_expression` | *str* | No | Advanced filter expression |
+| `hostility_type` | *HostilityType* | No | Filter by hostility type (Enemies, Friendlies) |
+| `include_resources` | *bool* | No | Include resource events |
+| `kill_type` | *KillType* | No | Filter by kill type |
+| `limit` | *int* | No | Maximum number of events to return |
+| `source_auras_absent` | *str* | No | Filter events where source lacks specific auras |
+| `source_auras_present` | *str* | No | Filter events where source has specific auras |
+| `source_class` | *str* | No | Filter by source character class |
+| `source_id` | *int* | No | Filter by specific source actor ID |
+| `source_instance_id` | *int* | No | Filter by source instance ID |
+| `start_time` | *float* | No | Start time in milliseconds relative to report start |
+| `target_auras_absent` | *str* | No | Filter events where target lacks specific auras |
+| `target_auras_present` | *str* | No | Filter events where target has specific auras |
+| `target_class` | *str* | No | Filter by target character class |
+| `target_id` | *int* | No | Filter by specific target actor ID |
+| `target_instance_id` | *int* | No | Filter by target instance ID |
+| `translate` | *bool* | No | Translate ability names to localized strings |
+| `use_ability_i_ds` | *bool* | No | Use ability IDs instead of names |
+| `use_actor_i_ds` | *bool* | No | Use actor IDs instead of names |
+| `view_options` | *int* | No | View option flags |
+| `wipe_cutoff` | *int* | No | Wipe cutoff percentage |
 
 **Returns**: `GetReportEvents` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.report.events.data** | *Any* | List of event objects containing timestamps, abilities, damage/healing values |
-| **report_data.report.events.next_page_timestamp** | *float \| None* | Timestamp for pagination to next page |
+| `report_data.report.events.data` | *Any* | List of event objects containing timestamps, abilities, damage/healing values |
+| `report_data.report.events.next_page_timestamp` | *float \| None* | Timestamp for pagination to next page |
 
 > **Note**: The triple nesting (`report_data.report.events`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
@@ -107,38 +107,38 @@ More data available after: 264591.0
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **code** | *str* | Yes | The report code to analyze |
-| **ability_id** | *float* | No | Filter by specific ability ID |
-| **data_type** | *GraphDataType* | No | Type of graph data (DamageDone, Healing, DamageTaken, etc.) |
-| **death** | *int* | No | Filter to specific death number |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **encounter_id** | *int* | No | Filter to specific encounter |
-| **end_time** | *float* | No | End time in milliseconds |
-| **fight_i_ds** | *List[int]* | No | List of fight IDs to include |
-| **filter_expression** | *str* | No | Advanced filter expression |
-| **hostility_type** | *HostilityType* | No | Filter by hostility type |
-| **kill_type** | *KillType* | No | Filter by kill type |
-| **source_auras_absent** | *str* | No | Filter where source lacks specific auras |
-| **source_auras_present** | *str* | No | Filter where source has specific auras |
-| **source_class** | *str* | No | Filter by source character class |
-| **source_id** | *int* | No | Filter by specific source actor ID |
-| **source_instance_id** | *int* | No | Filter by source instance ID |
-| **start_time** | *float* | No | Start time in milliseconds |
-| **target_auras_absent** | *str* | No | Filter where target lacks specific auras |
-| **target_auras_present** | *str* | No | Filter where target has specific auras |
-| **target_class** | *str* | No | Filter by target character class |
-| **target_id** | *int* | No | Filter by specific target actor ID |
-| **target_instance_id** | *int* | No | Filter by target instance ID |
-| **translate** | *bool* | No | Translate ability names |
-| **view_options** | *int* | No | View option flags |
-| **view_by** | *ViewType* | No | View aggregation method |
-| **wipe_cutoff** | *int* | No | Wipe cutoff percentage |
+| `code` | *str* | Yes | The report code to analyze |
+| `ability_id` | *float* | No | Filter by specific ability ID |
+| `data_type` | *GraphDataType* | No | Type of graph data (DamageDone, Healing, DamageTaken, etc.) |
+| `death` | *int* | No | Filter to specific death number |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `encounter_id` | *int* | No | Filter to specific encounter |
+| `end_time` | *float* | No | End time in milliseconds |
+| `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
+| `filter_expression` | *str* | No | Advanced filter expression |
+| `hostility_type` | *HostilityType* | No | Filter by hostility type |
+| `kill_type` | *KillType* | No | Filter by kill type |
+| `source_auras_absent` | *str* | No | Filter where source lacks specific auras |
+| `source_auras_present` | *str* | No | Filter where source has specific auras |
+| `source_class` | *str* | No | Filter by source character class |
+| `source_id` | *int* | No | Filter by specific source actor ID |
+| `source_instance_id` | *int* | No | Filter by source instance ID |
+| `start_time` | *float* | No | Start time in milliseconds |
+| `target_auras_absent` | *str* | No | Filter where target lacks specific auras |
+| `target_auras_present` | *str* | No | Filter where target has specific auras |
+| `target_class` | *str* | No | Filter by target character class |
+| `target_id` | *int* | No | Filter by specific target actor ID |
+| `target_instance_id` | *int* | No | Filter by target instance ID |
+| `translate` | *bool* | No | Translate ability names |
+| `view_options` | *int* | No | View option flags |
+| `view_by` | *ViewType* | No | View aggregation method |
+| `wipe_cutoff` | *int* | No | Wipe cutoff percentage |
 
 **Returns**: `GetReportGraph` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.report.graph** | *dict* | Graph data containing time-series performance data |
+| `report_data.report.graph` | *dict* | Graph data containing time-series performance data |
 
 > **Note**: The triple nesting (`report_data.report.graph`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
@@ -190,38 +190,38 @@ Data points: 240
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **code** | *str* | Yes | The report code to analyze |
-| **ability_id** | *float* | No | Filter by specific ability ID |
-| **data_type** | *TableDataType* | No | Type of table data (DamageDone, Healing, Deaths, etc.) |
-| **death** | *int* | No | Filter to specific death number |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **encounter_id** | *int* | No | Filter to specific encounter |
-| **end_time** | *float* | No | End time in milliseconds |
-| **fight_i_ds** | *List[int]* | No | List of fight IDs to include |
-| **filter_expression** | *str* | No | Advanced filter expression |
-| **hostility_type** | *HostilityType* | No | Filter by hostility type |
-| **kill_type** | *KillType* | No | Filter by kill type |
-| **source_auras_absent** | *str* | No | Filter where source lacks specific auras |
-| **source_auras_present** | *str* | No | Filter where source has specific auras |
-| **source_class** | *str* | No | Filter by source character class |
-| **source_id** | *int* | No | Filter by specific source actor ID |
-| **source_instance_id** | *int* | No | Filter by source instance ID |
-| **start_time** | *float* | No | Start time in milliseconds |
-| **target_auras_absent** | *str* | No | Filter where target lacks specific auras |
-| **target_auras_present** | *str* | No | Filter where target has specific auras |
-| **target_class** | *str* | No | Filter by target character class |
-| **target_id** | *int* | No | Filter by specific target actor ID |
-| **target_instance_id** | *int* | No | Filter by target instance ID |
-| **translate** | *bool* | No | Translate ability names |
-| **view_options** | *int* | No | View option flags |
-| **view_by** | *ViewType* | No | View aggregation method |
-| **wipe_cutoff** | *int* | No | Wipe cutoff percentage |
+| `code` | *str* | Yes | The report code to analyze |
+| `ability_id` | *float* | No | Filter by specific ability ID |
+| `data_type` | *TableDataType* | No | Type of table data (DamageDone, Healing, Deaths, etc.) |
+| `death` | *int* | No | Filter to specific death number |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `encounter_id` | *int* | No | Filter to specific encounter |
+| `end_time` | *float* | No | End time in milliseconds |
+| `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
+| `filter_expression` | *str* | No | Advanced filter expression |
+| `hostility_type` | *HostilityType* | No | Filter by hostility type |
+| `kill_type` | *KillType* | No | Filter by kill type |
+| `source_auras_absent` | *str* | No | Filter where source lacks specific auras |
+| `source_auras_present` | *str* | No | Filter where source has specific auras |
+| `source_class` | *str* | No | Filter by source character class |
+| `source_id` | *int* | No | Filter by specific source actor ID |
+| `source_instance_id` | *int* | No | Filter by source instance ID |
+| `start_time` | *float* | No | Start time in milliseconds |
+| `target_auras_absent` | *str* | No | Filter where target lacks specific auras |
+| `target_auras_present` | *str* | No | Filter where target has specific auras |
+| `target_class` | *str* | No | Filter by target character class |
+| `target_id` | *int* | No | Filter by specific target actor ID |
+| `target_instance_id` | *int* | No | Filter by target instance ID |
+| `translate` | *bool* | No | Translate ability names |
+| `view_options` | *int* | No | View option flags |
+| `view_by` | *ViewType* | No | View aggregation method |
+| `wipe_cutoff` | *int* | No | Wipe cutoff percentage |
 
 **Returns**: `GetReportTable` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.report.table** | *dict* | Table data containing aggregated statistics and performance metrics |
+| `report_data.report.table` | *dict* | Table data containing aggregated statistics and performance metrics |
 
 > **Note**: The triple nesting (`report_data.report.table`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
@@ -271,19 +271,19 @@ Number of players: 10
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **code** | *str* | Yes | The report code to analyze |
-| **compare** | *RankingCompareType* | No | Comparison method for rankings |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **encounter_id** | *int* | No | Filter to specific encounter |
-| **fight_i_ds** | *List[int]* | No | List of fight IDs to include |
-| **player_metric** | *ReportRankingMetricType* | No | Ranking metric (dps, hps, playerscore, etc.) |
-| **timeframe** | *RankingTimeframeType* | No | Time frame for ranking comparison |
+| `code` | *str* | Yes | The report code to analyze |
+| `compare` | *RankingCompareType* | No | Comparison method for rankings |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `encounter_id` | *int* | No | Filter to specific encounter |
+| `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
+| `player_metric` | *ReportRankingMetricType* | No | Ranking metric (dps, hps, playerscore, etc.) |
+| `timeframe` | *RankingTimeframeType* | No | Time frame for ranking comparison |
 
 **Returns**: `GetReportRankings` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.report.rankings** | *dict* | Rankings data containing performance comparisons and percentiles |
+| `report_data.report.rankings` | *dict* | Rankings data containing performance comparisons and percentiles |
 
 > **Note**: The triple nesting (`report_data.report.rankings`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
@@ -338,21 +338,21 @@ Top DPS Players:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| **code** | *str* | Yes | The report code to analyze |
-| **difficulty** | *int* | No | Difficulty level filter |
-| **encounter_id** | *int* | No | Filter to specific encounter |
-| **end_time** | *float* | No | End time in milliseconds |
-| **fight_i_ds** | *List[int]* | No | List of fight IDs to include |
-| **kill_type** | *KillType* | No | Filter by kill type |
-| **start_time** | *float* | No | Start time in milliseconds |
-| **translate** | *bool* | No | Translate ability names |
-| **include_combatant_info** | *bool* | No | Include detailed combatant information |
+| `code` | *str* | Yes | The report code to analyze |
+| `difficulty` | *int* | No | Difficulty level filter |
+| `encounter_id` | *int* | No | Filter to specific encounter |
+| `end_time` | *float* | No | End time in milliseconds |
+| `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
+| `kill_type` | *KillType* | No | Filter by kill type |
+| `start_time` | *float* | No | Start time in milliseconds |
+| `translate` | *bool* | No | Translate ability names |
+| `include_combatant_info` | *bool* | No | Include detailed combatant information |
 
 **Returns**: `GetReportPlayerDetails` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **report_data.report.player_details** | *dict* | Player details containing individual performance breakdowns |
+| `report_data.report.player_details` | *dict* | Player details containing individual performance breakdowns |
 
 > **Note**: The triple nesting (`report_data.report.player_details`) reflects the ESO Logs GraphQL API structure where all report queries are grouped under `reportData` with individual reports accessed via `report(code)`. This structure will be simplified in a future refactor to provide more direct access patterns.
 
