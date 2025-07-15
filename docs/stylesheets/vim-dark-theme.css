@@ -63,6 +63,7 @@
   /* Status line colors */
   --vim-statusline:   #444444;  /* Status line background */
   --vim-visual:       #5f5f87;  /* Visual selection */
+  --vim-visual-bright: #9f9fcf;  /* Brighter purple for text */
   --vim-search:       #ffff00;  /* Search highlight */
   --vim-comment:      #585858;  /* Comment gray */
 }
@@ -139,30 +140,30 @@
 }
 
 .md-typeset h2 {
-  color: var(--vim-blue) !important;
+  color: var(--vim-fg) !important;  /* Neutral gray matching normal text */
   font-weight: 600;
   border-bottom: 1px solid var(--vim-comment);
   padding-bottom: 0.25rem;
 }
 
 .md-typeset h3 {
-  color: var(--vim-cyan) !important;
+  color: var(--vim-blue) !important;  /* Blue - sky blue color */
   font-weight: 600;
 }
 
 .md-typeset h4 {
-  color: var(--vim-magenta) !important;
+  color: var(--vim-visual-bright) !important;  /* Purple - swapped from H3 */
   font-weight: 500;
 }
 
 /* Links with vim colors */
 .md-typeset a {
-  color: var(--vim-blue) !important;
+  color: var(--vim-cyan) !important;
   text-decoration: underline;
 }
 
 .md-typeset a:hover {
-  color: var(--vim-cyan) !important;
+  color: var(--vim-magenta) !important;
 }
 
 /* Code with exact colors from your example */
