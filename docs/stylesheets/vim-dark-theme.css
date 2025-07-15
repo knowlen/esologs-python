@@ -313,13 +313,13 @@
 }
 
 .md-nav__link:hover {
-  color: var(--vim-bg) !important;  /* Black text like top nav */
-  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
 }
 
 .md-nav__link--active {
-  color: var(--vim-bg) !important;  /* Black text like top nav */
-  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
   font-weight: 600;
 }
 
@@ -845,14 +845,14 @@
 }
 
 .md-nav--secondary .md-nav__link:hover {
-  color: var(--vim-bg) !important;  /* Black text like top nav */
-  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
   border-left-color: var(--vim-yellow);
 }
 
 .md-nav--secondary .md-nav__link--active {
-  color: var(--vim-bg) !important;  /* Black text like top nav */
-  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
   border-left-color: var(--vim-yellow);
   font-weight: 600;
 }
