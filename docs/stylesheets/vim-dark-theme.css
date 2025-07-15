@@ -1,0 +1,1048 @@
+/*
+ * Vim Dark Theme for ESO Logs Python Documentation
+ * ================================================
+ *
+ * Architecture Overview:
+ * ---------------------
+ * This theme overrides MkDocs Material Design, which uses extremely high CSS specificity
+ * through deeply nested selectors and dynamically generated classes. Material's theme
+ * system applies styles through multiple cascading layers, some via JavaScript at runtime.
+ *
+ * The extensive use of !important declarations (155 instances) is intentional and necessary
+ * to ensure our vim theme consistently overrides Material's defaults. Without these,
+ * Material's specificity would cause partial theme application, resulting in an
+ * inconsistent visual experience.
+ *
+ * Maintenance Guidelines:
+ * ----------------------
+ * - Color palette is defined as CSS custom properties for easy theming
+ * - Each major section is clearly commented for navigation
+ * - Syntax highlighting follows Pygments class naming conventions
+ * - When modifying, test across all page types to ensure consistency
+ *
+ * Color Philosophy:
+ * ----------------
+ * Based on classic vim colorschemes, optimized for long reading sessions
+ * and code readability. The palette has been refined over decades of
+ * terminal usage for optimal contrast and reduced eye strain.
+ */
+
+/* Import fonts with explicit font-display for optimal loading performance */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Vim Color Palette - matching your desired code block theme */
+:root {
+  /* Core vim colors */
+  --vim-bg:           #1c1c1c;  /* Dark gray background like vim */
+  --vim-bg-light:     #262626;  /* Slightly lighter bg */
+  --vim-bg-lighter:   #303030;  /* Even lighter bg for cards */
+  --vim-fg:           #d0d0d0;  /* Light gray text */
+  --vim-fg-dim:       #808080;  /* Dimmed text */
+  --vim-fg-bright:    #ffffff;  /* Bright white */
+
+  /* Code block colors - adjusted colors matching desired.png */
+  --code-keyword:     #f0dc8a;  /* Yellow for def, async, with, in, class, return - 10% brighter */
+  --code-import:      #9cdcfe;  /* Light blue for import/from */
+  --code-string:      #ff88ff;
+  --code-number:      #ff88ff;
+  --code-comment:     #1affff;  /* Cyan - same as functions but not bold */
+  --code-function:    #1affff;  /* Cyan - slightly brighter */
+  --code-variable:    #ffffff;
+  --code-operator:    #ffffff;
+  --code-text:        #d0d0d0;
+
+  /* Vim accent colors */
+  --vim-red:          #ff5f5f;  /* Error red */
+  --vim-green:        #87ff87;  /* Success green */
+  --vim-yellow:       #ffff87;  /* Warning yellow */
+  --vim-blue:         #87ceeb;  /* UI blue */
+  --vim-magenta:      #ff87ff;  /* Special magenta */
+  --vim-cyan:         #87ffff;  /* UI cyan */
+
+  /* Status line colors */
+  --vim-statusline:   #444444;  /* Status line background */
+  --vim-visual:       #5f5f87;  /* Visual selection */
+  --vim-visual-bright: #9f9fcf;  /* Brighter purple for text */
+  --vim-search:       #ffff00;  /* Search highlight */
+  --vim-comment:      #585858;  /* Comment gray */
+}
+
+/* Override Material Design colors with vim theme */
+[data-md-color-scheme="slate"] {
+  /* Background colors */
+  --md-default-bg-color:        #000000;
+  --md-default-bg-color--light: var(--vim-bg-light);
+  --md-default-bg-color--lighter: var(--vim-bg-lighter);
+
+  /* Text colors */
+  --md-default-fg-color:        var(--vim-fg);
+  --md-default-fg-color--light: var(--vim-fg-dim);
+  --md-default-fg-color--lighter: var(--vim-comment);
+
+  /* Primary colors (navigation, buttons) */
+  --md-primary-fg-color:        var(--vim-statusline);
+  --md-primary-fg-color--light: var(--vim-bg-lighter);
+  --md-primary-fg-color--dark:  var(--vim-bg);
+
+  /* Accent colors (links, highlights) */
+  --md-accent-fg-color:         var(--vim-blue);
+  --md-accent-fg-color--light:  var(--vim-visual);
+  --md-accent-fg-color--dark:   var(--vim-magenta);
+
+  /* Code colors */
+  --md-code-bg-color:           var(--vim-bg-light);
+  --md-code-fg-color:           var(--code-text);
+
+  /* OVERRIDE Material theme's syntax highlighting variables - Part 1 */
+  --md-code-hl-string-color:     var(--code-string) !important;
+  --md-code-hl-constant-color:   var(--code-function) !important;
+  --md-code-hl-name-color:       var(--code-variable) !important;
+  --md-code-hl-operator-color:   var(--code-operator) !important;
+  --md-code-hl-punctuation-color: var(--code-operator) !important;
+  --md-code-hl-comment-color:    var(--code-comment) !important;
+  --md-code-hl-keyword-color:    var(--code-keyword) !important;
+  --md-code-hl-special-color:    var(--code-string) !important;
+  --md-code-hl-function-color:   var(--code-function) !important;
+  --md-code-hl-number-color:     var(--code-number) !important;
+  --md-code-hl-generic-color:    var(--code-variable) !important;
+  --md-code-hl-variable-color:   var(--code-variable) !important;
+
+  /* Table and border colors */
+  --md-typeset-table-color:     var(--vim-comment);
+  --md-typeset-mark-color:      var(--vim-yellow);
+
+  /* Footer colors */
+  --md-footer-bg-color:         var(--vim-bg);
+  --md-footer-fg-color:         var(--vim-fg-dim);
+}
+
+/* Force vim theme for all elements */
+.md-container {
+  background-color: #000000 !important;
+}
+
+/* Typography - keep regular text readable, monospace for code */
+.md-typeset {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--vim-fg);
+  background-color: #000000;
+}
+
+/* Headings with vim-style colors */
+.md-typeset h1 {
+  color: var(--vim-fg-bright) !important;
+  font-weight: 700;
+  border-bottom: 2px solid var(--vim-statusline);
+  padding-bottom: 0.5rem;
+}
+
+.md-typeset h2 {
+  color: var(--vim-fg) !important;  /* Neutral gray matching normal text */
+  font-weight: 600;
+  border-bottom: 1px solid var(--vim-comment);
+  padding-bottom: 0.25rem;
+}
+
+.md-typeset h3 {
+  color: var(--vim-blue) !important;  /* Blue - sky blue color */
+  font-weight: 600;
+}
+
+.md-typeset h4 {
+  color: var(--vim-visual-bright) !important;  /* Purple - swapped from H3 */
+  font-weight: 500;
+}
+
+/* Links with vim colors */
+.md-typeset a {
+  color: var(--vim-cyan) !important;
+  text-decoration: underline;
+}
+
+.md-typeset a:hover {
+  color: var(--vim-magenta) !important;
+}
+
+/* Code with exact colors from your example */
+.md-typeset code {
+  background-color: var(--vim-bg-light) !important;
+  color: var(--code-text) !important;
+  border: 1px solid var(--vim-comment);
+  border-radius: 3px;
+  padding: 0.2em 0.4em;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.md-typeset pre {
+  background-color: var(--vim-bg) !important;
+  border: 1px solid var(--vim-comment);
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+.md-typeset pre code {
+  background-color: transparent !important;
+  border: none;
+  padding: 0;
+}
+
+/* Syntax highlighting for code blocks */
+.highlight {
+  background-color: var(--vim-bg) !important;
+  border-radius: 5px;
+  border: 1px solid var(--vim-comment);
+}
+
+.highlight pre {
+  background-color: var(--vim-bg) !important;
+  color: var(--code-text) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  padding: 1rem;
+  margin: 0;
+}
+
+/* Direct selector overrides for syntax highlighting */
+.md-typeset .highlight .k,     /* Keywords like def, async, with, as, for, in */
+.md-typeset .highlight .kc,    /* Keyword constants like True, False */
+.md-typeset .highlight .kw {   /* Built-in keywords like await */
+  color: var(--code-keyword) !important;
+}
+
+.md-typeset .highlight .kn {   /* Import keywords like import, from */
+  color: var(--code-import) !important;
+}
+
+.md-typeset .highlight .s,
+.md-typeset .highlight .s1,
+.md-typeset .highlight .s2,
+.md-typeset .highlight .si,
+.md-typeset .highlight .se,
+.md-typeset .highlight .sb,
+.md-typeset .highlight .sc,
+.md-typeset .highlight .sd,
+.md-typeset .highlight .sh {
+  color: var(--code-string) !important;
+}
+
+.md-typeset .highlight .sa {   /* String affixes like f in f-strings - should be white */
+  color: var(--code-variable) !important;
+}
+
+.md-typeset .highlight .mi,
+.md-typeset .highlight .mf,
+.md-typeset .highlight .mh,
+.md-typeset .highlight .mo {
+  color: var(--code-number) !important;
+}
+
+.md-typeset .highlight .c,
+.md-typeset .highlight .c1,
+.md-typeset .highlight .cm,
+.md-typeset .highlight .cp,
+.md-typeset .highlight .cs {
+  color: var(--code-comment) !important;
+}
+
+.md-typeset .highlight .nf,    /* Function names */
+.md-typeset .highlight .fm {   /* Magic function names */
+  color: var(--code-function) !important;
+  font-weight: bold !important;
+}
+
+.md-typeset .highlight .nb {   /* Built-ins like print - bold cyan */
+  color: var(--code-function) !important;
+  font-weight: bold !important;
+}
+
+.md-typeset .highlight .n,
+.md-typeset .highlight .na,
+.md-typeset .highlight .nd,
+.md-typeset .highlight .ne,
+.md-typeset .highlight .ni,
+.md-typeset .highlight .nl,
+.md-typeset .highlight .nn,
+.md-typeset .highlight .no,
+.md-typeset .highlight .nt,
+.md-typeset .highlight .nv,
+.md-typeset .highlight .nx {
+  color: var(--code-variable) !important;
+}
+
+.md-typeset .highlight .nc {   /* Class names/types like int, str, object - bold cyan */
+  color: var(--code-function) !important;
+  font-weight: bold !important;
+}
+
+.md-typeset .highlight .o {     /* Operators like =, + */
+  color: var(--code-operator) !important;
+}
+
+.md-typeset .highlight .ow {    /* Operator words like in, and, or - should be yellow */
+  color: var(--code-keyword) !important;
+}
+
+.md-typeset .highlight .p {
+  color: var(--code-operator) !important;
+}
+
+.md-typeset .highlight .w {
+  color: inherit !important;
+}
+
+/* Navigation with vim statusline feel */
+.md-nav {
+  background-color: #000000 !important;
+}
+
+.md-nav__title {
+  background-color: var(--vim-statusline) !important;
+  color: var(--vim-fg-bright) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.75rem 1rem;
+}
+
+.md-nav__link {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.md-nav__link:hover {
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
+}
+
+.md-nav__link--active {
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
+  font-weight: 600;
+}
+
+/* Two-row navigation with centered tabs */
+/* This is the stable approach that MkDocs Material supports well */
+
+/* Tabs styling */
+.md-tabs {
+  background-color: #000000 !important;  /* Pure black tabs */
+  border-bottom: 2px solid var(--vim-comment);
+}
+
+/* Center the navigation tabs */
+.md-tabs__list {
+  justify-content: center !important;
+  margin: 0 auto !important;
+  padding-right: 2rem !important;
+}
+
+/* Remove gap between header and tabs */
+.md-tabs {
+  margin-top: -2px !important;
+}
+
+.md-tabs__link {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.md-tabs__link:hover {
+  color: var(--vim-bg) !important;  /* Black text on hover */
+  background-color: var(--vim-fg) !important;  /* Light grey background like vim visual mode */
+}
+
+.md-tabs__link--active {
+  color: var(--vim-yellow) !important;
+  background-color: var(--vim-visual);
+}
+
+/* Header with vim feel */
+.md-header {
+  background-color: #000000 !important;  /* Pure black header */
+  border-bottom: 2px solid var(--vim-statusline);
+}
+
+/* Make logo bigger */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.6rem !important;  /* Slightly bigger than default */
+  width: auto !important;
+}
+
+.md-header__title {
+  color: var(--vim-fg-bright) !important;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+/* Search with vim command line feel */
+.md-search__input {
+  background-color: var(--vim-bg-light) !important;
+  color: var(--vim-fg) !important;
+  border: 1px solid var(--vim-comment) !important;
+  border-radius: 3px;
+  font-family: 'Inter', sans-serif;
+}
+
+.md-search__input:focus {
+  border-color: var(--vim-visual) !important;
+  box-shadow: 0 0 0 2px var(--vim-visual) !important;
+}
+
+.md-search__input::placeholder {
+  color: var(--vim-comment) !important;
+}
+
+/* Tables with vim colors */
+.md-typeset table:not([class]) {
+  background-color: var(--vim-bg-light) !important;
+  border: 1px solid var(--vim-comment);
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100% !important;  /* Ensure tables use full available width */
+  table-layout: auto !important;  /* Allow flexible column sizing */
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--vim-statusline) !important;
+  color: var(--vim-fg-bright) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--vim-comment);
+}
+
+.md-typeset table:not([class]) td {
+  color: var(--vim-fg) !important;
+  border-bottom: 1px solid var(--vim-comment);
+  font-family: 'Inter', sans-serif;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: var(--vim-bg) !important;
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background-color: var(--vim-visual) !important;
+}
+
+/* API Reference table column widths */
+.md-typeset table:not([class]) th:first-child,
+.md-typeset table:not([class]) td:first-child {
+  min-width: 180px !important;  /* Prevent parameter/field names from wrapping */
+  white-space: nowrap !important;  /* Force single line */
+}
+
+/* Ensure code snippets in tables don't wrap */
+.md-typeset table:not([class]) td code {
+  white-space: nowrap !important;  /* Prevent wrapping */
+  display: inline-block !important;  /* Maintain block properties */
+}
+
+/* Type column (second column) also benefits from minimum width */
+.md-typeset table:not([class]) th:nth-child(2),
+.md-typeset table:not([class]) td:nth-child(2) {
+  min-width: 120px !important;  /* Adequate space for type info */
+  white-space: nowrap !important;
+}
+
+/* Allow description column to take remaining space */
+.md-typeset table:not([class]) th:last-child,
+.md-typeset table:not([class]) td:last-child {
+  width: 100% !important;  /* Take remaining space */
+  white-space: normal !important;  /* Allow wrapping in descriptions */
+}
+
+/* Buttons with vim style */
+.md-button {
+  background-color: var(--vim-bg-light) !important;
+  color: var(--vim-fg) !important;
+  border: 2px solid var(--vim-comment) !important;
+  border-radius: 3px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.md-button:hover {
+  background-color: var(--vim-blue) !important;
+  color: var(--vim-bg) !important;
+  border-color: var(--vim-blue) !important;
+  transform: translateY(-1px);
+}
+
+.md-button--primary {
+  background-color: var(--vim-green) !important;
+  color: var(--vim-bg) !important;
+  border-color: var(--vim-green) !important;
+}
+
+.md-button--primary:hover {
+  background-color: var(--vim-cyan) !important;
+  border-color: var(--vim-cyan) !important;
+}
+
+/* Admonitions with vim colors */
+.md-typeset .admonition {
+  background-color: var(--vim-bg-light) !important;
+  border: 1px solid var(--vim-comment);
+  border-left: 4px solid var(--vim-blue);
+  border-radius: 5px;
+  color: var(--vim-fg);
+}
+
+.md-typeset .admonition-title {
+  background-color: var(--vim-statusline) !important;
+  color: var(--vim-fg-bright) !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: 0.75rem 1rem;
+}
+
+.md-typeset .admonition.note {
+  border-left-color: var(--vim-blue);
+}
+
+.md-typeset .admonition.warning {
+  border-left-color: var(--vim-yellow);
+}
+
+.md-typeset .admonition.danger {
+  border-left-color: var(--vim-red);
+}
+
+.md-typeset .admonition.tip {
+  border-left-color: var(--vim-green);
+}
+
+/* Content area */
+.md-content {
+  background-color: #000000 !important;
+}
+
+.md-content__inner {
+  background-color: #000000 !important;
+  color: var(--vim-fg);
+}
+
+/* Footer with vim style */
+.md-footer {
+  background-color: var(--vim-statusline) !important;
+  border-top: 2px solid var(--vim-comment);
+}
+
+/* Hide Previous/Next navigation */
+.md-footer__inner.md-grid {
+  display: none !important;
+}
+
+.md-footer-meta {
+  background-color: #000000 !important;
+  color: var(--vim-fg-dim) !important;
+}
+
+.md-footer__link {
+  color: var(--vim-fg) !important;
+}
+
+.md-footer__link:hover {
+  color: var(--vim-cyan) !important;
+}
+
+/* Hero section with vim terminal feel */
+.hero-section {
+  background-color: var(--vim-bg-light) !important;
+  border: 2px solid var(--vim-statusline);
+  border-radius: 5px;
+  margin: 1rem 0;
+  padding: 2rem;
+}
+
+/* Hero logo styling */
+.hero-section img {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.hero-section img:hover {
+  transform: scale(1.05);
+}
+
+.hero-section h1 {
+  color: var(--vim-fg-bright) !important;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--vim-blue);
+  padding-bottom: 0.5rem;
+}
+
+.hero-section p {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.hero-section ul {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+}
+
+.hero-section li {
+  margin-bottom: 0.5rem;
+}
+
+.hero-section b {
+  color: var(--vim-yellow) !important;
+  font-weight: 700;
+}
+
+/* Feature cards with vim terminal windows */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  background-color: var(--vim-bg-light) !important;
+  border: 2px solid var(--vim-comment);
+  border-radius: 5px;
+  padding: 0;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  border-color: var(--vim-visual);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.feature-card h3 {
+  background-color: var(--vim-statusline) !important;
+  color: var(--vim-fg-bright) !important;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--vim-comment);
+}
+
+.feature-card p,
+.feature-card ul,
+.feature-card li {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  padding: 0 1rem;
+}
+
+.feature-card p:last-child,
+.feature-card ul:last-child {
+  padding-bottom: 1rem;
+}
+
+/* Status badges with vim colors */
+.status-badge {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.75rem;
+  border-radius: 3px;
+  border: 1px solid;
+  white-space: nowrap !important;  /* Prevent badge text from wrapping */
+  display: inline-block !important;  /* Maintain block properties */
+}
+
+.status-badge--completed {
+  background-color: var(--vim-green) !important;
+  color: var(--vim-bg) !important;
+  border-color: var(--vim-green);
+}
+
+.status-badge--in-progress {
+  background-color: var(--vim-yellow) !important;
+  color: var(--vim-bg) !important;
+  border-color: var(--vim-yellow);
+}
+
+.status-badge--planned {
+  background-color: var(--vim-blue) !important;
+  color: var(--vim-bg) !important;
+  border-color: var(--vim-blue);
+}
+
+/* Mermaid diagrams with vim colors */
+.mermaid {
+  background-color: var(--vim-bg-light) !important;
+  border: 1px solid var(--vim-comment);
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+/* Tabbed content with vim style */
+.tabbed-set {
+  border: 1px solid var(--vim-comment);
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.tabbed-labels {
+  background-color: var(--vim-statusline) !important;
+}
+
+.tabbed-labels > label {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-right: 1px solid var(--vim-comment);
+}
+
+.tabbed-labels > label:hover {
+  background-color: var(--vim-bg-light) !important;
+  color: var(--vim-cyan) !important;
+}
+
+.tabbed-set input:checked + label {
+  background-color: var(--vim-visual) !important;
+  color: var(--vim-yellow) !important;
+}
+
+.tabbed-content {
+  background-color: var(--vim-bg-light) !important;
+  color: var(--vim-fg) !important;
+}
+
+/* Scrollbars with vim colors */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--vim-comment);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vim-fg-dim);
+}
+
+/* Selection with vim visual mode colors - matching navigation hover */
+::selection {
+  background-color: var(--vim-fg) !important;  /* Light grey background */
+  color: #000000 !important;  /* Black text */
+}
+
+::-moz-selection {
+  background-color: var(--vim-fg) !important;  /* Light grey background */
+  color: #000000 !important;  /* Black text */
+}
+
+/* Strong/bold text with reduced brightness */
+.md-typeset strong {
+  color: var(--vim-fg) !important;
+  font-weight: 700;
+}
+
+/* OVERRIDE Material theme syntax colors in media query - Part 2
+@media screen {
+  [data-md-color-scheme="slate"] {
+    --md-code-hl-string-color:     var(--code-string) !important;
+    --md-code-hl-constant-color:   var(--code-function) !important;
+    --md-code-hl-name-color:       var(--code-variable) !important;
+    --md-code-hl-operator-color:   var(--code-operator) !important;
+    --md-code-hl-punctuation-color: var(--code-operator) !important;
+    --md-code-hl-comment-color:    var(--code-comment) !important;
+    --md-code-hl-keyword-color:    var(--code-keyword) !important;
+    --md-code-hl-special-color:    var(--code-string) !important;
+    --md-code-hl-function-color:   var(--code-function) !important;
+    --md-code-hl-number-color:     var(--code-number) !important;
+    --md-code-hl-generic-color:    var(--code-variable) !important;
+    --md-code-hl-variable-color:   var(--code-variable) !important;
+  }
+}
+*/
+
+/* Emphasis/italic with normal text color */
+.md-typeset em {
+  color: var(--vim-fg) !important;
+  font-style: italic;
+}
+
+/* Lists with vim styling */
+.md-typeset ul li::marker {
+  color: var(--vim-blue) !important;
+}
+
+.md-typeset ol li::marker {
+  color: var(--vim-blue) !important;
+  font-weight: 700;
+}
+
+/* Blockquotes with vim comment styling */
+.md-typeset blockquote {
+  border-left: 4px solid var(--vim-comment);
+  background-color: var(--vim-bg-light);
+  color: var(--vim-fg-dim);
+  font-style: italic;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+/* Horizontal rules with vim separator */
+.md-typeset hr {
+  border: none;
+  border-top: 2px solid var(--vim-comment);
+  margin: 2rem 0;
+}
+
+/* Hide generator text if it still appears */
+.md-footer-meta__inner .md-footer-meta__generator {
+  display: none !important;
+}
+
+/* Right-side Table of Contents styling */
+.md-sidebar--secondary {
+  background-color: #000000 !important;
+  border: none !important;
+  border-left: none !important;
+}
+
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+  background-color: #000000 !important;
+  border: none !important;
+}
+
+/* TOC navigation styling */
+.md-nav--secondary {
+  background-color: #000000 !important;
+  border: none !important;
+}
+
+.md-nav--secondary .md-nav__title {
+  display: none !important;
+}
+
+/* Remove any borders or separators from TOC items */
+.md-nav--secondary .md-nav__item {
+  border: none !important;
+}
+
+.md-nav--secondary::before,
+.md-nav--secondary::after {
+  display: none !important;
+}
+
+/* Additional border removal for any nested elements */
+.md-sidebar--secondary *,
+.md-nav--secondary * {
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+.md-nav--secondary .md-nav__link {
+  color: var(--vim-fg) !important;
+  font-family: 'Inter', sans-serif;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.md-nav--secondary .md-nav__link:hover {
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
+  border-left-color: var(--vim-yellow);
+}
+
+.md-nav--secondary .md-nav__link--active {
+  color: var(--vim-yellow) !important;  /* Yellow text */
+  background-color: var(--vim-visual) !important;  /* Purple background */
+  border-left-color: var(--vim-yellow);
+  font-weight: 600;
+}
+
+/* Right sidebar (table of contents) ONLY - fit highlights to text */
+.md-nav--secondary .md-nav__link {
+  display: inline-block !important;
+  width: auto !important;
+  padding: 0.2em 0.5em !important;
+  margin: 0.1em 0 !important;
+  border-radius: 0.2em !important;
+  border-left: none !important;
+}
+
+/* Active state for table of contents */
+.md-nav--secondary .md-nav__link--active,
+.md-nav--secondary .md-nav__link:hover {
+  padding-left: 0.5em !important;
+  border-left: 3px solid var(--vim-yellow) !important;
+  margin-left: -3px !important;
+}
+
+/*
+ * Accessibility: Motion Preferences
+ * =================================
+ * Respects user's motion preferences to prevent motion sickness
+ * or discomfort from animations and transitions.
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* Remove all animations and transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable smooth scrolling */
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  /* Remove hover transform effects */
+  .hero-section img:hover,
+  .feature-card:hover,
+  .md-button:hover {
+    transform: none !important;
+  }
+}
+
+/*
+ * Search Optimization - Vim Style
+ * ================================
+ * Enhanced search with vim-style highlighting and keyboard shortcuts
+ */
+
+/* Search Results - Vim Style */
+.md-search-result {
+  background-color: var(--vim-bg-light) !important;
+  border: 1px solid var(--vim-comment) !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: 0.2rem !important;
+}
+
+.md-search-result__link {
+  color: var(--vim-fg) !important;
+}
+
+.md-search-result__link:hover {
+  background-color: var(--vim-visual) !important;
+  color: var(--vim-yellow) !important;
+}
+
+/* Highlight search terms like vim's hlsearch */
+.md-search-result em,
+.md-search-result mark {
+  background-color: var(--vim-yellow) !important;
+  color: var(--vim-bg) !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  padding: 0 2px !important;
+}
+
+/* Search input - vim command mode style */
+.md-search__input {
+  background-color: var(--vim-bg) !important;
+  border-bottom: 2px solid var(--vim-visual) !important;  /* Purple border */
+  color: var(--vim-fg) !important;
+  font-family: var(--md-code-font) !important;
+}
+
+.md-search__input::placeholder {
+  color: var(--vim-comment) !important;
+  font-style: italic;
+}
+
+/* Search icon */
+.md-search__icon {
+  color: var(--vim-visual) !important;  /* Purple icon */
+}
+
+/* Result count */
+.md-search-result__meta {
+  color: var(--vim-comment) !important;
+  font-family: var(--md-code-font) !important;
+  font-size: 0.8rem !important;
+}
+
+/* Type hints in results */
+.md-search-result__more summary {
+  color: var(--vim-blue) !important;
+}
+
+/* Search dialog background */
+.md-search__scrollwrap {
+  background-color: #000000 !important;
+}
+
+/*
+ * Image Optimization
+ * ==================
+ * Lazy loading and responsive image support
+ */
+
+/* Lazy loading placeholder */
+img[loading="lazy"] {
+  background: var(--vim-bg-light);
+  min-height: 100px;
+}
+
+/* Prevent layout shift for images with dimensions */
+img[width][height] {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Responsive images */
+picture {
+  display: inline-block;
+}
+
+picture img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Error state for failed images */
+img.error {
+  position: relative;
+  min-height: 100px;
+  background: var(--vim-bg-light);
+  border: 1px dashed var(--vim-red);
+}
+
+img.error::after {
+  content: "Failed to load image";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--vim-red);
+  font-family: var(--md-code-font);
+  font-size: 0.8em;
+}

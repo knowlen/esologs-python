@@ -1,39 +1,46 @@
+<div align="center">
+  <picture>
+    <source type="image/webp" srcset="docs/assets/logo.webp">
+    <img src="docs/assets/logo.png" alt="ESO Logs Python" width="300">
+  </picture>
+</div>
+
 # ESO Logs Python Client
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation](https://readthedocs.org/projects/esologs-python/badge/?version=latest)](https://esologs-python.readthedocs.io/)
 [![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
+[![Tests](https://github.com/knowlen/esologs-python/actions/workflows/ci.yml/badge.svg)](https://github.com/knowlen/esologs-python/actions/workflows/ci.yml)
 
 A comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/). This library provides both synchronous and asynchronous interfaces to access Elder Scrolls Online combat logging data, with built-in support for data transformation and analysis.
 
-## 🎯 Project Status
+## Project Status
 
 **Current Version:** 0.2.0-alpha
-**API Coverage:** ~35% (expanding to 95%+ coverage)
-**Development Stage:** Active development - Phase 2 implementation in progress
+**API Coverage:** ~83% (comprehensive analysis shows 6/8 API sections fully implemented)
+**Development Stage:** Active development
+**Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)
+**Tests:** 278 tests across unit, integration, documentation, and sanity suites
 
-### What's Working
-- ✅ OAuth2 authentication with ESO Logs API
-- ✅ Basic game data queries (abilities, classes, items, NPCs, maps)
-- ✅ Character and guild information retrieval
-- ✅ Basic report data access
-- ✅ Rate limiting information
-- ✅ Async/await support with HTTP and WebSocket connections
-- ✅ **Character rankings and performance metrics** (PR #4 - Merged)
-- ✅ **Comprehensive report analysis** (PR #5 - Approved & Ready for Merge)
-  - Event-by-event combat log data
-  - Time-series performance graphs
-  - Tabular analysis data
-  - Report rankings and player details
+### Current API Coverage
+**Implemented (6/8 sections):**
+1. ✅ **gameData** - 13 methods
+2. ✅ **characterData** - 5 methods
+3. ✅ **reportData** - 9 methods
+4. ✅ **worldData** - 4 methods
+5. ✅ **rateLimitData** - 1 method
+6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
 
-### Coming Soon
-- 🚧 Advanced report search and filtering
+**Missing (2/8 sections):**
+- ❌ **userData** - 0/3 methods (MISSING - requires user auth)
+- ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
+
+### Roadmap
 - 🚧 Progress race tracking
 - 🚧 User account integration
-- 🚧 Pandas DataFrame integration for data analysis
-- 🚧 Enhanced client architecture (modular design)
+- 🚧 Client architecture refactor (modular design)
 
-## 🚀 Installation
+## Installation
 
 **Note**: This package is currently in development and not yet published to PyPI.
 
@@ -57,7 +64,7 @@ For development with testing, linting, and pre-commit hooks:
 pip install -e ".[dev]"
 ```
 
-## 🔑 API Setup
+## API Setup
 
 1. **Create an ESO Logs API Client**
    - Visit [ESO Logs API Clients](https://www.esologs.com/api/clients/)
@@ -77,7 +84,9 @@ pip install -e ".[dev]"
    echo "ESOLOGS_SECRET=your_client_secret_here" >> .env
    ```
 
-## 📖 Quick Start
+## Quickstart
+
+For comprehensive documentation, visit [esologs-python.readthedocs.io](https://esologs-python.readthedocs.io/)
 
 ### Basic Usage
 
@@ -139,12 +148,12 @@ from access_token import get_access_token
 
 async def main():
     token = get_access_token()
-    
+
     async with Client(
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get character encounter rankings with filtering
         encounter_rankings = await client.get_character_encounter_rankings(
             character_id=12345,
@@ -153,14 +162,14 @@ async def main():
             role=RoleType.DPS,
             difficulty=125
         )
-        
+
         # Get zone-wide character leaderboards
         zone_rankings = await client.get_character_zone_rankings(
             character_id=12345,
             zone_id=1,
             metric=CharacterRankingMetricType.playerscore
         )
-        
+
         # Access ranking data
         if encounter_rankings.character_data.character.encounter_rankings:
             rankings_data = encounter_rankings.character_data.character.encounter_rankings
@@ -170,7 +179,53 @@ async def main():
 asyncio.run(main())
 ```
 
-## 📊 Available API Methods
+### Advanced Report Search (NEW)
+
+```python
+import asyncio
+from esologs.client import Client
+from access_token import get_access_token
+
+async def main():
+    token = get_access_token()
+
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Search reports with flexible criteria
+        reports = await client.search_reports(
+            guild_id=123,
+            zone_id=456,
+            start_time=1672531200000,  # Jan 1, 2023
+            end_time=1672617600000,    # Jan 2, 2023
+            limit=25,
+            page=1
+        )
+
+        # Convenience methods for common searches
+        guild_reports = await client.get_guild_reports(
+            guild_id=123,
+            limit=50
+        )
+
+        user_reports = await client.get_user_reports(
+            user_id=789,
+            zone_id=456,
+            limit=20
+        )
+
+        # Process search results
+        if reports.report_data and reports.report_data.reports:
+            for report in reports.report_data.reports.data:
+                print(f"Report: {report.code} - {report.zone.name}")
+                print(f"Duration: {report.end_time - report.start_time}ms")
+
+asyncio.run(main())
+```
+
+## Available API Methods
 
 ### Game Data
 - `get_ability(id)` - Get specific ability information
@@ -185,7 +240,7 @@ asyncio.run(main())
 - `get_map(id)` - Get map information
 - `get_maps(limit, page)` - List maps with pagination
 - `get_npc(id)` - Get NPC information
-- `get_np_cs(limit, page)` - List NPCs with pagination
+- `get_npcs(limit, page)` - List NPCs with pagination
 
 ### Character Data
 - `get_character_by_id(id)` - Get character profile
@@ -205,11 +260,20 @@ asyncio.run(main())
 
 ### Report Data
 - `get_report_by_code(code)` - Get specific report by code
+- `get_reports(**kwargs)` - **NEW**: Advanced report search with comprehensive filtering
+- `search_reports(**kwargs)` - **NEW**: Flexible report search with multiple criteria
+- `get_guild_reports(guild_id, **kwargs)` - **NEW**: Convenience method for guild reports
+- `get_user_reports(user_id, **kwargs)` - **NEW**: Convenience method for user reports
+- `get_report_events(code, **kwargs)` - Get event-by-event combat log data with comprehensive filtering
+- `get_report_graph(code, **kwargs)` - Get time-series performance graphs and metrics
+- `get_report_table(code, **kwargs)` - Get tabular analysis data with sorting and filtering
+- `get_report_rankings(code, **kwargs)` - Get report rankings and leaderboard data
+- `get_report_player_details(code, **kwargs)` - Get detailed player performance data from reports
 
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
 
-## 🛠️ Development
+## Development
 
 ### Setup Development Environment
 
@@ -250,10 +314,14 @@ esologs-python/
 │   ├── client.py           # Main client implementation
 │   ├── async_base_client.py # Base async GraphQL client
 │   ├── exceptions.py       # Custom exceptions
+│   ├── validators.py       # Parameter validation utilities
 │   └── get_*.py           # Generated GraphQL query modules
-├── tests/                  # Test suite
-│   ├── unit/              # Unit tests
-│   └── integration/       # Integration tests
+├── tests/                  # Test suite (278 tests)
+│   ├── unit/              # Unit tests (76 tests)
+│   ├── integration/       # Integration tests (85 tests)
+│   ├── docs/              # Documentation tests (98 tests)
+│   └── sanity/            # Sanity tests (19 tests)
+├── docs/                  # Documentation source
 ├── access_token.py        # OAuth2 authentication
 ├── schema.graphql         # GraphQL schema
 ├── queries.graphql        # GraphQL queries
@@ -261,7 +329,7 @@ esologs-python/
 └── README.md             # This file
 ```
 
-## 🔗 API Reference
+## API Reference
 
 ### GraphQL Schema
 The complete GraphQL schema is available at: https://www.esologs.com/v2-api-docs/eso/
@@ -274,7 +342,7 @@ The complete GraphQL schema is available at: https://www.esologs.com/v2-api-docs
 ### Data Models
 All API responses are validated using Pydantic models for type safety and data validation.
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our contributing guidelines:
 
@@ -292,27 +360,29 @@ We welcome contributions! Please see our contributing guidelines:
 
 - **Phase 1** ✅: Security fixes and foundation improvements
 - **Phase 2** 🚧: Core architecture and missing API functionality
-  - ✅ PR #1: Character Rankings Implementation (In Review)
-  - 🚧 PR #2: Report Analysis Implementation (Next)
-  - 🚧 PR #3: Advanced Report Search (Planned)
+  - ✅ PR #1: Character Rankings Implementation (Merged)
+  - ✅ PR #2: Report Analysis Implementation (Merged)
+  - ✅ PR #3: Integration Test Suite (Merged)
+  - ✅ PR #4: Advanced Report Search (Merged)
+  - 🚧 PR #5: Client Architecture Refactor (Next)
 - **Phase 3** 🚧: Data transformation and pandas integration
-- **Phase 4** 🚧: Comprehensive testing and documentation
+- **Phase 4** ✅: Comprehensive testing and documentation (278 tests)
 - **Phase 5** 🚧: Performance optimization and caching
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [ESO Logs](https://www.esologs.com/) for providing the API
 - [ariadne-codegen](https://github.com/mirumee/ariadne-codegen) for GraphQL code generation
 - The Elder Scrolls Online community
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/knowlen/esologs-python/issues)
-- **Documentation**: [GitHub Repository](https://github.com/knowlen/esologs-python)
+- **Documentation**: [Read the Docs](https://esologs-python.readthedocs.io/)
 - **ESO Logs API**: [Official Documentation](https://www.esologs.com/v2-api-docs/eso/)
 
 ---

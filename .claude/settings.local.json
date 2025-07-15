@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(rg:*)",
-      "Bash(git add:*)"
-    ],
-    "deny": []
-  }
-}

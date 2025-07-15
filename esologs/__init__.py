@@ -103,13 +103,13 @@ from .get_maps import (
     GetMapsGameDataMaps,
     GetMapsGameDataMapsData,
 )
-from .get_np_cs import (
+from .get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
+from .get_npcs import (
     GetNPCs,
     GetNPCsGameData,
     GetNPCsGameDataNpcs,
     GetNPCsGameDataNpcsData,
 )
-from .get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
 from .get_rate_limit_data import GetRateLimitData, GetRateLimitDataRateLimitData
 from .get_regions import (
     GetRegions,
@@ -149,6 +149,17 @@ from .get_report_table import (
     GetReportTable,
     GetReportTableReportData,
     GetReportTableReportDataReport,
+)
+from .get_reports import (
+    GetReports,
+    GetReportsReportData,
+    GetReportsReportDataReports,
+    GetReportsReportDataReportsData,
+    GetReportsReportDataReportsDataGuild,
+    GetReportsReportDataReportsDataGuildServer,
+    GetReportsReportDataReportsDataGuildServerRegion,
+    GetReportsReportDataReportsDataOwner,
+    GetReportsReportDataReportsDataZone,
 )
 from .get_world_data import (
     GetWorldData,
@@ -292,6 +303,15 @@ __all__ = [
     "GetReportTable",
     "GetReportTableReportData",
     "GetReportTableReportDataReport",
+    "GetReports",
+    "GetReportsReportData",
+    "GetReportsReportDataReports",
+    "GetReportsReportDataReportsData",
+    "GetReportsReportDataReportsDataGuild",
+    "GetReportsReportDataReportsDataGuildServer",
+    "GetReportsReportDataReportsDataGuildServerRegion",
+    "GetReportsReportDataReportsDataOwner",
+    "GetReportsReportDataReportsDataZone",
     "GetWorldData",
     "GetWorldDataWorldData",
     "GetWorldDataWorldDataEncounter",
