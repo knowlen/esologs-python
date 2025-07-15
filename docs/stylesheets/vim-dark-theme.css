@@ -313,13 +313,13 @@
 }
 
 .md-nav__link:hover {
-  color: var(--vim-cyan) !important;
-  background-color: var(--vim-bg-light) !important;
+  color: var(--vim-bg) !important;  /* Black text like top nav */
+  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
 }
 
 .md-nav__link--active {
-  color: var(--vim-yellow) !important;
-  background-color: var(--vim-visual) !important;
+  color: var(--vim-bg) !important;  /* Black text like top nav */
+  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
   font-weight: 600;
 }
 
@@ -845,16 +845,34 @@
 }
 
 .md-nav--secondary .md-nav__link:hover {
-  color: var(--vim-cyan) !important;
-  background-color: var(--vim-bg-light) !important;
-  border-left-color: var(--vim-cyan);
+  color: var(--vim-bg) !important;  /* Black text like top nav */
+  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
+  border-left-color: var(--vim-yellow);
 }
 
 .md-nav--secondary .md-nav__link--active {
-  color: var(--vim-yellow) !important;
-  background-color: var(--vim-visual) !important;
+  color: var(--vim-bg) !important;  /* Black text like top nav */
+  background-color: var(--vim-fg) !important;  /* Light grey like top nav */
   border-left-color: var(--vim-yellow);
   font-weight: 600;
+}
+
+/* Right sidebar (table of contents) ONLY - fit highlights to text */
+.md-nav--secondary .md-nav__link {
+  display: inline-block !important;
+  width: auto !important;
+  padding: 0.2em 0.5em !important;
+  margin: 0.1em 0 !important;
+  border-radius: 0.2em !important;
+  border-left: none !important;
+}
+
+/* Active state for table of contents */
+.md-nav--secondary .md-nav__link--active,
+.md-nav--secondary .md-nav__link:hover {
+  padding-left: 0.5em !important;
+  border-left: 3px solid var(--vim-yellow) !important;
+  margin-left: -3px !important;
 }
 
 /*
