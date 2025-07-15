@@ -722,15 +722,15 @@
   background-color: var(--vim-fg-dim);
 }
 
-/* Selection with vim visual mode colors */
+/* Selection with vim visual mode colors - matching navigation hover */
 ::selection {
-  background-color: var(--vim-visual) !important;
-  color: var(--vim-fg-bright) !important;
+  background-color: var(--vim-fg) !important;  /* Light grey background */
+  color: var(--vim-bg) !important;  /* Black text */
 }
 
 ::-moz-selection {
-  background-color: var(--vim-visual) !important;
-  color: var(--vim-fg-bright) !important;
+  background-color: var(--vim-fg) !important;  /* Light grey background */
+  color: var(--vim-bg) !important;  /* Black text */
 }
 
 /* Strong/bold text with reduced brightness */
