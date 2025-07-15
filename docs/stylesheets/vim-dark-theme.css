@@ -391,7 +391,7 @@
 }
 
 .md-search__input:focus {
-  border-color: var(--vim-yellow) !important;
+  border-color: var(--vim-blue) !important;
   box-shadow: 0 0 0 2px var(--vim-visual) !important;
 }
 
