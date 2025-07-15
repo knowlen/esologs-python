@@ -76,7 +76,7 @@ jobs:
         fi
 
     - name: Run integration tests
-      if: github.event_name != 'workflow_dispatch' || inputs.run_integration_tests == 'true'
+      if: (github.event_name != 'workflow_dispatch' || inputs.run_integration_tests == 'true') && github.actor != 'app/dependabot'
       env:
         ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
         ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}
@@ -85,7 +85,7 @@ jobs:
         pytest tests/integration/ -v --tb=short
 
     - name: Run sanity tests
-      if: github.event_name != 'workflow_dispatch' || inputs.run_integration_tests == 'true'
+      if: (github.event_name != 'workflow_dispatch' || inputs.run_integration_tests == 'true') && github.actor != 'app/dependabot'
       env:
         ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
         ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}
