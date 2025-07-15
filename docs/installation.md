@@ -11,7 +11,7 @@ Get ESO Logs Python up and running in your environment.
 ## Installation Methods
 
 !!! warning "Development Version"
-    ESO Logs Python is currently in development and not yet published to PyPI. 
+    ESO Logs Python is currently in development and not yet published to PyPI.
     Use the development installation method below.
 
 ### Development Installation
@@ -22,7 +22,7 @@ Get ESO Logs Python up and running in your environment.
     # Clone the repository
     git clone https://github.com/knowlen/esologs-python.git
     cd esologs-python
-    
+
     # Install the package
     pip install --upgrade pip
     pip install -e .
@@ -36,11 +36,11 @@ Get ESO Logs Python up and running in your environment.
     # Clone the repository
     git clone https://github.com/knowlen/esologs-python.git
     cd esologs-python
-    
+
     # Install with development tools
     pip install --upgrade pip
     pip install -e ".[dev]"
-    
+
     # Set up pre-commit hooks
     pre-commit install
     ```
@@ -52,13 +52,13 @@ Get ESO Logs Python up and running in your environment.
     ```bash
     # Create virtual environment
     python -m venv esologs-env
-    
+
     # Activate virtual environment
     # On Windows:
     esologs-env\Scripts\activate
     # On macOS/Linux:
     source esologs-env/bin/activate
-    
+
     # Clone and install
     git clone https://github.com/knowlen/esologs-python.git
     cd esologs-python
@@ -208,12 +208,11 @@ Once installation is complete:
 3. **[Explore the API reference](api-reference/game-data.md)** - Learn methods and usage patterns
 
 !!! tip "Development Environment"
-    If you plan to contribute to the project, see our [development setup guide](development/setup.md) 
+    If you plan to contribute to the project, see our [development setup guide](development/setup.md)
     for additional configuration and testing instructions.
 
 !!! question "Need Help?"
     If you encounter issues not covered here, please:
-    
-    - Check the [troubleshooting guide](development/setup.md#troubleshooting)
+
     - Search [existing issues](https://github.com/knowlen/esologs-python/issues)
     - Create a [new issue](https://github.com/knowlen/esologs-python/issues/new) with your system details

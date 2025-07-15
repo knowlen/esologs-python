@@ -1,6 +1,6 @@
-# System API
+# System Endpoints
 
-Monitor API usage, handle rate limits, and manage authentication with the ESO Logs API system endpoints.
+Monitor API usage, handle rate limits, and manage authentication.
 
 ## Overview
 
@@ -20,8 +20,8 @@ Monitor API usage, handle rate limits, and manage authentication with the ESO Lo
 
 | Field | Type | Description |
 |-------|------|-------------|
-| rate_limit_data.points_spent_this_hour | float | Points consumed in current hour |
-| rate_limit_data.limit_per_hour | int | Maximum points allowed per hour (18000) |
+| `rate_limit_data.points_spent_this_hour` | *float* | Points consumed in current hour |
+| `rate_limit_data.limit_per_hour` | *int* | Maximum points allowed per hour (18000) |
 
 **Example**:
 ```python
@@ -35,10 +35,10 @@ async def check_rate_limits():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Check current rate limit status
         rate_limit = await client.get_rate_limit_data()
-        
+
         print(f"Points used this hour: {rate_limit.rate_limit_data.points_spent_this_hour}")
         print(f"Points remaining: {18000 - rate_limit.rate_limit_data.points_spent_this_hour}")
         print(f"Limit per hour: {rate_limit.rate_limit_data.limit_per_hour}")
@@ -72,11 +72,11 @@ async def handle_auth_errors():
             url="https://www.esologs.com/api/v2/client",
             headers={"Authorization": f"Bearer {token}"}
         ) as client:
-            
+
             # Try to access protected resource
             rate_limit = await client.get_rate_limit_data()
             print("✅ Authentication successful")
-            
+
     except GraphQLClientHttpError as e:
         if e.status_code == 401:
             print("❌ Authentication failed: Invalid or expired token")
@@ -116,22 +116,22 @@ async def handle_rate_limits():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         try:
             # Example: Make multiple requests that might hit rate limit
             for i in range(5):
                 abilities = await client.get_abilities(limit=100)
                 print(f"Request {i+1}: Got {len(abilities.game_data.abilities.data)} abilities")
-                
+
                 # Check rate limit status
                 rate_limit = await client.get_rate_limit_data()
                 remaining = 18000 - rate_limit.rate_limit_data.points_spent_this_hour
                 print(f"Points remaining: {remaining}")
-                
+
                 if remaining < 10:
                     print("⚠️ Low on rate limit points, slowing down...")
                     await asyncio.sleep(2)
-                    
+
         except GraphQLClientHttpError as e:
             if e.status_code == 429:
                 print("❌ Rate limit exceeded. Wait before making more requests.")
@@ -159,19 +159,19 @@ async def handle_graphql_errors():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         try:
             # This might cause a GraphQL validation error
             abilities = await client.get_abilities(limit=200)  # Exceeds max limit
-            
+
         except GraphQLClientGraphQLMultiError as e:
             print(f"❌ GraphQL validation errors: {e}")
             # Multiple GraphQL errors returned together
-            
+
         except GraphQLClientGraphQLError as e:
             print(f"❌ GraphQL error: {e.message}")
             # Single GraphQL error
-            
+
         except ValidationError as e:
             print(f"❌ Client-side validation error: {e}")
             # Pydantic validation before sending request
@@ -192,22 +192,22 @@ from access_token import get_access_token
 
 async def handle_network_errors():
     token = get_access_token()
-    
+
     try:
         async with Client(
             url="https://www.esologs.com/api/v2/client",
             headers={"Authorization": f"Bearer {token}"}
         ) as client:
-            
+
             rate_limit = await client.get_rate_limit_data()
             print("✅ Connection successful")
-            
+
     except httpx.TimeoutException:
         print("❌ Request timed out - check network connection")
-        
+
     except httpx.ConnectError:
         print("❌ Connection failed - check network and API endpoint")
-        
+
     except GraphQLClientHttpError as e:
         if e.status_code >= 500:
             print(f"❌ Server error {e.status_code} - API temporarily unavailable")
@@ -232,26 +232,26 @@ class RateLimitMonitor:
     def __init__(self, client):
         self.client = client
         self.initial_usage = None
-        
+
     async def start_monitoring(self):
         """Record initial usage"""
         rate_limit = await self.client.get_rate_limit_data()
         self.initial_usage = rate_limit.rate_limit_data.points_spent_this_hour
         print(f"📊 Starting usage: {self.initial_usage}/18000 points")
-        
+
     async def check_usage(self, operation_name="operation"):
         """Check current usage and calculate points consumed"""
         rate_limit = await self.client.get_rate_limit_data()
         current_usage = rate_limit.rate_limit_data.points_spent_this_hour
-        
+
         if self.initial_usage is not None:
             consumed = current_usage - self.initial_usage
             print(f"📊 After {operation_name}: {current_usage}/18000 points (+{consumed})")
-        
+
         remaining = 18000 - current_usage
         if remaining < 100:
             print("⚠️ WARNING: Low on rate limit points!")
-            
+
         return remaining
 
 async def monitored_session():
@@ -260,17 +260,17 @@ async def monitored_session():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         monitor = RateLimitMonitor(client)
         await monitor.start_monitoring()
-        
+
         # Perform operations with monitoring
         abilities = await client.get_abilities(limit=50)
         await monitor.check_usage("get_abilities")
-        
+
         classes = await client.get_classes()
         await monitor.check_usage("get_classes")
-        
+
         items = await client.get_items(limit=25)
         await monitor.check_usage("get_items")
 
@@ -304,7 +304,7 @@ async def robust_api_call(client, operation, max_retries=3):
         try:
             result = await operation()
             return result
-            
+
         except GraphQLClientHttpError as e:
             if e.status_code == 429:  # Rate limit
                 if attempt < max_retries - 1:
@@ -315,7 +315,7 @@ async def robust_api_call(client, operation, max_retries=3):
                 else:
                     print("❌ Max retries exceeded for rate limit")
                     raise
-                    
+
             elif e.status_code >= 500:  # Server error
                 if attempt < max_retries - 1:
                     wait_time = (2 ** attempt) + random.uniform(0, 1)
@@ -335,14 +335,14 @@ async def reliable_data_fetch():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Use robust wrapper for API calls
         abilities = await robust_api_call(
-            client, 
+            client,
             lambda: client.get_abilities(limit=50)
         )
         print(f"✅ Successfully fetched {len(abilities.game_data.abilities.data)} abilities")
-        
+
         classes = await robust_api_call(
             client,
             lambda: client.get_classes()
@@ -372,14 +372,14 @@ class APISession:
     def __init__(self):
         self.client = None
         self.is_healthy = False
-        
+
     async def __aenter__(self):
         await self.start()
         return self
-        
+
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         await self.close()
-        
+
     async def start(self):
         """Initialize and validate the session"""
         token = get_access_token()
@@ -388,10 +388,10 @@ class APISession:
             headers={"Authorization": f"Bearer {token}"}
         )
         await self.client.__aenter__()
-        
+
         # Validate session with a simple call
         await self.health_check()
-        
+
     async def health_check(self):
         """Check if the session is still valid"""
         try:
@@ -405,7 +405,7 @@ class APISession:
             else:
                 print(f"❌ Session unhealthy - HTTP {e.status_code}")
             raise
-    
+
     async def close(self):
         """Clean up the session"""
         if self.client:
@@ -414,19 +414,19 @@ class APISession:
 
 async def long_running_session():
     async with APISession() as session:
-        
+
         # Perform operations
         for i in range(3):
             print(f"\n--- Operation {i+1} ---")
-            
+
             # Periodic health check
             if i > 0:
                 await session.health_check()
-            
+
             # Do actual work
             abilities = await session.client.get_abilities(limit=10)
             print(f"Fetched {len(abilities.game_data.abilities.data)} abilities")
-            
+
             # Small delay between operations
             await asyncio.sleep(1)
 

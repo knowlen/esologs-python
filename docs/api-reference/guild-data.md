@@ -1,6 +1,6 @@
-# Guild Data API
+# Guild Data
 
-Access ESO guild information, member lists, and guild performance data through the ESO Logs API.
+Enables the retrieval of single guilds or filtered collections of guilds. Guild information, member lists, and guild performance data.
 
 ## Overview
 
@@ -16,19 +16,19 @@ Access ESO guild information, member lists, and guild performance data through t
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| guild_id | int | Yes | The guild ID to retrieve |
+| `guild_id` | *int* | Yes | The guild ID to retrieve |
 
 **Returns**: `GetGuildById` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| guild_data.guild.id | int | Guild ID |
-| guild_data.guild.name | str | Guild name |
-| guild_data.guild.description | str | Guild description (may be empty) |
-| guild_data.guild.faction.name | str | Guild faction name |
-| guild_data.guild.server.name | str | Server name |
-| guild_data.guild.server.region.name | str | Server region name |
-| guild_data.guild.tags | List[Tag] \| None | Guild tags/teams (may be empty) |
+| `guild_data.guild.id` | *int* | Guild ID |
+| `guild_data.guild.name` | *str* | Guild name |
+| `guild_data.guild.description` | *str* | Guild description (may be empty) |
+| `guild_data.guild.faction.name` | *str* | Guild faction name |
+| `guild_data.guild.server.name` | *str* | Server name |
+| `guild_data.guild.server.region.name` | *str* | Server region name |
+| `guild_data.guild.tags` | *List[Tag] \| None* | Guild tags/teams (may be empty) |
 
 **Example**:
 ```python
@@ -42,7 +42,7 @@ async def get_guild_info():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         guild = await client.get_guild_by_id(guild_id=3468)
         print(f"Guild: {guild.guild_data.guild.name}")
         print(f"Faction: {guild.guild_data.guild.faction.name}")
@@ -67,22 +67,22 @@ Region: North America
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| guild_id | int | Yes | The guild ID to search for |
-| limit | int \| None | No | Number of reports per page (1-25, default 16) |
-| page | int \| None | No | Page number (default 1) |
-| start_time | float \| None | No | Start time filter (UNIX timestamp with milliseconds) |
-| end_time | float \| None | No | End time filter (UNIX timestamp with milliseconds) |
-| zone_id | int \| None | No | Filter by specific zone |
+| `guild_id` | *int* | Yes | The guild ID to search for |
+| `limit` | *int \| None* | No | Number of reports per page (1-25, default 16) |
+| `page` | *int \| None* | No | Page number (default 1) |
+| `start_time` | *float \| None* | No | Start time filter (UNIX timestamp with milliseconds) |
+| `end_time` | *float \| None* | No | End time filter (UNIX timestamp with milliseconds) |
+| `zone_id` | *int \| None* | No | Filter by specific zone |
 
 **Returns**: `GetReports` object with the following structure:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| report_data.reports.data | List[Report] | List of report objects |
-| report_data.reports.total | int | Total number of reports |
-| report_data.reports.per_page | int | Number of reports per page |
-| report_data.reports.current_page | int | Current page number |
-| report_data.reports.has_more_pages | bool | Whether more pages are available |
+| `report_data.reports.data` | *List[Report]* | List of report objects |
+| `report_data.reports.total` | *int* | Total number of reports |
+| `report_data.reports.per_page` | *int* | Number of reports per page |
+| `report_data.reports.current_page` | *int* | Current page number |
+| `report_data.reports.has_more_pages` | *bool* | Whether more pages are available |
 
 **Example**:
 ```python
@@ -96,11 +96,11 @@ async def get_guild_reports():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get recent reports for guild
         reports = await client.get_guild_reports(guild_id=3468, limit=5)
         print(f"Found {len(reports.report_data.reports.data)} reports")
-        
+
         # Show report details
         for report in reports.report_data.reports.data:
             print(f"- {report.title} ({report.code})")
@@ -129,11 +129,11 @@ Guild-related filtering is also available in the main search methods:
 
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
-| guild_id | int \| None | No | Filter by specific guild ID |
-| guild_name | str \| None | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
-| guild_server_slug | str \| None | No | Guild server slug (required with guild_name) |
-| guild_server_region | str \| None | No | Guild server region (required with guild_name) |
-| guild_tag_id | int \| None | No | Filter by guild tag/team ID |
+| `guild_id` | *int \| None* | No | Filter by specific guild ID |
+| `guild_name` | *str \| None* | No | Filter by guild name (requires guild_server_slug and guild_server_region) |
+| `guild_server_slug` | *str \| None* | No | Guild server slug (required with guild_name) |
+| `guild_server_region` | *str \| None* | No | Guild server region (required with guild_name) |
+| `guild_tag_id` | *int \| None* | No | Filter by guild tag/team ID |
 
 **Example**:
 ```python
@@ -147,11 +147,11 @@ async def search_guild_reports():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Search by guild ID (most common)
         reports = await client.search_reports(guild_id=3468, limit=10)
         print(f"Found {len(reports.report_data.reports.data)} reports")
-        
+
         # Search by guild name (requires server info)
         reports = await client.search_reports(
             guild_name="The Shadow Court",
@@ -186,31 +186,31 @@ async def analyze_guild_performance():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get guild info
         guild = await client.get_guild_by_id(guild_id=1583)
         print(f"Analyzing guild: {guild.guild_data.guild.name}")
-        
+
         # Get reports from last 30 days
         end_time = datetime.now().timestamp() * 1000
         start_time = (datetime.now() - timedelta(days=30)).timestamp() * 1000
-        
+
         reports = await client.get_guild_reports(
             guild_id=1583,
             start_time=start_time,
             end_time=end_time,
             limit=25
         )
-        
+
         print(f"Reports in last 30 days: {len(reports.report_data.reports.data)}")
-        
+
         # Analyze by zone
         zones = {}
         for report in reports.report_data.reports.data:
             if hasattr(report, 'zone') and report.zone:
                 zone_name = report.zone.name
                 zones[zone_name] = zones.get(zone_name, 0) + 1
-        
+
         print("Activity by zone:")
         for zone, count in sorted(zones.items(), key=lambda x: x[1], reverse=True):
             print(f"  {zone}: {count} reports")
@@ -244,27 +244,27 @@ async def track_member_activity():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Get recent guild reports
         reports = await client.get_guild_reports(guild_id=1583, limit=5)
-        
+
         # Collect unique participants across reports
         all_members = {}
-        
+
         for report in reports.report_data.reports.data:
             print(f"\nReport: {report.title}")
-            
+
             # Get report rankings to see participant details
             rankings = await client.get_report_rankings(code=report.code)
-            
+
             if rankings.report_data and rankings.report_data.report.rankings:
                 fights = rankings.report_data.report.rankings['data']
-                
+
                 # Process first fight to get participants
                 if fights:
                     fight = fights[0]
                     roles = fight.get('roles', {})
-                    
+
                     # Extract members from all roles
                     for role_name, role_data in roles.items():
                         if 'characters' in role_data:
@@ -272,7 +272,7 @@ async def track_member_activity():
                                 char_name = char['name']
                                 char_class = char['class']
                                 char_spec = char['spec']
-                                
+
                                 # Track member participation
                                 if char_name not in all_members:
                                     all_members[char_name] = {
@@ -281,21 +281,21 @@ async def track_member_activity():
                                         'reports': []
                                     }
                                 all_members[char_name]['reports'].append(report.title)
-                                
+
                                 print(f"  - {char_name} ({char_class} {char_spec})")
-            
+
             # Add delay for rate limiting
             await asyncio.sleep(0.2)
-        
+
         # Summary of most active members
         print(f"\n=== Guild Activity Summary ===")
         print(f"Total unique members: {len(all_members)}")
-        
+
         # Sort by participation count
-        sorted_members = sorted(all_members.items(), 
-                              key=lambda x: len(x[1]['reports']), 
+        sorted_members = sorted(all_members.items(),
+                              key=lambda x: len(x[1]['reports']),
                               reverse=True)
-        
+
         print("\nMost active members:")
         for name, data in sorted_members[:5]:
             report_count = len(data['reports'])
@@ -348,9 +348,9 @@ async def handle_missing_guild():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         guild = await client.get_guild_by_id(guild_id=999999)  # Non-existent guild
-        
+
         # Check if guild exists
         if guild.guild_data.guild is None:
             print("Guild not found")
@@ -378,17 +378,17 @@ async def validate_guild_parameters():
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         try:
             # Validate parameters before making request
             guild_id = 3468
             limit = 25
             validate_positive_integer(guild_id, "guild_id")
             validate_limit_parameter(limit)
-            
+
             reports = await client.get_guild_reports(guild_id=guild_id, limit=limit)
             print(f"Successfully retrieved {len(reports.report_data.reports.data)} reports")
-            
+
         except GraphQLClientGraphQLMultiError as e:
             print(f"GraphQL error: {e}")
         except ValidationError as e:

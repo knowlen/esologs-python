@@ -9,40 +9,31 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: en
-  
-  # Color scheme inspired by Modular/Mojo docs
+
+  # Vim-style color scheme - dark only
   palette:
-    # Light mode
-    - scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    
-    # Dark mode  
+    # Dark mode only (vim style)
     - scheme: slate
       primary: custom
       accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
-  
-  # Typography - Inter font like Modular
+
+  # Typography - Regular font for UI, monospace for code
   font:
     text: Inter
     code: JetBrains Mono
-  
+
   # Features
   features:
     - navigation.instant
     - navigation.instant.prefetch
+    - navigation.instant.progress  # Show loading progress bar
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.path
+    - navigation.prune  # Reduce DOM size for better performance
     - navigation.top
     - navigation.footer
     - search.highlight
@@ -55,17 +46,17 @@ theme:
     - content.tooltips
     - content.action.edit
     - content.action.view
-    - toc.integrate
-  
+    - content.lazy  # Lazy load images and iframes
+
   # Icons
   icon:
     repo: fontawesome/brands/github
     edit: material/pencil
     view: material/eye
-    
+
   # Logo and favicon
   logo: assets/logo.png
-  favicon: assets/favicon.ico
+  favicon: assets/logo.png
 
 # Navigation
 nav:
@@ -81,7 +72,7 @@ nav:
     - World Data: api-reference/world-data.md
     - Report Analysis: api-reference/report-analysis.md
     - Report Search: api-reference/report-search.md
-    - System APIs: api-reference/system.md
+    - System Enspoints: api-reference/system.md
   - Development:
     - Setup: development/setup.md
     - Testing: development/testing.md
@@ -142,14 +133,21 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+        remove_empty_space: true
+        reduce_boolean_attributes: true
+        remove_optional_attribute_quotes: false
   - git-revision-date-localized:
       type: date
       fallback_to_build_date: true
+      enable_creation_date: false  # Reduce git operations
 
 # Customization
 extra_css:
-  - stylesheets/extra.css
-  - stylesheets/modular-theme.css
+  - stylesheets/vim-dark-theme.css
 
 extra_javascript:
   - javascripts/mathjax.js
@@ -164,25 +162,26 @@ extra:
       link: https://github.com/knowlen/esologs-python
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/esologs-python/
-  analytics:
-    provider: google
-    property: !ENV [GOOGLE_ANALYTICS_KEY, ""]
-    feedback:
-      title: Was this page helpful?
-      ratings:
-        - icon: material/emoticon-happy-outline
-          name: This page was helpful
-          data: 1
-          note: >-
-            Thanks for your feedback!
-        - icon: material/emoticon-sad-outline
-          name: This page could be improved
-          data: 0
-          note: >- 
-            Thanks for your feedback! Help us improve this page by
-            <a href="https://github.com/knowlen/esologs-python/issues/new/?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">telling us what you found lacking</a>.
+  # Analytics disabled - no cookies used
+  # analytics:
+  #   provider: google
+  #   property: G-XXXXXXXXXX  # Set via environment variable GOOGLE_ANALYTICS_KEY
+  #   feedback:
+  #     title: Was this page helpful?
+  #     ratings:
+  #       - icon: material/emoticon-happy-outline
+  #         name: This page was helpful
+  #         data: 1
+  #         note: >-
+  #           Thanks for your feedback!
+  #       - icon: material/emoticon-sad-outline
+  #         name: This page could be improved
+  #         data: 0
+  #         note: >-
+  #           Thanks for your feedback! Help us improve this page by
+  #           <a href="https://github.com/knowlen/esologs-python/issues/new/?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">telling us what you found lacking</a>.
+  generator: false
 
 # Copyright
 copyright: |
-  &copy; 2024 Nick Knowles. 
-  <a href="#__consent">Change cookie settings</a>
+  &copy; 2024 esologs-python.
