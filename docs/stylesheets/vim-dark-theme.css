@@ -323,10 +323,89 @@
   font-weight: 600;
 }
 
-/* Tabs with vim statusline styling */
-.md-tabs {
-  background-color: var(--vim-statusline) !important;
-  border-bottom: 2px solid var(--vim-comment);
+/* SINGLE ROW NAVIGATION - Styles for JavaScript-moved tabs */
+@media screen and (min-width: 76.25em) {
+  /* Style the navigation when moved to header */
+  .md-header__nav {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  /* Navigation tabs in header */
+  .md-header__nav .md-tabs__list {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Navigation links in header */
+  .md-header__nav .md-tabs__link {
+    color: var(--vim-fg) !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  /* Hover state for nav in header */
+  .md-header__nav .md-tabs__link:hover {
+    color: var(--vim-bg) !important;
+    background-color: var(--vim-fg) !important;
+  }
+  
+  /* Active state for nav in header */
+  .md-header__nav .md-tabs__link--active {
+    color: var(--vim-yellow) !important;
+    background-color: var(--vim-visual) !important;
+  }
+  
+  /* Ensure header has proper spacing */
+  .md-header__inner {
+    padding: 0 1rem !important;
+    gap: 1rem !important;
+  }
+  
+  /* Logo styling */
+  .md-header__button.md-logo {
+    flex: 0 0 auto !important;
+  }
+  
+  /* Title styling - hide "Home" text to save space */
+  .md-header__title {
+    flex: 0 0 auto !important;
+  }
+  
+  /* Hide the page title in header for more space */
+  .md-header__topic {
+    display: none !important;
+  }
+  
+  /* Search stays on the right */
+  .md-search {
+    margin-left: auto !important;
+    flex: 0 0 auto !important;
+  }
+}
+
+/* Fallback for smaller screens - keep two rows */
+@media screen and (max-width: 76.25em) {
+  /* Tabs with vim statusline styling */
+  .md-tabs {
+    background-color: #000000 !important;  /* Pure black tabs */
+    border-bottom: 2px solid var(--vim-comment);
+  }
+
+  /* Center the navigation tabs with slight right adjustment */
+  .md-tabs__list {
+    justify-content: center !important;
+    margin: 0 auto !important;
+    padding-right: 2rem !important;  /* Shift slightly right to align with content */
+  }
+
+  /* Remove gap between header and tabs */
+  .md-tabs {
+    margin-top: -2px !important;  /* Pull tabs up to close gap */
+  }
 }
 
 .md-tabs__link {
@@ -349,8 +428,15 @@
 
 /* Header with vim feel */
 .md-header {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;  /* Pure black header */
   border-bottom: 2px solid var(--vim-statusline);
+}
+
+/* Make logo bigger */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 1.6rem !important;  /* Slightly bigger than default */
+  width: auto !important;
 }
 
 .md-header__title {
