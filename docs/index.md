@@ -1,3 +1,5 @@
+<center><h1>ESO Logs Python</h1></center>
+
 <div class="hero-section">
 
   <div style="text-align: center; margin-bottom: 2rem;">
@@ -7,7 +9,6 @@
     </picture>
   </div>
 
-  <center><h1>ESO Logs Python</h1></center>
   <p>A comprehensive Python client library for the ESO Logs API v2</p>
   <ul>
 		<li> <b>Type Safety</b>: Full type hints with Pydantic models</li>
