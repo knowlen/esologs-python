@@ -1,7 +1,9 @@
 """Shared test configuration for documentation tests."""
 
-import pytest
 import os
+
+import pytest
+
 from access_token import get_access_token
 
 
@@ -10,10 +12,10 @@ def api_credentials():
     """Ensure API credentials are available."""
     client_id = os.environ.get("ESOLOGS_ID")
     client_secret = os.environ.get("ESOLOGS_SECRET")
-    
+
     if not client_id or not client_secret:
         pytest.skip("ESO Logs API credentials not available in environment")
-    
+
     return {"client_id": client_id, "client_secret": client_secret}
 
 
@@ -32,7 +34,7 @@ def api_client_config(access_token):
     """Standard client configuration for tests."""
     return {
         "url": "https://www.esologs.com/api/v2/client",
-        "headers": {"Authorization": f"Bearer {access_token}"}
+        "headers": {"Authorization": f"Bearer {access_token}"},
     }
 
 

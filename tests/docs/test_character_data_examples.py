@@ -1,15 +1,19 @@
 """
 Tests for examples in docs/api-reference/character-data.md
 
-Validates that all code examples in the character data API documentation 
+Validates that all code examples in the character data API documentation
 execute correctly and return expected data structures.
 """
 
+
 import pytest
-import asyncio
+
 from esologs.client import Client
-from access_token import get_access_token
-from esologs.exceptions import GraphQLClientHttpError, GraphQLClientGraphQLMultiError, ValidationError
+from esologs.exceptions import (
+    GraphQLClientGraphQLMultiError,
+    GraphQLClientHttpError,
+    ValidationError,
+)
 
 
 class TestCharacterDataExamples:
@@ -21,23 +25,23 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID
             character = await client.get_character_by_id(id=314050)
-            
+
             # Validate response structure
-            assert hasattr(character, 'character_data')
+            assert hasattr(character, "character_data")
             assert character.character_data is not None
-            assert hasattr(character.character_data, 'character')
+            assert hasattr(character.character_data, "character")
             assert character.character_data.character is not None
-            
+
             # Validate character structure
             char = character.character_data.character
-            assert hasattr(char, 'id')
-            assert hasattr(char, 'name')
-            assert hasattr(char, 'class_id')
-            assert hasattr(char, 'race_id')
-            assert hasattr(char, 'guild_rank')
-            assert hasattr(char, 'hidden')
-            assert hasattr(char, 'server')
-            
+            assert hasattr(char, "id")
+            assert hasattr(char, "name")
+            assert hasattr(char, "class_id")
+            assert hasattr(char, "race_id")
+            assert hasattr(char, "guild_rank")
+            assert hasattr(char, "hidden")
+            assert hasattr(char, "server")
+
             # Validate data types
             assert isinstance(char.id, int)
             assert isinstance(char.name, str)
@@ -45,11 +49,11 @@ class TestCharacterDataExamples:
             assert isinstance(char.race_id, int)
             assert isinstance(char.guild_rank, int)
             assert isinstance(char.hidden, bool)
-            
+
             # Validate server structure
-            assert hasattr(char.server, 'name')
-            assert hasattr(char.server, 'region')
-            assert hasattr(char.server.region, 'name')
+            assert hasattr(char.server, "name")
+            assert hasattr(char.server, "region")
+            assert hasattr(char.server.region, "name")
             assert isinstance(char.server.name, str)
             assert isinstance(char.server.region.name, str)
 
@@ -59,42 +63,42 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID
             reports = await client.get_character_reports(character_id=314050, limit=5)
-            
+
             # Validate response structure
-            assert hasattr(reports, 'character_data')
+            assert hasattr(reports, "character_data")
             assert reports.character_data is not None
-            assert hasattr(reports.character_data, 'character')
+            assert hasattr(reports.character_data, "character")
             assert reports.character_data.character is not None
-            
+
             # Validate recent reports structure
             recent_reports = reports.character_data.character.recent_reports
             if recent_reports:  # May be None if character has no reports
-                assert hasattr(recent_reports, 'data')
-                assert hasattr(recent_reports, 'total')
-                assert hasattr(recent_reports, 'per_page')
-                assert hasattr(recent_reports, 'current_page')
-                assert hasattr(recent_reports, 'has_more_pages')
-                
+                assert hasattr(recent_reports, "data")
+                assert hasattr(recent_reports, "total")
+                assert hasattr(recent_reports, "per_page")
+                assert hasattr(recent_reports, "current_page")
+                assert hasattr(recent_reports, "has_more_pages")
+
                 # Validate data types
                 assert isinstance(recent_reports.total, int)
                 assert isinstance(recent_reports.per_page, int)
                 assert isinstance(recent_reports.current_page, int)
                 assert isinstance(recent_reports.has_more_pages, bool)
-                
+
                 # If there are reports, validate their structure
                 if recent_reports.data:
                     for report in recent_reports.data:
                         if report:  # Reports can be None
-                            assert hasattr(report, 'code')
-                            assert hasattr(report, 'start_time')
-                            assert hasattr(report, 'end_time')
+                            assert hasattr(report, "code")
+                            assert hasattr(report, "start_time")
+                            assert hasattr(report, "end_time")
                             assert isinstance(report.code, str)
                             assert isinstance(report.start_time, float)
                             assert isinstance(report.end_time, float)
-                            
+
                             # Zone can be None
                             if report.zone:
-                                assert hasattr(report.zone, 'name')
+                                assert hasattr(report.zone, "name")
                                 assert isinstance(report.zone.name, str)
 
     @pytest.mark.asyncio
@@ -103,18 +107,16 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID and encounter ID
             ranking = await client.get_character_encounter_ranking(
-                character_id=314050,
-                encounter_id=63  # Rockgrove encounter
+                character_id=314050, encounter_id=63  # Rockgrove encounter
             )
-            
+
             # Validate response structure
-            assert hasattr(ranking, 'character_data')
+            assert hasattr(ranking, "character_data")
             assert ranking.character_data is not None
-            assert hasattr(ranking.character_data, 'character')
+            assert hasattr(ranking.character_data, "character")
             assert ranking.character_data.character is not None
-            
+
             # encounter_rankings can be None or Any type
-            rankings = ranking.character_data.character.encounter_rankings
             # Just verify the field exists - content varies by character/encounter
 
     @pytest.mark.asyncio
@@ -125,17 +127,16 @@ class TestCharacterDataExamples:
             rankings = await client.get_character_encounter_rankings(
                 character_id=314050,
                 encounter_id=63,  # Rockgrove encounter
-                include_combatant_info=True
+                include_combatant_info=True,
             )
-            
+
             # Validate response structure
-            assert hasattr(rankings, 'character_data')
+            assert hasattr(rankings, "character_data")
             assert rankings.character_data is not None
-            assert hasattr(rankings.character_data, 'character')
+            assert hasattr(rankings.character_data, "character")
             assert rankings.character_data.character is not None
-            
+
             # encounter_rankings can be None or Any type
-            encounter_rankings = rankings.character_data.character.encounter_rankings
             # Just verify the field exists - content varies by character/encounter
 
     @pytest.mark.asyncio
@@ -144,19 +145,16 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Use a known valid character ID and zone ID
             rankings = await client.get_character_zone_rankings(
-                character_id=314050,
-                zone_id=19,  # Ossein Cage zone
-                size=5
+                character_id=314050, zone_id=19, size=5  # Ossein Cage zone
             )
-            
+
             # Validate response structure
-            assert hasattr(rankings, 'character_data')
+            assert hasattr(rankings, "character_data")
             assert rankings.character_data is not None
-            assert hasattr(rankings.character_data, 'character')
+            assert hasattr(rankings.character_data, "character")
             assert rankings.character_data.character is not None
-            
+
             # zone_rankings can be None or Any type
-            zone_rankings = rankings.character_data.character.zone_rankings
             # Just verify the field exists - content varies by character/zone
 
     @pytest.mark.asyncio
@@ -165,22 +163,22 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Test the complete character analysis pattern
             character_id = 314050
-            
+
             # Get character profile
             character = await client.get_character_by_id(id=character_id)
             assert character.character_data is not None
             assert character.character_data.character is not None
-            
+
             char = character.character_data.character
             assert isinstance(char.name, str)
             assert isinstance(char.server.name, str)
             assert isinstance(char.server.region.name, str)
-            
+
             # Get recent reports
             reports = await client.get_character_reports(character_id=character_id)
             assert reports.character_data is not None
             assert reports.character_data.character is not None
-            
+
             # recent_reports can be None if character has no activity
             recent_reports = reports.character_data.character.recent_reports
             if recent_reports:
@@ -193,20 +191,19 @@ class TestCharacterDataExamples:
             # Test the performance tracking pattern
             character_id = 314050
             encounter_id = 63  # Rockgrove encounter
-            
+
             # Get encounter rankings
             rankings = await client.get_character_encounter_rankings(
                 character_id=character_id,
                 encounter_id=encounter_id,
-                include_combatant_info=True
+                include_combatant_info=True,
             )
-            
+
             # Validate response structure
             assert rankings.character_data is not None
             assert rankings.character_data.character is not None
-            
+
             # encounter_rankings field should exist (can be None)
-            encounter_rankings = rankings.character_data.character.encounter_rankings
             # Content varies by character/encounter, so we just check field exists
 
     @pytest.mark.asyncio
@@ -217,8 +214,12 @@ class TestCharacterDataExamples:
             try:
                 character = await client.get_character_by_id(id=999999999)
                 # If it succeeds, just verify it's a valid response
-                assert hasattr(character, 'character_data')
-            except (GraphQLClientGraphQLMultiError, GraphQLClientHttpError, ValidationError):
+                assert hasattr(character, "character_data")
+            except (
+                GraphQLClientGraphQLMultiError,
+                GraphQLClientHttpError,
+                ValidationError,
+            ):
                 # Expected - this character ID likely doesn't exist
                 pass
 
@@ -228,10 +229,10 @@ class TestCharacterDataExamples:
         async with Client(**api_client_config) as client:
             # Test with small limit
             reports = await client.get_character_reports(character_id=314050, limit=1)
-            
+
             assert reports.character_data is not None
             assert reports.character_data.character is not None
-            
+
             recent_reports = reports.character_data.character.recent_reports
             if recent_reports and recent_reports.data:
                 # Should respect the limit
@@ -247,25 +248,24 @@ class TestCharacterDataExamples:
                 encounter_id=63,  # Rockgrove encounter
                 include_combatant_info=True,
                 by_bracket=True,
-                include_private_logs=False
+                include_private_logs=False,
             )
-            
+
             # Validate basic structure
             assert rankings.character_data is not None
             assert rankings.character_data.character is not None
-            assert hasattr(rankings.character_data.character, 'encounter_rankings')
+            assert hasattr(rankings.character_data.character, "encounter_rankings")
 
-    @pytest.mark.asyncio  
+    @pytest.mark.asyncio
     async def test_zone_rankings_without_zone_id(self, api_client_config):
         """Test character zone rankings without specifying zone_id"""
         async with Client(**api_client_config) as client:
             # Test without zone_id parameter (should get all zones)
             rankings = await client.get_character_zone_rankings(
-                character_id=314050,
-                size=10
+                character_id=314050, size=10
             )
-            
+
             # Validate basic structure
             assert rankings.character_data is not None
             assert rankings.character_data.character is not None
-            assert hasattr(rankings.character_data.character, 'zone_rankings')
+            assert hasattr(rankings.character_data.character, "zone_rankings")

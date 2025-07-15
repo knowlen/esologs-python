@@ -13,12 +13,12 @@ graph TB
     C --> F[OAuth2 Provider]
     D --> G[ESO Logs API v2]
     E --> H[Pydantic Validation]
-    
+
     subgraph "Generated Code"
         D
         E
     end
-    
+
     subgraph "ESO Logs Infrastructure"
         F
         G
@@ -63,18 +63,18 @@ class Client(BaseClient):
 # access_token.py
 def get_access_token(client_id=None, client_secret=None):
     """Get OAuth2 access token using client credentials flow."""
-    
+
     # Environment variable fallback
     client_id = client_id or os.getenv("ESOLOGS_ID")
     client_secret = client_secret or os.getenv("ESOLOGS_SECRET")
-    
+
     # OAuth2 request to ESO Logs
     response = requests.post("https://www.esologs.com/oauth/token", {
         "grant_type": "client_credentials",
         "client_id": client_id,
         "client_secret": client_secret
     })
-    
+
     return response.json()["access_token"]
 ```
 
@@ -96,7 +96,7 @@ class Character(BaseModel):
     server: Server
     class_id: Optional[int] = None
     race_id: Optional[int] = None
-    
+
     class Config:
         # Allow extra fields for future API expansion
         extra = "ignore"
@@ -171,16 +171,16 @@ graph LR
 # Proper async usage
 async def main():
     token = get_access_token()  # Sync operation
-    
+
     async with Client(
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:  # Async context manager
-        
+
         # All API calls are async
         character = await client.get_character_by_id(id=12345)
         reports = await client.get_character_reports(character_id=12345)
-        
+
         # Concurrent operations
         results = await asyncio.gather(
             client.get_abilities(limit=10),
@@ -254,7 +254,7 @@ graph TB
     A --> C[Integration Tests - 85]
     A --> D[Documentation Tests - 98]
     A --> E[Sanity Tests - 19]
-    
+
     B --> F[Fast, Isolated]
     C --> G[Live API, Comprehensive]
     D --> H[Example Validation]
@@ -372,10 +372,10 @@ IMPLEMENTED_APIS = {
    ```bash
    # 1. Update GraphQL queries
    vim queries.graphql
-   
+
    # 2. Regenerate client
    ariadne-codegen client --config mini.toml
-   
+
    # 3. Add tests
    pytest tests/integration/test_new_feature.py
    ```
@@ -433,10 +433,10 @@ def validate_character_id(character_id: int) -> int:
     """Validate character ID parameter."""
     if not isinstance(character_id, int):
         raise ValidationError("character_id", character_id, "Must be an integer")
-    
+
     if character_id <= 0:
         raise ValidationError("character_id", character_id, "Must be positive")
-    
+
     return character_id
 ```
 
@@ -455,10 +455,10 @@ def validate_character_id(character_id: int) -> int:
 async def check_rate_limits(client: Client):
     """Monitor current rate limit usage."""
     rate_limit = await client.get_rate_limit_data()
-    
+
     usage = rate_limit.rate_limit_data.points_spent_this_hour
     limit = rate_limit.rate_limit_data.limit_per_hour
-    
+
     print(f"Rate limit usage: {usage}/{limit} ({usage/limit*100:.1f}%)")
 ```
 
@@ -514,9 +514,9 @@ graph LR
 This architecture provides a solid foundation for a type-safe, maintainable, and extensible GraphQL client library with comprehensive testing and documentation support.
 
 !!! tip "Performance"
-    The architecture prioritizes developer experience with type safety while maintaining 
+    The architecture prioritizes developer experience with type safety while maintaining
     high performance through async operations and efficient GraphQL queries.
 
 !!! info "Extensibility"
-    New API endpoints can be added by updating GraphQL queries and regenerating the client, 
+    New API endpoints can be added by updating GraphQL queries and regenerating the client,
     making the library easy to extend as the ESO Logs API evolves.

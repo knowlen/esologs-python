@@ -107,7 +107,7 @@ pytest tests/ --cov=esologs --cov-report=html
 **Key Areas**:
 - All API reference documentation examples (98 tests)
 - Quickstart guide examples
-- Authentication guide examples  
+- Authentication guide examples
 - Game data, character data, guild data, world data examples
 - Report analysis and search examples
 - Error handling patterns

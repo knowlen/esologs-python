@@ -84,14 +84,14 @@ from esologs.exceptions import ValidationError
 
 class TestNewFeature:
     """Test suite for new feature."""
-    
+
     @pytest.mark.asyncio
     async def test_basic_functionality(self, authenticated_client):
         """Test basic functionality works correctly."""
         result = await authenticated_client.new_method()
         assert result is not None
         assert result.data is not None
-    
+
     def test_validation(self):
         """Test parameter validation."""
         with pytest.raises(ValidationError):
@@ -137,11 +137,11 @@ pytest path/to/test.py::test_name -v -s
 ## Performance
 
 - **Unit tests**: < 5 seconds
-- **Integration tests**: ~30 seconds  
+- **Integration tests**: ~30 seconds
 - **Documentation tests**: ~25 seconds
 - **Sanity tests**: ~15 seconds
 - **Total**: ~75 seconds
 
 !!! tip "Development Workflow"
-    Run unit tests frequently during development for fast feedback. 
+    Run unit tests frequently during development for fast feedback.
     Use integration tests before committing to validate API changes.

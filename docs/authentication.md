@@ -30,7 +30,7 @@ Before you can authenticate, you need:
    !!! info "Public Client vs Private Client"
        - **Private Client (Recommended)**: Can securely store client secret. Use for server-side applications, CLI tools, and scripts.
        - **Public Client**: Cannot store client secret securely. Uses PKCE (Proof Key for Code Exchange) flow. Mainly for mobile apps or browser-based applications.
-       
+
        For ESO Logs Python library usage, keep "Public Client" **unchecked** unless you have specific security constraints.
 
 4. Click **"Create"**
@@ -55,7 +55,7 @@ To access your credentials:
 - **Client Secret**: Private key (only visible when editing) - keep this secure!
 
 !!! warning "Keep Your Secret Safe"
-    **Never** commit your Client Secret to version control or share it publicly. 
+    **Never** commit your Client Secret to version control or share it publicly.
     Treat it like a password - store it securely using environment variables.
 
 ## Setting Up Credentials
@@ -70,7 +70,7 @@ Set your credentials as environment variables:
     # Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
     export ESOLOGS_ID="your_client_id_here"
     export ESOLOGS_SECRET="your_client_secret_here"
-    
+
     # Apply changes
     source ~/.bashrc  # or restart your terminal
     ```
@@ -81,7 +81,7 @@ Set your credentials as environment variables:
     # Set for current session
     $env:ESOLOGS_ID="your_client_id_here"
     $env:ESOLOGS_SECRET="your_client_secret_here"
-    
+
     # Set permanently (requires restart)
     [Environment]::SetEnvironmentVariable("ESOLOGS_ID", "your_client_id_here", "User")
     [Environment]::SetEnvironmentVariable("ESOLOGS_SECRET", "your_client_secret_here", "User")
@@ -93,7 +93,7 @@ Set your credentials as environment variables:
     # Set for current session
     set ESOLOGS_ID=your_client_id_here
     set ESOLOGS_SECRET=your_client_secret_here
-    
+
     # Set permanently
     setx ESOLOGS_ID "your_client_id_here"
     setx ESOLOGS_SECRET "your_client_secret_here"
@@ -111,7 +111,7 @@ ESOLOGS_SECRET=your_client_secret_here
 
 !!! danger "Security Warning"
     Add `.env` to your `.gitignore` file to prevent committing credentials:
-    
+
     ```gitignore
     # .gitignore
     .env
@@ -156,13 +156,13 @@ from access_token import get_access_token
 async def main():
     # Get authentication token
     token = get_access_token()
-    
+
     # Create authenticated client
     async with Client(
         url="https://www.esologs.com/api/v2/client",
         headers={"Authorization": f"Bearer {token}"}
     ) as client:
-        
+
         # Test authentication with rate limit check
         rate_limit = await client.get_rate_limit_data()
         print(f"Rate limit: {rate_limit.rate_limit_data.limit_per_hour}")
@@ -183,7 +183,7 @@ async def test_authentication():
     try:
         token = get_access_token()
         print("✅ Token obtained successfully")
-        
+
         # Test token with API call
         async with Client(
             url="https://www.esologs.com/api/v2/client",
@@ -192,7 +192,7 @@ async def test_authentication():
             rate_limit = await client.get_rate_limit_data()
             print("✅ Authentication successful")
             print(f"Rate limit: {rate_limit.rate_limit_data.limit_per_hour}/hour")
-            
+
     except GraphQLClientHttpError as e:
         if e.status_code == 401:
             print("❌ Authentication failed: Invalid credentials")
@@ -247,20 +247,20 @@ async def validate_token():
     """Validate authentication token by making a simple API call."""
     try:
         token = get_access_token()
-        
+
         async with Client(
             url="https://www.esologs.com/api/v2/client",
             headers={"Authorization": f"Bearer {token}"}
         ) as client:
-            
+
             # Simple validation call
             rate_limit = await client.get_rate_limit_data()
-            
+
             print("✅ Token valid")
             print(f"Rate limit: {rate_limit.rate_limit_data.limit_per_hour}/hour")
             print(f"Used: {rate_limit.rate_limit_data.points_spent_this_hour}")
             return True
-            
+
     except Exception as e:
         print(f"❌ Token validation failed: {e}")
         return False
@@ -382,9 +382,9 @@ With authentication configured:
 3. **[Development Guide](development/setup.md)** - Set up for contributing
 
 !!! tip "Rate Limits"
-    ESO Logs API has rate limits based on points per hour. Use `get_rate_limit_data()` 
+    ESO Logs API has rate limits based on points per hour. Use `get_rate_limit_data()`
     to monitor your usage and avoid hitting limits.
 
 !!! info "Multiple Applications"
-    You can create multiple API clients for different applications or environments. 
+    You can create multiple API clients for different applications or environments.
     Each client gets its own rate limit allocation.

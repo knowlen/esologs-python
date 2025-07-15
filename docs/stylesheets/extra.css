@@ -92,22 +92,22 @@ html {
   .md-footer {
     display: none;
   }
-  
+
   .md-content {
     margin: 0;
   }
-  
+
   .md-typeset table:not([class]) th,
   .md-typeset table:not([class]) td {
     border-left: 1px solid #000;
     border-right: 1px solid #000;
   }
-  
+
   .md-typeset table:not([class]) th:first-child,
   .md-typeset table:not([class]) td:first-child {
     border-left: none;
   }
-  
+
   .md-typeset table:not([class]) th:last-child,
   .md-typeset table:not([class]) td:last-child {
     border-right: none;

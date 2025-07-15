@@ -53,13 +53,13 @@ git push origin feature/your-feature-name
 ```python
 async def get_character_by_id(self, id: int) -> CharacterResponse:
     """Get character information by ID.
-    
+
     Args:
         id: Character ID to retrieve
-        
+
     Returns:
         Character data including profile and server
-        
+
     Raises:
         ValidationError: If character ID is invalid
         GraphQLClientHttpError: If API request fails
@@ -149,5 +149,5 @@ ariadne-codegen client --config mini.toml
 - Follow patterns in existing code
 
 !!! tip "First Contribution?"
-    Start with documentation improvements or small bug fixes to get familiar 
+    Start with documentation improvements or small bug fixes to get familiar
     with the codebase and workflow.
