@@ -91,7 +91,7 @@
   --md-accent-fg-color--dark:   var(--vim-magenta);
 
   /* Code colors */
-  --md-code-bg-color:           #000000;
+  --md-code-bg-color:           var(--vim-bg-light);
   --md-code-fg-color:           var(--code-text);
 
   /* OVERRIDE Material theme's syntax highlighting variables - Part 1 */
@@ -168,7 +168,7 @@
 
 /* Code with exact colors from your example */
 .md-typeset code {
-  background-color: #000000 !important;
+  background-color: var(--vim-bg-light) !important;
   color: var(--code-text) !important;
   border: 1px solid var(--vim-comment);
   border-radius: 3px;
