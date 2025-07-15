@@ -140,15 +140,10 @@ plugins:
         remove_empty_space: true
         reduce_boolean_attributes: true
         remove_optional_attribute_quotes: false
-      css_files:
-        - stylesheets/vim-dark-theme.css
-      js_files:
-        - javascripts/mathjax.js
   - git-revision-date-localized:
       type: date
       fallback_to_build_date: true
       enable_creation_date: false  # Reduce git operations
-      cache: true
 
 # Customization
 extra_css:
