@@ -5,7 +5,7 @@ import subprocess
 from pathlib import Path
 
 
-def create_webp(input_path, output_path):
+def create_webp(input_path: Path, output_path: Path) -> bool:
     """Create WebP version of image."""
     try:
         subprocess.run(
@@ -19,7 +19,7 @@ def create_webp(input_path, output_path):
         return False
 
 
-def main():
+def main() -> None:
     """Convert images to WebP format."""
     docs_dir = Path("docs")
 

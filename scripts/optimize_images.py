@@ -5,12 +5,13 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import List
 
 
-def check_dependencies():
+def check_dependencies() -> bool:
     """Check if required tools are installed."""
     tools = ["pngquant", "optipng", "cwebp"]
-    missing = []
+    missing: List[str] = []
 
     for tool in tools:
         if shutil.which(tool) is None:
@@ -25,7 +26,7 @@ def check_dependencies():
     return True
 
 
-def optimize_png(input_path, output_path):
+def optimize_png(input_path: Path, output_path: Path) -> None:
     """Optimize PNG using pngquant and optipng."""
     temp_path = output_path.with_suffix(".temp.png")
 
@@ -74,7 +75,7 @@ def optimize_png(input_path, output_path):
         temp_path.unlink()
 
 
-def create_webp(input_path, output_path):
+def create_webp(input_path: Path, output_path: Path) -> bool:
     """Create WebP version of image."""
     try:
         subprocess.run(
@@ -88,7 +89,7 @@ def create_webp(input_path, output_path):
         return False
 
 
-def optimize_favicon():
+def optimize_favicon() -> None:
     """Special handling for favicon."""
     favicon_path = Path("docs/assets/favicon.ico")
     if not favicon_path.exists():
@@ -104,7 +105,7 @@ def optimize_favicon():
         # Note: ICO optimization is complex, leaving as-is for now
 
 
-def main():
+def main() -> None:
     """Optimize all images in docs directory."""
     if not check_dependencies():
         sys.exit(1)
@@ -116,7 +117,7 @@ def main():
 
     # Find all images
     image_patterns = ["*.png", "*.jpg", "*.jpeg"]
-    images = []
+    images: List[Path] = []
     for pattern in image_patterns:
         images.extend(docs_dir.rglob(pattern))
 
@@ -126,9 +127,9 @@ def main():
 
     print(f"Found {len(images)} images to optimize\n")
 
-    total_original = 0
-    total_optimized = 0
-    total_webp = 0
+    total_original = 0.0
+    total_optimized = 0.0
+    total_webp = 0.0
 
     for img_path in images:
         print(f"Processing: {img_path}")
