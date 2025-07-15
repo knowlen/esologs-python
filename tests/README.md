@@ -9,8 +9,9 @@ Comprehensive testing framework for the esologs-python library, providing three 
 | **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 76 tests |
 | **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 85 tests |
 | **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 19 tests |
+| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 98 tests |
 
-## Quick Start
+## Quickstart
 
 ### Running All Tests
 ```bash
@@ -26,6 +27,11 @@ pytest tests/integration/ -v
 export ESOLOGS_ID="your_client_id"
 export ESOLOGS_SECRET="your_client_secret"
 pytest tests/sanity/ -v
+
+# Documentation tests (API credentials required)
+export ESOLOGS_ID="your_client_id"
+export ESOLOGS_SECRET="your_client_secret"
+pytest tests/docs/ -v
 
 # All tests
 pytest tests/ -v
@@ -90,12 +96,32 @@ pytest tests/ --cov=esologs --cov-report=html
 
 [→ View Sanity Test Details](sanity/README.md)
 
+### 📖 [Documentation Tests](docs/) - Code Examples Validation
+**Purpose**: Ensure documentation code examples are accurate and executable
+
+- **📋 Example Validation**: Tests all code blocks from documentation
+- **🔄 Prevents Documentation Drift**: Ensures examples stay current with API changes
+- **✅ User Confidence**: Guarantees copy-paste examples work as expected
+- **🤖 CI/CD Integration**: Automated validation of documentation accuracy
+
+**Key Areas**:
+- All API reference documentation examples (98 tests)
+- Quickstart guide examples
+- Authentication guide examples
+- Game data, character data, guild data, world data examples
+- Report analysis and search examples
+- Error handling patterns
+- Module import validation
+
+[→ View Documentation Test Details](docs/README.md)
+
 ## Testing Strategy
 
 ### Development Workflow
 1. **🔧 Unit Tests First**: Write and run unit tests during development
 2. **🔌 Integration Testing**: Verify API integration works correctly
-3. **🩺 Sanity Check**: Ensure overall system health before deployment
+3. **📖 Documentation Testing**: Validate code examples remain accurate
+4. **🩺 Sanity Check**: Ensure overall system health before deployment
 
 ### Test Selection Guide
 ```bash
@@ -104,6 +130,9 @@ pytest tests/unit/
 
 # Before committing - verify API integration
 pytest tests/integration/
+
+# Before documentation updates - validate examples
+pytest tests/docs/
 
 # Before deployment - overall health check
 pytest tests/sanity/
@@ -151,7 +180,7 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~65% API endpoint coverage
+- **Integration Tests**: ~75% API endpoint coverage
 - **Sanity Tests**: 13+ major API features validated
 - **Overall**: 70% code coverage with high-quality tests
 
@@ -167,8 +196,9 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 1. **Unit Tests**: Add for all new validation logic and methods
 2. **Integration Tests**: Add for new API endpoints and workflows
-3. **Sanity Tests**: Update coverage report for new API features
-4. **Documentation**: Update relevant README files
+3. **Documentation Tests**: Add for new code examples in documentation
+4. **Sanity Tests**: Update coverage report for new API features
+5. **Documentation**: Update relevant README files
 
 ### Test Guidelines
 
@@ -201,6 +231,12 @@ black . && isort . && ruff check --fix . && mypy .
     ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}
   run: pytest tests/integration/ -v
 
+- name: Run Documentation Tests
+  env:
+    ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
+    ESOLOGS_SECRET: ${{ secrets.ESOLOGS_SECRET }}
+  run: pytest tests/docs/ -v
+
 - name: Run Sanity Tests
   env:
     ESOLOGS_ID: ${{ secrets.ESOLOGS_ID }}
@@ -212,9 +248,10 @@ black . && isort . && ruff check --fix . && mypy .
 
 | Suite | Execution Time | Tests | Purpose |
 |-------|---------------|-------|---------|
-| Unit | < 5 seconds | 81 | Development feedback |
-| Integration | ~30 seconds | 67 | API validation |
-| Sanity | ~15 seconds | 18 | Health check |
-| **Total** | **~60 seconds** | **180** | **Complete validation** |
+| Unit | < 5 seconds | 76 | Development feedback |
+| Integration | ~30 seconds | 85 | API validation |
+| Documentation | ~25 seconds | 98 | Examples validation |
+| Sanity | ~15 seconds | 19 | Health check |
+| **Total** | **~75 seconds** | **278** | **Complete validation** |
 
 The test suite provides comprehensive coverage while maintaining fast execution times for efficient development workflows.

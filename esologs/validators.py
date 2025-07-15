@@ -199,7 +199,7 @@ def validate_limit_parameter(limit: Optional[int]) -> None:
     if limit <= 0:
         raise ValidationError("Limit must be positive")
 
-    if limit > 10000:  # Reasonable upper bound
+    if limit > 10000:  # ESO Logs API maximum allowed limit
         raise ValidationError("Limit cannot exceed 10,000")
 
 
