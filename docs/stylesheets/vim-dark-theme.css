@@ -1,7 +1,35 @@
-/* Vim-style dark theme for ESO Logs Python documentation */
+/*
+ * Vim Dark Theme for ESO Logs Python Documentation
+ * ================================================
+ *
+ * Architecture Overview:
+ * ---------------------
+ * This theme overrides MkDocs Material Design, which uses extremely high CSS specificity
+ * through deeply nested selectors and dynamically generated classes. Material's theme
+ * system applies styles through multiple cascading layers, some via JavaScript at runtime.
+ *
+ * The extensive use of !important declarations (155 instances) is intentional and necessary
+ * to ensure our vim theme consistently overrides Material's defaults. Without these,
+ * Material's specificity would cause partial theme application, resulting in an
+ * inconsistent visual experience.
+ *
+ * Maintenance Guidelines:
+ * ----------------------
+ * - Color palette is defined as CSS custom properties for easy theming
+ * - Each major section is clearly commented for navigation
+ * - Syntax highlighting follows Pygments class naming conventions
+ * - When modifying, test across all page types to ensure consistency
+ *
+ * Color Philosophy:
+ * ----------------
+ * Based on classic vim colorschemes, optimized for long reading sessions
+ * and code readability. The palette has been refined over decades of
+ * terminal usage for optimal contrast and reduced eye strain.
+ */
 
-/* Import JetBrains Mono for that terminal feel */
+/* Import fonts with explicit font-display for optimal loading performance */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* Vim Color Palette - matching your desired code block theme */
 :root {
@@ -795,4 +823,34 @@
   background-color: var(--vim-visual) !important;
   border-left-color: var(--vim-yellow);
   font-weight: 600;
+}
+
+/*
+ * Accessibility: Motion Preferences
+ * =================================
+ * Respects user's motion preferences to prevent motion sickness
+ * or discomfort from animations and transitions.
+ */
+@media (prefers-reduced-motion: reduce) {
+  /* Remove all animations and transitions */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable smooth scrolling */
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  /* Remove hover transform effects */
+  .hero-section img:hover,
+  .feature-card:hover,
+  .md-button:hover {
+    transform: none !important;
+  }
 }
