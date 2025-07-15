@@ -26,12 +26,14 @@ theme:
   features:
     - navigation.instant
     - navigation.instant.prefetch
+    - navigation.instant.progress  # Show loading progress bar
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.path
+    - navigation.prune  # Reduce DOM size for better performance
     - navigation.top
     - navigation.footer
     - search.highlight
@@ -44,6 +46,7 @@ theme:
     - content.tooltips
     - content.action.edit
     - content.action.view
+    - content.lazy  # Lazy load images and iframes
 
   # Icons
   icon:
@@ -130,9 +133,22 @@ plugins:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - minify:
       minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+        remove_empty_space: true
+        reduce_boolean_attributes: true
+        remove_optional_attribute_quotes: false
+      css_files:
+        - stylesheets/vim-dark-theme.css
+      js_files:
+        - javascripts/mathjax.js
   - git-revision-date-localized:
       type: date
       fallback_to_build_date: true
+      enable_creation_date: false  # Reduce git operations
+      cache: true
 
 # Customization
 extra_css:
