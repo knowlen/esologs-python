@@ -16,11 +16,13 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## Project Status
 
-**Current Version:** 0.2.0-alpha
-**API Coverage:** ~83% (comprehensive analysis shows 6/8 API sections fully implemented)
-**Development Stage:** Active development
-**Documentation:** [Read the Docs](https://esologs-python.readthedocs.io/)
-**Tests:** 278 tests across unit, integration, documentation, and sanity suites
+| Metric | Status |
+|--------|--------|
+| **Current Version** | 0.2.0-alpha |
+| **API Coverage** | ~83% (comprehensive analysis shows 6/8 API sections fully implemented) |
+| **Development Stage** | Active development |
+| **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
+| **Tests** | 278 tests across unit, integration, documentation, and sanity suites |
 
 ### Current API Coverage
 **Implemented (6/8 sections):**
