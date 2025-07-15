@@ -382,6 +382,8 @@
   border: 1px solid var(--vim-comment);
   border-radius: 5px;
   overflow: hidden;
+  width: 100% !important;  /* Ensure tables use full available width */
+  table-layout: auto !important;  /* Allow flexible column sizing */
 }
 
 .md-typeset table:not([class]) th {
@@ -405,6 +407,33 @@
 
 .md-typeset table:not([class]) tr:hover {
   background-color: var(--vim-visual) !important;
+}
+
+/* API Reference table column widths */
+.md-typeset table:not([class]) th:first-child,
+.md-typeset table:not([class]) td:first-child {
+  min-width: 180px !important;  /* Prevent parameter/field names from wrapping */
+  white-space: nowrap !important;  /* Force single line */
+}
+
+/* Ensure code snippets in tables don't wrap */
+.md-typeset table:not([class]) td code {
+  white-space: nowrap !important;  /* Prevent wrapping */
+  display: inline-block !important;  /* Maintain block properties */
+}
+
+/* Type column (second column) also benefits from minimum width */
+.md-typeset table:not([class]) th:nth-child(2),
+.md-typeset table:not([class]) td:nth-child(2) {
+  min-width: 120px !important;  /* Adequate space for type info */
+  white-space: nowrap !important;
+}
+
+/* Allow description column to take remaining space */
+.md-typeset table:not([class]) th:last-child,
+.md-typeset table:not([class]) td:last-child {
+  width: 100% !important;  /* Take remaining space */
+  white-space: normal !important;  /* Allow wrapping in descriptions */
 }
 
 /* Buttons with vim style */
