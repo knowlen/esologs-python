@@ -71,7 +71,7 @@
 /* Override Material Design colors with vim theme */
 [data-md-color-scheme="slate"] {
   /* Background colors */
-  --md-default-bg-color:        var(--vim-bg);
+  --md-default-bg-color:        #000000;
   --md-default-bg-color--light: var(--vim-bg-light);
   --md-default-bg-color--lighter: var(--vim-bg-lighter);
 
@@ -119,7 +119,7 @@
 
 /* Force vim theme for all elements */
 .md-container {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
 }
 
 /* Typography - keep regular text readable, monospace for code */
@@ -128,7 +128,7 @@
   font-weight: 400;
   line-height: 1.6;
   color: var(--vim-fg);
-  background-color: var(--vim-bg);
+  background-color: #000000;
 }
 
 /* Headings with vim-style colors */
@@ -177,7 +177,7 @@
 }
 
 .md-typeset pre {
-  background-color: #000000 !important;
+  background-color: var(--vim-bg) !important;
   border: 1px solid var(--vim-comment);
   border-radius: 5px;
   overflow-x: auto;
@@ -191,13 +191,13 @@
 
 /* Syntax highlighting for code blocks */
 .highlight {
-  background-color: #000000 !important;
+  background-color: var(--vim-bg) !important;
   border-radius: 5px;
   border: 1px solid var(--vim-comment);
 }
 
 .highlight pre {
-  background-color: #000000 !important;
+  background-color: var(--vim-bg) !important;
   color: var(--code-text) !important;
   font-family: 'JetBrains Mono', monospace !important;
   padding: 1rem;
@@ -294,7 +294,7 @@
 
 /* Navigation with vim statusline feel */
 .md-nav {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
 }
 
 .md-nav__title {
@@ -527,11 +527,11 @@
 
 /* Content area */
 .md-content {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
 }
 
 .md-content__inner {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
   color: var(--vim-fg);
 }
 
@@ -541,8 +541,13 @@
   border-top: 2px solid var(--vim-comment);
 }
 
+/* Hide Previous/Next navigation */
+.md-footer__inner.md-grid {
+  display: none !important;
+}
+
 .md-footer-meta {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
   color: var(--vim-fg-dim) !important;
 }
 
@@ -733,7 +738,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: var(--vim-bg);
+  background-color: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -748,12 +753,12 @@
 /* Selection with vim visual mode colors - matching navigation hover */
 ::selection {
   background-color: var(--vim-fg) !important;  /* Light grey background */
-  color: var(--vim-bg) !important;  /* Black text */
+  color: #000000 !important;  /* Black text */
 }
 
 ::-moz-selection {
   background-color: var(--vim-fg) !important;  /* Light grey background */
-  color: var(--vim-bg) !important;  /* Black text */
+  color: #000000 !important;  /* Black text */
 }
 
 /* Strong/bold text with reduced brightness */
@@ -821,19 +826,19 @@
 
 /* Right-side Table of Contents styling */
 .md-sidebar--secondary {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
   border: none !important;
   border-left: none !important;
 }
 
 .md-sidebar--secondary .md-sidebar__scrollwrap {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
   border: none !important;
 }
 
 /* TOC navigation styling */
 .md-nav--secondary {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
   border: none !important;
 }
 
@@ -992,7 +997,7 @@
 
 /* Search dialog background */
 .md-search__scrollwrap {
-  background-color: var(--vim-bg) !important;
+  background-color: #000000 !important;
 }
 
 /*
