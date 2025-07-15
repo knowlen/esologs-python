@@ -941,7 +941,7 @@
 /* Search input - vim command mode style */
 .md-search__input {
   background-color: var(--vim-bg) !important;
-  border-bottom: 2px solid var(--vim-green) !important;
+  border-bottom: 2px solid var(--vim-visual) !important;  /* Purple border */
   color: var(--vim-fg) !important;
   font-family: var(--md-code-font) !important;
 }
@@ -953,7 +953,7 @@
 
 /* Search icon */
 .md-search__icon {
-  color: var(--vim-green) !important;
+  color: var(--vim-visual) !important;  /* Purple icon */
 }
 
 /* Result count */
