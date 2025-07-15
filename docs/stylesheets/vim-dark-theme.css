@@ -91,7 +91,7 @@
   --md-accent-fg-color--dark:   var(--vim-magenta);
 
   /* Code colors */
-  --md-code-bg-color:           var(--vim-bg-light);
+  --md-code-bg-color:           #000000;
   --md-code-fg-color:           var(--code-text);
 
   /* OVERRIDE Material theme's syntax highlighting variables - Part 1 */
@@ -168,7 +168,7 @@
 
 /* Code with exact colors from your example */
 .md-typeset code {
-  background-color: var(--vim-bg-light) !important;
+  background-color: #000000 !important;
   color: var(--code-text) !important;
   border: 1px solid var(--vim-comment);
   border-radius: 3px;
@@ -177,7 +177,7 @@
 }
 
 .md-typeset pre {
-  background-color: var(--vim-bg-light) !important;
+  background-color: #000000 !important;
   border: 1px solid var(--vim-comment);
   border-radius: 5px;
   overflow-x: auto;
@@ -191,13 +191,13 @@
 
 /* Syntax highlighting for code blocks */
 .highlight {
-  background-color: var(--vim-bg-light) !important;
+  background-color: #000000 !important;
   border-radius: 5px;
   border: 1px solid var(--vim-comment);
 }
 
 .highlight pre {
-  background-color: var(--vim-bg-light) !important;
+  background-color: #000000 !important;
   color: var(--code-text) !important;
   font-family: 'JetBrains Mono', monospace !important;
   padding: 1rem;

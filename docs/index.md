@@ -9,14 +9,13 @@
     </picture>
   </div>
 
-  <p>A comprehensive Python client library for the ESO Logs API v2</p>
+  <p>A comprehensive Python client for the ESO Logs API v2</p>
   <ul>
 		<li> <b>Type Safety</b>: Full type hints with Pydantic models</li>
 		<li> <b>Async First</b>: Native async/await support with HTTP and WebSocket</li>
-		<li> <b>GraphQL Integration</b>: Code generation with `ariadne-codegen`</li>
+		<li> <b>GraphQL Integration</b>: Code generation with `ariadne-codegen` + Claude</li>
 		<li> <b>Security</b>: OAuth2 authentication with parameter validation</li>
 		<li> <b>Testing</b>: 278 tests with comprehensive coverage</li>
-		<li> <b>Code Quality</b>: Pre-commit hooks, linting, and formatting</li>
   </ul>
 </div>
 
@@ -77,16 +76,20 @@
     <span class="status-badge status-badge--completed">83% API Coverage</span></p>
     <p>Active development with comprehensive testing and documentation.</p>
   </div>
+</div>
+
+<div class="feature-grid">
   <div class="feature-card">
     <h3>Coming Soon (17%)</h3>
     <ul>
-      <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings</li>
+      <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings </li>
       <li><span class="status-badge status-badge--planned">Progress Tracking</span> Race & achievement tracking</li>
       <li><span class="status-badge status-badge--planned">Enhanced Guilds</span> Advanced guild management</li>
       <li><span class="status-badge status-badge--planned">Caching</span> Performance optimization</li>
     </ul>
   </div>
 </div>
+
 
 ## Architecture
 ```mermaid
