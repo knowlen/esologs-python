@@ -23,11 +23,12 @@
 === "Installation"
 
     ```bash
-    # Clone the repository
+    # Install from PyPI
+    pip install esologs-python==0.2.0a2
+
+    # Or install latest development version
     git clone https://github.com/knowlen/esologs-python.git
     cd esologs-python
-
-    # Install the package
     pip install -e .
     ```
 

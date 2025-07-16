@@ -10,9 +10,23 @@ Get ESO Logs Python up and running in your environment.
 
 ## Installation Methods
 
-!!! warning "Development Version"
-    ESO Logs Python is currently in development and not yet published to PyPI.
-    Use the development installation method below.
+### PyPI Installation (Recommended)
+
+ESO Logs Python is available on PyPI:
+
+=== "Latest Alpha"
+
+    ```bash
+    # Install the latest alpha release
+    pip install esologs-python==0.2.0a2
+    ```
+
+=== "Any Version"
+
+    ```bash
+    # Install any available version (including pre-releases)
+    pip install esologs-python
+    ```
 
 ### Development Installation
 
