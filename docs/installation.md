@@ -18,7 +18,7 @@ ESO Logs Python is available on PyPI:
 
     ```bash
     # Install the latest alpha release
-    pip install esologs-python==0.2.0a2
+    pip install esologs-python
     ```
 
 === "Any Version"
