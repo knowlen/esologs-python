@@ -18,7 +18,7 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 | Metric | Status |
 |--------|--------|
-| **Current Version** | 0.2.0-alpha |
+| **Current Version** | 0.2.0a2 |
 | **API Coverage** | ~83% (comprehensive analysis shows 6/8 API sections fully implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
@@ -44,25 +44,20 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## Installation
 
-**Note**: This package is currently in development and not yet published to PyPI.
-
-### Current Installation Method
-
 ```bash
-# Clone the repository
-git clone https://github.com/knowlen/esologs-python.git
-cd esologs-python
+# Install from PyPI (recommended)
+pip install esologs-python
 
-# Basic installation
-pip install --upgrade pip
-pip install -e .
+# For development or latest features
+pip install git+https://github.com/knowlen/esologs-python.git@main
 ```
 
 ### Development Installation
 
-For development with testing, linting, and pre-commit hooks:
 ```bash
-# Development installation
+# Clone for development
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 pip install -e ".[dev]"
 ```
 
@@ -95,7 +90,7 @@ For comprehensive documentation, visit [esologs-python.readthedocs.io](https://e
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     # Get authentication token
@@ -128,7 +123,7 @@ asyncio.run(main())
 ### Authentication Only
 
 ```python
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 # Using environment variables
 token = get_access_token()
@@ -146,7 +141,7 @@ token = get_access_token(
 import asyncio
 from esologs.client import Client
 from esologs.enums import CharacterRankingMetricType, RoleType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     token = get_access_token()
@@ -186,7 +181,7 @@ asyncio.run(main())
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     token = get_access_token()
@@ -315,6 +310,7 @@ esologs-python/
 ├── esologs/                 # Main package
 │   ├── client.py           # Main client implementation
 │   ├── async_base_client.py # Base async GraphQL client
+│   ├── auth.py            # OAuth2 authentication module
 │   ├── exceptions.py       # Custom exceptions
 │   ├── validators.py       # Parameter validation utilities
 │   └── get_*.py           # Generated GraphQL query modules
@@ -324,7 +320,6 @@ esologs-python/
 │   ├── docs/              # Documentation tests (98 tests)
 │   └── sanity/            # Sanity tests (19 tests)
 ├── docs/                  # Documentation source
-├── access_token.py        # OAuth2 authentication
 ├── schema.graphql         # GraphQL schema
 ├── queries.graphql        # GraphQL queries
 ├── pyproject.toml         # Project configuration

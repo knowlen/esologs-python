@@ -60,7 +60,7 @@ Access detailed (behavioral) combat log data including events, performance graph
 import asyncio
 from esologs.client import Client
 from esologs.enums import EventDataType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def analyze_report_events():
     token = get_access_token()
@@ -147,7 +147,7 @@ More data available after: 264591.0
 import asyncio
 from esologs.client import Client
 from esologs.enums import GraphDataType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_damage_graph():
     token = get_access_token()
@@ -230,7 +230,7 @@ Data points: 240
 import asyncio
 from esologs.client import Client
 from esologs.enums import TableDataType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_damage_table():
     token = get_access_token()
@@ -292,7 +292,7 @@ Number of players: 10
 import asyncio
 from esologs.client import Client
 from esologs.enums import ReportRankingMetricType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_dps_rankings():
     token = get_access_token()
@@ -360,7 +360,7 @@ Top DPS Players:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_player_performance():
     token = get_access_token()
@@ -433,7 +433,7 @@ Combine different analysis methods for comprehensive performance review:
 import asyncio
 from esologs.client import Client
 from esologs.enums import GraphDataType, TableDataType, ReportRankingMetricType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def comprehensive_analysis():
     token = get_access_token()
@@ -509,7 +509,7 @@ Analyze specific phases of boss encounters:
 import asyncio
 from esologs.client import Client
 from esologs.enums import EventDataType, GraphDataType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def analyze_encounter_phase():
     token = get_access_token()

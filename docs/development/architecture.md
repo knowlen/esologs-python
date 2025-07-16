@@ -60,7 +60,7 @@ class Client(BaseClient):
 **Purpose**: OAuth2 client credentials flow for secure API access
 
 ```python
-# access_token.py
+# esologs/auth.py
 def get_access_token(client_id=None, client_secret=None):
     """Get OAuth2 access token using client credentials flow."""
 
@@ -316,7 +316,7 @@ TEST_DATA = {
 ```toml
 [project]
 name = "esologs-python"
-version = "0.2.0-alpha"
+version = "0.2.0a2"
 dependencies = [
     "httpx>=0.24.0",
     "pydantic>=2.0.0",

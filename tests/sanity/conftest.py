@@ -3,7 +3,7 @@
 
 import pytest
 
-from access_token import get_access_token
+from esologs.auth import get_access_token
 from esologs.client import Client
 
 
