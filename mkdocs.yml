@@ -1,6 +1,8 @@
-site_name: ESO Logs Python
-site_description: A comprehensive Python client library for the ESO Logs API v2
+site_name: ESO Logs Python - Elder Scrolls Online Combat Log Analysis
+site_description: Python client library for ESO Logs API v2 - Analyze Elder Scrolls Online combat logs, track DPS/HPS metrics, build ESO tools. Features character rankings, report analysis, guild management.
 site_url: https://esologs-python.readthedocs.io/
+site_author: Nick Knowles
+copyright: Copyright &copy; 2024 - ESO Logs Python
 repo_url: https://github.com/knowlen/esologs-python
 repo_name: knowlen/esologs-python
 edit_uri: edit/main/docs/
@@ -199,6 +201,4 @@ extra:
   #           <a href="https://github.com/knowlen/esologs-python/issues/new/?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">telling us what you found lacking</a>.
   generator: false
 
-# Copyright
-copyright: |
-  &copy; 2024 esologs-python.
+# Copyright already defined at top of file

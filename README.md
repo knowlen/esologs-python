@@ -5,14 +5,15 @@
   </picture>
 </div>
 
-# ESO Logs Python Client
+# ESO Logs Python Client - Elder Scrolls Online Combat Log Analysis
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![PyPI version](https://badge.fury.io/py/esologs-python.svg)](https://pypi.org/project/esologs-python/)
 [![Documentation](https://readthedocs.org/projects/esologs-python/badge/?version=latest)](https://esologs-python.readthedocs.io/)
 [![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
 [![Tests](https://github.com/knowlen/esologs-python/actions/workflows/ci.yml/badge.svg)](https://github.com/knowlen/esologs-python/actions/workflows/ci.yml)
 
-A comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/). This library provides both synchronous and asynchronous interfaces to access Elder Scrolls Online combat logging data, with built-in support for data transformation and analysis.
+**esologs-python** is a comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/), designed for Elder Scrolls Online (ESO) players and developers who want to analyze combat logs, track performance metrics, and build tools for the ESO community. This library provides both synchronous and asynchronous interfaces to access ESO Logs data, with built-in support for data transformation and analysis.
 
 ## Project Status
 
@@ -385,3 +386,13 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 **Note**: This library is not officially affiliated with ESO Logs or ZeniMax Online Studios.
+
+## Related Projects and Resources
+
+- **ESO Logs**: [esologs.com](https://www.esologs.com/) - The premier Elder Scrolls Online combat logging service
+- **Elder Scrolls Online**: [elderscrollsonline.com](https://www.elderscrollsonline.com/) - Official ESO website
+- **Python Package Index**: [pypi.org/project/esologs-python](https://pypi.org/project/esologs-python/)
+
+## Search Terms
+
+Elder Scrolls Online API, ESO combat logs, ESO Logs Python, ESO performance analysis, Elder Scrolls Online DPS meter, ESO raid analysis, MMORPG combat analysis Python, ESO Logs API client, Elder Scrolls Online data analysis
