@@ -150,6 +150,11 @@ plugins:
   - minify:
       minify_html: true
       minify_js: true
+
+  # SEO Enhancements
+  - sitemap:
+      changefreq: weekly
+      priority: 0.5
       minify_css: true
       htmlmin_opts:
         remove_comments: true
@@ -181,6 +186,25 @@ extra:
       link: https://github.com/knowlen/esologs-python
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/esologs-python/
+
+  # SEO and Social Media
+  meta:
+    - property: og:type
+      content: website
+    - property: og:title
+      content: ESO Logs Python - Elder Scrolls Online Combat Log Analysis
+    - property: og:description
+      content: Python client library for ESO Logs API v2. Analyze Elder Scrolls Online combat logs, track DPS/HPS metrics, and build ESO tools.
+    - property: og:url
+      content: https://esologs-python.readthedocs.io/
+    - property: og:image
+      content: https://esologs-python.readthedocs.io/assets/logo.png
+    - name: twitter:card
+      content: summary
+    - name: twitter:title
+      content: ESO Logs Python
+    - name: twitter:description
+      content: Python client for ESO Logs API v2 - Elder Scrolls Online combat analysis
   # Analytics disabled - no cookies used
   # analytics:
   #   provider: google
