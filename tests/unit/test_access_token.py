@@ -14,7 +14,7 @@ class TestGetAccessToken:
 
     def test_get_access_token_with_parameters(self):
         """Test getting access token with explicit parameters."""
-        with patch("access_token.requests.post") as mock_post:
+        with patch("esologs.auth.requests.post") as mock_post:
             mock_response = Mock(spec=Response)
             mock_response.status_code = 200
             mock_response.json.return_value = {"access_token": "test_token"}
@@ -30,7 +30,7 @@ class TestGetAccessToken:
         with patch.dict(
             os.environ, {"ESOLOGS_ID": "env_id", "ESOLOGS_SECRET": "env_secret"}
         ):
-            with patch("access_token.requests.post") as mock_post:
+            with patch("esologs.auth.requests.post") as mock_post:
                 mock_response = Mock(spec=Response)
                 mock_response.status_code = 200
                 mock_response.json.return_value = {"access_token": "env_token"}
@@ -54,7 +54,7 @@ class TestGetAccessToken:
 
     def test_get_access_token_http_error(self):
         """Test error handling for HTTP errors."""
-        with patch("access_token.requests.post") as mock_post:
+        with patch("esologs.auth.requests.post") as mock_post:
             mock_response = Mock(spec=Response)
             mock_response.status_code = 401
             mock_response.text = "Unauthorized"
@@ -65,7 +65,7 @@ class TestGetAccessToken:
 
     def test_get_access_token_missing_token_in_response(self):
         """Test error when access token is missing from response."""
-        with patch("access_token.requests.post") as mock_post:
+        with patch("esologs.auth.requests.post") as mock_post:
             mock_response = Mock(spec=Response)
             mock_response.status_code = 200
             mock_response.json.return_value = {}
