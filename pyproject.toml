@@ -62,7 +62,6 @@ docs = [
     "mkdocs-minify-plugin>=0.7.0",
     "mkdocs-git-revision-date-localized-plugin>=1.2.0",
     "pymdown-extensions>=10.0.0",
-    "mkdocs-sitemap-plugin>=1.0.0",
 ]
 all = [
     "esologs-python[dev,websockets,pandas,docs]",
