@@ -74,10 +74,11 @@ pytest                       # Run all tests
 
 ```
 esologs-python/
-├── esologs/                 # Generated GraphQL client
+├── esologs/                 # Main package
+│   ├── auth.py             # OAuth2 authentication
+│   └── *.py                # Client and generated modules
 ├── tests/                   # Test suites (see Testing Guide)
 ├── docs/                    # Documentation source
-├── access_token.py          # OAuth2 authentication
 ├── queries.graphql          # GraphQL queries to generate
 ├── schema.graphql           # ESO Logs API schema
 └── mini.toml               # Code generation config

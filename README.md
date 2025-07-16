@@ -310,6 +310,7 @@ esologs-python/
 ├── esologs/                 # Main package
 │   ├── client.py           # Main client implementation
 │   ├── async_base_client.py # Base async GraphQL client
+│   ├── auth.py            # OAuth2 authentication module
 │   ├── exceptions.py       # Custom exceptions
 │   ├── validators.py       # Parameter validation utilities
 │   └── get_*.py           # Generated GraphQL query modules
@@ -319,7 +320,6 @@ esologs-python/
 │   ├── docs/              # Documentation tests (98 tests)
 │   └── sanity/            # Sanity tests (19 tests)
 ├── docs/                  # Documentation source
-├── access_token.py        # OAuth2 authentication
 ├── schema.graphql         # GraphQL schema
 ├── queries.graphql        # GraphQL queries
 ├── pyproject.toml         # Project configuration
