@@ -7,7 +7,7 @@ execute without errors and produce expected results.
 
 import pytest
 
-from access_token import get_access_token
+from esologs.auth import get_access_token
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
 
@@ -137,7 +137,7 @@ class TestAuthenticationExamples:
         # We can't test with fake credentials, but we can test the interface
         import inspect
 
-        from access_token import get_access_token
+        from esologs.auth import get_access_token
 
         # Verify function signature supports client_id and client_secret parameters
         sig = inspect.signature(get_access_token)
@@ -160,7 +160,7 @@ class TestAuthenticationDocumentationIntegrity:
     def test_authentication_imports(self):
         """Test that all modules used in auth docs are importable."""
         # Test basic imports
-        from access_token import get_access_token
+        from esologs.auth import get_access_token
         from esologs.client import Client
         from esologs.exceptions import GraphQLClientHttpError
 
@@ -189,7 +189,7 @@ class TestAuthenticationDocumentationIntegrity:
 
     def test_oauth_error_handling(self):
         """Test that OAuth errors are handled as documented."""
-        from access_token import get_access_token
+        from esologs.auth import get_access_token
 
         # Test with invalid credentials to verify error handling
         try:

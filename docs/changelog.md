@@ -5,6 +5,20 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0a2] - 2025-07-16
+
+### Fixed
+
+- **CRITICAL**: Moved authentication module (`access_token.py`) into the package as `esologs.auth` so it's included in pip distributions
+- Updated all imports to use `from esologs.auth import get_access_token` or `from esologs import get_access_token`
+- Authentication is now properly packaged and accessible when installing from PyPI
+
+## [0.2.0a1] - 2025-07-15
+
+### Added
+
+This is the first alpha release of version 0.2.0. See the [0.2.0] section below for full feature list.
+
 ## [0.2.0] - 2024-01-XX (Upcoming Release)
 
 ### Added
