@@ -11,6 +11,10 @@ license = {text = "MIT"}
 authors = [
     {name = "Nick Knowles"},
 ]
+keywords = [
+    "eso", "elder-scrolls-online", "esologs", "api", "graphql",
+    "combat-logs", "mmorpg", "gaming", "api-client", "python"
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -67,7 +71,9 @@ all = [
 Homepage = "https://github.com/knowlen/esologs-python"
 Repository = "https://github.com/knowlen/esologs-python"
 Issues = "https://github.com/knowlen/esologs-python/issues"
-Documentation = "https://github.com/knowlen/esologs-python"
+Documentation = "https://esologs-python.readthedocs.io/"
+Changelog = "https://github.com/knowlen/esologs-python/wiki/Changelog"
+Wiki = "https://github.com/knowlen/esologs-python/wiki"
 
 [tool.setuptools.packages.find]
 where = ["."]

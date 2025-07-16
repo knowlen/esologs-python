@@ -44,25 +44,20 @@ A comprehensive Python client library for the [ESO Logs API v2](https://www.esol
 
 ## Installation
 
-**Note**: This package is currently in development and not yet published to PyPI.
-
-### Current Installation Method
-
 ```bash
-# Clone the repository
-git clone https://github.com/knowlen/esologs-python.git
-cd esologs-python
+# Install from PyPI (recommended)
+pip install esologs-python
 
-# Basic installation
-pip install --upgrade pip
-pip install -e .
+# For development or latest features
+pip install git+https://github.com/knowlen/esologs-python.git@main
 ```
 
 ### Development Installation
 
-For development with testing, linting, and pre-commit hooks:
 ```bash
-# Development installation
+# Clone for development
+git clone https://github.com/knowlen/esologs-python.git
+cd esologs-python
 pip install -e ".[dev]"
 ```
 

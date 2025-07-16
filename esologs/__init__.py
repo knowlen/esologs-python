@@ -1,3 +1,5 @@
+__version__ = "0.2.0a1"
+
 from .async_base_client import AsyncBaseClient
 from .base_model import BaseModel, Upload
 from .client import Client
