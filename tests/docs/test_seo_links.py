@@ -94,3 +94,26 @@ class TestSEOLinks:
         assert "User-agent:" in content, "User-agent directive missing"
         assert "Sitemap:" in content, "Sitemap directive missing"
         assert "esologs-python.readthedocs.io" in content, "Site URL missing"
+
+    def test_sitemap_requirements(self):
+        """Test that all requirements for sitemap generation are met."""
+        # Check MkDocs version supports sitemap (>= 0.13.0)
+        import mkdocs
+
+        version_parts = mkdocs.__version__.split(".")
+        major = int(version_parts[0])
+        minor = int(version_parts[1]) if len(version_parts) > 1 else 0
+
+        assert major > 0 or (
+            major == 0 and minor >= 13
+        ), "MkDocs version too old for sitemap generation"
+
+        # Check site_url is set
+        mkdocs_path = Path(__file__).parent.parent.parent / "mkdocs.yml"
+        content = mkdocs_path.read_text()
+        assert "site_url:" in content, "site_url must be set for sitemap generation"
+
+        # Ensure no sitemap plugin is configured (uses built-in)
+        assert (
+            "- sitemap:" not in content or "# SEO Enhancements" not in content
+        ), "Sitemap plugin should not be configured (use built-in)"

@@ -28,9 +28,11 @@ This directory contains tests that validate code examples from:
 - `test_report_analysis_examples.py` - Tests all examples from report analysis API reference
 - `test_report_search_examples.py` - Tests all examples from report search API reference
 - `test_system_examples.py` - Tests all examples from system API reference
+- `test_seo_links.py` - Tests SEO metadata, links, and documentation requirements
+- `test_sitemap_generation.py` - Tests sitemap.xml generation and validation
 - `conftest.py` - Shared test fixtures and configuration
 
-**Total: 98 tests** across all documentation files
+**Total: 108 tests** across all documentation files
 
 ## Running Tests
 
