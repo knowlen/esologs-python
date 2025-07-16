@@ -66,13 +66,13 @@ class TestSEOLinks:
                 assert "Python" in search_terms_line
 
     def test_mkdocs_sitemap_config(self):
-        """Test that sitemap is configured in mkdocs.yml."""
+        """Test that site_url is configured for sitemap generation."""
         mkdocs_path = Path(__file__).parent.parent.parent / "mkdocs.yml"
         content = mkdocs_path.read_text()
 
-        # Check for sitemap plugin
-        assert "- sitemap:" in content, "Sitemap plugin not configured"
-        assert "changefreq:" in content, "Sitemap changefreq not configured"
+        # Check for site_url which is required for sitemap generation
+        assert "site_url:" in content, "site_url not configured (required for sitemap)"
+        assert "esologs-python.readthedocs.io" in content, "Site URL should be set"
 
     def test_mkdocs_social_meta(self):
         """Test that OpenGraph meta tags are configured."""

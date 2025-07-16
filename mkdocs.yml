@@ -150,11 +150,6 @@ plugins:
   - minify:
       minify_html: true
       minify_js: true
-
-  # SEO Enhancements
-  - sitemap:
-      changefreq: weekly
-      priority: 0.5
       minify_css: true
       htmlmin_opts:
         remove_comments: true
