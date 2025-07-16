@@ -33,7 +33,7 @@ Access collections of data such as NPCs, classes, abilities, items, maps, etc. G
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_all_abilities():
     token = get_access_token()
@@ -98,7 +98,7 @@ except GraphQLClientHttpError as e:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_ability_details():
     token = get_access_token()
@@ -145,7 +145,7 @@ ID: 2
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def list_character_classes():
     token = get_access_token()
@@ -196,7 +196,7 @@ Available character classes:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_class_details():
     token = get_access_token()
@@ -240,7 +240,7 @@ Class: Dragonknight
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def browse_items():
     token = get_access_token()
@@ -290,7 +290,7 @@ Found 3 items
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_item_details():
     token = get_access_token()
@@ -342,7 +342,7 @@ ID: 3
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def list_npcs():
     token = get_access_token()
@@ -392,7 +392,7 @@ Found 5 NPCs
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_npc_details():
     token = get_access_token()
@@ -440,7 +440,7 @@ ID: 1
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def list_maps():
     token = get_access_token()
@@ -490,7 +490,7 @@ Found 100 maps (first page)
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_map_details():
     token = get_access_token()
@@ -536,7 +536,7 @@ ID: 1
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def list_factions():
     token = get_access_token()
@@ -572,7 +572,7 @@ Efficiently collect and store item information for analysis:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def build_item_database():
     token = get_access_token()
@@ -646,7 +646,7 @@ async def respectful_bulk_operation():
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def monitor_usage():
     token = get_access_token()

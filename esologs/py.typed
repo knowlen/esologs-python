@@ -1,0 +1,7 @@
+# PEP 561 marker file
+# This file indicates that the esologs package includes inline type annotations.
+# Type checkers like mypy will use these annotations when type checking code
+# that imports this package.
+#
+# This file should remain empty except for comments.
+# See: https://www.python.org/dev/peps/pep-0561/

@@ -27,7 +27,7 @@ Monitor API usage, handle rate limits, and manage authentication.
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def check_rate_limits():
     token = get_access_token()
@@ -63,7 +63,7 @@ Handle authentication failures and token expiration:
 import asyncio
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def handle_auth_errors():
     try:
@@ -108,7 +108,7 @@ Handle rate limit exceeded scenarios:
 import asyncio
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def handle_rate_limits():
     token = get_access_token()
@@ -151,7 +151,7 @@ import asyncio
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientGraphQLError, GraphQLClientGraphQLMultiError
 from pydantic import ValidationError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def handle_graphql_errors():
     token = get_access_token()
@@ -188,7 +188,7 @@ import asyncio
 import httpx
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def handle_network_errors():
     token = get_access_token()
@@ -226,7 +226,7 @@ Monitor your usage throughout a session:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 class RateLimitMonitor:
     def __init__(self, client):
@@ -294,7 +294,7 @@ import asyncio
 import random
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def robust_api_call(client, operation, max_retries=3):
     """
@@ -366,7 +366,7 @@ Manage long-running sessions with periodic health checks:
 import asyncio
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 class APISession:
     def __init__(self):

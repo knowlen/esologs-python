@@ -124,7 +124,7 @@ ESOLOGS_SECRET=your_client_secret_here
 For testing or specific use cases, you can pass credentials directly:
 
 ```python
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 # Direct parameter passing (not recommended for production)
 token = get_access_token(
@@ -138,7 +138,7 @@ token = get_access_token(
 ### Basic Authentication
 
 ```python
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 # Get access token using environment variables
 token = get_access_token()
@@ -151,7 +151,7 @@ print(f"Access token: {token[:20]}...")  # Show first 20 chars
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     # Get authentication token
@@ -175,7 +175,7 @@ asyncio.run(main())
 
 ```python
 import asyncio
-from access_token import get_access_token
+from esologs.auth import get_access_token
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError
 
@@ -241,7 +241,7 @@ Verify your token is working:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def validate_token():
     """Validate authentication token by making a simple API call."""
@@ -364,7 +364,7 @@ Enable debug logging to troubleshoot issues:
 
 ```python
 import logging
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 # Enable debug logging
 logging.basicConfig(level=logging.DEBUG)

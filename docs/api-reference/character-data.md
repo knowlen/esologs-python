@@ -35,7 +35,7 @@ Enables the retrieval of single characters or filtered collections of characters
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_character_profile():
     token = get_access_token()
@@ -99,7 +99,7 @@ Guild Rank: 0
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_character_recent_reports():
     token = get_access_token()
@@ -151,7 +151,7 @@ Showing 5 reports:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_character_encounter_ranking():
     token = get_access_token()
@@ -213,7 +213,7 @@ Available data: ['bestAmount', 'medianPerformance', 'averagePerformance', 'total
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_character_encounter_rankings():
     token = get_access_token()
@@ -285,7 +285,7 @@ Rank percentile: 68.0%
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_character_zone_rankings():
     token = get_access_token()
@@ -324,7 +324,7 @@ Available metrics: ['bestPerformanceAverage', 'medianPerformanceAverage', 'diffi
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def analyze_character(character_id: int):
     """Complete character analysis including profile and recent activity."""
@@ -365,7 +365,7 @@ Recent activity: 286 reports
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def track_character_performance(character_id: int, encounter_id: int):
     """Track character performance for a specific encounter."""

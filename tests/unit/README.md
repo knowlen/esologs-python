@@ -16,7 +16,7 @@ The unit tests provide:
 ### Core Test Files
 
 - **`test_validators.py`**: Parameter validation functions (22 test classes)
-- **`test_access_token.py`**: OAuth2 token handling and credential validation
+- **`test_access_token.py`**: Tests for auth module - OAuth2 token handling and credential validation
 - **`test_character_rankings.py`**: Character ranking method logic and validation
 - **`test_report_analysis.py`**: Report analysis method signatures and validation
 - **`test_report_search.py`**: Report search validation, date parsing, and method logic
@@ -32,7 +32,7 @@ The unit tests provide:
 - **Fight ID Validation**: Fight ID list validation
 - **Required String Validation**: Non-empty string validation
 
-#### Authentication Tests (`test_access_token.py`)
+#### Authentication Tests (`test_access_token.py` - tests `esologs.auth` module)
 - **Credential Handling**: Environment variable and parameter validation
 - **Error Scenarios**: Missing credentials and invalid responses
 - **OAuth Flow**: Mock testing of token request/response cycle

@@ -1,3 +1,14 @@
+"""Authentication module for ESO Logs API.
+
+This module provides OAuth2 client credentials flow authentication for accessing
+the ESO Logs GraphQL API. It handles credential management, token acquisition,
+and includes utilities for schema downloading.
+
+The primary function `get_access_token` supports both environment variable
+and parameter-based credential passing, making it suitable for both production
+deployments and development/testing scenarios.
+"""
+
 import base64
 import logging
 import os

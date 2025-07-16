@@ -20,8 +20,8 @@ Before starting, ensure you have:
        ```
        Get your credentials from [esologs.com/v2-api-docs](https://www.esologs.com/v2-api-docs)
 
-    2. **Access to `access_token.py`** - Examples assume this module is available in your project.
-       If running outside the project directory, replace `from access_token import get_access_token`
+    2. **Access to the authentication module** - Examples assume this module is available in your project.
+       If running outside the project directory, replace `from esologs.auth import get_access_token`
        with your own authentication implementation.
 
 ## Your First API Call
@@ -31,7 +31,7 @@ Let's start with a simple example to verify everything is working:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def hello_esologs():
     """Your first ESO Logs API call."""
@@ -70,7 +70,7 @@ ESO Logs Python is built for async programming:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     token = get_access_token()
@@ -107,7 +107,7 @@ Use the client as a context manager for proper resource cleanup:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     token = get_access_token()
@@ -138,7 +138,7 @@ ESO Logs Python provides detailed error information:
 import asyncio
 from esologs.client import Client
 from esologs.exceptions import GraphQLClientHttpError, GraphQLClientGraphQLError, ValidationError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def safe_api_call():
     token = get_access_token()
@@ -183,7 +183,7 @@ asyncio.run(safe_api_call())
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def explore_game_data():
     """Explore ESO's game data."""
@@ -247,7 +247,7 @@ Zones (48 total):
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def analyze_character():
     """Analyze a specific character."""
@@ -301,7 +301,7 @@ Recent Reports (3):
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def search_reports():
     """Search for reports with filtering."""
@@ -350,7 +350,7 @@ All responses use Pydantic models for type safety:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def type_safe_example():
     """Demonstrate type safety with Pydantic models."""
@@ -400,7 +400,7 @@ ESO Logs Python validates all parameters:
 import asyncio
 from esologs.client import Client
 from esologs.exceptions import ValidationError
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def validation_example():
     """Show parameter validation in action."""
@@ -439,7 +439,7 @@ Found 25 reports
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def character_dashboard(character_id: int):
     """Create a simple character dashboard."""
@@ -499,7 +499,7 @@ Race ID: 5
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def guild_monitor(guild_id: int):
     """Monitor recent guild activity."""
