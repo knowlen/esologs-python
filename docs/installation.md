@@ -72,7 +72,7 @@ Verify your installation by running a simple test:
 ```python
 # test_installation.py
 import esologs
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 # Check version
 print(f"ESO Logs Python version: {esologs.__version__}")

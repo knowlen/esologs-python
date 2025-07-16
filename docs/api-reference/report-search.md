@@ -83,7 +83,7 @@ Search and filter combat reports with advanced criteria including guilds, encoun
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def search_recent_reports():
     token = get_access_token()
@@ -136,7 +136,7 @@ Has more pages: True
 import asyncio
 import time
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def search_with_filters():
     token = get_access_token()
@@ -214,7 +214,7 @@ except GraphQLClientHttpError as e:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_guild_activity():
     token = get_access_token()
@@ -266,7 +266,7 @@ Guild has 10 recent reports
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_user_activity():
     token = get_access_token()

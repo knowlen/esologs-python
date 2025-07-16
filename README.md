@@ -90,7 +90,7 @@ For comprehensive documentation, visit [esologs-python.readthedocs.io](https://e
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     # Get authentication token
@@ -123,7 +123,7 @@ asyncio.run(main())
 ### Authentication Only
 
 ```python
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 # Using environment variables
 token = get_access_token()
@@ -141,7 +141,7 @@ token = get_access_token(
 import asyncio
 from esologs.client import Client
 from esologs.enums import CharacterRankingMetricType, RoleType
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     token = get_access_token()
@@ -181,7 +181,7 @@ asyncio.run(main())
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def main():
     token = get_access_token()

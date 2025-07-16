@@ -1,6 +1,7 @@
-__version__ = "0.2.0a1"
+__version__ = "0.2.0a2"
 
 from .async_base_client import AsyncBaseClient
+from .auth import get_access_token
 from .base_model import BaseModel, Upload
 from .client import Client
 from .enums import (
@@ -360,4 +361,5 @@ __all__ = [
     "TableDataType",
     "Upload",
     "ViewType",
+    "get_access_token",
 ]

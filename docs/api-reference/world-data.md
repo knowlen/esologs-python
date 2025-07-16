@@ -40,7 +40,7 @@ Access world information including encounters, zones, regions, and dungeon/trial
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def list_zones():
     token = get_access_token()
@@ -127,7 +127,7 @@ Arenas (ID: 30)
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def list_regions():
     token = get_access_token()
@@ -182,7 +182,7 @@ Europe (ID: 2)
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_dungeon_encounters():
     token = get_access_token()
@@ -238,7 +238,7 @@ Find all encounters across all zones:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def discover_all_encounters():
     token = get_access_token()
@@ -291,7 +291,7 @@ Find all zones that offer Veteran Hard Mode difficulty:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def analyze_veteran_hard_mode_zones():
     token = get_access_token()

@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 import pytest
 from requests import Response
 
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 
 class TestGetAccessToken:

@@ -34,7 +34,7 @@ Enables the retrieval of single guilds or filtered collections of guilds. Guild 
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_guild_info():
     token = get_access_token()
@@ -88,7 +88,7 @@ Region: North America
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def get_guild_reports():
     token = get_access_token()
@@ -139,7 +139,7 @@ Guild-related filtering is also available in the main search methods:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def search_guild_reports():
     token = get_access_token()
@@ -178,7 +178,7 @@ Track guild performance over time:
 import asyncio
 from datetime import datetime, timedelta
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def analyze_guild_performance():
     token = get_access_token()
@@ -236,7 +236,7 @@ Monitor guild member participation using report rankings data:
 ```python
 import asyncio
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def track_member_activity():
     token = get_access_token()
@@ -340,7 +340,7 @@ Unlike some APIs that throw exceptions for missing data, guild methods return `N
 
 ```python
 from esologs.client import Client
-from access_token import get_access_token
+from esologs.auth import get_access_token
 
 async def handle_missing_guild():
     token = get_access_token()
