@@ -9,9 +9,11 @@ from esologs._generated.enums import (
     RankingTimeframeType,
     RoleType,
 )
+from esologs._generated.get_character_encounter_rankings import (
+    GetCharacterEncounterRankings,
+)
+from esologs._generated.get_character_zone_rankings import GetCharacterZoneRankings
 from esologs.client import Client
-from esologs.get_character_encounter_rankings import GetCharacterEncounterRankings
-from esologs.get_character_zone_rankings import GetCharacterZoneRankings
 
 
 class TestCharacterRankings:

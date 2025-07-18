@@ -11,9 +11,9 @@ import pytest
 from esologs._generated.exceptions import (
     GraphQLClientGraphQLMultiError,
     GraphQLClientHttpError,
-    ValidationError,
 )
 from esologs.client import Client
+from esologs.validators import ValidationError
 
 
 class TestGameDataExamples:

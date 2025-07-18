@@ -10,10 +10,10 @@ import pytest
 from esologs._generated.exceptions import (
     GraphQLClientGraphQLError,
     GraphQLClientHttpError,
-    ValidationError,
 )
 from esologs.auth import get_access_token
 from esologs.client import Client
+from esologs.validators import ValidationError
 
 
 class TestQuickstartExamples:
@@ -285,8 +285,8 @@ class TestDocumentationIntegrity:
         from esologs._generated.exceptions import (
             GraphQLClientGraphQLError,
             GraphQLClientHttpError,
-            ValidationError,
         )
+        from esologs.validators import ValidationError
 
         # Verify they're proper exception classes
         assert issubclass(GraphQLClientHttpError, Exception)

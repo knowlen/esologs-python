@@ -5,9 +5,9 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from esologs._generated.exceptions import ValidationError
 from esologs.client import Client
 from esologs.validators import (
+    ValidationError,
     parse_date_to_timestamp,
     validate_guild_search_params,
     validate_report_search_params,

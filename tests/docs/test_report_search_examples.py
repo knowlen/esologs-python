@@ -10,8 +10,8 @@ import time
 
 import pytest
 
-from esologs._generated.exceptions import ValidationError
 from esologs.client import Client
+from esologs.validators import ValidationError
 
 
 class TestReportSearchExamples:
