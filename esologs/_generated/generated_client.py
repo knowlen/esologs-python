@@ -1,8 +1,8 @@
 from typing import Any, Dict, List, Optional, Union
 
-from ._generated.async_base_client import AsyncBaseClient
-from ._generated.base_model import UNSET, UnsetType
-from ._generated.enums import (
+from .async_base_client import AsyncBaseClient
+from .base_model import UNSET, UnsetType
+from .enums import (
     CharacterRankingMetricType,
     EventDataType,
     GraphDataType,
@@ -15,42 +15,37 @@ from ._generated.enums import (
     TableDataType,
     ViewType,
 )
-from ._generated.get_abilities import GetAbilities
-from ._generated.get_ability import GetAbility
-from ._generated.get_character_by_id import GetCharacterById
-from ._generated.get_character_encounter_ranking import GetCharacterEncounterRanking
-from ._generated.get_character_encounter_rankings import GetCharacterEncounterRankings
-from ._generated.get_character_reports import GetCharacterReports
-from ._generated.get_character_zone_rankings import GetCharacterZoneRankings
-from ._generated.get_class import GetClass
-from ._generated.get_classes import GetClasses
-from ._generated.get_encounters_by_zone import GetEncountersByZone
-from ._generated.get_factions import GetFactions
-from ._generated.get_guild_by_id import GetGuildById
-from ._generated.get_item import GetItem
-from ._generated.get_item_set import GetItemSet
-from ._generated.get_item_sets import GetItemSets
-from ._generated.get_items import GetItems
-from ._generated.get_map import GetMap
-from ._generated.get_maps import GetMaps
-from ._generated.get_np_cs import GetNPCs
-from ._generated.get_npc import GetNPC
-from ._generated.get_rate_limit_data import GetRateLimitData
-from ._generated.get_regions import GetRegions
-from ._generated.get_report_by_code import GetReportByCode
-from ._generated.get_report_events import GetReportEvents
-from ._generated.get_report_graph import GetReportGraph
-from ._generated.get_report_player_details import GetReportPlayerDetails
-from ._generated.get_report_rankings import GetReportRankings
-from ._generated.get_report_table import GetReportTable
-from ._generated.get_reports import GetReports
-from ._generated.get_world_data import GetWorldData
-from ._generated.get_zones import GetZones
-from .validators import (
-    validate_limit_parameter,
-    validate_positive_integer,
-    validate_report_search_params,
-)
+from .get_abilities import GetAbilities
+from .get_ability import GetAbility
+from .get_character_by_id import GetCharacterById
+from .get_character_encounter_ranking import GetCharacterEncounterRanking
+from .get_character_encounter_rankings import GetCharacterEncounterRankings
+from .get_character_reports import GetCharacterReports
+from .get_character_zone_rankings import GetCharacterZoneRankings
+from .get_class import GetClass
+from .get_classes import GetClasses
+from .get_encounters_by_zone import GetEncountersByZone
+from .get_factions import GetFactions
+from .get_guild_by_id import GetGuildById
+from .get_item import GetItem
+from .get_item_set import GetItemSet
+from .get_item_sets import GetItemSets
+from .get_items import GetItems
+from .get_map import GetMap
+from .get_maps import GetMaps
+from .get_np_cs import GetNPCs
+from .get_npc import GetNPC
+from .get_rate_limit_data import GetRateLimitData
+from .get_regions import GetRegions
+from .get_report_by_code import GetReportByCode
+from .get_report_events import GetReportEvents
+from .get_report_graph import GetReportGraph
+from .get_report_player_details import GetReportPlayerDetails
+from .get_report_rankings import GetReportRankings
+from .get_report_table import GetReportTable
+from .get_reports import GetReports
+from .get_world_data import GetWorldData
+from .get_zones import GetZones
 
 
 def gql(q: str) -> str:
@@ -58,20 +53,6 @@ def gql(q: str) -> str:
 
 
 class Client(AsyncBaseClient):
-    """
-    ESO Logs API client with comprehensive validation and security features.
-
-    Security Features:
-    - Input validation with length limits to prevent DoS attacks
-    - API key sanitization in error messages
-    - Parameter validation before API calls
-
-    Rate Limiting:
-    - ESO Logs API has rate limits (typically 300 requests/minute)
-    - Users should implement rate limiting in production applications
-    - Consider using exponential backoff for failed requests
-    """
-
     async def get_ability(self, id: int, **kwargs: Any) -> GetAbility:
         query = gql(
             """
@@ -874,7 +855,7 @@ class Client(AsyncBaseClient):
         data = self.get_data(response)
         return GetNPC.model_validate(data)
 
-    async def get_npcs(
+    async def get_np_cs(
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
@@ -1436,175 +1417,3 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetReports.model_validate(data)
-
-    async def search_reports(
-        self,
-        guild_id: Union[Optional[int], UnsetType] = UNSET,
-        guild_name: Union[Optional[str], UnsetType] = UNSET,
-        guild_server_slug: Union[Optional[str], UnsetType] = UNSET,
-        guild_server_region: Union[Optional[str], UnsetType] = UNSET,
-        guild_tag_id: Union[Optional[int], UnsetType] = UNSET,
-        user_id: Union[Optional[int], UnsetType] = UNSET,
-        zone_id: Union[Optional[int], UnsetType] = UNSET,
-        game_zone_id: Union[Optional[int], UnsetType] = UNSET,
-        start_time: Union[Optional[float], UnsetType] = UNSET,
-        end_time: Union[Optional[float], UnsetType] = UNSET,
-        limit: Union[Optional[int], UnsetType] = UNSET,
-        page: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
-    ) -> GetReports:
-        """
-        Search for reports with flexible filtering options.
-
-        Args:
-            guild_id: Filter by specific guild ID
-            guild_name: Filter by guild name (requires guild_server_slug and guild_server_region)
-            guild_server_slug: Guild server slug (required with guild_name)
-            guild_server_region: Guild server region (required with guild_name)
-            guild_tag_id: Filter by guild tag/team ID
-            user_id: Filter by specific user ID
-            zone_id: Filter by zone ID
-            game_zone_id: Filter by game zone ID
-            start_time: Start time filter (UNIX timestamp with milliseconds)
-            end_time: End time filter (UNIX timestamp with milliseconds)
-            limit: Number of reports per page (1-25, default 16)
-            page: Page number (default 1)
-
-        Returns:
-            GetReports: Paginated list of reports matching the criteria
-
-        Examples:
-            # Search by guild ID
-            reports = await client.search_reports(guild_id=123)
-
-            # Search by guild name
-            reports = await client.search_reports(
-                guild_name="My Guild",
-                guild_server_slug="server-name",
-                guild_server_region="NA"
-            )
-
-            # Search with date range
-            reports = await client.search_reports(
-                user_id=456,
-                start_time=1640995200000,  # Jan 1, 2022
-                end_time=1672531200000     # Jan 1, 2023
-            )
-        """
-        # Validate parameters before making API call
-        validate_report_search_params(
-            guild_name=guild_name,
-            guild_server_slug=guild_server_slug,
-            guild_server_region=guild_server_region,
-            limit=limit,
-            page=page,
-            start_time=start_time,
-            end_time=end_time,
-            **kwargs,
-        )
-
-        return await self.get_reports(
-            end_time=end_time,
-            guild_id=guild_id,
-            guild_name=guild_name,
-            guild_server_slug=guild_server_slug,
-            guild_server_region=guild_server_region,
-            guild_tag_id=guild_tag_id,
-            user_id=user_id,
-            limit=limit,
-            page=page,
-            start_time=start_time,
-            zone_id=zone_id,
-            game_zone_id=game_zone_id,
-            **kwargs,
-        )
-
-    async def get_guild_reports(
-        self,
-        guild_id: int,
-        limit: Union[Optional[int], UnsetType] = UNSET,
-        page: Union[Optional[int], UnsetType] = UNSET,
-        start_time: Union[Optional[float], UnsetType] = UNSET,
-        end_time: Union[Optional[float], UnsetType] = UNSET,
-        zone_id: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
-    ) -> GetReports:
-        """
-        Convenience method to get reports for a specific guild.
-
-        Args:
-            guild_id: The guild ID to search for
-            limit: Number of reports per page (1-25, default 16)
-            page: Page number (default 1)
-            start_time: Start time filter (UNIX timestamp with milliseconds)
-            end_time: End time filter (UNIX timestamp with milliseconds)
-            zone_id: Filter by specific zone
-
-        Returns:
-            GetReports: Paginated list of guild reports
-
-        Example:
-            # Get recent reports for guild
-            reports = await client.get_guild_reports(guild_id=123, limit=25)
-        """
-        # Validate guild-specific parameters
-        validate_positive_integer(guild_id, "guild_id")
-        if limit is not UNSET and limit is not None and isinstance(limit, int):
-            validate_limit_parameter(limit)
-        if page is not UNSET and page is not None and isinstance(page, int):
-            validate_positive_integer(page, "page")
-
-        return await self.search_reports(
-            guild_id=guild_id,
-            limit=limit,
-            page=page,
-            start_time=start_time,
-            end_time=end_time,
-            zone_id=zone_id,
-            **kwargs,
-        )
-
-    async def get_user_reports(
-        self,
-        user_id: int,
-        limit: Union[Optional[int], UnsetType] = UNSET,
-        page: Union[Optional[int], UnsetType] = UNSET,
-        start_time: Union[Optional[float], UnsetType] = UNSET,
-        end_time: Union[Optional[float], UnsetType] = UNSET,
-        zone_id: Union[Optional[int], UnsetType] = UNSET,
-        **kwargs: Any,
-    ) -> GetReports:
-        """
-        Convenience method to get reports for a specific user.
-
-        Args:
-            user_id: The user ID to search for
-            limit: Number of reports per page (1-25, default 16)
-            page: Page number (default 1)
-            start_time: Start time filter (UNIX timestamp with milliseconds)
-            end_time: End time filter (UNIX timestamp with milliseconds)
-            zone_id: Filter by specific zone
-
-        Returns:
-            GetReports: Paginated list of user reports
-
-        Example:
-            # Get recent reports for user
-            reports = await client.get_user_reports(user_id=456, limit=25)
-        """
-        # Validate user-specific parameters
-        validate_positive_integer(user_id, "user_id")
-        if limit is not UNSET and limit is not None and isinstance(limit, int):
-            validate_limit_parameter(limit)
-        if page is not UNSET and page is not None and isinstance(page, int):
-            validate_positive_integer(page, "page")
-
-        return await self.search_reports(
-            user_id=user_id,
-            limit=limit,
-            page=page,
-            start_time=start_time,
-            end_time=end_time,
-            zone_id=zone_id,
-            **kwargs,
-        )

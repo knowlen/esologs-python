@@ -7,13 +7,13 @@ execute without errors and produce expected results.
 
 import pytest
 
-from esologs.auth import get_access_token
-from esologs.client import Client
-from esologs.exceptions import (
+from esologs._generated.exceptions import (
     GraphQLClientGraphQLError,
     GraphQLClientHttpError,
     ValidationError,
 )
+from esologs.auth import get_access_token
+from esologs.client import Client
 
 
 class TestQuickstartExamples:
@@ -282,7 +282,7 @@ class TestDocumentationIntegrity:
 
     def test_required_exceptions_importable(self):
         """Test that all exceptions used in docs are importable."""
-        from esologs.exceptions import (
+        from esologs._generated.exceptions import (
             GraphQLClientGraphQLError,
             GraphQLClientHttpError,
             ValidationError,

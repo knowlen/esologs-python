@@ -10,14 +10,17 @@ import asyncio
 import pytest
 from pydantic import ValidationError
 
-from esologs.client import Client
-from esologs.enums import (
+from esologs._generated.enums import (
     EventDataType,
     GraphDataType,
     ReportRankingMetricType,
     TableDataType,
 )
-from esologs.exceptions import GraphQLClientGraphQLMultiError, GraphQLClientHttpError
+from esologs._generated.exceptions import (
+    GraphQLClientGraphQLMultiError,
+    GraphQLClientHttpError,
+)
+from esologs.client import Client
 
 
 class TestReportAnalysisExamples:

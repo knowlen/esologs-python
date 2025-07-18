@@ -218,7 +218,7 @@ class TestReportSearchErrorHandling:
     @pytest.mark.asyncio
     async def test_search_reports_invalid_guild_id(self, client):
         """Test search with invalid guild ID."""
-        from esologs.exceptions import GraphQLClientGraphQLMultiError
+        from esologs._generated.exceptions import GraphQLClientGraphQLMultiError
 
         # Very large guild ID that likely doesn't exist
         with pytest.raises(GraphQLClientGraphQLMultiError) as exc_info:
