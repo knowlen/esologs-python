@@ -170,6 +170,12 @@ markers = [
     "timeout: marks tests with timeout requirements",
 ]
 asyncio_mode = "auto"
+filterwarnings = [
+    # Ignore deprecation warnings from generated websockets code
+    "ignore:websockets.client.WebSocketClientProtocol is deprecated:DeprecationWarning",
+    "ignore:websockets.legacy is deprecated:DeprecationWarning",
+    "ignore:websockets.client.connect is deprecated:DeprecationWarning",
+]
 
 [tool.coverage.run]
 source = ["esologs"]
