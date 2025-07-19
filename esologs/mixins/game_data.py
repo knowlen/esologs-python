@@ -2,7 +2,7 @@
 Game data related methods for ESO Logs API client.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict
 
 from .._generated.get_abilities import GetAbilities
 from .._generated.get_ability import GetAbility
@@ -33,13 +33,13 @@ if TYPE_CHECKING:
 class GameDataMixin:
     """Mixin providing game data related API methods."""
 
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """Initialize game data methods when subclass is created."""
         super().__init_subclass__(**kwargs)
         cls._register_game_data_methods()
 
     @classmethod
-    def _register_game_data_methods(cls):
+    def _register_game_data_methods(cls) -> None:
         """Register all game data methods on the class."""
         # Simple getters (single ID parameter)
         game_data_simple_getters = {
@@ -71,7 +71,7 @@ class GameDataMixin:
                 operation_name=NO_PARAM_GETTER_CONFIGS["get_factions"],
                 return_type=GetFactions,
             )
-            setattr(cls, "get_factions", method)
+            cls.get_factions = method
 
         # Paginated getters
         paginated_getters = {
@@ -83,7 +83,7 @@ class GameDataMixin:
         }
 
         for method_name, return_type in paginated_getters.items():
-            config = PAGINATED_GETTER_CONFIGS.get(
+            getter_config: Dict[str, Any] = PAGINATED_GETTER_CONFIGS.get(
                 method_name,
                 {
                     "operation_name": method_name.replace("get_", "get")
@@ -92,18 +92,18 @@ class GameDataMixin:
                 },
             )
             method = create_paginated_getter(
-                operation_name=config["operation_name"],
+                operation_name=getter_config["operation_name"],
                 return_type=return_type,
-                extra_params=config.get("extra_params"),
+                extra_params=getter_config.get("extra_params"),
             )
             setattr(cls, method_name, method)
 
         # Special case: get_classes with extra parameters
         if "get_classes" in PAGINATED_GETTER_CONFIGS:
-            config = PAGINATED_GETTER_CONFIGS["get_classes"]
+            classes_config: Dict[str, Any] = PAGINATED_GETTER_CONFIGS["get_classes"]
             method = create_paginated_getter(
-                operation_name=config["operation_name"],
+                operation_name=classes_config["operation_name"],
                 return_type=GetClasses,
-                extra_params=config.get("extra_params"),
+                extra_params=classes_config.get("extra_params"),
             )
-            setattr(cls, "get_classes", method)
+            cls.get_classes = method

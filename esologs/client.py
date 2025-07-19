@@ -4,6 +4,7 @@ Refactored ESO Logs API client using mixins and factory methods.
 This is a cleaner, more maintainable implementation of the client.
 """
 
+from typing import Any
 
 from ._generated.async_base_client import AsyncBaseClient
 from ._generated.base_model import UNSET, UnsetType
@@ -77,7 +78,7 @@ class Client(
         ```
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialize the client and register all methods from mixins."""
         super().__init__(*args, **kwargs)
         # Methods are automatically registered by mixin __init_subclass__ hooks

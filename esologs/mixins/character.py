@@ -2,7 +2,7 @@
 Character related methods for ESO Logs API client.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from .._generated.enums import (
     CharacterRankingMetricType,
@@ -28,13 +28,13 @@ if TYPE_CHECKING:
 class CharacterMixin:
     """Mixin providing character related API methods."""
 
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """Initialize character methods when subclass is created."""
         super().__init_subclass__(**kwargs)
         cls._register_character_methods()
 
     @classmethod
-    def _register_character_methods(cls):
+    def _register_character_methods(cls) -> None:
         """Register all character methods on the class."""
         # Simple getter: get_character_by_id
         if "get_character_by_id" in SIMPLE_GETTER_CONFIGS:
@@ -44,7 +44,7 @@ class CharacterMixin:
                 return_type=GetCharacterById,
                 id_param_name=config["id_param_name"],
             )
-            setattr(cls, "get_character_by_id", method)
+            cls.get_character_by_id = method
 
         # get_character_reports (has limit parameter)
         method = create_complex_method(
@@ -54,7 +54,7 @@ class CharacterMixin:
             optional_params={"limit": int},
             param_mapping={"character_id": "characterId"},
         )
-        setattr(cls, "get_character_reports", method)
+        cls.get_character_reports = method
 
         # get_character_encounter_ranking (simple version)
         method = create_complex_method(
@@ -66,7 +66,7 @@ class CharacterMixin:
                 "encounter_id": "encounterId",
             },
         )
-        setattr(cls, "get_character_encounter_ranking", method)
+        cls.get_character_encounter_ranking = method
 
         # get_character_encounter_rankings (complex version with many params)
         method = create_complex_method(
@@ -97,7 +97,7 @@ class CharacterMixin:
                 "include_private_logs": "includePrivateLogs",
             },
         )
-        setattr(cls, "get_character_encounter_rankings", method)
+        cls.get_character_encounter_rankings = method
 
         # get_character_zone_rankings
         method = create_complex_method(
@@ -127,4 +127,4 @@ class CharacterMixin:
                 "include_private_logs": "includePrivateLogs",
             },
         )
-        setattr(cls, "get_character_zone_rankings", method)
+        cls.get_character_zone_rankings = method

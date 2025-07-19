@@ -6,8 +6,7 @@ following common patterns in the ESO Logs API.
 """
 
 import re
-from functools import wraps
-from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union
+from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union, cast
 
 from ._generated.base_model import UNSET, UnsetType
 from .queries import QUERIES
@@ -40,8 +39,8 @@ def create_simple_getter(
 
     # Convert camelCase to snake_case properly
     snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
-    
-    async def method(self, id: int = None, **kwargs: Any) -> T:
+
+    async def method(self: Any, id: Optional[int] = None, **kwargs: Any) -> T:
         """Execute a simple ID-based query."""
         # Support both positional and keyword arguments
         if id is None:
@@ -52,12 +51,12 @@ def create_simple_getter(
                 id = kwargs.pop(id_param_name)
             else:
                 # Try snake_case version of id_param_name
-                param_key = re.sub('([a-z0-9])([A-Z])', r'\1_\2', id_param_name).lower()
+                param_key = re.sub("([a-z0-9])([A-Z])", r"\1_\2", id_param_name).lower()
                 if param_key in kwargs:
                     id = kwargs.pop(param_key)
                 else:
                     raise TypeError(f"{snake_name}() missing required parameter: id")
-        
+
         query = QUERIES[operation_name]
         variables: Dict[str, object] = {id_param_name: id}
 
@@ -65,7 +64,7 @@ def create_simple_getter(
             query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
-        return return_type.model_validate(data)
+        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
 
     # Update method metadata
     method.__name__ = snake_name
@@ -95,7 +94,7 @@ def create_no_params_getter(
         An async method that executes the query
     """
 
-    async def method(self, **kwargs: Any) -> T:
+    async def method(self: Any, **kwargs: Any) -> T:
         """Execute a parameterless query."""
         query = QUERIES[operation_name]
         variables: Dict[str, object] = {}
@@ -104,7 +103,7 @@ def create_no_params_getter(
             query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
-        return return_type.model_validate(data)
+        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
 
     # Update method metadata
     # Convert camelCase to snake_case properly
@@ -139,7 +138,7 @@ def create_paginated_getter(
     extra_params = extra_params or {}
 
     async def method(
-        self,
+        self: Any,
         limit: Union[Optional[int], UnsetType] = UNSET,
         page: Union[Optional[int], UnsetType] = UNSET,
         **kwargs: Any,
@@ -162,7 +161,7 @@ def create_paginated_getter(
             query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
-        return return_type.model_validate(data)
+        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
 
     # Update method metadata
     # Convert camelCase to snake_case properly
@@ -202,7 +201,7 @@ def create_complex_method(
 
     # Build the full parameter list for the method signature
 
-    async def method(self, **kwargs: Any) -> T:
+    async def method(self: Any, **kwargs: Any) -> T:
         """Execute a complex query with many parameters."""
         query = QUERIES[operation_name]
         variables: Dict[str, object] = {}
@@ -224,7 +223,7 @@ def create_complex_method(
             query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
-        return return_type.model_validate(data)
+        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
 
     # Update method metadata
     # Convert camelCase to snake_case properly
@@ -240,7 +239,7 @@ def create_complex_method(
 def create_method_with_builder(
     operation_name: str,
     return_type: Type[T],
-    param_builder: Callable[[Dict[str, Any]], Dict[str, object]],
+    param_builder: Callable[..., Dict[str, object]],
 ) -> Callable:
     """
     Create a method that uses a parameter builder function.
@@ -257,7 +256,7 @@ def create_method_with_builder(
         An async method that executes the query
     """
 
-    async def method(self, **kwargs: Any) -> T:
+    async def method(self: Any, **kwargs: Any) -> T:
         """Execute a query with custom parameter building."""
         query = QUERIES[operation_name]
         variables = param_builder(**kwargs)
@@ -266,7 +265,7 @@ def create_method_with_builder(
             query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
-        return return_type.model_validate(data)
+        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
 
     # Update method metadata
     # Convert camelCase to snake_case properly

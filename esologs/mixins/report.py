@@ -35,17 +35,19 @@ if TYPE_CHECKING:
 class ReportMixin:
     """Mixin providing report related API methods."""
 
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """Initialize report methods when subclass is created."""
         super().__init_subclass__(**kwargs)
         cls._register_report_methods()
 
     @classmethod
-    def _register_report_methods(cls):
+    def _register_report_methods(cls) -> None:
         """Register all report methods on the class."""
 
         # Simple getter: get_report_by_code (uses 'code' instead of 'id')
-        async def get_report_by_code(self, code: str, **kwargs: Any) -> GetReportByCode:
+        async def get_report_by_code(
+            self: Any, code: str, **kwargs: Any
+        ) -> GetReportByCode:
             from ..queries import QUERIES
 
             query = QUERIES["getReportByCode"]
@@ -58,13 +60,13 @@ class ReportMixin:
             data = self.get_data(response)
             return GetReportByCode.model_validate(data)
 
-        setattr(cls, "get_report_by_code", get_report_by_code)
+        cls.get_report_by_code = get_report_by_code
 
         # No params getter: get_rate_limit_data
         method = create_no_params_getter(
             operation_name="getRateLimitData", return_type=GetRateLimitData
         )
-        setattr(cls, "get_rate_limit_data", method)
+        cls.get_rate_limit_data = method
 
         # Complex report methods using builders
         report_methods = {
@@ -100,11 +102,11 @@ class ReportMixin:
         cls._register_report_convenience_methods()
 
     @classmethod
-    def _register_report_convenience_methods(cls):
+    def _register_report_convenience_methods(cls) -> None:
         """Register convenience methods for report searching."""
 
         async def search_reports(
-            self,
+            self: Any,
             guild_id: Union[Optional[int], UnsetType] = UNSET,
             guild_name: Union[Optional[str], UnsetType] = UNSET,
             guild_server_slug: Union[Optional[str], UnsetType] = UNSET,
@@ -149,7 +151,7 @@ class ReportMixin:
             )
 
         async def get_guild_reports(
-            self,
+            self: Any,
             guild_id: int,
             limit: Union[Optional[int], UnsetType] = UNSET,
             page: Union[Optional[int], UnsetType] = UNSET,
@@ -177,7 +179,7 @@ class ReportMixin:
             )
 
         async def get_user_reports(
-            self,
+            self: Any,
             user_id: int,
             limit: Union[Optional[int], UnsetType] = UNSET,
             page: Union[Optional[int], UnsetType] = UNSET,
@@ -256,6 +258,6 @@ class ReportMixin:
             GetReports: Paginated list of user reports
         """
 
-        setattr(cls, "search_reports", search_reports)
-        setattr(cls, "get_guild_reports", get_guild_reports)
-        setattr(cls, "get_user_reports", get_user_reports)
+        cls.search_reports = search_reports
+        cls.get_guild_reports = get_guild_reports
+        cls.get_user_reports = get_user_reports

@@ -19,7 +19,7 @@ from ._generated.enums import (
 class ParameterBuilder:
     """Base class for parameter builders."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.params: Dict[str, Any] = {}
 
     def add_param(self, name: str, value: Any) -> "ParameterBuilder":
@@ -36,7 +36,7 @@ class ParameterBuilder:
 class ReportFilterBuilder(ParameterBuilder):
     """Builder for report filtering parameters used across multiple methods."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._param_mapping = {
             "fight_i_ds": "fightIDs",
@@ -72,7 +72,8 @@ class ReportFilterBuilder(ParameterBuilder):
         end_time: Union[Optional[float], UnsetType] = UNSET,
     ) -> "ReportFilterBuilder":
         """Add time range parameters."""
-        return self.add_param("startTime", start_time).add_param("endTime", end_time)
+        self.add_param("startTime", start_time).add_param("endTime", end_time)
+        return self
 
     def add_combat_filters(
         self,
@@ -83,13 +84,12 @@ class ReportFilterBuilder(ParameterBuilder):
         target_class: Union[Optional[str], UnsetType] = UNSET,
     ) -> "ReportFilterBuilder":
         """Add combat-related filters."""
-        return (
-            self.add_param("abilityID", ability_id)
-            .add_param("sourceID", source_id)
-            .add_param("targetID", target_id)
-            .add_param("sourceClass", source_class)
-            .add_param("targetClass", target_class)
-        )
+        self.add_param("abilityID", ability_id)
+        self.add_param("sourceID", source_id)
+        self.add_param("targetID", target_id)
+        self.add_param("sourceClass", source_class)
+        self.add_param("targetClass", target_class)
+        return self
 
     def add_aura_filters(
         self,
@@ -99,14 +99,13 @@ class ReportFilterBuilder(ParameterBuilder):
         target_auras_absent: Union[Optional[str], UnsetType] = UNSET,
     ) -> "ReportFilterBuilder":
         """Add aura-based filters."""
-        return (
-            self.add_param("sourceAurasPresent", source_auras_present)
-            .add_param("sourceAurasAbsent", source_auras_absent)
-            .add_param("targetAurasPresent", target_auras_present)
-            .add_param("targetAurasAbsent", target_auras_absent)
-        )
+        self.add_param("sourceAurasPresent", source_auras_present)
+        self.add_param("sourceAurasAbsent", source_auras_absent)
+        self.add_param("targetAurasPresent", target_auras_present)
+        self.add_param("targetAurasAbsent", target_auras_absent)
+        return self
 
-    def build_from_kwargs(self, **kwargs) -> Dict[str, object]:
+    def build_from_kwargs(self, **kwargs: Any) -> Dict[str, object]:
         """Build parameters from kwargs with proper mapping."""
         result = {}
 
@@ -127,7 +126,7 @@ class ReportFilterBuilder(ParameterBuilder):
 class RankingParameterBuilder(ParameterBuilder):
     """Builder for ranking-related parameters."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._param_mapping = {
             "character_id": "characterId",
@@ -148,12 +147,11 @@ class RankingParameterBuilder(ParameterBuilder):
         compare: Union[Optional[RankingCompareType], UnsetType] = UNSET,
     ) -> "RankingParameterBuilder":
         """Add ranking-specific filters."""
-        return (
-            self.add_param("metric", metric)
-            .add_param("partition", partition)
-            .add_param("timeframe", timeframe)
-            .add_param("compare", compare)
-        )
+        self.add_param("metric", metric)
+        self.add_param("partition", partition)
+        self.add_param("timeframe", timeframe)
+        self.add_param("compare", compare)
+        return self
 
     def add_class_filters(
         self,
@@ -162,13 +160,12 @@ class RankingParameterBuilder(ParameterBuilder):
         role: Union[Optional[RoleType], UnsetType] = UNSET,
     ) -> "RankingParameterBuilder":
         """Add class/spec/role filters."""
-        return (
-            self.add_param("className", class_name)
-            .add_param("specName", spec_name)
-            .add_param("role", role)
-        )
+        self.add_param("className", class_name)
+        self.add_param("specName", spec_name)
+        self.add_param("role", role)
+        return self
 
-    def build_from_kwargs(self, **kwargs) -> Dict[str, object]:
+    def build_from_kwargs(self, **kwargs: Any) -> Dict[str, object]:
         """Build parameters from kwargs with proper mapping."""
         result = {}
 
@@ -198,31 +195,31 @@ class RankingParameterBuilder(ParameterBuilder):
 # Convenience functions for building specific parameter sets
 
 
-def build_report_event_params(**kwargs) -> Dict[str, object]:
+def build_report_event_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for get_report_events method."""
     builder = ReportFilterBuilder()
     return builder.build_from_kwargs(**kwargs)
 
 
-def build_report_graph_params(**kwargs) -> Dict[str, object]:
+def build_report_graph_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for get_report_graph method."""
     builder = ReportFilterBuilder()
     return builder.build_from_kwargs(**kwargs)
 
 
-def build_report_table_params(**kwargs) -> Dict[str, object]:
+def build_report_table_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for get_report_table method."""
     builder = ReportFilterBuilder()
     return builder.build_from_kwargs(**kwargs)
 
 
-def build_character_ranking_params(**kwargs) -> Dict[str, object]:
+def build_character_ranking_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for character ranking methods."""
     builder = RankingParameterBuilder()
     return builder.build_from_kwargs(**kwargs)
 
 
-def build_report_search_params(**kwargs) -> Dict[str, object]:
+def build_report_search_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for report search methods."""
     param_mapping = {
         "guild_id": "guildID",
@@ -252,7 +249,7 @@ def build_report_search_params(**kwargs) -> Dict[str, object]:
     return result
 
 
-def build_report_player_details_params(**kwargs) -> Dict[str, object]:
+def build_report_player_details_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for get_report_player_details method."""
     param_mapping = {
         "encounter_id": "encounterID",
@@ -279,7 +276,7 @@ def build_report_player_details_params(**kwargs) -> Dict[str, object]:
     return result
 
 
-def build_report_rankings_params(**kwargs) -> Dict[str, object]:
+def build_report_rankings_params(**kwargs: Any) -> Dict[str, object]:
     """Build parameters for get_report_rankings method."""
     param_mapping = {
         "encounter_id": "encounterID",

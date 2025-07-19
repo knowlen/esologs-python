@@ -2,7 +2,7 @@
 World data related methods for ESO Logs API client.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from .._generated.get_encounters_by_zone import GetEncountersByZone
 from .._generated.get_regions import GetRegions
@@ -22,13 +22,13 @@ if TYPE_CHECKING:
 class WorldDataMixin:
     """Mixin providing world data related API methods."""
 
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """Initialize world data methods when subclass is created."""
         super().__init_subclass__(**kwargs)
         cls._register_world_data_methods()
 
     @classmethod
-    def _register_world_data_methods(cls):
+    def _register_world_data_methods(cls) -> None:
         """Register all world data methods on the class."""
         # No parameter getters
         no_param_methods = {
@@ -53,4 +53,4 @@ class WorldDataMixin:
                 return_type=GetEncountersByZone,
                 id_param_name=config["id_param_name"],
             )
-            setattr(cls, "get_encounters_by_zone", method)
+            cls.get_encounters_by_zone = method
