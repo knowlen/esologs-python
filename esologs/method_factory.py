@@ -3,15 +3,57 @@ Method factory functions for dynamically creating API client methods.
 
 This module provides factory functions that generate async methods
 following common patterns in the ESO Logs API.
+
+## Method Registration and Naming Conventions
+
+The factory functions automatically convert GraphQL operation names to Python method names:
+
+1. **Naming Convention**: camelCase GraphQL operations → snake_case Python methods
+   - `getAbility` → `get_ability()`
+   - `getCharacterById` → `get_character_by_id()`
+   - `getGuildReports` → `get_guild_reports()`
+
+2. **Method Registration**: Methods are dynamically created and registered on the Client class
+   through mixin classes using the `__init_subclass__` hook.
+
+3. **Operation Mapping**: The mapping from Python method to GraphQL operation is stored in:
+   - `SIMPLE_GETTER_CONFIGS` for single ID parameter methods
+   - `NO_PARAM_GETTER_CONFIGS` for parameterless methods
+   - `PAGINATED_GETTER_CONFIGS` for paginated methods
+   - Direct operation names passed to factory functions for complex methods
+
+Example:
+    ```python
+    # In a mixin class:
+    method = create_simple_getter(
+        operation_name="getAbility",  # GraphQL operation
+        return_type=GetAbility,
+        id_param_name="id"
+    )
+    # Registers as: client.get_ability(id=123)
+    ```
 """
 
 import re
-from typing import Any, Callable, Dict, Optional, Type, TypeVar, Union, cast
+from typing import Any, Callable, Dict, Optional, Protocol, Type, TypeVar, Union, cast
 
 from ._generated.base_model import UNSET, UnsetType
 from .queries import QUERIES
 
-T = TypeVar("T")
+
+class ModelWithValidate(Protocol):
+    """Protocol for types that have a model_validate class method."""
+
+    @classmethod
+    def model_validate(cls, obj: Any) -> Any:
+        """Validate and create an instance from a dictionary."""
+        ...
+
+
+T = TypeVar("T", bound=ModelWithValidate)
+
+# Cache compiled regex patterns for performance
+_CAMEL_TO_SNAKE_PATTERN = re.compile(r"([a-z0-9])([A-Z])")
 
 
 def create_simple_getter(
@@ -38,7 +80,7 @@ def create_simple_getter(
     """
 
     # Convert camelCase to snake_case properly
-    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
+    snake_name = _CAMEL_TO_SNAKE_PATTERN.sub(r"\1_\2", operation_name).lower()
 
     async def method(self: Any, id: Optional[int] = None, **kwargs: Any) -> T:
         """Execute a simple ID-based query."""
@@ -51,11 +93,20 @@ def create_simple_getter(
                 id = kwargs.pop(id_param_name)
             else:
                 # Try snake_case version of id_param_name
-                param_key = re.sub("([a-z0-9])([A-Z])", r"\1_\2", id_param_name).lower()
+                param_key = _CAMEL_TO_SNAKE_PATTERN.sub(r"\1_\2", id_param_name).lower()
                 if param_key in kwargs:
                     id = kwargs.pop(param_key)
                 else:
-                    raise TypeError(f"{snake_name}() missing required parameter: id")
+                    available_params = list(kwargs.keys())
+                    param_hint = (
+                        f" (available: {', '.join(available_params)})"
+                        if available_params
+                        else ""
+                    )
+                    raise TypeError(
+                        f"{snake_name}() missing required parameter 'id'. "
+                        f"Expected one of: 'id', '{id_param_name}', or '{param_key}'{param_hint}"
+                    )
 
         query = QUERIES[operation_name]
         variables: Dict[str, object] = {id_param_name: id}
@@ -64,7 +115,7 @@ def create_simple_getter(
             query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
-        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
+        return cast(T, return_type.model_validate(data))
 
     # Update method metadata
     method.__name__ = snake_name
@@ -103,11 +154,11 @@ def create_no_params_getter(
             query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
-        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
+        return cast(T, return_type.model_validate(data))
 
     # Update method metadata
     # Convert camelCase to snake_case properly
-    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
+    snake_name = _CAMEL_TO_SNAKE_PATTERN.sub(r"\1_\2", operation_name).lower()
     method.__name__ = snake_name
     method.__doc__ = f"Get {return_type.__name__}."
 
@@ -161,11 +212,11 @@ def create_paginated_getter(
             query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
-        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
+        return cast(T, return_type.model_validate(data))
 
     # Update method metadata
     # Convert camelCase to snake_case properly
-    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
+    snake_name = _CAMEL_TO_SNAKE_PATTERN.sub(r"\1_\2", operation_name).lower()
     method.__name__ = snake_name
     method.__doc__ = f"Get paginated {return_type.__name__}."
 
@@ -207,27 +258,42 @@ def create_complex_method(
         variables: Dict[str, object] = {}
 
         # Process required parameters
-        for param_name, _param_type in required_params.items():
+        for param_name, param_type in required_params.items():
             if param_name not in kwargs:
-                raise TypeError(f"Missing required parameter: {param_name}")
-            variables[param_mapping.get(param_name, param_name)] = kwargs.pop(
-                param_name
+                available = list(kwargs.keys())
+                available_hint = (
+                    f" Available: {', '.join(available)}" if available else ""
+                )
+                raise TypeError(
+                    f"{snake_name}() missing required parameter '{param_name}' (type: {param_type.__name__}).{available_hint}"
+                )
+            mapped_name = (
+                param_mapping.get(param_name, param_name)
+                if param_mapping
+                else param_name
             )
+            variables[mapped_name] = kwargs.pop(param_name)
 
         # Process optional parameters
-        for param_name in optional_params:
-            value = kwargs.pop(param_name, UNSET)
-            variables[param_mapping.get(param_name, param_name)] = value
+        if optional_params:
+            for param_name in optional_params:
+                value = kwargs.pop(param_name, UNSET)
+                mapped_name = (
+                    param_mapping.get(param_name, param_name)
+                    if param_mapping
+                    else param_name
+                )
+                variables[mapped_name] = value
 
         response = await self.execute(
             query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
-        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
+        return cast(T, return_type.model_validate(data))
 
     # Update method metadata
     # Convert camelCase to snake_case properly
-    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
+    snake_name = _CAMEL_TO_SNAKE_PATTERN.sub(r"\1_\2", operation_name).lower()
     method.__name__ = snake_name
     method.__doc__ = f"Execute {operation_name} with complex parameters."
 
@@ -265,11 +331,11 @@ def create_method_with_builder(
             query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
-        return cast(T, return_type.model_validate(data))  # type: ignore[attr-defined]
+        return cast(T, return_type.model_validate(data))
 
     # Update method metadata
     # Convert camelCase to snake_case properly
-    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
+    snake_name = _CAMEL_TO_SNAKE_PATTERN.sub(r"\1_\2", operation_name).lower()
     method.__name__ = snake_name
     method.__doc__ = f"Execute {operation_name} with custom parameter building."
 

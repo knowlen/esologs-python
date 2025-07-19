@@ -248,7 +248,7 @@ class TestMethodFactory:
         bound_method = method.__get__(mock_client, MockClient)
 
         # Should raise TypeError for missing required param
-        with pytest.raises(TypeError, match="Missing required parameter: report_id"):
+        with pytest.raises(TypeError, match="missing required parameter 'report_id'"):
             await bound_method(code="ABC123")
 
     @pytest.mark.asyncio
