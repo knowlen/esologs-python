@@ -48,18 +48,18 @@ class Client(
 
 **Architecture Components**:
 
-- **Factory Methods** (`method_factory.py`): Dynamic method generation
-  - `create_simple_getter()`: For single ID parameter methods
-  - `create_complex_method()`: For methods with multiple parameters
-  - `create_method_with_builder()`: For methods using parameter builders
-- **Mixins** (`mixins/`): Methods organized by functional area
-  - `GameDataMixin`: Abilities, items, NPCs, classes, factions, maps
-  - `CharacterMixin`: Character info, reports, rankings
-  - `WorldDataMixin`: World data, zones, regions, encounters
-  - `GuildMixin`: Guild information
-  - `ReportMixin`: Combat reports, events, graphs, rankings
-- **Parameter Builders** (`param_builders.py`): Complex parameter handling
-- **GraphQL Queries** (`queries.py`): Centralized query storage
+* **Factory Methods** (`method_factory.py`): Dynamic method generation
+    - `create_simple_getter()`: For single ID parameter methods
+    - `create_complex_method()`: For methods with multiple parameters
+    - `create_method_with_builder()`: For methods using parameter builders
+* **Mixins** (`mixins/`): Methods organized by functional area
+    - `GameDataMixin`: Abilities, items, NPCs, classes, factions, maps
+    - `CharacterMixin`: Character info, reports, rankings
+    - `WorldDataMixin`: World data, zones, regions, encounters
+    - `GuildMixin`: Guild information
+    - `ReportMixin`: Combat reports, events, graphs, rankings
+* **Parameter Builders** (`param_builders.py`): Complex parameter handling
+* **GraphQL Queries** (`queries.py`): Centralized query storage
 
 ### 2. GraphQL Client Layer
 
