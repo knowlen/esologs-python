@@ -44,7 +44,7 @@ class CharacterMixin:
                 return_type=GetCharacterById,
                 id_param_name=config["id_param_name"],
             )
-            cls.get_character_by_id = method
+            setattr(cls, "get_character_by_id", method)
 
         # get_character_reports (has limit parameter)
         method = create_complex_method(
@@ -54,7 +54,7 @@ class CharacterMixin:
             optional_params={"limit": int},
             param_mapping={"character_id": "characterId"},
         )
-        cls.get_character_reports = method
+        setattr(cls, "get_character_reports", method)
 
         # get_character_encounter_ranking (simple version)
         method = create_complex_method(
@@ -66,7 +66,7 @@ class CharacterMixin:
                 "encounter_id": "encounterId",
             },
         )
-        cls.get_character_encounter_ranking = method
+        setattr(cls, "get_character_encounter_ranking", method)
 
         # get_character_encounter_rankings (complex version with many params)
         method = create_complex_method(
@@ -97,7 +97,7 @@ class CharacterMixin:
                 "include_private_logs": "includePrivateLogs",
             },
         )
-        cls.get_character_encounter_rankings = method
+        setattr(cls, "get_character_encounter_rankings", method)
 
         # get_character_zone_rankings
         method = create_complex_method(
@@ -127,4 +127,4 @@ class CharacterMixin:
                 "include_private_logs": "includePrivateLogs",
             },
         )
-        cls.get_character_zone_rankings = method
+        setattr(cls, "get_character_zone_rankings", method)

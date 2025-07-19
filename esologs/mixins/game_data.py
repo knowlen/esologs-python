@@ -71,7 +71,7 @@ class GameDataMixin:
                 operation_name=NO_PARAM_GETTER_CONFIGS["get_factions"],
                 return_type=GetFactions,
             )
-            cls.get_factions = method
+            setattr(cls, "get_factions", method)
 
         # Paginated getters
         paginated_getters = {
@@ -106,4 +106,4 @@ class GameDataMixin:
                 return_type=GetClasses,
                 extra_params=config.get("extra_params"),
             )
-            cls.get_classes = method
+            setattr(cls, "get_classes", method)

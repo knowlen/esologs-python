@@ -13,10 +13,7 @@ from .._generated.get_report_player_details import GetReportPlayerDetails
 from .._generated.get_report_rankings import GetReportRankings
 from .._generated.get_report_table import GetReportTable
 from .._generated.get_reports import GetReports
-from ..method_factory import (
-    create_method_with_builder,
-    create_no_params_getter,
-)
+from ..method_factory import create_method_with_builder, create_no_params_getter
 from ..param_builders import (
     build_report_event_params,
     build_report_graph_params,
@@ -57,18 +54,17 @@ class ReportMixin:
                 query=query,
                 operation_name="getReportByCode",
                 variables=variables,
-                **kwargs,
             )
             data = self.get_data(response)
             return GetReportByCode.model_validate(data)
 
-        cls.get_report_by_code = get_report_by_code
+        setattr(cls, "get_report_by_code", get_report_by_code)
 
         # No params getter: get_rate_limit_data
         method = create_no_params_getter(
             operation_name="getRateLimitData", return_type=GetRateLimitData
         )
-        cls.get_rate_limit_data = method
+        setattr(cls, "get_rate_limit_data", method)
 
         # Complex report methods using builders
         report_methods = {
@@ -260,6 +256,6 @@ class ReportMixin:
             GetReports: Paginated list of user reports
         """
 
-        cls.search_reports = search_reports
-        cls.get_guild_reports = get_guild_reports
-        cls.get_user_reports = get_user_reports
+        setattr(cls, "search_reports", search_reports)
+        setattr(cls, "get_guild_reports", get_guild_reports)
+        setattr(cls, "get_user_reports", get_user_reports)

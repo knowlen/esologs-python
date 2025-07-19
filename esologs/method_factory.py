@@ -38,21 +38,36 @@ def create_simple_getter(
         An async method that executes the query
     """
 
-    @wraps(create_simple_getter)
-    async def method(self, id: int, **kwargs: Any) -> T:
+    # Convert camelCase to snake_case properly
+    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
+    
+    async def method(self, id: int = None, **kwargs: Any) -> T:
         """Execute a simple ID-based query."""
+        # Support both positional and keyword arguments
+        if id is None:
+            # Try to get from kwargs using various possible names
+            if "id" in kwargs:
+                id = kwargs.pop("id")
+            elif id_param_name in kwargs:
+                id = kwargs.pop(id_param_name)
+            else:
+                # Try snake_case version of id_param_name
+                param_key = re.sub('([a-z0-9])([A-Z])', r'\1_\2', id_param_name).lower()
+                if param_key in kwargs:
+                    id = kwargs.pop(param_key)
+                else:
+                    raise TypeError(f"{snake_name}() missing required parameter: id")
+        
         query = QUERIES[operation_name]
         variables: Dict[str, object] = {id_param_name: id}
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables, **kwargs
+            query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
 
     # Update method metadata
-    # Convert camelCase to snake_case properly
-    snake_name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", operation_name).lower()
     method.__name__ = snake_name
     method.__doc__ = f"Get {return_type.__name__} by {id_param_name}."
 
@@ -80,14 +95,13 @@ def create_no_params_getter(
         An async method that executes the query
     """
 
-    @wraps(create_no_params_getter)
     async def method(self, **kwargs: Any) -> T:
         """Execute a parameterless query."""
         query = QUERIES[operation_name]
         variables: Dict[str, object] = {}
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables, **kwargs
+            query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -124,7 +138,6 @@ def create_paginated_getter(
     """
     extra_params = extra_params or {}
 
-    @wraps(create_paginated_getter)
     async def method(
         self,
         limit: Union[Optional[int], UnsetType] = UNSET,
@@ -146,7 +159,7 @@ def create_paginated_getter(
                 variables[param_name] = UNSET
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables, **kwargs
+            query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -189,7 +202,6 @@ def create_complex_method(
 
     # Build the full parameter list for the method signature
 
-    @wraps(create_complex_method)
     async def method(self, **kwargs: Any) -> T:
         """Execute a complex query with many parameters."""
         query = QUERIES[operation_name]
@@ -209,7 +221,7 @@ def create_complex_method(
             variables[param_mapping.get(param_name, param_name)] = value
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables, **kwargs
+            query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -245,14 +257,13 @@ def create_method_with_builder(
         An async method that executes the query
     """
 
-    @wraps(create_method_with_builder)
     async def method(self, **kwargs: Any) -> T:
         """Execute a query with custom parameter building."""
         query = QUERIES[operation_name]
         variables = param_builder(**kwargs)
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables, **kwargs
+            query=query, operation_name=operation_name, variables=variables
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
