@@ -53,4 +53,4 @@ class WorldDataMixin:
                 return_type=GetEncountersByZone,
                 id_param_name=config["id_param_name"],
             )
-            cls.get_encounters_by_zone = method
+            cls.get_encounters_by_zone = method  # type: ignore[attr-defined]

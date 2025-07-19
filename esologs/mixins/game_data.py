@@ -2,7 +2,7 @@
 Game data related methods for ESO Logs API client.
 """
 
-from typing import TYPE_CHECKING, Any, Dict
+from typing import TYPE_CHECKING, Any, Dict, cast
 
 from .._generated.get_abilities import GetAbilities
 from .._generated.get_ability import GetAbility
@@ -71,7 +71,7 @@ class GameDataMixin:
                 operation_name=NO_PARAM_GETTER_CONFIGS["get_factions"],
                 return_type=GetFactions,
             )
-            cls.get_factions = method
+            cls.get_factions = method  # type: ignore[attr-defined]
 
         # Paginated getters
         paginated_getters = {
@@ -83,13 +83,16 @@ class GameDataMixin:
         }
 
         for method_name, return_type in paginated_getters.items():
-            getter_config: Dict[str, Any] = PAGINATED_GETTER_CONFIGS.get(
-                method_name,
-                {
-                    "operation_name": method_name.replace("get_", "get")
-                    .title()
-                    .replace("_", "")
-                },
+            getter_config = cast(
+                Dict[str, Any],
+                PAGINATED_GETTER_CONFIGS.get(
+                    method_name,
+                    {
+                        "operation_name": method_name.replace("get_", "get")
+                        .title()
+                        .replace("_", "")
+                    },
+                ),
             )
             method = create_paginated_getter(
                 operation_name=getter_config["operation_name"],
@@ -100,10 +103,12 @@ class GameDataMixin:
 
         # Special case: get_classes with extra parameters
         if "get_classes" in PAGINATED_GETTER_CONFIGS:
-            classes_config: Dict[str, Any] = PAGINATED_GETTER_CONFIGS["get_classes"]
+            classes_config = cast(
+                Dict[str, Any], PAGINATED_GETTER_CONFIGS["get_classes"]
+            )
             method = create_paginated_getter(
                 operation_name=classes_config["operation_name"],
                 return_type=GetClasses,
                 extra_params=classes_config.get("extra_params"),
             )
-            cls.get_classes = method
+            cls.get_classes = method  # type: ignore[attr-defined]

@@ -60,13 +60,13 @@ class ReportMixin:
             data = self.get_data(response)
             return GetReportByCode.model_validate(data)
 
-        cls.get_report_by_code = get_report_by_code
+        cls.get_report_by_code = get_report_by_code  # type: ignore[attr-defined]
 
         # No params getter: get_rate_limit_data
         method = create_no_params_getter(
             operation_name="getRateLimitData", return_type=GetRateLimitData
         )
-        cls.get_rate_limit_data = method
+        cls.get_rate_limit_data = method  # type: ignore[attr-defined]
 
         # Complex report methods using builders
         report_methods = {
@@ -258,6 +258,6 @@ class ReportMixin:
             GetReports: Paginated list of user reports
         """
 
-        cls.search_reports = search_reports
-        cls.get_guild_reports = get_guild_reports
-        cls.get_user_reports = get_user_reports
+        cls.search_reports = search_reports  # type: ignore[attr-defined]
+        cls.get_guild_reports = get_guild_reports  # type: ignore[attr-defined]
+        cls.get_user_reports = get_user_reports  # type: ignore[attr-defined]

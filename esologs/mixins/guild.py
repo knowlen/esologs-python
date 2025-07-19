@@ -30,4 +30,4 @@ class GuildMixin:
                 return_type=GetGuildById,
                 id_param_name=config["id_param_name"],
             )
-            cls.get_guild_by_id = method
+            cls.get_guild_by_id = method  # type: ignore[attr-defined]
