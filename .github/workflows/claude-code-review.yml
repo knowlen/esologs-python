@@ -16,7 +16,7 @@ on:
 jobs:
   claude-review:
     # Skip Claude review on synchronize unless specifically requested
-    if: github.event.action == 'opened' || contains(github.event.head_commit.message, '[review]')
+    if: github.event.action == 'opened' || contains(github.event.head_commit.message, '[review]') || github.event_name == 'workflow_dispatch'
     # Optional: Filter by PR author
     # if: |
     #   github.event.pull_request.user.login == 'external-contributor' ||
