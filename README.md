@@ -19,7 +19,7 @@
 
 | Metric | Status |
 |--------|--------|
-| **Current Version** | 0.2.0a2 |
+| **Current Version** | 0.2.0a3 |
 | **API Coverage** | ~83% (comprehensive analysis shows 6/8 API sections fully implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |

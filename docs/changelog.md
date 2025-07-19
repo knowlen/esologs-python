@@ -5,6 +5,30 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0a3] - 2025-07-19
+
+### Changed
+
+- **Major Refactoring**: Reduced `client.py` from 1,610 lines to 86 lines (95% reduction)
+- Implemented factory pattern with mixins for better code organization
+- Created modular architecture with clear separation of concerns:
+  - Method factory functions for dynamic method generation
+  - Parameter builders for complex parameter handling
+  - Mixins organizing methods by functional area
+  - Centralized GraphQL queries storage
+- Moved all auto-generated code to `_generated/` subdirectory for cleaner structure
+- Improved error messages to show available parameters when missing
+- Added comprehensive documentation for method registration and naming conventions
+- Cached regex patterns for performance improvement
+- Fixed type safety issues with proper Protocol usage
+- Updated test suite from 278 to 310 tests (added 29 unit tests for new patterns)
+
+### Fixed
+
+- Type annotations now satisfy mypy without `# type: ignore` comments
+- Parameter validation errors now provide more helpful context
+- Fixed kwargs passthrough issue in report methods preventing HTTP client errors
+
 ## [0.2.0a2] - 2025-07-16
 
 ### Fixed
