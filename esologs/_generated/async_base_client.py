@@ -16,9 +16,9 @@ from .exceptions import (
 )
 
 try:
-    from websockets.client import WebSocketClientProtocol
-    from websockets.client import (
-        connect as ws_connect,  # type: ignore[import-not-found,unused-ignore]
+    from websockets.client import (  # type: ignore[import-not-found,unused-ignore]
+        WebSocketClientProtocol,
+        connect as ws_connect,
     )
     from websockets.typing import (  # type: ignore[import-not-found,unused-ignore]
         Data,

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "esologs-python"
-version = "0.2.0a2"
+version = "0.2.0a3"
 description = "A Python client library for the ESO Logs API v2"
 readme = "README.md"
 license = {text = "MIT"}
@@ -95,7 +95,7 @@ extend-exclude = '''
   | buck-out
   | build
   | dist
-  | esologs/get_.*\.py  # Exclude generated files
+  | esologs/_generated  # Exclude all generated files
 )/
 '''
 
@@ -107,18 +107,13 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
-extend_skip_glob = ["esologs/get_*.py"]
+extend_skip_glob = ["esologs/_generated/**"]
 
 [tool.ruff]
 line-length = 88
 target-version = "py38"
 extend-exclude = [
-    "esologs/get_*.py",  # Exclude generated files
-    "esologs/input_types.py",
-    "esologs/enums.py",
-    "esologs/base_model.py",
-    "esologs/exceptions.py",
-    "esologs/async_base_client.py",
+    "esologs/_generated/**",  # Exclude all generated files
 ]
 select = [
     "E",  # pycodestyle errors
@@ -151,17 +146,7 @@ warn_unreachable = true
 strict_equality = true
 
 [[tool.mypy.overrides]]
-module = "esologs.get_*"
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = [
-    "esologs.input_types",
-    "esologs.enums",
-    "esologs.base_model",
-    "esologs.exceptions",
-    "esologs.async_base_client",
-]
+module = "esologs._generated.*"
 ignore_errors = true
 
 [tool.pytest.ini_options]
@@ -185,18 +170,19 @@ markers = [
     "timeout: marks tests with timeout requirements",
 ]
 asyncio_mode = "auto"
+filterwarnings = [
+    # Ignore deprecation warnings from generated websockets code
+    "ignore:websockets.client.WebSocketClientProtocol is deprecated:DeprecationWarning",
+    "ignore:websockets.legacy is deprecated:DeprecationWarning",
+    "ignore:websockets.client.connect is deprecated:DeprecationWarning",
+]
 
 [tool.coverage.run]
 source = ["esologs"]
 omit = [
     "*/tests/*",
     "*/test_*",
-    "esologs/get_*.py",
-    "esologs/input_types.py",
-    "esologs/enums.py",
-    "esologs/base_model.py",
-    "esologs/exceptions.py",
-    "esologs/async_base_client.py",
+    "esologs/_generated/**",
 ]
 
 [tool.coverage.report]

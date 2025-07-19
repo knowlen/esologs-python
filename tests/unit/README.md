@@ -20,6 +20,8 @@ The unit tests provide:
 - **`test_character_rankings.py`**: Character ranking method logic and validation
 - **`test_report_analysis.py`**: Report analysis method signatures and validation
 - **`test_report_search.py`**: Report search validation, date parsing, and method logic
+- **`test_method_factory.py`**: Method factory pattern tests (11 tests)
+- **`test_param_builders.py`**: Parameter builder pattern tests (20 tests)
 
 ### Test Categories
 
@@ -84,7 +86,7 @@ pytest tests/unit/ -n auto
 
 ## Test Coverage
 
-### Current Coverage (76 tests)
+### Current Coverage (105 tests)
 
 | Component | Tests | Coverage Focus |
 |-----------|-------|----------------|
@@ -92,7 +94,9 @@ pytest tests/unit/ -n auto
 | **Access Token** | 8 tests | OAuth2 flow and credential handling |
 | **Character Rankings** | 8 tests | Method logic and parameter validation |
 | **Report Analysis** | 8 tests | Method signatures and basic validation |
-| **Report Search** | 8 tests | Advanced validation and date parsing |
+| **Report Search** | 18 tests | Advanced validation, date parsing, and search methods |
+| **Method Factory** | 11 tests | Dynamic method generation and factory patterns |
+| **Parameter Builders** | 20 tests | Parameter builder patterns and validation |
 
 ### Validation Test Coverage
 - ✅ **Report Codes**: Valid/invalid format testing

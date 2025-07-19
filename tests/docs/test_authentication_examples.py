@@ -7,9 +7,9 @@ execute without errors and produce expected results.
 
 import pytest
 
+from esologs._generated.exceptions import GraphQLClientHttpError
 from esologs.auth import get_access_token
 from esologs.client import Client
-from esologs.exceptions import GraphQLClientHttpError
 
 
 class TestAuthenticationExamples:
@@ -160,9 +160,9 @@ class TestAuthenticationDocumentationIntegrity:
     def test_authentication_imports(self):
         """Test that all modules used in auth docs are importable."""
         # Test basic imports
+        from esologs._generated.exceptions import GraphQLClientHttpError
         from esologs.auth import get_access_token
         from esologs.client import Client
-        from esologs.exceptions import GraphQLClientHttpError
 
         assert callable(get_access_token)
         assert Client is not None
@@ -210,7 +210,7 @@ class TestAuthenticationDocumentationIntegrity:
         # verify the exception class has the expected interface
         import inspect
 
-        from esologs.exceptions import GraphQLClientHttpError
+        from esologs._generated.exceptions import GraphQLClientHttpError
 
         # Check that GraphQLClientHttpError has status_code in its __init__
         init_sig = inspect.signature(GraphQLClientHttpError.__init__)
