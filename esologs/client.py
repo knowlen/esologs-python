@@ -6,6 +6,7 @@ This is a cleaner, more maintainable implementation of the client.
 
 
 from ._generated.async_base_client import AsyncBaseClient
+from ._generated.base_model import UNSET, UnsetType
 from .mixins import (
     CharacterMixin,
     GameDataMixin,
@@ -13,6 +14,9 @@ from .mixins import (
     ReportMixin,
     WorldDataMixin,
 )
+
+# Re-export UNSET for backward compatibility
+__all__ = ["Client", "UNSET", "UnsetType"]
 
 
 def gql(q: str) -> str:

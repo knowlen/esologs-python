@@ -62,7 +62,7 @@ def create_simple_getter(
         variables: Dict[str, object] = {id_param_name: id}
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables
+            query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -101,7 +101,7 @@ def create_no_params_getter(
         variables: Dict[str, object] = {}
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables
+            query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -159,7 +159,7 @@ def create_paginated_getter(
                 variables[param_name] = UNSET
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables
+            query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -221,7 +221,7 @@ def create_complex_method(
             variables[param_mapping.get(param_name, param_name)] = value
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables
+            query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
         return return_type.model_validate(data)
@@ -263,7 +263,7 @@ def create_method_with_builder(
         variables = param_builder(**kwargs)
 
         response = await self.execute(
-            query=query, operation_name=operation_name, variables=variables
+            query=query, operation_name=operation_name, variables=variables, **kwargs
         )
         data = self.get_data(response)
         return return_type.model_validate(data)

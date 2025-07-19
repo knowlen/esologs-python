@@ -258,7 +258,7 @@ class TestMethodFactory:
         mock_client.get_data.return_value = {"data": {}}
 
         # Create custom builder function
-        def custom_builder(kwargs: Dict[str, Any]) -> Dict[str, object]:
+        def custom_builder(**kwargs: Any) -> Dict[str, object]:
             # Transform parameters
             result = {}
             if "user_id" in kwargs:
