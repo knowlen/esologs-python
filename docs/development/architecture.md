@@ -47,6 +47,7 @@ class Client(
 ```
 
 **Architecture Components**:
+
 - **Factory Methods** (`method_factory.py`): Dynamic method generation
   - `create_simple_getter()`: For single ID parameter methods
   - `create_complex_method()`: For methods with multiple parameters

@@ -23,7 +23,7 @@
 | **API Coverage** | ~83% (comprehensive analysis shows 6/8 API sections fully implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
-| **Tests** | 278 tests across unit, integration, documentation, and sanity suites |
+| **Tests** | 310 tests across unit, integration, documentation, and sanity suites |
 
 ### Current API Coverage
 **Implemented (6/8 sections):**
@@ -309,14 +309,24 @@ This project uses several tools to maintain code quality:
 ```
 esologs-python/
 ├── esologs/                 # Main package
-│   ├── client.py           # Main client implementation
-│   ├── async_base_client.py # Base async GraphQL client
-│   ├── auth.py            # OAuth2 authentication module
-│   ├── exceptions.py       # Custom exceptions
+│   ├── client.py           # Main client (86 lines, uses mixins)
+│   ├── method_factory.py   # Dynamic method generation (349 lines)
+│   ├── param_builders.py   # Parameter validation & builders (330 lines)
+│   ├── queries.py          # Centralized GraphQL queries (770 lines)
+│   ├── auth.py             # OAuth2 authentication module
 │   ├── validators.py       # Parameter validation utilities
-│   └── get_*.py           # Generated GraphQL query modules
-├── tests/                  # Test suite (278 tests)
-│   ├── unit/              # Unit tests (76 tests)
+│   ├── mixins/             # Modular API functionality
+│   │   ├── game_data.py    # Game data methods (abilities, items, etc.)
+│   │   ├── character.py    # Character methods (info, rankings)
+│   │   ├── world_data.py   # World data methods (zones, regions)
+│   │   ├── guild.py        # Guild methods
+│   │   └── report.py       # Report methods (search, analysis)
+│   └── _generated/         # Auto-generated GraphQL modules
+│       ├── async_base_client.py  # Base async GraphQL client
+│       ├── exceptions.py         # Custom exceptions
+│       └── get_*.py             # Generated query/response models
+├── tests/                  # Test suite (310 tests)
+│   ├── unit/              # Unit tests (105 tests)
 │   ├── integration/       # Integration tests (85 tests)
 │   ├── docs/              # Documentation tests (98 tests)
 │   └── sanity/            # Sanity tests (19 tests)
@@ -364,7 +374,7 @@ We welcome contributions! Please see our contributing guidelines:
   - ✅ PR #4: Advanced Report Search (Merged)
   - 🚧 PR #5: Client Architecture Refactor (Next)
 - **Phase 3** 🚧: Data transformation and pandas integration
-- **Phase 4** ✅: Comprehensive testing and documentation (278 tests)
+- **Phase 4** ✅: Comprehensive testing and documentation (310 tests)
 - **Phase 5** 🚧: Performance optimization and caching
 
 ## License
