@@ -21,6 +21,16 @@ This is the first alpha release of version 0.2.0. See the [0.2.0] section below 
 
 ## [0.2.0] - 2024-01-XX (Upcoming Release)
 
+### Changed
+
+#### Architecture Improvements
+- **Client Refactoring**: Complete overhaul of client.py architecture
+  - Reduced from 1,600+ lines to 86 lines (95% reduction)
+  - Implemented factory pattern for method generation
+  - Organized methods into logical mixins by functional area
+  - Moved all generated code to `_generated/` subdirectory
+  - Maintained 100% backward compatibility
+
 ### Added
 
 #### Character Rankings & Performance
