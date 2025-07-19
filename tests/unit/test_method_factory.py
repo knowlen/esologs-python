@@ -306,8 +306,8 @@ class TestMethodFactory:
         assert "Get paginated GetAbilities" in method.__doc__
 
     @pytest.mark.asyncio
-    async def test_kwargs_passthrough(self, mock_client):
-        """Test that extra kwargs are passed through to execute."""
+    async def test_kwargs_not_passed_to_execute(self, mock_client):
+        """Test that extra kwargs are NOT passed through to execute."""
         # Setup
         mock_client.get_data.return_value = {"data": {}}
 
@@ -320,9 +320,11 @@ class TestMethodFactory:
         bound_method = method.__get__(mock_client, MockClient)
         await bound_method(id=123, custom_header="value", timeout=30)
 
-        # Verify kwargs were passed through
+        # Verify only required args were passed to execute
         call_kwargs = mock_client.execute.call_args[1]
-        assert "custom_header" in call_kwargs
-        assert call_kwargs["custom_header"] == "value"
-        assert "timeout" in call_kwargs
-        assert call_kwargs["timeout"] == 30
+        assert "query" in call_kwargs
+        assert "operation_name" in call_kwargs
+        assert "variables" in call_kwargs
+        # These should NOT be passed through
+        assert "custom_header" not in call_kwargs
+        assert "timeout" not in call_kwargs

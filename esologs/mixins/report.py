@@ -147,7 +147,6 @@ class ReportMixin:
                 start_time=start_time,
                 zone_id=zone_id,
                 game_zone_id=game_zone_id,
-                **kwargs,
             )
 
         async def get_guild_reports(
@@ -175,7 +174,6 @@ class ReportMixin:
                 start_time=start_time,
                 end_time=end_time,
                 zone_id=zone_id,
-                **kwargs,
             )
 
         async def get_user_reports(
@@ -203,7 +201,6 @@ class ReportMixin:
                 start_time=start_time,
                 end_time=end_time,
                 zone_id=zone_id,
-                **kwargs,
             )
 
         # Add docstrings
