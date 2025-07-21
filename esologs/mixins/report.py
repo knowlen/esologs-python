@@ -4,17 +4,17 @@ Report related methods for ESO Logs API client.
 
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-from .._generated.base_model import UNSET, UnsetType
-from .._generated.get_rate_limit_data import GetRateLimitData
-from .._generated.get_report_by_code import GetReportByCode
-from .._generated.get_report_events import GetReportEvents
-from .._generated.get_report_graph import GetReportGraph
-from .._generated.get_report_player_details import GetReportPlayerDetails
-from .._generated.get_report_rankings import GetReportRankings
-from .._generated.get_report_table import GetReportTable
-from .._generated.get_reports import GetReports
-from ..method_factory import create_method_with_builder, create_no_params_getter
-from ..param_builders import (
+from esologs._generated.base_model import UNSET, UnsetType
+from esologs._generated.get_rate_limit_data import GetRateLimitData
+from esologs._generated.get_report_by_code import GetReportByCode
+from esologs._generated.get_report_events import GetReportEvents
+from esologs._generated.get_report_graph import GetReportGraph
+from esologs._generated.get_report_player_details import GetReportPlayerDetails
+from esologs._generated.get_report_rankings import GetReportRankings
+from esologs._generated.get_report_table import GetReportTable
+from esologs._generated.get_reports import GetReports
+from esologs.method_factory import create_method_with_builder, create_no_params_getter
+from esologs.param_builders import (
     build_report_event_params,
     build_report_graph_params,
     build_report_player_details_params,
@@ -22,7 +22,7 @@ from ..param_builders import (
     build_report_search_params,
     build_report_table_params,
 )
-from ..validators import (
+from esologs.validators import (
     validate_limit_parameter,
     validate_positive_integer,
     validate_report_search_params,

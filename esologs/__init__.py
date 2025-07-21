@@ -1,6 +1,6 @@
-from ._generated.async_base_client import AsyncBaseClient
-from ._generated.base_model import BaseModel, Upload
-from ._generated.enums import (
+from esologs._generated.async_base_client import AsyncBaseClient
+from esologs._generated.base_model import BaseModel, Upload
+from esologs._generated.enums import (
     CharacterRankingMetricType,
     EventDataType,
     ExternalBuffRankFilter,
@@ -19,43 +19,43 @@ from ._generated.enums import (
     TableDataType,
     ViewType,
 )
-from ._generated.exceptions import (
+from esologs._generated.exceptions import (
     GraphQLClientError,
     GraphQLClientGraphQLError,
     GraphQLClientGraphQLMultiError,
     GraphQLClientHttpError,
     GraphQLClientInvalidResponseError,
 )
-from ._generated.generated_client import Client
-from ._generated.get_abilities import (
+from esologs._generated.generated_client import Client
+from esologs._generated.get_abilities import (
     GetAbilities,
     GetAbilitiesGameData,
     GetAbilitiesGameDataAbilities,
     GetAbilitiesGameDataAbilitiesData,
 )
-from ._generated.get_ability import (
+from esologs._generated.get_ability import (
     GetAbility,
     GetAbilityGameData,
     GetAbilityGameDataAbility,
 )
-from ._generated.get_character_by_id import (
+from esologs._generated.get_character_by_id import (
     GetCharacterById,
     GetCharacterByIdCharacterData,
     GetCharacterByIdCharacterDataCharacter,
     GetCharacterByIdCharacterDataCharacterServer,
     GetCharacterByIdCharacterDataCharacterServerRegion,
 )
-from ._generated.get_character_encounter_ranking import (
+from esologs._generated.get_character_encounter_ranking import (
     GetCharacterEncounterRanking,
     GetCharacterEncounterRankingCharacterData,
     GetCharacterEncounterRankingCharacterDataCharacter,
 )
-from ._generated.get_character_encounter_rankings import (
+from esologs._generated.get_character_encounter_rankings import (
     GetCharacterEncounterRankings,
     GetCharacterEncounterRankingsCharacterData,
     GetCharacterEncounterRankingsCharacterDataCharacter,
 )
-from ._generated.get_character_reports import (
+from esologs._generated.get_character_reports import (
     GetCharacterReports,
     GetCharacterReportsCharacterData,
     GetCharacterReportsCharacterDataCharacter,
@@ -63,29 +63,33 @@ from ._generated.get_character_reports import (
     GetCharacterReportsCharacterDataCharacterRecentReportsData,
     GetCharacterReportsCharacterDataCharacterRecentReportsDataZone,
 )
-from ._generated.get_character_zone_rankings import (
+from esologs._generated.get_character_zone_rankings import (
     GetCharacterZoneRankings,
     GetCharacterZoneRankingsCharacterData,
     GetCharacterZoneRankingsCharacterDataCharacter,
 )
-from ._generated.get_class import GetClass, GetClassGameData, GetClassGameDataClass
-from ._generated.get_classes import (
+from esologs._generated.get_class import (
+    GetClass,
+    GetClassGameData,
+    GetClassGameDataClass,
+)
+from esologs._generated.get_classes import (
     GetClasses,
     GetClassesGameData,
     GetClassesGameDataClasses,
 )
-from ._generated.get_encounters_by_zone import (
+from esologs._generated.get_encounters_by_zone import (
     GetEncountersByZone,
     GetEncountersByZoneWorldData,
     GetEncountersByZoneWorldDataZone,
     GetEncountersByZoneWorldDataZoneEncounters,
 )
-from ._generated.get_factions import (
+from esologs._generated.get_factions import (
     GetFactions,
     GetFactionsGameData,
     GetFactionsGameDataFactions,
 )
-from ._generated.get_guild_attendance import (
+from esologs._generated.get_guild_attendance import (
     GetGuildAttendance,
     GetGuildAttendanceGuildData,
     GetGuildAttendanceGuildDataGuild,
@@ -93,7 +97,7 @@ from ._generated.get_guild_attendance import (
     GetGuildAttendanceGuildDataGuildAttendanceData,
     GetGuildAttendanceGuildDataGuildAttendanceDataPlayers,
 )
-from ._generated.get_guild_by_id import (
+from esologs._generated.get_guild_by_id import (
     GetGuildById,
     GetGuildByIdGuildData,
     GetGuildByIdGuildDataGuild,
@@ -102,7 +106,7 @@ from ._generated.get_guild_by_id import (
     GetGuildByIdGuildDataGuildServerRegion,
     GetGuildByIdGuildDataGuildTags,
 )
-from ._generated.get_guild_by_name import (
+from esologs._generated.get_guild_by_name import (
     GetGuildByName,
     GetGuildByNameGuildData,
     GetGuildByNameGuildDataGuild,
@@ -111,7 +115,7 @@ from ._generated.get_guild_by_name import (
     GetGuildByNameGuildDataGuildServerRegion,
     GetGuildByNameGuildDataGuildTags,
 )
-from ._generated.get_guild_members import (
+from esologs._generated.get_guild_members import (
     GetGuildMembers,
     GetGuildMembersGuildData,
     GetGuildMembersGuildDataGuild,
@@ -120,7 +124,7 @@ from ._generated.get_guild_members import (
     GetGuildMembersGuildDataGuildMembersDataServer,
     GetGuildMembersGuildDataGuildMembersDataServerRegion,
 )
-from ._generated.get_guilds import (
+from esologs._generated.get_guilds import (
     GetGuilds,
     GetGuildsGuildData,
     GetGuildsGuildDataGuilds,
@@ -129,82 +133,82 @@ from ._generated.get_guilds import (
     GetGuildsGuildDataGuildsDataServer,
     GetGuildsGuildDataGuildsDataServerRegion,
 )
-from ._generated.get_item import GetItem, GetItemGameData, GetItemGameDataItem
-from ._generated.get_item_set import (
+from esologs._generated.get_item import GetItem, GetItemGameData, GetItemGameDataItem
+from esologs._generated.get_item_set import (
     GetItemSet,
     GetItemSetGameData,
     GetItemSetGameDataItemSet,
 )
-from ._generated.get_item_sets import (
+from esologs._generated.get_item_sets import (
     GetItemSets,
     GetItemSetsGameData,
     GetItemSetsGameDataItemSets,
     GetItemSetsGameDataItemSetsData,
 )
-from ._generated.get_items import (
+from esologs._generated.get_items import (
     GetItems,
     GetItemsGameData,
     GetItemsGameDataItems,
     GetItemsGameDataItemsData,
 )
-from ._generated.get_map import GetMap, GetMapGameData, GetMapGameDataMap
-from ._generated.get_maps import (
+from esologs._generated.get_map import GetMap, GetMapGameData, GetMapGameDataMap
+from esologs._generated.get_maps import (
     GetMaps,
     GetMapsGameData,
     GetMapsGameDataMaps,
     GetMapsGameDataMapsData,
 )
-from ._generated.get_np_cs import (
+from esologs._generated.get_np_cs import (
     GetNPCs,
     GetNPCsGameData,
     GetNPCsGameDataNpcs,
     GetNPCsGameDataNpcsData,
 )
-from ._generated.get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
-from ._generated.get_rate_limit_data import (
+from esologs._generated.get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
+from esologs._generated.get_rate_limit_data import (
     GetRateLimitData,
     GetRateLimitDataRateLimitData,
 )
-from ._generated.get_regions import (
+from esologs._generated.get_regions import (
     GetRegions,
     GetRegionsWorldData,
     GetRegionsWorldDataRegions,
     GetRegionsWorldDataRegionsSubregions,
 )
-from ._generated.get_report_by_code import (
+from esologs._generated.get_report_by_code import (
     GetReportByCode,
     GetReportByCodeReportData,
     GetReportByCodeReportDataReport,
     GetReportByCodeReportDataReportFights,
     GetReportByCodeReportDataReportZone,
 )
-from ._generated.get_report_events import (
+from esologs._generated.get_report_events import (
     GetReportEvents,
     GetReportEventsReportData,
     GetReportEventsReportDataReport,
     GetReportEventsReportDataReportEvents,
 )
-from ._generated.get_report_graph import (
+from esologs._generated.get_report_graph import (
     GetReportGraph,
     GetReportGraphReportData,
     GetReportGraphReportDataReport,
 )
-from ._generated.get_report_player_details import (
+from esologs._generated.get_report_player_details import (
     GetReportPlayerDetails,
     GetReportPlayerDetailsReportData,
     GetReportPlayerDetailsReportDataReport,
 )
-from ._generated.get_report_rankings import (
+from esologs._generated.get_report_rankings import (
     GetReportRankings,
     GetReportRankingsReportData,
     GetReportRankingsReportDataReport,
 )
-from ._generated.get_report_table import (
+from esologs._generated.get_report_table import (
     GetReportTable,
     GetReportTableReportData,
     GetReportTableReportDataReport,
 )
-from ._generated.get_reports import (
+from esologs._generated.get_reports import (
     GetReports,
     GetReportsReportData,
     GetReportsReportDataReports,
@@ -215,7 +219,7 @@ from ._generated.get_reports import (
     GetReportsReportDataReportsDataOwner,
     GetReportsReportDataReportsDataZone,
 )
-from ._generated.get_world_data import (
+from esologs._generated.get_world_data import (
     GetWorldData,
     GetWorldDataWorldData,
     GetWorldDataWorldDataEncounter,
@@ -237,7 +241,7 @@ from ._generated.get_world_data import (
     GetWorldDataWorldDataZonesExpansion,
     GetWorldDataWorldDataZonesPartitions,
 )
-from ._generated.get_zones import (
+from esologs._generated.get_zones import (
     GetZones,
     GetZonesWorldData,
     GetZonesWorldDataZones,

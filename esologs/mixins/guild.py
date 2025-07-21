@@ -4,21 +4,21 @@ Guild related methods for ESO Logs API client.
 
 from typing import TYPE_CHECKING, Any, Dict, Optional, Protocol, Union, cast
 
-from .._generated.base_model import UNSET, UnsetType
-from .._generated.get_guild_attendance import GetGuildAttendance
-from .._generated.get_guild_by_id import GetGuildById
-from .._generated.get_guild_by_name import GetGuildByName
-from .._generated.get_guild_members import GetGuildMembers
-from .._generated.get_guilds import GetGuilds
-from ..method_factory import (
+from esologs._generated.base_model import UNSET, UnsetType
+from esologs._generated.get_guild_attendance import GetGuildAttendance
+from esologs._generated.get_guild_by_id import GetGuildById
+from esologs._generated.get_guild_by_name import GetGuildByName
+from esologs._generated.get_guild_members import GetGuildMembers
+from esologs._generated.get_guilds import GetGuilds
+from esologs.method_factory import (
     SIMPLE_GETTER_CONFIGS,
     create_complex_method,
     create_method_with_builder,
     create_simple_getter,
 )
-from ..param_builders import build_guild_attendance_params
-from ..queries import QUERIES
-from ..validators import ValidationError
+from esologs.param_builders import build_guild_attendance_params
+from esologs.queries import QUERIES
+from esologs.validators import ValidationError
 
 if TYPE_CHECKING:
     import httpx

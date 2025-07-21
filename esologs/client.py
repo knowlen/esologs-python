@@ -7,8 +7,8 @@ from all API mixins.
 
 from typing import Any, Optional
 
-from ._generated.generated_client import Client as GeneratedClient
-from .mixins import (
+from esologs._generated.generated_client import Client as GeneratedClient
+from esologs.mixins import (
     CharacterMixin,
     GameDataMixin,
     GuildMixin,

@@ -1,8 +1,8 @@
 from typing import Any, Dict, List, Optional, Union
 
 from .async_base_client import AsyncBaseClient
-from .base_model import UNSET, UnsetType
-from .enums import (
+from esologs._generated.base_model import UNSET, UnsetType
+from esologs._generated.enums import (
     CharacterRankingMetricType,
     EventDataType,
     GraphDataType,

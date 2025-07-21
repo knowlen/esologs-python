@@ -4,11 +4,11 @@ World data related methods for ESO Logs API client.
 
 from typing import TYPE_CHECKING, Any
 
-from .._generated.get_encounters_by_zone import GetEncountersByZone
-from .._generated.get_regions import GetRegions
-from .._generated.get_world_data import GetWorldData
-from .._generated.get_zones import GetZones
-from ..method_factory import (
+from esologs._generated.get_encounters_by_zone import GetEncountersByZone
+from esologs._generated.get_regions import GetRegions
+from esologs._generated.get_world_data import GetWorldData
+from esologs._generated.get_zones import GetZones
+from esologs.method_factory import (
     NO_PARAM_GETTER_CONFIGS,
     SIMPLE_GETTER_CONFIGS,
     create_no_params_getter,

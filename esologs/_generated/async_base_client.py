@@ -7,8 +7,8 @@ import httpx
 from pydantic import BaseModel
 from pydantic_core import to_jsonable_python
 
-from .base_model import UNSET, Upload
-from .exceptions import (
+from esologs._generated.base_model import UNSET, Upload
+from esologs._generated.exceptions import (
     GraphQLClientGraphQLMultiError,
     GraphQLClientHttpError,
     GraphQLClientInvalidMessageFormat,
