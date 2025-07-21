@@ -86,30 +86,52 @@ html {
 }
 
 /* Anchor link styling - change from pilcrow (¶) to hash (#) */
-/* Hide the pilcrow character completely */
+/* Hide the default pilcrow character using multiple methods */
 .md-typeset .headerlink {
-  /* Hide the text but keep the element for accessibility */
+  /* Hide the original text */
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  display: inline-block !important;
+  width: 0 !important;
+
+  /* Ensure no text is visible */
   color: transparent !important;
   font-size: 0 !important;
+  line-height: 0 !important;
+
+  /* Keep clickable area */
+  position: relative !important;
 }
 
-/* Add hash symbol using ::after pseudo-element */
+/* Add the hash symbol */
 .md-typeset .headerlink::after {
+  /* Reset text indent for pseudo element */
+  text-indent: 0 !important;
+
+  /* Hash symbol */
   content: "#" !important;
+
+  /* Positioning and visibility */
+  position: absolute !important;
+  left: 0.5em !important;
+
+  /* Styling */
   color: var(--md-default-fg-color--lighter) !important;
   font-size: 0.85em !important;
   font-weight: 400 !important;
-  margin-left: 0.5em !important;
+  line-height: normal !important;
+
+  /* Hover effect */
   opacity: 0;
   transition: opacity 0.25s;
 }
 
-/* Show anchor on hover of the heading */
+/* Show on heading hover */
 .md-typeset :is(h1, h2, h3, h4, h5, h6):hover .headerlink::after {
   opacity: 1;
 }
 
-/* Show anchor on direct hover of the link */
+/* Highlight on direct hover */
 .md-typeset .headerlink:hover::after {
   color: var(--md-accent-fg-color) !important;
   opacity: 1;
