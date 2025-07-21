@@ -251,6 +251,12 @@ from esologs._generated.get_zones import (
     GetZonesWorldDataZonesExpansion,
 )
 
+# Import client factory functions
+from esologs.client_factory import create_client_with_timeout, create_resilient_client
+
+# Version
+__version__ = "0.2.0a3"
+
 __all__ = [
     "AsyncBaseClient",
     "BaseModel",
@@ -443,4 +449,6 @@ __all__ = [
     "TableDataType",
     "Upload",
     "ViewType",
+    "create_client_with_timeout",
+    "create_resilient_client",
 ]

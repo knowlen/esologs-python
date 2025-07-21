@@ -6,6 +6,11 @@ import pytest
 from esologs.auth import get_access_token
 from esologs.client import Client
 
+from .retry_utils import RetryClient
+
+# Register the retry plugin
+pytest_plugins = ["tests.integration.pytest_plugins"]
+
 
 @pytest.fixture(scope="session")
 def api_credentials():
@@ -54,6 +59,9 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "integration: mark test as integration test requiring real API calls"
     )
+    # Configure pytest-rerunfailures for integration tests
+    config.option.reruns = 3
+    config.option.reruns_delay = 2
 
 
 def pytest_collection_modifyitems(config, items):
@@ -87,3 +95,19 @@ def api_client_config(api_credentials):
         "url": api_credentials["endpoint"],
         "headers": {"Authorization": f"Bearer {api_credentials['access_token']}"},
     }
+
+
+@pytest.fixture
+def retry_client(api_credentials):
+    """Create a test client with retry logic for handling transient failures."""
+    base_client = Client(
+        url=api_credentials["endpoint"],
+        headers={"Authorization": f"Bearer {api_credentials['access_token']}"},
+    )
+    return RetryClient(
+        base_client,
+        max_attempts=3,
+        initial_delay=2.0,
+        backoff_factor=2.0,
+        max_delay=10.0,
+    )
