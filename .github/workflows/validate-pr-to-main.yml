@@ -1,0 +1,28 @@
+name: Validate PR to Main
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate-source-branch:
+    name: Validate Source Branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check if source branch is allowed
+        run: |
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          echo "PR source branch: $SOURCE_BRANCH"
+
+          # Only allow branches with 'release' prefix to target main
+          if [[ ! "$SOURCE_BRANCH" =~ ^release.* ]]; then
+            echo "❌ ERROR: Only branches with 'release' prefix can create PRs to main!"
+            echo "Source branch '$SOURCE_BRANCH' does not start with 'release'"
+            echo ""
+            echo "Please create PRs to 'dev' branch instead, or use a release branch."
+            exit 1
+          fi
+
+          echo "✅ Source branch '$SOURCE_BRANCH' is allowed to target main"
