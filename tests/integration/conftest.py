@@ -78,3 +78,12 @@ def check_credentials():
 def slow_test_marker():
     """Marker for slow integration tests."""
     return pytest.mark.slow
+
+
+@pytest.fixture
+def api_client_config(api_credentials):
+    """Configuration for creating API client instances."""
+    return {
+        "url": api_credentials["endpoint"],
+        "headers": {"Authorization": f"Bearer {api_credentials['access_token']}"},
+    }

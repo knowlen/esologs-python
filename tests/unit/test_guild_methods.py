@@ -36,8 +36,8 @@ class TestGuildMethods:
         """Test get_guild_by_id method."""
         client = Client(url="http://test.com", headers={})
 
-        # Mock the execute method
-        mock_response = {
+        # Mock the response data
+        mock_response_data = {
             "guildData": {
                 "guild": {
                     "id": 123,
@@ -53,26 +53,35 @@ class TestGuildMethods:
             }
         }
 
+        # Mock execute to return httpx.Response and get_data to return the data
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            result = await client.get_guild_by_id(guild_id=123)
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify the method was called correctly
-            mock_execute.assert_called_once()
-            call_args = mock_execute.call_args
-            assert "getGuildById" in call_args.kwargs["operation_name"]
-            assert call_args.kwargs["variables"]["guildId"] == 123
+                result = await client.get_guild_by_id(guild_id=123)
 
-            # Verify result type
-            assert isinstance(result, GetGuildById)
+                # Verify the method was called correctly
+                mock_execute.assert_called_once()
+                call_args = mock_execute.call_args
+                assert "getGuildById" in call_args.kwargs["operation_name"]
+                assert call_args.kwargs["variables"]["guildId"] == 123
+
+                # Verify result type
+                assert isinstance(result, GetGuildById)
 
     @pytest.mark.asyncio
     async def test_get_guilds_pagination(self):
         """Test get_guilds method with pagination."""
         client = Client(url="http://test.com", headers={})
 
-        mock_response = {
+        mock_response_data = {
             "guildData": {
                 "guilds": {
                     "total": 100,
@@ -98,26 +107,34 @@ class TestGuildMethods:
         }
 
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            result = await client.get_guilds(limit=10, page=1)
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify the method was called correctly
-            mock_execute.assert_called_once()
-            call_args = mock_execute.call_args
-            assert "getGuilds" in call_args.kwargs["operation_name"]
-            assert call_args.kwargs["variables"]["limit"] == 10
-            assert call_args.kwargs["variables"]["page"] == 1
+                result = await client.get_guilds(limit=10, page=1)
 
-            # Verify result type
-            assert isinstance(result, GetGuilds)
+                # Verify the method was called correctly
+                mock_execute.assert_called_once()
+                call_args = mock_execute.call_args
+                assert "getGuilds" in call_args.kwargs["operation_name"]
+                assert call_args.kwargs["variables"]["limit"] == 10
+                assert call_args.kwargs["variables"]["page"] == 1
+
+                # Verify result type
+                assert isinstance(result, GetGuilds)
 
     @pytest.mark.asyncio
     async def test_get_guilds_with_server_filter(self):
         """Test get_guilds method with server filters."""
         client = Client(url="http://test.com", headers={})
 
-        mock_response = {
+        mock_response_data = {
             "guildData": {
                 "guilds": {
                     "total": 10,
@@ -133,18 +150,26 @@ class TestGuildMethods:
         }
 
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            await client.get_guilds(
-                server_id=1, server_slug="na", server_region="north-america"
-            )
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify the method was called with server filters
-            call_args = mock_execute.call_args
-            variables = call_args.kwargs["variables"]
-            assert variables["serverID"] == 1
-            assert variables["serverSlug"] == "na"
-            assert variables["serverRegion"] == "north-america"
+                await client.get_guilds(
+                    server_id=1, server_slug="na", server_region="north-america"
+                )
+
+                # Verify the method was called with server filters
+                call_args = mock_execute.call_args
+                variables = call_args.kwargs["variables"]
+                assert variables["serverID"] == 1
+                assert variables["serverSlug"] == "na"
+                assert variables["serverRegion"] == "north-america"
 
     @pytest.mark.asyncio
     async def test_get_guild_by_id_path(self):
@@ -166,7 +191,7 @@ class TestGuildMethods:
         """Test get_guild method using name/server lookup path."""
         client = Client(url="http://test.com", headers={})
 
-        mock_response = {
+        mock_response_data = {
             "guildData": {
                 "guild": {
                     "id": 789,
@@ -180,24 +205,32 @@ class TestGuildMethods:
         }
 
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            result = await client.get_guild(
-                guild_name="Named Guild",
-                guild_server_slug="eu",
-                guild_server_region="europe",
-            )
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify it used the name-based query
-            mock_execute.assert_called_once()
-            call_args = mock_execute.call_args
-            assert "getGuildByName" in call_args.kwargs["operation_name"]
-            assert call_args.kwargs["variables"]["name"] == "Named Guild"
-            assert call_args.kwargs["variables"]["serverSlug"] == "eu"
-            assert call_args.kwargs["variables"]["serverRegion"] == "europe"
+                result = await client.get_guild(
+                    guild_name="Named Guild",
+                    guild_server_slug="eu",
+                    guild_server_region="europe",
+                )
 
-            # Verify result type
-            assert isinstance(result, GetGuildByName)
+                # Verify it used the name-based query
+                mock_execute.assert_called_once()
+                call_args = mock_execute.call_args
+                assert "getGuildByName" in call_args.kwargs["operation_name"]
+                assert call_args.kwargs["variables"]["name"] == "Named Guild"
+                assert call_args.kwargs["variables"]["serverSlug"] == "eu"
+                assert call_args.kwargs["variables"]["serverRegion"] == "europe"
+
+                # Verify result type
+                assert isinstance(result, GetGuildByName)
 
     @pytest.mark.asyncio
     async def test_get_guild_validation_error(self):
@@ -231,7 +264,7 @@ class TestGuildMethods:
         """Test get_guild_attendance method."""
         client = Client(url="http://test.com", headers={})
 
-        mock_response = {
+        mock_response_data = {
             "guildData": {
                 "guild": {
                     "attendance": {
@@ -258,32 +291,40 @@ class TestGuildMethods:
         }
 
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            result = await client.get_guild_attendance(
-                guild_id=123, zone_id=456, limit=10, page=2
-            )
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify the method was called correctly
-            mock_execute.assert_called_once()
-            call_args = mock_execute.call_args
-            assert "getGuildAttendance" in call_args.kwargs["operation_name"]
+                result = await client.get_guild_attendance(
+                    guild_id=123, zone_id=456, limit=10, page=2
+                )
 
-            variables = call_args.kwargs["variables"]
-            assert variables["guildId"] == 123
-            assert variables["zoneID"] == 456
-            assert variables["limit"] == 10
-            assert variables["page"] == 2
+                # Verify the method was called correctly
+                mock_execute.assert_called_once()
+                call_args = mock_execute.call_args
+                assert "getGuildAttendance" in call_args.kwargs["operation_name"]
 
-            # Verify result type
-            assert isinstance(result, GetGuildAttendance)
+                variables = call_args.kwargs["variables"]
+                assert variables["guildId"] == 123
+                assert variables["zoneID"] == 456
+                assert variables["limit"] == 10
+                assert variables["page"] == 2
+
+                # Verify result type
+                assert isinstance(result, GetGuildAttendance)
 
     @pytest.mark.asyncio
     async def test_get_guild_attendance_defaults(self):
         """Test get_guild_attendance method with default pagination."""
         client = Client(url="http://test.com", headers={})
 
-        mock_response = {
+        mock_response_data = {
             "guildData": {
                 "guild": {
                     "attendance": {
@@ -298,23 +339,31 @@ class TestGuildMethods:
         }
 
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            # Call without limit/page to test defaults
-            await client.get_guild_attendance(guild_id=999)
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify defaults were applied
-            call_args = mock_execute.call_args
-            variables = call_args.kwargs["variables"]
-            assert variables["limit"] == 16  # Default from param builder
-            assert variables["page"] == 1  # Default from param builder
+                # Call without limit/page to test defaults
+                await client.get_guild_attendance(guild_id=999)
+
+                # Verify defaults were applied
+                call_args = mock_execute.call_args
+                variables = call_args.kwargs["variables"]
+                assert variables["limit"] == 16  # Default from param builder
+                assert variables["page"] == 1  # Default from param builder
 
     @pytest.mark.asyncio
     async def test_get_guild_members(self):
         """Test get_guild_members method."""
         client = Client(url="http://test.com", headers={})
 
-        mock_response = {
+        mock_response_data = {
             "guildData": {
                 "guild": {
                     "members": {
@@ -339,22 +388,30 @@ class TestGuildMethods:
         }
 
         with patch.object(client, "execute", new_callable=AsyncMock) as mock_execute:
-            mock_execute.return_value = mock_response
+            # Create a mock httpx.Response
+            mock_http_response = Mock()
+            mock_http_response.is_success = True
+            mock_http_response.status_code = 200
+            mock_http_response.json.return_value = {"data": mock_response_data}
+            mock_execute.return_value = mock_http_response
 
-            result = await client.get_guild_members(guild_id=789, limit=50, page=2)
+            with patch.object(client, "get_data") as mock_get_data:
+                mock_get_data.return_value = mock_response_data
 
-            # Verify the method was called correctly
-            mock_execute.assert_called_once()
-            call_args = mock_execute.call_args
-            assert "getGuildMembers" in call_args.kwargs["operation_name"]
+                result = await client.get_guild_members(guild_id=789, limit=50, page=2)
 
-            variables = call_args.kwargs["variables"]
-            assert variables["guildId"] == 789
-            assert variables["limit"] == 50
-            assert variables["page"] == 2
+                # Verify the method was called correctly
+                mock_execute.assert_called_once()
+                call_args = mock_execute.call_args
+                assert "getGuildMembers" in call_args.kwargs["operation_name"]
 
-            # Verify result type
-            assert isinstance(result, GetGuildMembers)
+                variables = call_args.kwargs["variables"]
+                assert variables["guildId"] == 789
+                assert variables["limit"] == 50
+                assert variables["page"] == 2
+
+                # Verify result type
+                assert isinstance(result, GetGuildMembers)
 
     def test_parameter_builder_import(self):
         """Test that the guild attendance parameter builder is available."""
