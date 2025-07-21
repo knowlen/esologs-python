@@ -120,18 +120,10 @@ class TestReportSearchIntegration:
         assert reports.total == 0
         assert len(reports.data) == 0
 
-    @pytest.mark.asyncio
-    async def test_get_guild_reports_convenience(self, client, test_data):
-        """Test get_guild_reports convenience method."""
-        result = await client.get_guild_reports(guild_id=test_data["guild_id"], limit=3)
-
-        assert result is not None
-        reports = result.report_data.reports
-        assert len(reports.data) <= 3
-
-        # Should only contain reports from the specified guild
-        for report in reports.data:
-            assert report.guild.id == test_data["guild_id"]
+    # @pytest.mark.asyncio
+    # async def test_get_guild_reports_convenience(self, client, test_data):
+    #     """Test get_guild_reports convenience method."""
+    #     # REMOVED: get_guild_reports method not available in this version
 
     @pytest.mark.asyncio
     async def test_get_user_reports_convenience(self, client):

@@ -20,19 +20,19 @@
 | Metric | Status |
 |--------|--------|
 | **Current Version** | 0.2.0a2 |
-| **API Coverage** | ~83% (comprehensive analysis shows 6/8 API sections fully implemented) |
+| **API Coverage** | ~76% (32/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
 | **Tests** | 278 tests across unit, integration, documentation, and sanity suites |
 
 ### Current API Coverage
-**Implemented (6/8 sections):**
+**Implemented (5/8 sections + partial):**
 1. ✅ **gameData** - 13 methods
 2. ✅ **characterData** - 5 methods
 3. ✅ **reportData** - 9 methods
 4. ✅ **worldData** - 4 methods
 5. ✅ **rateLimitData** - 1 method
-6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
+6. 🟡 **guildData** - 1 method (PARTIAL - only get_guild_by_id)
 
 **Missing (2/8 sections):**
 - ❌ **userData** - 0/3 methods (MISSING - requires user auth)
