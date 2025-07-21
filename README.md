@@ -20,7 +20,7 @@
 | Metric | Status |
 |--------|--------|
 | **Current Version** | 0.2.0a3 |
-| **API Coverage** | ~76% (32/42 methods implemented) |
+| **API Coverage** | ~88% (37/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
 | **Tests** | 310 tests across unit, integration, documentation, and sanity suites |
@@ -32,7 +32,7 @@
 3. ✅ **reportData** - 9 methods
 4. ✅ **worldData** - 4 methods
 5. ✅ **rateLimitData** - 1 method
-6. 🟡 **guildData** - 1 method (PARTIAL - only get_guild_by_id implemented)
+6. ✅ **guildData** - 5 methods (COMPLETE - all guild endpoints implemented)
 
 **Missing (2/8 sections):**
 - ❌ **userData** - 0/3 methods (MISSING - requires user auth)
@@ -200,6 +200,23 @@ async def main():
             print(f"Server: {guild.guild_data.guild.server.name}")
             print(f"Faction: {guild.guild_data.guild.faction.name}")
 
+        # Search for guilds on a specific server
+        guilds = await client.get_guilds(
+            server_slug="megaserver",
+            server_region="NA",
+            limit=10
+        )
+
+        # Get guild attendance for raids
+        attendance = await client.get_guild_attendance(
+            guild_id=123,
+            zone_id=38,  # e.g., Dreadsail Reef
+            limit=20
+        )
+
+        # Get guild members
+        members = await client.get_guild_members(guild_id=123, limit=50)
+
 asyncio.run(main())
 ```
 
@@ -274,7 +291,11 @@ asyncio.run(main())
 - `get_character_zone_rankings(character_id, zone_id, **kwargs)` - **NEW**: Zone-wide character leaderboards
 
 ### Guild Data
-- `get_guild_by_id(guild_id)` - Get guild information
+- `get_guild_by_id(guild_id)` - Get guild information by ID
+- `get_guild(guild_id=None, guild_name=None, guild_server_slug=None, guild_server_region=None)` - Flexible guild lookup
+- `get_guilds(server_id=None, server_slug=None, server_region=None, limit=None, page=None)` - List/search guilds
+- `get_guild_attendance(guild_id, zone_id=None, encounter_id=None, difficulty=None, ...)` - Get guild raid attendance
+- `get_guild_members(guild_id, limit=None, page=None)` - Get guild member list
 
 ### World Data
 - `get_world_data()` - Get comprehensive world information

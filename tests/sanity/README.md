@@ -39,8 +39,12 @@ The sanity tests provide:
 - Character profiles
 - Character rankings (encounter + zone)
 
-✅ **Guild Data (1 feature)**
-- Basic guild information (get_guild_by_id)
+✅ **Guild Data (5 features)**
+- Get guild by ID (get_guild_by_id)
+- Flexible guild lookup (get_guild)
+- List/search guilds (get_guilds)
+- Guild raid attendance (get_guild_attendance)
+- Guild member list (get_guild_members)
 
 ✅ **Report Data (3 features)**
 - Individual reports
@@ -104,7 +108,7 @@ character_data: 2 features - ['character_profiles', 'character_rankings']
 guild_data: 1 features - ['guild_basic_info']
 report_data: 3 features - ['individual_reports', 'report_analysis', 'report_search']
 system_data: 1 features - ['rate_limiting']
-Total API features working: 14+
+Total API features working: 18+
 ```
 
 This shows that 14+ major API features are working correctly, providing confidence in the overall library health.
