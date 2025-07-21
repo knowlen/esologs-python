@@ -11,7 +11,7 @@ import time
 import pytest
 
 from esologs.client import Client
-from esologs.validators import ValidationError
+from esologs.exceptions import ValidationError
 
 
 class TestReportSearchExamples:

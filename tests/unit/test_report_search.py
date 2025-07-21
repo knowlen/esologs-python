@@ -6,8 +6,8 @@ from unittest.mock import AsyncMock
 import pytest
 
 from esologs.client import Client
+from esologs.exceptions import ValidationError
 from esologs.validators import (
-    ValidationError,
     parse_date_to_timestamp,
     validate_guild_search_params,
     validate_report_search_params,
@@ -241,20 +241,15 @@ class TestReportSearchMethods:
         assert call_kwargs["end_time"] == 1672531200000
 
     @pytest.mark.asyncio
-    async def test_convenience_methods_kwargs_not_passed(self, mock_client):
-        """Test that extra kwargs are NOT passed through in convenience methods."""
+    async def test_convenience_methods_kwargs_passthrough(self, mock_client):
+        """Test that kwargs are passed through in convenience methods."""
         custom_kwarg = {"custom_param": "test_value"}
 
-        # This should work without error, but kwargs won't be passed through
         await mock_client.get_guild_reports(guild_id=123, **custom_kwarg)
 
-        # Verify only the expected parameters were passed through
+        # Verify custom kwargs were passed through
         call_kwargs = mock_client.get_reports.call_args.kwargs
-        # Only standard parameters should be present
-        assert "guild_id" in call_kwargs
-        assert call_kwargs["guild_id"] == 123
-        # Custom kwargs should NOT be passed through
-        assert "custom_param" not in call_kwargs
+        assert call_kwargs["custom_param"] == "test_value"
 
 
 class TestReportSearchIntegration:

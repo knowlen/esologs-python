@@ -4,7 +4,7 @@ on:
   # Run on PR creation and updates, but with conditions to reduce waste
   pull_request:
     types: [opened, synchronize]
-    branches: [ main, v2-dev, dev ]
+    branches: [ main, v2-dev ]
   # Allow manual triggering from GitHub UI
   workflow_dispatch:
     inputs:
@@ -13,9 +13,9 @@ on:
         required: false
         default: 'true'
         type: boolean
-  # Still run on pushes to main/v2-dev/dev (for releases)
+  # Still run on pushes to main/v2-dev (for releases)
   push:
-    branches: [ main, v2-dev, dev ]
+    branches: [ main, v2-dev ]
 
 jobs:
   test:

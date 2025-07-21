@@ -73,7 +73,7 @@
 <div class="feature-grid">
   <div class="feature-card">
     <h3>Current Version</h3>
-    <p><strong>v0.2.0a3</strong><br>
+    <p><strong>v0.2.0a2</strong><br>
     <span class="status-badge status-badge--completed">83% API Coverage</span></p>
     <p>Active development with comprehensive testing and documentation.</p>
   </div>

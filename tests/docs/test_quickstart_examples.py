@@ -7,13 +7,13 @@ execute without errors and produce expected results.
 
 import pytest
 
-from esologs._generated.exceptions import (
-    GraphQLClientGraphQLError,
-    GraphQLClientHttpError,
-)
 from esologs.auth import get_access_token
 from esologs.client import Client
-from esologs.validators import ValidationError
+from esologs.exceptions import (
+    GraphQLClientGraphQLError,
+    GraphQLClientHttpError,
+    ValidationError,
+)
 
 
 class TestQuickstartExamples:
@@ -282,11 +282,11 @@ class TestDocumentationIntegrity:
 
     def test_required_exceptions_importable(self):
         """Test that all exceptions used in docs are importable."""
-        from esologs._generated.exceptions import (
+        from esologs.exceptions import (
             GraphQLClientGraphQLError,
             GraphQLClientHttpError,
+            ValidationError,
         )
-        from esologs.validators import ValidationError
 
         # Verify they're proper exception classes
         assert issubclass(GraphQLClientHttpError, Exception)

@@ -4,9 +4,9 @@ import asyncio
 
 import pytest
 
-from esologs._generated.enums import CharacterRankingMetricType
 from esologs.auth import get_access_token
 from esologs.client import Client
+from esologs.enums import CharacterRankingMetricType
 
 # Fixtures are now centralized in conftest.py
 

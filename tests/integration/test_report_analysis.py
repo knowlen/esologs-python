@@ -4,15 +4,15 @@ import asyncio
 
 import pytest
 
-from esologs._generated.enums import (
+from esologs.auth import get_access_token
+from esologs.client import Client
+from esologs.enums import (
     EventDataType,
     GraphDataType,
     HostilityType,
     ReportRankingMetricType,
     TableDataType,
 )
-from esologs.auth import get_access_token
-from esologs.client import Client
 
 # Fixtures are now centralized in conftest.py
 
