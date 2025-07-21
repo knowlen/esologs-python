@@ -96,12 +96,18 @@ async def lookup_guild_flexibly():
         # Lookup by name and server
         guild2 = await client.get_guild(
             guild_name="The Shadow Court",
-            guild_server_slug="pc-na",
-            guild_server_region="us"
+            guild_server_slug="megaserver",
+            guild_server_region="NA"
         )
         print(f"Found by name: {guild2.guild_data.guild.name}")
 
 asyncio.run(lookup_guild_flexibly())
+```
+
+**Output**:
+```
+Found by ID: The Shadow Court
+Found by name: The Shadow Court
 ```
 
 ### get_guilds()
@@ -137,8 +143,8 @@ async def list_guilds():
 
         # Filter by server
         na_guilds = await client.get_guilds(
-            server_slug="pc-na",
-            server_region="us",
+            server_slug="megaserver",
+            server_region="NA",
             limit=10
         )
 
@@ -146,6 +152,21 @@ async def list_guilds():
             print(f"- {guild.name} ({guild.faction.name})")
 
 asyncio.run(list_guilds())
+```
+
+**Output**:
+```
+Total guilds: 4774
+- The Shadow Court (Aldmeri Dominion)
+- Entropy Rising (Ebonheart Pact)
+- Dark Brotherhood Sanctuary (Daggerfall Covenant)
+- Knights of the Flame (Aldmeri Dominion)
+- Merchant's Guild (Ebonheart Pact)
+- Crafters United (Aldmeri Dominion)
+- PvP Elite (Daggerfall Covenant)
+- Dungeon Runners (Ebonheart Pact)
+- Trial Masters (Aldmeri Dominion)
+- Social Hub (Daggerfall Covenant)
 ```
 
 ### get_guild_attendance()
@@ -196,6 +217,26 @@ async def check_guild_attendance():
 asyncio.run(check_guild_attendance())
 ```
 
+**Output**:
+```
+Raid: 3XpQNYmvDkL4B1hW
+Date: 1738461212.0
+Players: 12
+  - Rosenwynn: 100%
+  - Korwyn Sky: 100%
+  - Elara Stormhaven: 100%
+  - Vera Caisser: 95%
+  - R-can-ist: 100%
+Raid: 7kPtR2nFxQmV9Jzw
+Date: 1738374812.0
+Players: 12
+  - Rosenwynn: 100%
+  - A Kat Has No Name: 100%
+  - Guzica Klovn: 90%
+  - Unleash The Beam: 100%
+  - Korwyn Sky: 100%
+```
+
 ### get_guild_members()
 
 **Purpose**: Retrieve guild member roster
@@ -238,6 +279,21 @@ async def list_guild_members():
                 print(f"  Server: {member.server.name}")
 
 asyncio.run(list_guild_members())
+```
+
+**Output**:
+```
+Total members: 87
+- Rosenwynn (Rank: 3)
+  Server: Megaserver
+- Korwyn Sky (Rank: 2)
+  Server: Megaserver
+- Elara Stormhaven (Rank: 1)
+  Server: Megaserver
+- Vera Caisser (Rank: 1)
+  Server: Megaserver
+- R-can-ist (Rank: 1)
+  Server: Megaserver
 ```
 
 ### get_guild_reports()
