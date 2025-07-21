@@ -4,8 +4,8 @@ Enables the retrieval of single guilds or filtered collections of guilds. Guild 
 
 ## Overview
 
-- **Coverage**: 2 direct endpoints + guild filtering in search
-- **Use Cases**: Guild management, member tracking, guild performance analysis
+- **Coverage**: 6 direct endpoints + guild filtering in search
+- **Use Cases**: Guild management, member tracking, guild performance analysis, attendance tracking
 - **Rate Limit Impact**: 2-4 points per request (varies by complexity)
 
 ## Methods
@@ -60,6 +60,185 @@ Server: Megaserver
 Region: North America
 ```
 
+
+### get_guild()
+
+**Purpose**: Flexible guild lookup by ID or name/server combination
+
+| Parameters | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `guild_id` | *int \| None* | No* | The guild ID (required if name not provided) |
+| `guild_name` | *str \| None* | No* | Guild name (required with server info) |
+| `guild_server_slug` | *str \| None* | No* | Server slug (required with guild_name) |
+| `guild_server_region` | *str \| None* | No* | Server region (required with guild_name) |
+
+\* Must provide either `guild_id` OR all three name/server parameters
+
+**Returns**: `GetGuildById` or `GetGuildByName` object with guild information
+
+**Example**:
+```python
+import asyncio
+from esologs.client import Client
+from esologs.auth import get_access_token
+
+async def lookup_guild_flexibly():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Lookup by ID
+        guild1 = await client.get_guild(guild_id=3468)
+        print(f"Found by ID: {guild1.guild_data.guild.name}")
+
+        # Lookup by name and server
+        guild2 = await client.get_guild(
+            guild_name="The Shadow Court",
+            guild_server_slug="pc-na",
+            guild_server_region="us"
+        )
+        print(f"Found by name: {guild2.guild_data.guild.name}")
+
+asyncio.run(lookup_guild_flexibly())
+```
+
+### get_guilds()
+
+**Purpose**: List guilds with optional server filtering and pagination
+
+| Parameters | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `limit` | *int \| None* | No | Number of guilds per page (default: 100, max: 100) |
+| `page` | *int \| None* | No | Page number to retrieve (default: 1) |
+| `server_id` | *int \| None* | No | Filter by server ID |
+| `server_slug` | *str \| None* | No | Filter by server slug (use with server_region) |
+| `server_region` | *str \| None* | No | Filter by server region (use with server_slug) |
+
+**Returns**: `GetGuilds` object with paginated guild list
+
+**Example**:
+```python
+import asyncio
+from esologs.client import Client
+from esologs.auth import get_access_token
+
+async def list_guilds():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Get all guilds
+        all_guilds = await client.get_guilds(limit=20, page=1)
+        print(f"Total guilds: {all_guilds.guild_data.guilds.total}")
+
+        # Filter by server
+        na_guilds = await client.get_guilds(
+            server_slug="pc-na",
+            server_region="us",
+            limit=10
+        )
+
+        for guild in na_guilds.guild_data.guilds.data:
+            print(f"- {guild.name} ({guild.faction.name})")
+
+asyncio.run(list_guilds())
+```
+
+### get_guild_attendance()
+
+**Purpose**: Retrieve guild attendance data for raids
+
+| Parameters | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `guild_id` | *int* | Yes | The guild ID |
+| `guild_tag_id` | *int \| None* | No | Filter by specific guild tag/team |
+| `zone_id` | *int \| None* | No | Filter by specific zone |
+| `limit` | *int \| None* | No | Results per page (default: 16, max: 25) |
+| `page` | *int \| None* | No | Page number (default: 1) |
+
+**Returns**: `GetGuildAttendance` object with attendance records
+
+**Example**:
+```python
+import asyncio
+from esologs.client import Client
+from esologs.auth import get_access_token
+
+async def check_guild_attendance():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Get attendance for a guild
+        attendance = await client.get_guild_attendance(
+            guild_id=3468,
+            zone_id=38,  # Dreadsail Reef
+            limit=10
+        )
+
+        guild = attendance.guild_data.guild
+        if guild and guild.attendance:
+            for raid in guild.attendance.data:
+                print(f"Raid: {raid.code}")
+                print(f"Date: {raid.start_time}")
+                print(f"Players: {len(raid.players)}")
+
+                # Show player attendance
+                for player in raid.players[:5]:
+                    print(f"  - {player.name}: {player.presence * 100:.0f}%")
+
+asyncio.run(check_guild_attendance())
+```
+
+### get_guild_members()
+
+**Purpose**: Retrieve guild member roster
+
+| Parameters | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `guild_id` | *int* | Yes | The guild ID |
+| `limit` | *int \| None* | No | Members per page (default: 100, max: 100) |
+| `page` | *int \| None* | No | Page number (default: 1) |
+
+**Returns**: `GetGuildMembers` object with member list
+
+**Note**: Member rosters may not be available for all games (e.g., Classic WoW)
+
+**Example**:
+```python
+import asyncio
+from esologs.client import Client
+from esologs.auth import get_access_token
+
+async def list_guild_members():
+    token = get_access_token()
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        members = await client.get_guild_members(
+            guild_id=3468,
+            limit=50,
+            page=1
+        )
+
+        guild = members.guild_data.guild
+        if guild and guild.members:
+            print(f"Total members: {guild.members.total}")
+
+            for member in guild.members.data:
+                print(f"- {member.name} (Rank: {member.guild_rank})")
+                print(f"  Server: {member.server.name}")
+
+asyncio.run(list_guild_members())
+```
 
 ### get_guild_reports()
 

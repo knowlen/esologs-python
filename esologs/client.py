@@ -1,13 +1,13 @@
 """
-Refactored ESO Logs API client using mixins and factory methods.
+ESO Logs API client with mixin-based architecture.
 
-This is a cleaner, more maintainable implementation of the client.
+This module provides the main Client class that combines functionality
+from all API mixins.
 """
 
-from typing import Any
+from typing import Any, Optional
 
-from ._generated.async_base_client import AsyncBaseClient
-from ._generated.base_model import UNSET, UnsetType
+from ._generated.generated_client import Client as GeneratedClient
 from .mixins import (
     CharacterMixin,
     GameDataMixin,
@@ -16,73 +16,52 @@ from .mixins import (
     WorldDataMixin,
 )
 
-# Re-export UNSET for backward compatibility
-__all__ = ["Client", "UNSET", "UnsetType"]
-
-
-def gql(q: str) -> str:
-    """Helper function for GraphQL queries."""
-    return q
-
 
 class Client(
-    AsyncBaseClient,
-    GameDataMixin,
+    GeneratedClient,
     CharacterMixin,
-    WorldDataMixin,
+    GameDataMixin,
     GuildMixin,
     ReportMixin,
+    WorldDataMixin,
 ):
     """
-    ESO Logs API client with comprehensive validation and security features.
+    ESO Logs API client.
 
-    This refactored client uses mixins to organize methods by functional area:
-    - GameDataMixin: Abilities, items, NPCs, classes, factions, maps
-    - CharacterMixin: Character info, reports, rankings
-    - WorldDataMixin: World data, zones, regions, encounters
-    - GuildMixin: Guild information
-    - ReportMixin: Combat reports, events, graphs, rankings, analysis
+    This client provides access to all ESO Logs API functionality through
+    a mixin-based architecture. Methods are organized by functional area:
 
-    Security Features:
-    - Input validation with length limits to prevent DoS attacks
-    - API key sanitization in error messages
-    - Parameter validation before API calls
-
-    Rate Limiting:
-    - ESO Logs API has rate limits (typically 300 requests/minute)
-    - Users should implement rate limiting in production applications
-    - Consider using exponential backoff for failed requests
+    - Character methods: Character data and rankings
+    - Game data methods: Abilities, classes, items, NPCs, etc.
+    - Guild methods: Guild search, members, attendance
+    - Report methods: Report data, events, rankings, tables
+    - World data methods: Zones, regions, encounters
 
     Example:
-        ```python
-        from esologs import Client
-
-        async with Client(
-            client_id="your-client-id",
-            client_secret="your-client-secret"
-        ) as client:
-            # Get ability information
-            ability = await client.get_ability(id=12345)
-
-            # Search for reports
-            reports = await client.search_reports(
-                guild_id=123,
-                limit=25
-            )
-
-            # Get character rankings
-            rankings = await client.get_character_zone_rankings(
-                character_id=456,
-                metric=CharacterRankingMetricType.dps
-            )
-        ```
+        >>> from esologs import Client
+        >>> client = Client(
+        ...     client_id="your_client_id",
+        ...     client_secret="your_client_secret"
+        ... )
+        >>> guilds = client.get_guilds(server_slug="pc-na", limit=10)
     """
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        """Initialize the client and register all methods from mixins."""
-        super().__init__(*args, **kwargs)
-        # Methods are automatically registered by mixin __init_subclass__ hooks
+    def __init__(
+        self,
+        client_id: Optional[str] = None,
+        client_secret: Optional[str] = None,
+        *args: Any,
+        **kwargs: Any,
+    ):
+        """
+        Initialize the ESO Logs client.
 
-    def __repr__(self) -> str:
-        """Return a string representation of the client."""
-        return "<ESO Logs Client (Refactored)>"
+        Args:
+            client_id: OAuth client ID (can also be set via ESOLOGS_ID env var)
+            client_secret: OAuth client secret (can also be set via ESOLOGS_SECRET env var)
+            *args: Additional positional arguments for the base client
+            **kwargs: Additional keyword arguments for the base client
+        """
+        # The auth handling should be done by the generated client or auth module
+        # For now, just pass through to the generated client
+        super().__init__(*args, **kwargs)

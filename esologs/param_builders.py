@@ -328,3 +328,33 @@ def validate_param_combination(
 def clean_unset_params(params: Dict[str, Any]) -> Dict[str, Any]:
     """Remove UNSET values from a parameter dictionary."""
     return {k: v for k, v in params.items() if v is not UNSET}
+
+
+def build_guild_attendance_params(**kwargs: Any) -> Dict[str, object]:
+    """Build parameters for guild attendance query."""
+    params: Dict[str, object] = {}
+
+    # Parameter mapping
+    param_mapping = {
+        "guild_id": "guildId",
+        "guild_tag_id": "guildTagID",
+        "zone_id": "zoneID",
+    }
+
+    # Process parameters with mapping
+    for param_name, mapped_name in param_mapping.items():
+        if param_name in kwargs and kwargs[param_name] is not UNSET:
+            params[mapped_name] = kwargs[param_name]
+
+    # Add any unmapped parameters directly
+    for key, value in kwargs.items():
+        if key not in param_mapping and value is not UNSET:
+            params[key] = value
+
+    # Add pagination defaults
+    if "limit" not in params or params.get("limit") is UNSET:
+        params["limit"] = 16
+    if "page" not in params or params.get("page") is UNSET:
+        params["page"] = 1
+
+    return params

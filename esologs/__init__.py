@@ -1,5 +1,3 @@
-__version__ = "0.2.0a3"
-
 from ._generated.async_base_client import AsyncBaseClient
 from ._generated.base_model import BaseModel, Upload
 from ._generated.enums import (
@@ -28,6 +26,7 @@ from ._generated.exceptions import (
     GraphQLClientHttpError,
     GraphQLClientInvalidResponseError,
 )
+from ._generated.generated_client import Client
 from ._generated.get_abilities import (
     GetAbilities,
     GetAbilitiesGameData,
@@ -86,6 +85,14 @@ from ._generated.get_factions import (
     GetFactionsGameData,
     GetFactionsGameDataFactions,
 )
+from ._generated.get_guild_attendance import (
+    GetGuildAttendance,
+    GetGuildAttendanceGuildData,
+    GetGuildAttendanceGuildDataGuild,
+    GetGuildAttendanceGuildDataGuildAttendance,
+    GetGuildAttendanceGuildDataGuildAttendanceData,
+    GetGuildAttendanceGuildDataGuildAttendanceDataPlayers,
+)
 from ._generated.get_guild_by_id import (
     GetGuildById,
     GetGuildByIdGuildData,
@@ -94,6 +101,33 @@ from ._generated.get_guild_by_id import (
     GetGuildByIdGuildDataGuildServer,
     GetGuildByIdGuildDataGuildServerRegion,
     GetGuildByIdGuildDataGuildTags,
+)
+from ._generated.get_guild_by_name import (
+    GetGuildByName,
+    GetGuildByNameGuildData,
+    GetGuildByNameGuildDataGuild,
+    GetGuildByNameGuildDataGuildFaction,
+    GetGuildByNameGuildDataGuildServer,
+    GetGuildByNameGuildDataGuildServerRegion,
+    GetGuildByNameGuildDataGuildTags,
+)
+from ._generated.get_guild_members import (
+    GetGuildMembers,
+    GetGuildMembersGuildData,
+    GetGuildMembersGuildDataGuild,
+    GetGuildMembersGuildDataGuildMembers,
+    GetGuildMembersGuildDataGuildMembersData,
+    GetGuildMembersGuildDataGuildMembersDataServer,
+    GetGuildMembersGuildDataGuildMembersDataServerRegion,
+)
+from ._generated.get_guilds import (
+    GetGuilds,
+    GetGuildsGuildData,
+    GetGuildsGuildDataGuilds,
+    GetGuildsGuildDataGuildsData,
+    GetGuildsGuildDataGuildsDataFaction,
+    GetGuildsGuildDataGuildsDataServer,
+    GetGuildsGuildDataGuildsDataServerRegion,
 )
 from ._generated.get_item import GetItem, GetItemGameData, GetItemGameDataItem
 from ._generated.get_item_set import (
@@ -120,13 +154,13 @@ from ._generated.get_maps import (
     GetMapsGameDataMaps,
     GetMapsGameDataMapsData,
 )
-from ._generated.get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
-from ._generated.get_npcs import (
+from ._generated.get_np_cs import (
     GetNPCs,
     GetNPCsGameData,
     GetNPCsGameDataNpcs,
     GetNPCsGameDataNpcsData,
 )
+from ._generated.get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
 from ._generated.get_rate_limit_data import (
     GetRateLimitData,
     GetRateLimitDataRateLimitData,
@@ -212,8 +246,6 @@ from ._generated.get_zones import (
     GetZonesWorldDataZonesEncounters,
     GetZonesWorldDataZonesExpansion,
 )
-from .auth import get_access_token
-from .client import Client
 
 __all__ = [
     "AsyncBaseClient",
@@ -263,6 +295,12 @@ __all__ = [
     "GetFactions",
     "GetFactionsGameData",
     "GetFactionsGameDataFactions",
+    "GetGuildAttendance",
+    "GetGuildAttendanceGuildData",
+    "GetGuildAttendanceGuildDataGuild",
+    "GetGuildAttendanceGuildDataGuildAttendance",
+    "GetGuildAttendanceGuildDataGuildAttendanceData",
+    "GetGuildAttendanceGuildDataGuildAttendanceDataPlayers",
     "GetGuildById",
     "GetGuildByIdGuildData",
     "GetGuildByIdGuildDataGuild",
@@ -270,6 +308,27 @@ __all__ = [
     "GetGuildByIdGuildDataGuildServer",
     "GetGuildByIdGuildDataGuildServerRegion",
     "GetGuildByIdGuildDataGuildTags",
+    "GetGuildByName",
+    "GetGuildByNameGuildData",
+    "GetGuildByNameGuildDataGuild",
+    "GetGuildByNameGuildDataGuildFaction",
+    "GetGuildByNameGuildDataGuildServer",
+    "GetGuildByNameGuildDataGuildServerRegion",
+    "GetGuildByNameGuildDataGuildTags",
+    "GetGuildMembers",
+    "GetGuildMembersGuildData",
+    "GetGuildMembersGuildDataGuild",
+    "GetGuildMembersGuildDataGuildMembers",
+    "GetGuildMembersGuildDataGuildMembersData",
+    "GetGuildMembersGuildDataGuildMembersDataServer",
+    "GetGuildMembersGuildDataGuildMembersDataServerRegion",
+    "GetGuilds",
+    "GetGuildsGuildData",
+    "GetGuildsGuildDataGuilds",
+    "GetGuildsGuildDataGuildsData",
+    "GetGuildsGuildDataGuildsDataFaction",
+    "GetGuildsGuildDataGuildsDataServer",
+    "GetGuildsGuildDataGuildsDataServerRegion",
     "GetItem",
     "GetItemGameData",
     "GetItemGameDataItem",
@@ -380,5 +439,4 @@ __all__ = [
     "TableDataType",
     "Upload",
     "ViewType",
-    "get_access_token",
 ]

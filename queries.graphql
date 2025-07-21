@@ -799,3 +799,103 @@ query getReports(
     }
   }
 }
+
+# Guild search/list with pagination
+query getGuilds($limit: Int, $page: Int, $serverID: Int, $serverSlug: String, $serverRegion: String) {
+  guildData {
+    guilds(limit: $limit, page: $page, serverID: $serverID, serverSlug: $serverSlug, serverRegion: $serverRegion) {
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+      data {
+        id
+        name
+        faction {
+          name
+        }
+        server {
+          name
+          region {
+            name
+          }
+        }
+      }
+    }
+  }
+}
+
+# Get guild by name/server/region
+query getGuildByName($name: String!, $serverSlug: String!, $serverRegion: String!) {
+  guildData {
+    guild(name: $name, serverSlug: $serverSlug, serverRegion: $serverRegion) {
+      id
+      name
+      description
+      faction {
+        name
+      }
+      server {
+        name
+        region {
+          name
+        }
+      }
+      tags {
+        id
+        name
+      }
+    }
+  }
+}
+
+# Get guild attendance
+query getGuildAttendance($guildId: Int!, $guildTagID: Int, $limit: Int, $page: Int, $zoneID: Int) {
+  guildData {
+    guild(id: $guildId) {
+      attendance(guildTagID: $guildTagID, limit: $limit, page: $page, zoneID: $zoneID) {
+        total
+        per_page
+        current_page
+        has_more_pages
+        data {
+          code
+          startTime
+          players {
+            name
+            type
+            presence
+          }
+        }
+      }
+    }
+  }
+}
+
+# Get guild members
+query getGuildMembers($guildId: Int!, $limit: Int, $page: Int) {
+  guildData {
+    guild(id: $guildId) {
+      members(limit: $limit, page: $page) {
+        total
+        per_page
+        current_page
+        has_more_pages
+        data {
+          id
+          name
+          server {
+            name
+            region {
+              name
+            }
+          }
+          guildRank
+        }
+      }
+    }
+  }
+}
