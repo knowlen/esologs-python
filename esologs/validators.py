@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 from typing import Any, Optional, Union
 
-from ._generated.base_model import UNSET, UnsetType
+from esologs._generated.base_model import UNSET, UnsetType
 
 
 class ValidationError(Exception):

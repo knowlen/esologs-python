@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 from pydantic import Field
 
-from .base_model import BaseModel
+from esologs._generated.base_model import BaseModel
 
 
 class GetCharacterZoneRankings(BaseModel):

@@ -4,18 +4,22 @@ Character related methods for ESO Logs API client.
 
 from typing import TYPE_CHECKING, Any
 
-from .._generated.enums import (
+from esologs._generated.enums import (
     CharacterRankingMetricType,
     RankingCompareType,
     RankingTimeframeType,
     RoleType,
 )
-from .._generated.get_character_by_id import GetCharacterById
-from .._generated.get_character_encounter_ranking import GetCharacterEncounterRanking
-from .._generated.get_character_encounter_rankings import GetCharacterEncounterRankings
-from .._generated.get_character_reports import GetCharacterReports
-from .._generated.get_character_zone_rankings import GetCharacterZoneRankings
-from ..method_factory import (
+from esologs._generated.get_character_by_id import GetCharacterById
+from esologs._generated.get_character_encounter_ranking import (
+    GetCharacterEncounterRanking,
+)
+from esologs._generated.get_character_encounter_rankings import (
+    GetCharacterEncounterRankings,
+)
+from esologs._generated.get_character_reports import GetCharacterReports
+from esologs._generated.get_character_zone_rankings import GetCharacterZoneRankings
+from esologs.method_factory import (
     SIMPLE_GETTER_CONFIGS,
     create_complex_method,
     create_simple_getter,

@@ -37,8 +37,8 @@ Example:
 import re
 from typing import Any, Callable, Dict, Optional, Protocol, Type, TypeVar, Union, cast
 
-from ._generated.base_model import UNSET, UnsetType
-from .queries import QUERIES
+from esologs._generated.base_model import UNSET, UnsetType
+from esologs.queries import QUERIES
 
 
 class ModelWithValidate(Protocol):

@@ -4,11 +4,11 @@ Mixin classes for ESO Logs API client.
 These mixins organize API methods by functional area.
 """
 
-from .character import CharacterMixin
-from .game_data import GameDataMixin
-from .guild import GuildMixin
-from .report import ReportMixin
-from .world_data import WorldDataMixin
+from esologs.mixins.character import CharacterMixin
+from esologs.mixins.game_data import GameDataMixin
+from esologs.mixins.guild import GuildMixin
+from esologs.mixins.report import ReportMixin
+from esologs.mixins.world_data import WorldDataMixin
 
 __all__ = [
     "CharacterMixin",

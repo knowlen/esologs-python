@@ -483,6 +483,110 @@ query getGuildById($guildId: Int!) {
 }
 """
 
+GET_GUILDS = """
+query getGuilds($limit: Int, $page: Int, $serverID: Int, $serverSlug: String, $serverRegion: String) {
+  guildData {
+    guilds(limit: $limit, page: $page, serverID: $serverID, serverSlug: $serverSlug, serverRegion: $serverRegion) {
+      total
+      per_page
+      current_page
+      from
+      to
+      last_page
+      has_more_pages
+      data {
+        id
+        name
+        faction {
+          name
+        }
+        server {
+          name
+          region {
+            name
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+GET_GUILD_BY_NAME = """
+query getGuildByName($name: String!, $serverSlug: String!, $serverRegion: String!) {
+  guildData {
+    guild(name: $name, serverSlug: $serverSlug, serverRegion: $serverRegion) {
+      id
+      name
+      description
+      faction {
+        name
+      }
+      server {
+        name
+        region {
+          name
+        }
+      }
+      tags {
+        id
+        name
+      }
+    }
+  }
+}
+"""
+
+GET_GUILD_ATTENDANCE = """
+query getGuildAttendance($guildId: Int!, $guildTagID: Int, $limit: Int, $page: Int, $zoneID: Int) {
+  guildData {
+    guild(id: $guildId) {
+      attendance(guildTagID: $guildTagID, limit: $limit, page: $page, zoneID: $zoneID) {
+        total
+        per_page
+        current_page
+        has_more_pages
+        data {
+          code
+          startTime
+          players {
+            name
+            type
+            presence
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+GET_GUILD_MEMBERS = """
+query getGuildMembers($guildId: Int!, $limit: Int, $page: Int) {
+  guildData {
+    guild(id: $guildId) {
+      members(limit: $limit, page: $page) {
+        total
+        per_page
+        current_page
+        has_more_pages
+        data {
+          id
+          name
+          server {
+            name
+            region {
+              name
+            }
+          }
+          guildRank
+        }
+      }
+    }
+  }
+}
+"""
+
 # Report Queries
 GET_REPORT_BY_CODE = """
 query getReportByCode($code: String!) {
@@ -753,6 +857,10 @@ QUERIES = {
     "getCharacterZoneRankings": GET_CHARACTER_ZONE_RANKINGS,
     # Guild
     "getGuildById": GET_GUILD_BY_ID,
+    "getGuilds": GET_GUILDS,
+    "getGuildByName": GET_GUILD_BY_NAME,
+    "getGuildAttendance": GET_GUILD_ATTENDANCE,
+    "getGuildMembers": GET_GUILD_MEMBERS,
     # Reports
     "getReportByCode": GET_REPORT_BY_CODE,
     "getReports": GET_REPORTS,

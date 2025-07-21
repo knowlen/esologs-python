@@ -1,8 +1,8 @@
 from typing import Any, Dict, List, Optional, Union
 
 from .async_base_client import AsyncBaseClient
-from .base_model import UNSET, UnsetType
-from .enums import (
+from esologs._generated.base_model import UNSET, UnsetType
+from esologs._generated.enums import (
     CharacterRankingMetricType,
     EventDataType,
     GraphDataType,
@@ -26,7 +26,11 @@ from .get_class import GetClass
 from .get_classes import GetClasses
 from .get_encounters_by_zone import GetEncountersByZone
 from .get_factions import GetFactions
+from .get_guild_attendance import GetGuildAttendance
 from .get_guild_by_id import GetGuildById
+from .get_guild_by_name import GetGuildByName
+from .get_guild_members import GetGuildMembers
+from .get_guilds import GetGuilds
 from .get_item import GetItem
 from .get_item_set import GetItemSet
 from .get_item_sets import GetItemSets
@@ -1417,3 +1421,196 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetReports.model_validate(data)
+
+    async def get_guilds(
+        self,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        server_id: Union[Optional[int], UnsetType] = UNSET,
+        server_slug: Union[Optional[str], UnsetType] = UNSET,
+        server_region: Union[Optional[str], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetGuilds:
+        query = gql(
+            """
+            query getGuilds($limit: Int, $page: Int, $serverID: Int, $serverSlug: String, $serverRegion: String) {
+              guildData {
+                guilds(
+                  limit: $limit
+                  page: $page
+                  serverID: $serverID
+                  serverSlug: $serverSlug
+                  serverRegion: $serverRegion
+                ) {
+                  total
+                  per_page
+                  current_page
+                  from
+                  to
+                  last_page
+                  has_more_pages
+                  data {
+                    id
+                    name
+                    faction {
+                      name
+                    }
+                    server {
+                      name
+                      region {
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "limit": limit,
+            "page": page,
+            "serverID": server_id,
+            "serverSlug": server_slug,
+            "serverRegion": server_region,
+        }
+        response = await self.execute(
+            query=query, operation_name="getGuilds", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetGuilds.model_validate(data)
+
+    async def get_guild_by_name(
+        self, name: str, server_slug: str, server_region: str, **kwargs: Any
+    ) -> GetGuildByName:
+        query = gql(
+            """
+            query getGuildByName($name: String!, $serverSlug: String!, $serverRegion: String!) {
+              guildData {
+                guild(name: $name, serverSlug: $serverSlug, serverRegion: $serverRegion) {
+                  id
+                  name
+                  description
+                  faction {
+                    name
+                  }
+                  server {
+                    name
+                    region {
+                      name
+                    }
+                  }
+                  tags {
+                    id
+                    name
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "name": name,
+            "serverSlug": server_slug,
+            "serverRegion": server_region,
+        }
+        response = await self.execute(
+            query=query, operation_name="getGuildByName", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetGuildByName.model_validate(data)
+
+    async def get_guild_attendance(
+        self,
+        guild_id: int,
+        guild_tag_id: Union[Optional[int], UnsetType] = UNSET,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetGuildAttendance:
+        query = gql(
+            """
+            query getGuildAttendance($guildId: Int!, $guildTagID: Int, $limit: Int, $page: Int, $zoneID: Int) {
+              guildData {
+                guild(id: $guildId) {
+                  attendance(guildTagID: $guildTagID, limit: $limit, page: $page, zoneID: $zoneID) {
+                    total
+                    per_page
+                    current_page
+                    has_more_pages
+                    data {
+                      code
+                      startTime
+                      players {
+                        name
+                        type
+                        presence
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "guildId": guild_id,
+            "guildTagID": guild_tag_id,
+            "limit": limit,
+            "page": page,
+            "zoneID": zone_id,
+        }
+        response = await self.execute(
+            query=query,
+            operation_name="getGuildAttendance",
+            variables=variables,
+            **kwargs,
+        )
+        data = self.get_data(response)
+        return GetGuildAttendance.model_validate(data)
+
+    async def get_guild_members(
+        self,
+        guild_id: int,
+        limit: Union[Optional[int], UnsetType] = UNSET,
+        page: Union[Optional[int], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetGuildMembers:
+        query = gql(
+            """
+            query getGuildMembers($guildId: Int!, $limit: Int, $page: Int) {
+              guildData {
+                guild(id: $guildId) {
+                  members(limit: $limit, page: $page) {
+                    total
+                    per_page
+                    current_page
+                    has_more_pages
+                    data {
+                      id
+                      name
+                      server {
+                        name
+                        region {
+                          name
+                        }
+                      }
+                      guildRank
+                    }
+                  }
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "guildId": guild_id,
+            "limit": limit,
+            "page": page,
+        }
+        response = await self.execute(
+            query=query, operation_name="getGuildMembers", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetGuildMembers.model_validate(data)

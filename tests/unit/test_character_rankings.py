@@ -228,7 +228,7 @@ class TestCharacterRankings:
         assert variables["characterId"] == 12345
         assert variables["metric"] == CharacterRankingMetricType.playerscore
         # zoneId should be UNSET, not None
-        from esologs.client import UNSET
+        from esologs._generated.base_model import UNSET
 
         assert variables["zoneId"] == UNSET
 
