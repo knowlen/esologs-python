@@ -1,5 +1,11 @@
 """
 Guild related methods for ESO Logs API client.
+
+Validation Strategy:
+- Methods that map directly to single GraphQL operations (get_guild_by_id, get_guilds,
+  get_guild_attendance, get_guild_members) rely on GraphQL schema validation.
+- The get_guild() convenience method has additional client-side validation because it
+  routes to different GraphQL queries based on the parameters provided.
 """
 
 from typing import TYPE_CHECKING, Any, Dict, Optional, Protocol, Union, cast
@@ -117,6 +123,11 @@ class GuildMixin:
         guild_server_region: Union[Optional[str], UnsetType] = UNSET,
     ) -> Union[GetGuildById, GetGuildByName]:
         """Get guild by ID or name/server/region combination.
+
+        Note: This method has comprehensive client-side validation because it's a
+        convenience method that routes to different GraphQL queries based on the
+        parameters provided. The other guild methods rely on GraphQL schema validation
+        as they map directly to single GraphQL operations.
 
         Args:
             guild_id: The ID of the guild (optional)
