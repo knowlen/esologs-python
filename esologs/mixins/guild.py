@@ -2,7 +2,7 @@
 Guild related methods for ESO Logs API client.
 """
 
-from typing import TYPE_CHECKING, Any, Optional, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, Optional, Protocol, Union, cast
 
 from .._generated.base_model import UNSET, UnsetType
 from .._generated.get_guild_attendance import GetGuildAttendance
@@ -18,9 +18,32 @@ from ..method_factory import (
 )
 from ..param_builders import build_guild_attendance_params
 from ..queries import QUERIES
+from ..validators import ValidationError
 
 if TYPE_CHECKING:
-    pass
+    import httpx
+
+
+class ClientProtocol(Protocol):
+    """Protocol for ESO Logs client methods needed by guild operations."""
+
+    async def execute(
+        self,
+        query: str,
+        operation_name: Optional[str] = None,
+        variables: Optional[Dict[str, Any]] = None,
+        **kwargs: Any,
+    ) -> "httpx.Response":
+        """Execute a GraphQL query."""
+        ...
+
+    def get_data(self, response: "httpx.Response") -> Dict[str, Any]:
+        """Extract data from GraphQL response."""
+        ...
+
+    async def get_guild_by_id(self, guild_id: int) -> GetGuildById:
+        """Get guild by ID."""
+        ...
 
 
 class GuildMixin:
@@ -87,7 +110,7 @@ class GuildMixin:
         cls.get_guild_members = members_method  # type: ignore[attr-defined]
 
     async def get_guild(
-        self: Any,
+        self: ClientProtocol,
         guild_id: Union[Optional[int], UnsetType] = UNSET,
         guild_name: Union[Optional[str], UnsetType] = UNSET,
         guild_server_slug: Union[Optional[str], UnsetType] = UNSET,
@@ -105,10 +128,8 @@ class GuildMixin:
             Guild information
 
         Raises:
-            ValueError: If neither ID nor name/server combination provided
+            ValidationError: If neither ID nor name/server combination provided
         """
-        from ..validators import ValidationError
-
         # Check if we have guild_id
         has_guild_id = guild_id is not UNSET and guild_id is not None
 
@@ -147,8 +168,8 @@ class GuildMixin:
             )
 
         # Use appropriate query based on parameters
-        if guild_id is not UNSET:
-            return await self.get_guild_by_id(guild_id=guild_id)
+        if guild_id is not UNSET and guild_id is not None:
+            return await self.get_guild_by_id(guild_id=cast(int, guild_id))
         else:
             # Use the name-based query
             response = await self.execute(
@@ -161,4 +182,4 @@ class GuildMixin:
                 },
             )
             data = self.get_data(response)
-            return cast(GetGuildByName, GetGuildByName.model_validate(data))
+            return GetGuildByName.model_validate(data)
