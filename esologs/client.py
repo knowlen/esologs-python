@@ -1,67 +1,62 @@
 """
-ESO Logs API client with mixin-based architecture.
+ESO Logs API Client.
 
-This module provides the main Client class that combines functionality
-from all API mixins.
+This is the main client class that combines all API functionality through mixins.
 """
 
-from typing import Any, Optional
+from typing import Any
 
-from esologs._generated.generated_client import Client as GeneratedClient
+from esologs._generated.async_base_client import AsyncBaseClient
 from esologs.mixins import (
     CharacterMixin,
     GameDataMixin,
     GuildMixin,
+    ProgressRaceMixin,
     ReportMixin,
     WorldDataMixin,
 )
 
 
 class Client(
-    GeneratedClient,
-    CharacterMixin,
+    AsyncBaseClient,
     GameDataMixin,
+    CharacterMixin,
+    WorldDataMixin,
     GuildMixin,
     ReportMixin,
-    WorldDataMixin,
+    ProgressRaceMixin,
 ):
     """
-    ESO Logs API client.
+    ESO Logs API Client.
 
     This client provides access to all ESO Logs API functionality through
-    a mixin-based architecture. Methods are organized by functional area:
-
-    - Character methods: Character data and rankings
-    - Game data methods: Abilities, classes, items, NPCs, etc.
-    - Guild methods: Guild search, members, attendance
-    - Report methods: Report data, events, rankings, tables
-    - World data methods: Zones, regions, encounters
+    a modular mixin-based architecture.
 
     Example:
+        >>> import asyncio
         >>> from esologs import Client
-        >>> client = Client(
-        ...     client_id="your_client_id",
-        ...     client_secret="your_client_secret"
-        ... )
-        >>> guilds = client.get_guilds(server_slug="pc-na", limit=10)
+        >>>
+        >>> async def main():
+        ...     async with Client(
+        ...         client_id="your_client_id",
+        ...         client_secret="your_client_secret"
+        ...     ) as client:
+        ...         # Get ability information
+        ...         ability = await client.get_ability(id=20301)
+        ...         # Access ability name: ability.game_data.ability.name
+        >>>
+        >>> asyncio.run(main())
     """
 
-    def __init__(
-        self,
-        client_id: Optional[str] = None,
-        client_secret: Optional[str] = None,
-        *args: Any,
-        **kwargs: Any,
-    ):
-        """
-        Initialize the ESO Logs client.
+    def __init__(self, **kwargs: Any) -> None:
+        """Initialize the ESO Logs client."""
+        super().__init__(**kwargs)
 
-        Args:
-            client_id: OAuth client ID (can also be set via ESOLOGS_ID env var)
-            client_secret: OAuth client secret (can also be set via ESOLOGS_SECRET env var)
-            *args: Additional positional arguments for the base client
-            **kwargs: Additional keyword arguments for the base client
-        """
-        # The auth handling should be done by the generated client or auth module
-        # For now, just pass through to the generated client
-        super().__init__(*args, **kwargs)
+    async def __aenter__(self) -> "Client":
+        """Async context manager entry."""
+        return self
+
+    async def __aexit__(self, *args: Any) -> None:
+        """Async context manager exit."""
+        # Use parent's __aexit__ which closes the http_client
+        await super().__aexit__(*args)
