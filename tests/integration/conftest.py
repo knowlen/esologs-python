@@ -8,9 +8,6 @@ from esologs.client import Client
 
 from .retry_utils import RetryClient
 
-# Register the retry plugin
-pytest_plugins = ["tests.integration.pytest_plugins"]
-
 
 @pytest.fixture(scope="session")
 def api_credentials():
@@ -52,23 +49,6 @@ def client(api_credentials):
 def integration_test_marker():
     """Marker for integration tests that require real API calls."""
     return pytest.mark.integration
-
-
-def pytest_configure(config):
-    """Configure pytest with custom markers."""
-    config.addinivalue_line(
-        "markers", "integration: mark test as integration test requiring real API calls"
-    )
-    # Configure pytest-rerunfailures for integration tests
-    config.option.reruns = 3
-    config.option.reruns_delay = 2
-
-
-def pytest_collection_modifyitems(config, items):
-    """Modify test collection to handle integration test markers."""
-    for item in items:
-        if "integration" in item.nodeid:
-            item.add_marker(pytest.mark.integration)
 
 
 @pytest.fixture(autouse=True)
