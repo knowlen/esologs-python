@@ -89,13 +89,13 @@ Tests use fixed test data defined in `conftest.py`:
 
 ## API Coverage Testing
 
-Integration tests verify ~75% API coverage across:
+Integration tests verify ~60% API coverage across:
 
 ### ✅ Currently Tested
 - **Game Data**: abilities, classes, factions, items, maps, NPCs
 - **Character Data**: profiles, reports, rankings (encounter & zone)
 - **World Data**: regions, zones, encounters
-- **Guild Data**: basic guild information
+- **Guild Data**: basic guild information (get_guild_by_id)
 - **Report Data**: individual reports, comprehensive analysis, advanced search
 - **System Data**: rate limiting
 

@@ -40,7 +40,7 @@ The sanity tests provide:
 - Character rankings (encounter + zone)
 
 ✅ **Guild Data (1 feature)**
-- Basic guild information
+- Basic guild information (get_guild_by_id)
 
 ✅ **Report Data (3 features)**
 - Individual reports

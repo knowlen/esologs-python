@@ -90,7 +90,7 @@ pytest tests/ --cov=esologs --cov-report=html
 - Game Data: abilities, classes, factions, items, NPCs (5 features)
 - World Data: zones, regions (2 features)
 - Character Data: profiles, rankings (2 features)
-- Guild Data: basic info (1 feature)
+- Guild Data: get_guild_by_id (1 feature)
 - Report Data: reports, analysis, search (3 features)
 - System Data: rate limiting (1 feature)
 
@@ -180,9 +180,9 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~75% API endpoint coverage
-- **Sanity Tests**: 13+ major API features validated
-- **Overall**: 70% code coverage with high-quality tests
+- **Integration Tests**: ~60% API endpoint coverage (32/42 methods)
+- **Sanity Tests**: 14 major API features validated
+- **Overall**: ~76% API coverage with high-quality tests
 
 ### Target Coverage
 - **Unit Tests**: Maintain 100% validation coverage

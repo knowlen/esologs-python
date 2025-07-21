@@ -20,7 +20,7 @@
 | Metric | Status |
 |--------|--------|
 | **Current Version** | 0.2.0a3 |
-| **API Coverage** | ~83% (comprehensive analysis shows 6/8 API sections fully implemented) |
+| **API Coverage** | ~76% (32/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
 | **Tests** | 310 tests across unit, integration, documentation, and sanity suites |
@@ -32,7 +32,7 @@
 3. ✅ **reportData** - 9 methods
 4. ✅ **worldData** - 4 methods
 5. ✅ **rateLimitData** - 1 method
-6. 🟡 **guildData** - 2 methods (PARTIAL - missing 4 advanced methods)
+6. 🟡 **guildData** - 1 method (PARTIAL - only get_guild_by_id implemented)
 
 **Missing (2/8 sections):**
 - ❌ **userData** - 0/3 methods (MISSING - requires user auth)
@@ -173,6 +173,32 @@ async def main():
             rankings_data = encounter_rankings.character_data.character.encounter_rankings
             print(f"Best DPS: {rankings_data.get('bestAmount', 0)}")
             print(f"Total Kills: {rankings_data.get('totalKills', 0)}")
+
+asyncio.run(main())
+```
+
+### Guild Data
+
+```python
+import asyncio
+from esologs.client import Client
+from esologs.auth import get_access_token
+
+async def main():
+    token = get_access_token()
+
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        # Get guild information by ID
+        guild = await client.get_guild_by_id(guild_id=123)
+
+        if guild.guild_data.guild:
+            print(f"Guild: {guild.guild_data.guild.name}")
+            print(f"Server: {guild.guild_data.guild.server.name}")
+            print(f"Faction: {guild.guild_data.guild.faction.name}")
 
 asyncio.run(main())
 ```
