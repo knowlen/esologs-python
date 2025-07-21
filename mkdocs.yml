@@ -1,4 +1,4 @@
-site_name: ESO Logs Python - Elder Scrolls Online Combat Log Analysis
+site_name: ESO Logs Python
 site_description: Python client library for ESO Logs API v2 - Analyze Elder Scrolls Online combat logs, track DPS/HPS metrics, build ESO tools. Features character rankings, report analysis, guild management.
 site_url: https://esologs-python.readthedocs.io/
 site_author: Nick Knowles

@@ -8,12 +8,12 @@ execute correctly and return expected data structures.
 
 import pytest
 
-from esologs.client import Client
-from esologs.exceptions import (
+from esologs._generated.exceptions import (
     GraphQLClientGraphQLMultiError,
     GraphQLClientHttpError,
-    ValidationError,
 )
+from esologs.client import Client
+from esologs.validators import ValidationError
 
 
 class TestGameDataExamples:

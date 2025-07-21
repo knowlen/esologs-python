@@ -10,12 +10,12 @@ import asyncio
 import httpx
 import pytest
 
-from esologs.client import Client
-from esologs.exceptions import (
+from esologs._generated.exceptions import (
     GraphQLClientGraphQLError,
     GraphQLClientGraphQLMultiError,
     GraphQLClientHttpError,
 )
+from esologs.client import Client
 
 
 class TestSystemExamples:

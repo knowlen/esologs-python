@@ -4,8 +4,14 @@ import re
 from datetime import datetime
 from typing import Any, Optional, Union
 
-from .base_model import UNSET, UnsetType
-from .exceptions import ValidationError
+from esologs._generated.base_model import UNSET, UnsetType
+
+
+class ValidationError(Exception):
+    """Validation error for API parameters."""
+
+    pass
+
 
 # Security constants
 MAX_STRING_LENGTH = 1000  # Prevent DoS via large strings
