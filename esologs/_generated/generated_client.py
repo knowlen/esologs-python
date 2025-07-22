@@ -24,6 +24,7 @@ from .get_character_reports import GetCharacterReports
 from .get_character_zone_rankings import GetCharacterZoneRankings
 from .get_class import GetClass
 from .get_classes import GetClasses
+from .get_current_user import GetCurrentUser
 from .get_encounters_by_zone import GetEncountersByZone
 from .get_factions import GetFactions
 from .get_guild_attendance import GetGuildAttendance
@@ -49,6 +50,8 @@ from .get_report_player_details import GetReportPlayerDetails
 from .get_report_rankings import GetReportRankings
 from .get_report_table import GetReportTable
 from .get_reports import GetReports
+from .get_user_by_id import GetUserById
+from .get_user_data import GetUserData
 from .get_world_data import GetWorldData
 from .get_zones import GetZones
 
@@ -1664,3 +1667,114 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetProgressRace.model_validate(data)
+
+    async def get_user_by_id(self, user_id: int, **kwargs: Any) -> GetUserById:
+        query = gql(
+            """
+            query getUserById($userId: Int!) {
+              userData {
+                user(id: $userId) {
+                  id
+                  name
+                  guilds {
+                    id
+                    name
+                    server {
+                      name
+                      region {
+                        name
+                      }
+                    }
+                  }
+                  characters {
+                    id
+                    name
+                    server {
+                      name
+                      region {
+                        name
+                      }
+                    }
+                    gameData
+                    classID
+                    raceID
+                    hidden
+                  }
+                  naDisplayName
+                  euDisplayName
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {"userId": user_id}
+        response = await self.execute(
+            query=query, operation_name="getUserById", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetUserById.model_validate(data)
+
+    async def get_current_user(self, **kwargs: Any) -> GetCurrentUser:
+        query = gql(
+            """
+            query getCurrentUser {
+              userData {
+                currentUser {
+                  id
+                  name
+                  guilds {
+                    id
+                    name
+                    server {
+                      name
+                      region {
+                        name
+                      }
+                    }
+                  }
+                  characters {
+                    id
+                    name
+                    server {
+                      name
+                      region {
+                        name
+                      }
+                    }
+                    gameData
+                    classID
+                    raceID
+                    hidden
+                  }
+                  naDisplayName
+                  euDisplayName
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {}
+        response = await self.execute(
+            query=query, operation_name="getCurrentUser", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetCurrentUser.model_validate(data)
+
+    async def get_user_data(self, **kwargs: Any) -> GetUserData:
+        query = gql(
+            """
+            query getUserData {
+              userData {
+                user(id: 1) {
+                  id
+                }
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {}
+        response = await self.execute(
+            query=query, operation_name="getUserData", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetUserData.model_validate(data)

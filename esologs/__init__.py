@@ -73,6 +73,17 @@ from ._generated.get_classes import (
     GetClassesGameData,
     GetClassesGameDataClasses,
 )
+from ._generated.get_current_user import (
+    GetCurrentUser,
+    GetCurrentUserUserData,
+    GetCurrentUserUserDataCurrentUser,
+    GetCurrentUserUserDataCurrentUserCharacters,
+    GetCurrentUserUserDataCurrentUserCharactersServer,
+    GetCurrentUserUserDataCurrentUserCharactersServerRegion,
+    GetCurrentUserUserDataCurrentUserGuilds,
+    GetCurrentUserUserDataCurrentUserGuildsServer,
+    GetCurrentUserUserDataCurrentUserGuildsServerRegion,
+)
 from ._generated.get_encounters_by_zone import (
     GetEncountersByZone,
     GetEncountersByZoneWorldData,
@@ -218,6 +229,22 @@ from ._generated.get_reports import (
     GetReportsReportDataReportsDataOwner,
     GetReportsReportDataReportsDataZone,
 )
+from ._generated.get_user_by_id import (
+    GetUserById,
+    GetUserByIdUserData,
+    GetUserByIdUserDataUser,
+    GetUserByIdUserDataUserCharacters,
+    GetUserByIdUserDataUserCharactersServer,
+    GetUserByIdUserDataUserCharactersServerRegion,
+    GetUserByIdUserDataUserGuilds,
+    GetUserByIdUserDataUserGuildsServer,
+    GetUserByIdUserDataUserGuildsServerRegion,
+)
+from ._generated.get_user_data import (
+    GetUserData,
+    GetUserDataUserData,
+    GetUserDataUserDataUser,
+)
 from ._generated.get_world_data import (
     GetWorldData,
     GetWorldDataWorldData,
@@ -249,13 +276,25 @@ from ._generated.get_zones import (
     GetZonesWorldDataZonesEncounters,
     GetZonesWorldDataZonesExpansion,
 )
+from .auth import get_access_token
 from .client import Client
+from .user_auth import (
+    UserToken,
+    exchange_authorization_code,
+    generate_authorization_url,
+    refresh_access_token,
+)
 
 __all__ = [
     "AsyncBaseClient",
     "BaseModel",
     "CharacterRankingMetricType",
     "Client",
+    "UserToken",
+    "exchange_authorization_code",
+    "generate_authorization_url",
+    "get_access_token",
+    "refresh_access_token",
     "EventDataType",
     "ExternalBuffRankFilter",
     "FightRankingMetricType",
@@ -292,6 +331,15 @@ __all__ = [
     "GetClasses",
     "GetClassesGameData",
     "GetClassesGameDataClasses",
+    "GetCurrentUser",
+    "GetCurrentUserUserData",
+    "GetCurrentUserUserDataCurrentUser",
+    "GetCurrentUserUserDataCurrentUserCharacters",
+    "GetCurrentUserUserDataCurrentUserCharactersServer",
+    "GetCurrentUserUserDataCurrentUserCharactersServerRegion",
+    "GetCurrentUserUserDataCurrentUserGuilds",
+    "GetCurrentUserUserDataCurrentUserGuildsServer",
+    "GetCurrentUserUserDataCurrentUserGuildsServerRegion",
     "GetEncountersByZone",
     "GetEncountersByZoneWorldData",
     "GetEncountersByZoneWorldDataZone",
@@ -399,6 +447,18 @@ __all__ = [
     "GetReportsReportDataReportsDataGuildServerRegion",
     "GetReportsReportDataReportsDataOwner",
     "GetReportsReportDataReportsDataZone",
+    "GetUserById",
+    "GetUserByIdUserData",
+    "GetUserByIdUserDataUser",
+    "GetUserByIdUserDataUserCharacters",
+    "GetUserByIdUserDataUserCharactersServer",
+    "GetUserByIdUserDataUserCharactersServerRegion",
+    "GetUserByIdUserDataUserGuilds",
+    "GetUserByIdUserDataUserGuildsServer",
+    "GetUserByIdUserDataUserGuildsServerRegion",
+    "GetUserData",
+    "GetUserDataUserData",
+    "GetUserDataUserDataUser",
     "GetWorldData",
     "GetWorldDataWorldData",
     "GetWorldDataWorldDataEncounter",
