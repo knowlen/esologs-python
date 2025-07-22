@@ -13,7 +13,7 @@ Access world/realm first achievement race tracking data in ESO.
 The Progress Race API provides access to real-time tracking data for world/realm first achievement races in Elder Scrolls Online. This data is particularly valuable during new content releases when guilds compete to be the first to complete challenging content.
 
 !!! warning "API Availability"
-    Progress race data is only available when there is an active race. Outside of active progression periods, queries will return `null`.
+    Progress race data is only available when there is an active race. Outside of active progression periods, the API will raise a `GraphQLClientGraphQLMultiError` with the message "No race supported for this game currently".
 
 ## Methods
 
@@ -162,36 +162,43 @@ async def compare_difficulties(zone_id: int):
 
 ## Error Handling
 
-Progress race queries handle missing data gracefully:
+Progress race queries will raise `GraphQLClientGraphQLMultiError` when no race is active:
 
 ```python
+from esologs._generated.exceptions import GraphQLClientGraphQLMultiError
+
 async def safe_progress_check():
     async with Client(
         client_id="your_client_id",
         client_secret="your_client_secret"
     ) as client:
         try:
-            result = await client.get_progress_race(zone_id=999)
+            result = await client.get_progress_race(zone_id=40)
 
-            # Check if race data exists
-            if result.progress_race_data.progress_race is None:
-                print("No active race data available")
-                return
+            # Process race data if available
+            if result.progress_race_data.progress_race:
+                race_data = result.progress_race_data.progress_race
+                print(f"Race data: {race_data}")
+            else:
+                print("No race data in response")
 
-            # Process race data
-            race_data = result.progress_race_data.progress_race
-            print(f"Race data: {race_data}")
-
+        except GraphQLClientGraphQLMultiError as e:
+            # This is expected when no race is active
+            if "No race supported for this game currently" in str(e):
+                print("No active race for Elder Scrolls Online")
+            else:
+                print(f"GraphQL error: {e}")
         except Exception as e:
-            print(f"Error checking progress race: {e}")
+            print(f"Unexpected error: {e}")
 ```
 
 ## Best Practices
 
-1. **Check for Active Races**: Always handle `null` responses gracefully as races are time-limited
-2. **Cache Results**: During active races, cache results for a few minutes to reduce API calls
-3. **Use Appropriate Filters**: Apply zone and difficulty filters to get relevant data
-4. **Handle Dynamic Schema**: The JSON response format may vary - write flexible parsing code
+1. **Handle GraphQL Errors**: Always catch `GraphQLClientGraphQLMultiError` when calling progress race methods
+2. **Check for Active Races**: The API will throw an error when no race is active for the game
+3. **Cache Results**: During active races, cache results for a few minutes to reduce API calls
+4. **Use Appropriate Filters**: Apply zone and difficulty filters to get relevant data
+5. **Handle Dynamic Schema**: The JSON response format may vary - write flexible parsing code
 
 ## Rate Limiting
 
@@ -203,7 +210,8 @@ Progress race queries are lightweight:
 
 ## Notes
 
-- Progress race data is only populated during active world/realm first competitions
+- Progress race data is only available during active world/realm first competitions
+- When no race is active, the API raises `GraphQLClientGraphQLMultiError` with message "No race supported for this game currently"
 - The JSON response structure is not frozen and may change without notice
 - Competition IDs and their meanings are not documented in the public API
 - Default values (latest zone, highest difficulty) are applied when parameters are omitted

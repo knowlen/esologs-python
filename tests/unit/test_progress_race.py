@@ -9,6 +9,7 @@ from unittest.mock import AsyncMock, Mock
 import httpx
 import pytest
 
+from esologs._generated.exceptions import GraphQLClientGraphQLMultiError
 from esologs._generated.get_progress_race import GetProgressRace
 from esologs.client import Client
 
@@ -211,3 +212,41 @@ class TestProgressRaceMethods:
         assert variables["competitionID"] == 2
         assert variables["difficulty"] == 2
         assert variables["size"] == 8
+
+    @pytest.mark.asyncio
+    async def test_get_progress_race_no_active_race(self):
+        """Test get_progress_race method when no race is active (GraphQL error)."""
+        client = Client(url="http://test.com", headers={})
+
+        # Mock the GraphQL error response
+        mock_response = Mock(spec=httpx.Response)
+        mock_response.json.return_value = {
+            "data": None,
+            "errors": [
+                {
+                    "message": "No race supported for this game currently.",
+                    "extensions": {"code": "INVALID_RACE"},
+                }
+            ],
+        }
+        mock_response.is_error = False
+
+        # Mock the execute method to raise the error
+        client.execute = AsyncMock(
+            side_effect=GraphQLClientGraphQLMultiError.from_errors_dicts(
+                errors_dicts=[
+                    {
+                        "message": "No race supported for this game currently.",
+                        "extensions": {"code": "INVALID_RACE"},
+                    }
+                ],
+                data=None,
+            )
+        )
+
+        # The method should raise the GraphQL error
+        with pytest.raises(GraphQLClientGraphQLMultiError) as exc_info:
+            await client.get_progress_race(zone_id=40)
+
+        # Verify the error message
+        assert "No race supported for this game currently" in str(exc_info.value)
