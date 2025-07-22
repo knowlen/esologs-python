@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
-from esologs._generated.base_model import BaseModel
+from .base_model import BaseModel
 
 
 class GetRegions(BaseModel):

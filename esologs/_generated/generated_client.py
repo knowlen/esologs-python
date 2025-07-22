@@ -1,8 +1,8 @@
 from typing import Any, Dict, List, Optional, Union
 
 from .async_base_client import AsyncBaseClient
-from esologs._generated.base_model import UNSET, UnsetType
-from esologs._generated.enums import (
+from .base_model import UNSET, UnsetType
+from .enums import (
     CharacterRankingMetricType,
     EventDataType,
     GraphDataType,
@@ -39,6 +39,7 @@ from .get_map import GetMap
 from .get_maps import GetMaps
 from .get_np_cs import GetNPCs
 from .get_npc import GetNPC
+from .get_progress_race import GetProgressRace
 from .get_rate_limit_data import GetRateLimitData
 from .get_regions import GetRegions
 from .get_report_by_code import GetReportByCode
@@ -1614,3 +1615,52 @@ class Client(AsyncBaseClient):
         )
         data = self.get_data(response)
         return GetGuildMembers.model_validate(data)
+
+    async def get_progress_race(
+        self,
+        guild_id: Union[Optional[int], UnsetType] = UNSET,
+        zone_id: Union[Optional[int], UnsetType] = UNSET,
+        competition_id: Union[Optional[int], UnsetType] = UNSET,
+        difficulty: Union[Optional[int], UnsetType] = UNSET,
+        size: Union[Optional[int], UnsetType] = UNSET,
+        server_region: Union[Optional[str], UnsetType] = UNSET,
+        server_subregion: Union[Optional[str], UnsetType] = UNSET,
+        server_slug: Union[Optional[str], UnsetType] = UNSET,
+        guild_name: Union[Optional[str], UnsetType] = UNSET,
+        **kwargs: Any,
+    ) -> GetProgressRace:
+        query = gql(
+            """
+            query getProgressRace($guildID: Int, $zoneID: Int, $competitionID: Int, $difficulty: Int, $size: Int, $serverRegion: String, $serverSubregion: String, $serverSlug: String, $guildName: String) {
+              progressRaceData {
+                progressRace(
+                  guildID: $guildID
+                  zoneID: $zoneID
+                  competitionID: $competitionID
+                  difficulty: $difficulty
+                  size: $size
+                  serverRegion: $serverRegion
+                  serverSubregion: $serverSubregion
+                  serverSlug: $serverSlug
+                  guildName: $guildName
+                )
+              }
+            }
+            """
+        )
+        variables: Dict[str, object] = {
+            "guildID": guild_id,
+            "zoneID": zone_id,
+            "competitionID": competition_id,
+            "difficulty": difficulty,
+            "size": size,
+            "serverRegion": server_region,
+            "serverSubregion": server_subregion,
+            "serverSlug": server_slug,
+            "guildName": guild_name,
+        }
+        response = await self.execute(
+            query=query, operation_name="getProgressRace", variables=variables, **kwargs
+        )
+        data = self.get_data(response)
+        return GetProgressRace.model_validate(data)

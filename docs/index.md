@@ -74,17 +74,16 @@
   <div class="feature-card">
     <h3>Current Version</h3>
     <p><strong>v0.2.0a3</strong><br>
-    <span class="status-badge status-badge--completed">83% API Coverage</span></p>
+    <span class="status-badge status-badge--completed">90% API Coverage</span></p>
     <p>Active development with comprehensive testing and documentation.</p>
   </div>
 </div>
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>Coming Soon (17%)</h3>
+    <h3>Coming Soon (10%)</h3>
     <ul>
-      <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings </li>
-      <li><span class="status-badge status-badge--planned">Progress Tracking</span> Race & achievement tracking</li>
+      <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings (OAuth2 required)</li>
       <li><span class="status-badge status-badge--planned">Enhanced Guilds</span> Advanced guild management</li>
       <li><span class="status-badge status-badge--planned">Caching</span> Performance optimization</li>
     </ul>

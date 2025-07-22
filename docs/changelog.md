@@ -5,7 +5,17 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0a3] - 2025-07-19
+## [0.2.0a3] - 2025-07-21
+
+### Added
+
+- **Progress Race Tracking**: Implemented `get_progress_race()` method for world/realm first achievement race tracking
+  - Supports filtering by guild, zone, competition, difficulty, size, and server
+  - Returns flexible JSON data that adapts to active race formats
+  - Added comprehensive documentation and examples
+- **API Coverage**: Increased from 88% to 90% (38/42 methods implemented)
+- Added 4 unit tests and 8 integration tests for progress race functionality
+- Created new `ProgressRaceMixin` following established architecture patterns
 
 ### Changed
 
@@ -21,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added comprehensive documentation for method registration and naming conventions
 - Cached regex patterns for performance improvement
 - Fixed type safety issues with proper Protocol usage
-- Updated test suite from 278 to 310 tests (added 29 unit tests for new patterns)
+- Updated test suite from 278 to 322 tests (added 33 unit tests and 8 docs tests)
 
 ### Fixed
 

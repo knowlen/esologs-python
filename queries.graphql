@@ -899,3 +899,21 @@ query getGuildMembers($guildId: Int!, $limit: Int, $page: Int) {
     }
   }
 }
+
+
+# Get progress race data
+query getProgressRace($guildID: Int, $zoneID: Int, $competitionID: Int, $difficulty: Int, $size: Int, $serverRegion: String, $serverSubregion: String, $serverSlug: String, $guildName: String) {
+  progressRaceData {
+    progressRace(
+      guildID: $guildID
+      zoneID: $zoneID
+      competitionID: $competitionID
+      difficulty: $difficulty
+      size: $size
+      serverRegion: $serverRegion
+      serverSubregion: $serverSubregion
+      serverSlug: $serverSlug
+      guildName: $guildName
+    )
+  }
+}

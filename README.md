@@ -20,28 +20,28 @@
 | Metric | Status |
 |--------|--------|
 | **Current Version** | 0.2.0a3 |
-| **API Coverage** | ~88% (37/42 methods implemented) |
+| **API Coverage** | ~90% (38/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
-| **Tests** | 310 tests across unit, integration, documentation, and sanity suites |
+| **Tests** | 369 tests across unit, integration, documentation, and sanity suites |
 
 ### Current API Coverage
-**Implemented (6/8 sections):**
-1. ✅ **gameData** - 13 methods
-2. ✅ **characterData** - 5 methods
-3. ✅ **reportData** - 9 methods
-4. ✅ **worldData** - 4 methods
-5. ✅ **rateLimitData** - 1 method
-6. ✅ **guildData** - 5 methods (COMPLETE - all guild endpoints implemented)
+**Implemented (7/8 sections):**
+1. ✅ **gameData** - 13 methods (COMPLETE)
+2. ✅ **characterData** - 5 methods (COMPLETE)
+3. ✅ **reportData** - 10 methods (COMPLETE)
+4. ✅ **worldData** - 4 methods (COMPLETE)
+5. ✅ **rateLimitData** - 1 method (COMPLETE)
+6. ✅ **guildData** - 5 methods (COMPLETE)
+7. ✅ **progressRaceData** - 1 method (COMPLETE)
 
-**Missing (2/8 sections):**
-- ❌ **userData** - 0/3 methods (MISSING - requires user auth)
-- ❌ **progressRaceData** - 0/1 method (MISSING - niche racing feature)
+**Missing (1/8 sections):**
+- ❌ **userData** - 0/3 methods (requires OAuth2 user authentication)
 
 ### Roadmap
-- 🚧 Progress race tracking
-- 🚧 User account integration
-- 🚧 Client architecture refactor (modular design)
+- ✅ Progress race tracking (COMPLETE)
+- 🚧 User account integration (requires OAuth2 flow)
+- ✅ Client architecture refactor (COMPLETE - modular design with mixins)
 
 ## Installation
 
@@ -220,6 +220,45 @@ async def main():
 asyncio.run(main())
 ```
 
+### Progress Race Tracking (NEW)
+
+```python
+import asyncio
+from esologs.client import Client
+from esologs.auth import get_access_token
+from esologs._generated.exceptions import GraphQLClientGraphQLMultiError
+
+async def main():
+    token = get_access_token()
+
+    async with Client(
+        url="https://www.esologs.com/api/v2/client",
+        headers={"Authorization": f"Bearer {token}"}
+    ) as client:
+
+        try:
+            # Get progress race data for a specific zone
+            race_data = await client.get_progress_race(
+                zone_id=40,      # Lucent Citadel
+                difficulty=2,    # Veteran
+                size=12         # 12-person
+            )
+
+            if race_data.progress_race_data.progress_race:
+                print("Active race data:", race_data.progress_race_data.progress_race)
+            else:
+                print("No active race data available")
+
+        except GraphQLClientGraphQLMultiError as e:
+            # Expected when no race is active
+            if "No race supported for this game currently" in str(e):
+                print("No active race for Elder Scrolls Online")
+            else:
+                print(f"GraphQL error: {e}")
+
+asyncio.run(main())
+```
+
 ### Advanced Report Search (NEW)
 
 ```python
@@ -315,6 +354,9 @@ asyncio.run(main())
 - `get_report_rankings(code, **kwargs)` - Get report rankings and leaderboard data
 - `get_report_player_details(code, **kwargs)` - Get detailed player performance data from reports
 
+### Progress Race
+- `get_progress_race(**kwargs)` - Get world/realm first achievement race tracking data
+
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
 
@@ -372,10 +414,10 @@ esologs-python/
 │       ├── async_base_client.py  # Base async GraphQL client
 │       ├── exceptions.py         # Custom exceptions
 │       └── get_*.py             # Generated query/response models
-├── tests/                  # Test suite (310 tests)
-│   ├── unit/              # Unit tests (105 tests)
-│   ├── integration/       # Integration tests (85 tests)
-│   ├── docs/              # Documentation tests (98 tests)
+├── tests/                  # Test suite (369 tests)
+│   ├── unit/              # Unit tests (111 tests)
+│   ├── integration/       # Integration tests (93 tests)
+│   ├── docs/              # Documentation tests (106 tests)
 │   └── sanity/            # Sanity tests (19 tests)
 ├── docs/                  # Documentation source
 ├── schema.graphql         # GraphQL schema
@@ -419,9 +461,10 @@ We welcome contributions! Please see our contributing guidelines:
   - ✅ PR #2: Report Analysis Implementation (Merged)
   - ✅ PR #3: Integration Test Suite (Merged)
   - ✅ PR #4: Advanced Report Search (Merged)
-  - 🚧 PR #5: Client Architecture Refactor (Next)
+  - ✅ PR #5: Client Architecture Refactor (Merged)
+  - ✅ PR #28: Progress Race Implementation (In Review)
 - **Phase 3** 🚧: Data transformation and pandas integration
-- **Phase 4** ✅: Comprehensive testing and documentation (310 tests)
+- **Phase 4** ✅: Comprehensive testing and documentation (369 tests)
 - **Phase 5** 🚧: Performance optimization and caching
 
 ## License

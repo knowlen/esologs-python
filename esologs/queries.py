@@ -817,6 +817,25 @@ query getReportPlayerDetails($code: String!, $difficulty: Int, $encounterID: Int
 }
 """
 
+# Progress Race Query
+GET_PROGRESS_RACE = """
+query getProgressRace($guildID: Int, $zoneID: Int, $competitionID: Int, $difficulty: Int, $size: Int, $serverRegion: String, $serverSubregion: String, $serverSlug: String, $guildName: String) {
+  progressRaceData {
+    progressRace(
+      guildID: $guildID
+      zoneID: $zoneID
+      competitionID: $competitionID
+      difficulty: $difficulty
+      size: $size
+      serverRegion: $serverRegion
+      serverSubregion: $serverSubregion
+      serverSlug: $serverSlug
+      guildName: $guildName
+    )
+  }
+}
+"""
+
 # Rate Limit Query
 GET_RATE_LIMIT_DATA = """
 query getRateLimitData {
@@ -869,6 +888,8 @@ QUERIES = {
     "getReportTable": GET_REPORT_TABLE,
     "getReportRankings": GET_REPORT_RANKINGS,
     "getReportPlayerDetails": GET_REPORT_PLAYER_DETAILS,
+    # Progress Race
+    "getProgressRace": GET_PROGRESS_RACE,
     # Rate Limit
     "getRateLimitData": GET_RATE_LIMIT_DATA,
 }

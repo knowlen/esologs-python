@@ -180,9 +180,9 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~75% API endpoint coverage (37/42 methods)
-- **Sanity Tests**: 18 major API features validated (5 guild features added)
-- **Overall**: ~88% API coverage with high-quality tests
+- **Integration Tests**: ~80% API endpoint coverage (38/42 methods)
+- **Sanity Tests**: 19 major API features validated (includes progress race)
+- **Overall**: ~90% API coverage with high-quality tests
 
 ### Target Coverage
 - **Unit Tests**: Maintain 100% validation coverage
@@ -248,10 +248,10 @@ black . && isort . && ruff check --fix . && mypy .
 
 | Suite | Execution Time | Tests | Purpose |
 |-------|---------------|-------|---------|
-| Unit | < 5 seconds | 105 | Development feedback |
-| Integration | ~30 seconds | 85 | API validation |
-| Documentation | ~25 seconds | 98 | Examples validation |
+| Unit | < 5 seconds | 111 | Development feedback |
+| Integration | ~35 seconds | 93 | API validation |
+| Documentation | ~30 seconds | 106 | Examples validation |
 | Sanity | ~15 seconds | 19 | Health check |
-| **Total** | **~80 seconds** | **310** | **Complete validation** |
+| **Total** | **~85 seconds** | **369** | **Complete validation** |
 
 The test suite provides comprehensive coverage while maintaining fast execution times for efficient development workflows.

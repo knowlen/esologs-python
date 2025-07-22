@@ -74,6 +74,7 @@ nav:
     - World Data: api-reference/world-data.md
     - Report Analysis: api-reference/report-analysis.md
     - Report Search: api-reference/report-search.md
+    - Progress Race: api-reference/progress-race.md
     - System Endpoints: api-reference/system.md
   - Development:
     - Setup: development/setup.md
