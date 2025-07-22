@@ -53,6 +53,8 @@ dev = [
     "types-requests>=2.25.0",
     "responses>=0.23.0",
     "mkdocs>=1.5.0",  # Required for SEO/sitemap tests
+    "mkdocs-material>=9.4.0",  # Required for sitemap generation tests
+    "mkdocs-minify-plugin>=0.7.0",  # Required for sitemap generation tests
 ]
 websockets = [
     "websockets>=11.0.0",

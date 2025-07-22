@@ -115,9 +115,10 @@ class TestUserDataIntegration:
     async def mock_user_client(self):
         """Create a mock client configured for user authentication."""
         # In production, you would use a real user token obtained via OAuth2
+        # Pass user_token to avoid warning about missing authentication
         mock_client = Client(
             url="https://www.esologs.com/api/v2/user",
-            headers={"Authorization": "Bearer mock_user_token"},
+            user_token="mock_user_token",  # This will set the Authorization header
         )
 
         # Mock the execute method to return fake user data
