@@ -15,7 +15,7 @@
 		<li> <b>Async First</b>: Native async/await support with HTTP and WebSocket</li>
 		<li> <b>GraphQL Integration</b>: Code generation with `ariadne-codegen` + Claude</li>
 		<li> <b>Security</b>: OAuth2 authentication with parameter validation</li>
-		<li> <b>Testing</b>: 278 tests with comprehensive coverage</li>
+		<li> <b>Testing</b>: 404 tests with comprehensive coverage</li>
   </ul>
 </div>
 
@@ -74,18 +74,18 @@
   <div class="feature-card">
     <h3>Current Version</h3>
     <p><strong>v0.2.0a3</strong><br>
-    <span class="status-badge status-badge--completed">90% API Coverage</span></p>
-    <p>Active development with comprehensive testing and documentation.</p>
+    <span class="status-badge status-badge--completed">100% API Coverage!</span></p>
+    <p>All 42 ESO Logs API methods implemented with comprehensive testing and documentation.</p>
   </div>
 </div>
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>Coming Soon (10%)</h3>
+    <h3>Completed Features</h3>
     <ul>
-      <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings (OAuth2 required)</li>
-      <li><span class="status-badge status-badge--planned">Enhanced Guilds</span> Advanced guild management</li>
-      <li><span class="status-badge status-badge--planned">Caching</span> Performance optimization</li>
+      <li><span class="status-badge status-badge--completed">User Accounts</span> OAuth2 authentication & user data access</li>
+      <li><span class="status-badge status-badge--completed">Progress Race</span> World/realm first tracking</li>
+      <li><span class="status-badge status-badge--completed">Full API Coverage</span> All 42 methods implemented</li>
     </ul>
   </div>
 </div>

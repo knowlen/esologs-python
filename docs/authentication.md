@@ -21,8 +21,15 @@ Before you can authenticate, you need:
    | Field | Value | Notes |
    |-------|-------|-------|
    | **Application Name** | Your Application Name | e.g., "My ESO Analysis Tool" - be descriptive |
-   | **Redirect URLs** | Leave blank | For server-side/CLI apps, enter comma-separated URLs if needed |
+   | **Redirect URLs** | See below | Required for OAuth2 user authentication flow |
    | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
+
+   **For Redirect URLs:**
+   - **Client Credentials Only**: Leave blank if you only need API access (no user data)
+   - **User Authentication**: Enter URLs for OAuth2 callbacks (comma-separated if multiple)
+     - Development: `http://localhost:8765/callback` (recommended port for this library)
+     - Production: `https://yourdomain.com/auth/callback`
+   - Multiple URLs supported, separated by commas
 
    !!! tip "Application Naming"
        Be descriptive with your application name. As noted in the form: "If we can't understand what the application is, we're more likely to cancel the key."
@@ -205,9 +212,271 @@ async def test_authentication():
 asyncio.run(test_authentication())
 ```
 
+## OAuth2 User Authentication
+
+For accessing user-specific data, you need to implement OAuth2 Authorization Code flow.
+
+### Quick Start with OAuth2Flow (Recommended)
+
+The simplest way to handle OAuth2 user authentication is with the `OAuth2Flow` class:
+
+```python
+from esologs import OAuth2Flow, Client
+import asyncio
+
+# Create OAuth2 flow handler
+oauth_flow = OAuth2Flow(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    redirect_uri="http://localhost:8765/callback"  # Must match your ESO Logs app config
+)
+
+# This will:
+# 1. Start a local server on port 8765
+# 2. Open your browser for authorization
+# 3. Capture the callback automatically
+# 4. Exchange the code for a token
+user_token = oauth_flow.authorize(scopes=["view-user-profile"])
+
+# Use the token
+async def main():
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
+!!! info "Redirect URI Configuration"
+    Make sure to add `http://localhost:8765/callback` to your ESO Logs app's redirect URLs.
+    The OAuth2Flow class extracts the port from your redirect URI automatically.
+
+### Manual OAuth2 Flow
+
+For more control or custom implementations, you can use the manual flow:
+
+### Setting Up User Authentication
+
+```python
+from esologs.user_auth import (
+    generate_authorization_url,
+    exchange_authorization_code,
+    refresh_access_token,
+    UserToken
+)
+
+# Step 1: Generate authorization URL
+auth_url = generate_authorization_url(
+    client_id="your_client_id",
+    redirect_uri="http://localhost:8000/callback",
+    scopes=["view-user-profile"],
+    state="random_state_string"  # Optional CSRF protection
+)
+
+print(f"Please visit: {auth_url}")
+# User will be redirected to ESO Logs login page
+```
+
+### Handling the Callback
+
+After authorization, the user is redirected to your callback URL with a code:
+
+```python
+# Step 2: Exchange authorization code for token
+# (In your callback handler)
+code = request.args.get('code')  # Get from callback URL
+
+user_token = exchange_authorization_code(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    code=code,
+    redirect_uri="http://localhost:8000/callback"
+)
+
+# user_token contains:
+# - access_token: Bearer token for API requests
+# - refresh_token: Token to refresh expired access
+# - expires_in: Token lifetime in seconds
+```
+
+### Using User Authentication
+
+```python
+import asyncio
+from esologs.client import Client
+
+async def get_user_info():
+    # Note: Using /api/v2/user endpoint (not /client)
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token  # Can be UserToken object or string
+    ) as client:
+
+        # Get current user information
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+        # Access user's guilds
+        for guild in current_user.user_data.current_user.guilds:
+            print(f"Guild: {guild.name} on {guild.server.name}")
+
+asyncio.run(get_user_info())
+```
+
+### Token Persistence
+
+Save and load tokens for persistent authentication:
+
+```python
+from esologs.user_auth import save_token_to_file, load_token_from_file
+
+# Save token after authentication
+save_token_to_file(user_token, ".esologs_token.json")
+
+# Load token later
+saved_token = load_token_from_file(".esologs_token.json")
+
+if saved_token and saved_token.is_expired:
+    # Refresh if expired
+    new_token = refresh_access_token(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        refresh_token=saved_token.refresh_token
+    )
+    save_token_to_file(new_token)
+```
+
+### Complete Flask Example
+
+Here's a complete example web app with OAuth2 flow:
+
+```python
+from flask import Flask, request, redirect, session
+from esologs.user_auth import (
+    generate_authorization_url,
+    exchange_authorization_code,
+    save_token_to_file
+)
+from esologs.client import Client
+import asyncio
+import secrets
+
+app = Flask(__name__)
+app.secret_key = secrets.token_hex(32)
+
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+REDIRECT_URI = "http://localhost:5000/callback"
+
+@app.route('/')
+def home():
+    return '<a href="/login">Login with ESO Logs</a>'
+
+@app.route('/login')
+def login():
+    # Generate CSRF token
+    state = secrets.token_urlsafe(32)
+    session['oauth_state'] = state
+
+    # Generate authorization URL
+    auth_url = generate_authorization_url(
+        client_id=CLIENT_ID,
+        redirect_uri=REDIRECT_URI,
+        scopes=["view-user-profile"],
+        state=state
+    )
+
+    return redirect(auth_url)
+
+@app.route('/callback')
+def callback():
+    # Verify CSRF token
+    state = request.args.get('state')
+    if state != session.get('oauth_state'):
+        return "Invalid state parameter", 400
+
+    # Get authorization code
+    code = request.args.get('code')
+    if not code:
+        return "Authorization failed", 400
+
+    try:
+        # Exchange code for token
+        user_token = exchange_authorization_code(
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET,
+            code=code,
+            redirect_uri=REDIRECT_URI
+        )
+
+        # Save token for later use
+        save_token_to_file(user_token)
+        session['user_token'] = user_token.access_token
+
+        return redirect('/profile')
+
+    except Exception as e:
+        return f"Error: {str(e)}", 500
+
+@app.route('/profile')
+def profile():
+    token = session.get('user_token')
+    if not token:
+        return redirect('/login')
+
+    # Get user info asynchronously
+    user_info = asyncio.run(get_user_profile(token))
+
+    return f"""
+    <h1>Welcome, {user_info['name']}!</h1>
+    <p>User ID: {user_info['id']}</p>
+    <p>Guilds: {', '.join(user_info['guilds'])}</p>
+    <p>Characters: {', '.join(user_info['characters'])}</p>
+    <a href="/logout">Logout</a>
+    """
+
+async def get_user_profile(token):
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=token
+    ) as client:
+        current_user = await client.get_current_user()
+        user = current_user.user_data.current_user
+
+        return {
+            'name': user.name,
+            'id': user.id,
+            'guilds': [g.name for g in user.guilds],
+            'characters': [c.name for c in user.characters]
+        }
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
+```
+
+### Important Notes
+
+1. **Different Endpoint**: User authentication requires `/api/v2/user` endpoint, not `/api/v2/client`
+2. **Scopes**: Request `view-user-profile` scope to access user's guilds and characters
+3. **Security**: Always validate the `state` parameter to prevent CSRF attacks
+4. **Token Storage**: Never expose tokens in URLs or client-side code
+5. **Refresh Tokens**: Store refresh tokens securely to maintain persistent authentication
+
 ## Authentication Flow
 
-ESO Logs Python uses the OAuth2 Client Credentials flow:
+ESO Logs Python supports two OAuth2 authentication flows:
+
+### Client Credentials Flow (Default)
+
+Used for most API access:
 
 ```mermaid
 graph LR
@@ -223,6 +492,27 @@ graph LR
 3. **Token Response**: ESO Logs returns a bearer token
 4. **API Access**: Token is used for authenticated API requests
 5. **Token Refresh**: Tokens are automatically refreshed as needed
+
+### Authorization Code Flow (User Authentication)
+
+Required for user-specific data (UserData endpoints):
+
+```mermaid
+graph LR
+    A[User] --> B[Authorization URL]
+    B --> C[ESO Logs Login]
+    C --> D[User Authorizes]
+    D --> E[Callback with Code]
+    E --> F[Exchange Code]
+    F --> G[User Token]
+    G --> H[User API Access]
+```
+
+1. **Generate Auth URL**: Create URL for user to authorize
+2. **User Authorization**: User logs in and grants permissions
+3. **Authorization Code**: User redirected back with code
+4. **Token Exchange**: Exchange code for access/refresh tokens
+5. **API Access**: Use token for user-specific endpoints
 
 ## Token Management
 
@@ -317,6 +607,18 @@ For production environments:
 ## Troubleshooting
 
 ### Common Authentication Errors
+
+#### OAuth2 Redirect URI Mismatch
+
+```
+{"error":"invalid_request","error_description":"The redirect uri included is not valid."}
+```
+
+**Solutions**:
+1. Ensure your redirect URI exactly matches one configured in your ESO Logs app
+2. Check for trailing slashes - `http://localhost:8765/callback` vs `http://localhost:8765/callback/`
+3. Verify the port number matches
+4. Add multiple redirect URIs for different environments (dev/prod)
 
 #### Invalid Client Credentials
 

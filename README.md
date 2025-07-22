@@ -20,13 +20,13 @@
 | Metric | Status |
 |--------|--------|
 | **Current Version** | 0.2.0a3 |
-| **API Coverage** | ~90% (38/42 methods implemented) |
+| **API Coverage** | **100%** (42/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
-| **Tests** | 369 tests across unit, integration, documentation, and sanity suites |
+| **Tests** | 404 tests across unit, integration, documentation, and sanity suites |
 
 ### Current API Coverage
-**Implemented (7/8 sections):**
+**Complete Coverage (8/8 sections):**
 1. ✅ **gameData** - 13 methods (COMPLETE)
 2. ✅ **characterData** - 5 methods (COMPLETE)
 3. ✅ **reportData** - 10 methods (COMPLETE)
@@ -34,14 +34,13 @@
 5. ✅ **rateLimitData** - 1 method (COMPLETE)
 6. ✅ **guildData** - 5 methods (COMPLETE)
 7. ✅ **progressRaceData** - 1 method (COMPLETE)
+8. ✅ **userData** - 3 methods (COMPLETE - OAuth2 user authentication)
 
-**Missing (1/8 sections):**
-- ❌ **userData** - 0/3 methods (requires OAuth2 user authentication)
-
-### Roadmap
-- ✅ Progress race tracking (COMPLETE)
-- 🚧 User account integration (requires OAuth2 flow)
-- ✅ Client architecture refactor (COMPLETE - modular design with mixins)
+### Features Complete
+- ✅ Progress race tracking
+- ✅ User account integration with OAuth2 flow
+- ✅ Client architecture refactor (modular design with mixins)
+- ✅ **100% API Coverage** - All ESO Logs API methods implemented!
 
 ## Installation
 
@@ -259,6 +258,53 @@ async def main():
 asyncio.run(main())
 ```
 
+### OAuth2 User Authentication (NEW)
+
+```python
+from esologs.user_auth import (
+    generate_authorization_url,
+    exchange_authorization_code,
+    UserToken
+)
+from esologs.client import Client
+
+# Step 1: Generate authorization URL
+auth_url = generate_authorization_url(
+    client_id="your_client_id",
+    redirect_uri="http://localhost:8000/callback",
+    scopes=["view-user-profile"]
+)
+# Redirect user to auth_url
+
+# Step 2: After user authorizes, exchange code for token
+user_token = exchange_authorization_code(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    code="auth_code_from_callback",
+    redirect_uri="http://localhost:8000/callback"
+)
+
+# Step 3: Use token with client
+async def get_user_info():
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",  # Note: /user endpoint
+        user_token=user_token
+    ) as client:
+        # Get current user
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+        # Get user's guilds and characters
+        for guild in current_user.user_data.current_user.guilds:
+            print(f"Guild: {guild.name}")
+
+        # Get specific user by ID
+        user = await client.get_user_by_id(user_id=12345)
+        print(f"User: {user.user_data.user.name}")
+
+asyncio.run(get_user_info())
+```
+
 ### Advanced Report Search (NEW)
 
 ```python
@@ -356,6 +402,11 @@ asyncio.run(main())
 
 ### Progress Race
 - `get_progress_race(**kwargs)` - Get world/realm first achievement race tracking data
+
+### User Data (OAuth2 Required)
+- `get_user_by_id(user_id)` - Get specific user information
+- `get_current_user()` - Get authenticated user (requires /api/v2/user endpoint)
+- `get_user_data()` - Get userData root object
 
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits

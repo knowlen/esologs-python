@@ -169,6 +169,7 @@ markers = [
     "integration: marks tests as integration tests",
     "unit: marks tests as unit tests",
     "timeout: marks tests with timeout requirements",
+    "oauth2: marks tests that require OAuth2 configuration (deselect with '-m \"not oauth2\"')",
 ]
 asyncio_mode = "auto"
 filterwarnings = [

@@ -4,12 +4,103 @@ Note: These tests mock the OAuth2 user authentication since we cannot
 perform real user authentication in automated tests.
 """
 
+import logging
+import os
 from unittest.mock import AsyncMock
 
 import pytest
 
 from esologs._generated.exceptions import GraphQLClientGraphQLMultiError
 from esologs.client import Client
+from esologs.user_auth import OAuth2Flow, UserToken
+
+
+class TestOAuth2Configuration:
+    """Test OAuth2 configuration detection.
+
+    These tests help users identify if their OAuth2 client is properly
+    configured with redirect URLs.
+    """
+
+    @pytest.fixture
+    def oauth2_credentials(self):
+        """Get OAuth2 credentials from environment."""
+        client_id = os.environ.get("ESOLOGS_ID")
+        client_secret = os.environ.get("ESOLOGS_SECRET")
+        redirect_uri = os.environ.get(
+            "ESOLOGS_REDIRECT_URI", "http://localhost:8765/callback"
+        )
+
+        return {
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "redirect_uri": redirect_uri,
+            "has_credentials": bool(client_id and client_secret),
+        }
+
+    @pytest.mark.oauth2
+    def test_oauth2_configuration_check(self, oauth2_credentials):
+        """Check if OAuth2 is properly configured for testing."""
+        if not oauth2_credentials["has_credentials"]:
+            pytest.skip(
+                "OAuth2 credentials not found. To run UserData tests:\n"
+                "1. Set ESOLOGS_ID and ESOLOGS_SECRET environment variables\n"
+                "2. Configure redirect URL in your ESO Logs app settings\n"
+                "3. Optionally set ESOLOGS_REDIRECT_URI (default: http://localhost:8765/callback)"
+            )
+
+        # Inform about configuration
+        logging.info("\n" + "=" * 60)
+        logging.info("OAuth2 Configuration Detected:")
+        logging.info(f"  Client ID: {oauth2_credentials['client_id'][:10]}...")
+        logging.info(f"  Redirect URI: {oauth2_credentials['redirect_uri']}")
+        logging.info("\nMake sure your ESO Logs app has this redirect URI configured!")
+        logging.info("=" * 60)
+
+    @pytest.mark.oauth2
+    @pytest.mark.skipif(
+        not os.environ.get("ESOLOGS_MANUAL_TEST"),
+        reason="Set ESOLOGS_MANUAL_TEST=1 to run manual OAuth2 flow test",
+    )
+    def test_oauth2_flow_manual(self, oauth2_credentials):
+        """Manual test for OAuth2 flow (requires user interaction).
+
+        This test is skipped by default. To run it:
+        1. Set ESOLOGS_MANUAL_TEST=1
+        2. Ensure OAuth2 credentials are configured
+        3. Be ready to authorize in your browser
+        """
+        if not oauth2_credentials["has_credentials"]:
+            pytest.skip("OAuth2 credentials required for manual test")
+
+        oauth_flow = OAuth2Flow(
+            client_id=oauth2_credentials["client_id"],
+            client_secret=oauth2_credentials["client_secret"],
+            redirect_uri=oauth2_credentials["redirect_uri"],
+            timeout=30,  # 30 second timeout for manual test
+        )
+
+        logging.info("\n" + "=" * 60)
+        logging.info("Manual OAuth2 Flow Test")
+        logging.info("A browser window will open for authorization...")
+        logging.info("=" * 60)
+
+        try:
+            # This will open the browser and wait for authorization
+            user_token = oauth_flow.authorize(
+                scopes=["view-user-profile"], open_browser=True
+            )
+
+            assert isinstance(user_token, UserToken)
+            assert user_token.access_token
+            assert not user_token.is_expired
+
+            logging.info("\n✅ OAuth2 flow successful!")
+            logging.info(f"Token type: {user_token.token_type}")
+            logging.info(f"Expires in: {user_token.expires_in} seconds")
+
+        except Exception as e:
+            pytest.fail(f"OAuth2 flow failed: {e}")
 
 
 class TestUserDataIntegration:
@@ -251,40 +342,29 @@ class TestUserDataIntegration:
         assert client_client.is_user_authenticated is False
 
 
-# Note: In a real application, you would need to:
-# 1. Implement a web server to handle OAuth2 callbacks
-# 2. Use generate_authorization_url() to create the auth URL
-# 3. Handle the callback and extract the authorization code
-# 4. Use exchange_authorization_code() to get the access token
-# 5. Use the access token with the /api/v2/user endpoint
+# Note: In a real application, you can now use the simplified OAuth2Flow class:
 #
-# Example flow (not runnable in tests):
+# from esologs import OAuth2Flow, Client
 #
-# from esologs.user_auth import generate_authorization_url, exchange_authorization_code
-#
-# # Step 1: Generate auth URL
-# auth_url = generate_authorization_url(
-#     client_id="your_client_id",
-#     redirect_uri="http://localhost:8000/callback",
-#     scopes=["view-user-profile"]
-# )
-# Visit: {auth_url}
-#
-# # Step 2: User authorizes and is redirected to callback
-# # Extract 'code' from callback URL parameters
-#
-# # Step 3: Exchange code for token
-# user_token = exchange_authorization_code(
+# # Create OAuth2 flow handler
+# oauth_flow = OAuth2Flow(
 #     client_id="your_client_id",
 #     client_secret="your_client_secret",
-#     code="authorization_code_from_callback",
-#     redirect_uri="http://localhost:8000/callback"
+#     redirect_uri="http://localhost:8765/callback"  # Must be registered in your ESO Logs app
 # )
 #
-# # Step 4: Use token with client
+# # Authorize (opens browser automatically)
+# user_token = oauth_flow.authorize(scopes=["view-user-profile"])
+#
+# # Use token with client
 # async with Client(
 #     url="https://www.esologs.com/api/v2/user",
 #     user_token=user_token
 # ) as client:
 #     current_user = await client.get_current_user()
-#     Logged in as: {current_user.user_data.current_user.name}
+#     logging.info(f"Logged in as: {current_user.user_data.current_user.name}")
+#
+# For manual flow or custom implementations, you can still use:
+# - generate_authorization_url()
+# - exchange_authorization_code()
+# - refresh_access_token()

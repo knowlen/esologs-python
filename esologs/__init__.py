@@ -279,6 +279,7 @@ from ._generated.get_zones import (
 from .auth import get_access_token
 from .client import Client
 from .user_auth import (
+    OAuth2Flow,
     UserToken,
     exchange_authorization_code,
     generate_authorization_url,
@@ -290,6 +291,7 @@ __all__ = [
     "BaseModel",
     "CharacterRankingMetricType",
     "Client",
+    "OAuth2Flow",
     "UserToken",
     "exchange_authorization_code",
     "generate_authorization_url",
