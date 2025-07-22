@@ -350,32 +350,31 @@ class OAuth2Flow:
 
         # Wait for callback
         start_time = time.time()
-        while (
-            self._auth_code is None
-            and self._auth_error is None
-            and (time.time() - start_time) < self.timeout
-        ):
+        auth_code: Optional[str] = None
+
+        while (time.time() - start_time) < self.timeout:
+            if self._auth_error:
+                raise Exception(f"Authorization failed: {self._auth_error}")
+
+            if self._auth_code is not None:
+                auth_code = self._auth_code  # type: ignore[unreachable]
+                break
+
             time.sleep(0.1)
 
-        # Check for various error conditions
-        if self._auth_error:
-            raise Exception(f"Authorization failed: {self._auth_error}")
-
-        if self._auth_code is None:
+        # Check if we got a code
+        if auth_code is None:
             raise Exception(f"Authorization timed out after {self.timeout} seconds")
 
         # Verify state
         if self._auth_state != self._expected_state:
             raise Exception("Invalid state parameter - possible CSRF attack")
 
-        # At this point we know _auth_code is not None
-        assert self._auth_code is not None
-
         # Exchange code for token
         user_token = exchange_authorization_code(
             client_id=self.client_id,
             client_secret=self.client_secret,
-            code=self._auth_code,
+            code=auth_code,
             redirect_uri=self.redirect_uri,
         )
 
