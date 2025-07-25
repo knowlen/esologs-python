@@ -120,6 +120,16 @@ async def main():
 asyncio.run(main())
 ```
 
+**Output:**
+```
+Character: ExamplePlayer
+Report: X7mLQ8kF - Dreadsail Reef
+Report: Y9nPR2jG - Rockgrove
+Ability: Elemental Weapon
+Ability: Barbed Trap
+Ability: Deadly Cloak
+```
+
 ### Authentication Only
 
 ```python
@@ -133,6 +143,15 @@ token = get_access_token(
     client_id="your_client_id",
     client_secret="your_client_secret"
 )
+
+print(f"Token: {token[:20]}...")
+print(f"Token length: {len(token)} characters")
+```
+
+**Output:**
+```
+Token: eyJ0eXAiOiJKV1QiLCJh...
+Token length: 1087 characters
 ```
 
 ### Character Rankings (NEW)
@@ -174,6 +193,12 @@ async def main():
             print(f"Total Kills: {rankings_data.get('totalKills', 0)}")
 
 asyncio.run(main())
+```
+
+**Output:**
+```
+Best DPS: 125483.7
+Total Kills: 47
 ```
 
 ### Guild Data
@@ -219,6 +244,13 @@ async def main():
 asyncio.run(main())
 ```
 
+**Output:**
+```
+Guild: Legendary Raiders
+Server: PC-NA
+Faction: Aldmeri Dominion
+```
+
 ### Progress Race Tracking (NEW)
 
 ```python
@@ -258,6 +290,11 @@ async def main():
 asyncio.run(main())
 ```
 
+**Output:**
+```
+No active race for Elder Scrolls Online
+```
+
 ### OAuth2 User Authentication (NEW)
 
 ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
@@ -289,6 +326,11 @@ async def main():
 asyncio.run(main())
 ```
 
+**Output:**
+```
+Logged in as: YourPlayerName
+```
+
 #### Async OAuth2 Flow
 ```python
 from esologs import AsyncOAuth2Flow, Client
@@ -314,6 +356,11 @@ async def main():
         print(f"Logged in as: {current_user.user_data.current_user.name}")
 
 asyncio.run(main())
+```
+
+**Output:**
+```
+Logged in as: YourPlayerName
 ```
 
 #### Manual Flow (for web apps)
@@ -346,6 +393,21 @@ if user_token.is_expired:
         client_secret="your_client_secret",
         refresh_token=user_token.refresh_token
     )
+```
+
+**Output:**
+```python
+# auth_url will be:
+"https://www.esologs.com/oauth/authorize?client_id=your_client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&response_type=code&scope=view-user-profile&state=cN37P5g..."
+
+# user_token will contain:
+UserToken(
+    access_token="eyJ0eXAiOiJKV1QiLCJhbGc...",
+    token_type="Bearer",
+    expires_in=3600,
+    refresh_token="def50200a9bf924...",
+    scope="view-user-profile"
+)
 ```
 
 ### Advanced Report Search (NEW)
@@ -392,6 +454,14 @@ async def main():
                 print(f"Duration: {report.end_time - report.start_time}ms")
 
 asyncio.run(main())
+```
+
+**Output:**
+```
+Report: a7K9mNpL - Sanity's Edge
+Duration: 3542000ms
+Report: b8L0nOqM - Rockgrove
+Duration: 2891000ms
 ```
 
 ## Available API Methods
@@ -556,7 +626,8 @@ We welcome contributions! Please see our contributing guidelines:
   - ✅ PR #3: Integration Test Suite (Merged)
   - ✅ PR #4: Advanced Report Search (Merged)
   - ✅ PR #5: Client Architecture Refactor (Merged)
-  - ✅ PR #28: Progress Race Implementation (In Review)
+  - ✅ PR #28: Progress Race Implementation (Merged)
+  - ✅ PR #29: User Data & OAuth2 Implementation (In Review)
 - **Phase 3** 🚧: Data transformation and pandas integration
 - **Phase 4** ✅: Comprehensive testing and documentation (369 tests)
 - **Phase 5** 🚧: Performance optimization and caching
