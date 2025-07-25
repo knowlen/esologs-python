@@ -173,6 +173,7 @@ extra_javascript:
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
   - javascripts/mermaid-init.js
+  - javascripts/api-status-check.js
 
 # Additional configuration
 extra:

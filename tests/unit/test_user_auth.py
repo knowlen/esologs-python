@@ -9,10 +9,15 @@ import responses
 from esologs.user_auth import (
     UserToken,
     exchange_authorization_code,
+    exchange_authorization_code_async,
     generate_authorization_url,
     load_token_from_file,
+    load_token_from_file_async,
     refresh_access_token,
+    refresh_access_token_async,
     save_token_to_file,
+    save_token_to_file_async,
+    validate_redirect_uri,
 )
 
 
@@ -74,13 +79,22 @@ class TestUserToken:
         )
         assert valid_token.is_expired is False
 
-        # Token without expires_in
+        # Token without expires_in - treated as expired for security
         no_expiry_token = UserToken(
             access_token="no_expiry",
             token_type="Bearer",
             expires_in=None,
         )
-        assert no_expiry_token.is_expired is False
+        assert no_expiry_token.is_expired is True
+
+        # Token without created_at - also treated as expired
+        no_created_token = UserToken(
+            access_token="no_created",
+            token_type="Bearer",
+            expires_in=3600,
+            created_at=None,
+        )
+        assert no_created_token.is_expired is True
 
 
 class TestAuthorizationUrl:
@@ -118,6 +132,40 @@ class TestAuthorizationUrl:
         )
 
         assert "state=random_state_123" in url
+
+
+class TestRedirectUriValidation:
+    """Test redirect URI validation."""
+
+    def test_valid_redirect_uris(self):
+        """Test valid redirect URIs pass validation."""
+        # These should all pass
+        validate_redirect_uri("https://example.com/callback")
+        validate_redirect_uri("http://localhost:8000/callback")
+        validate_redirect_uri("http://127.0.0.1:8765/callback")
+        validate_redirect_uri("https://myapp.com/oauth/callback")
+
+    def test_invalid_scheme(self):
+        """Test invalid URI schemes are rejected."""
+        with pytest.raises(ValueError, match="Invalid redirect URI scheme"):
+            validate_redirect_uri("ftp://example.com/callback")
+
+    def test_no_user_credentials(self):
+        """Test URIs with user credentials are rejected."""
+        with pytest.raises(ValueError, match="must not contain user credentials"):
+            validate_redirect_uri("https://user:pass@example.com/callback")
+
+    def test_no_hostname(self):
+        """Test URIs without hostname are rejected."""
+        with pytest.raises(ValueError, match="must have a valid hostname"):
+            validate_redirect_uri("https:///callback")
+
+    def test_http_only_localhost(self):
+        """Test HTTP is only allowed for localhost."""
+        with pytest.raises(
+            ValueError, match="HTTP scheme is only allowed for localhost"
+        ):
+            validate_redirect_uri("http://example.com/callback")
 
 
 class TestTokenExchange:
@@ -286,3 +334,145 @@ class TestTokenPersistence:
         assert token.access_token == "only_this"
         assert token.token_type == "Bearer"  # default
         assert token.expires_in == 3600  # default
+
+
+class TestAsyncTokenExchange:
+    """Test async OAuth2 token exchange functionality."""
+
+    @pytest.mark.asyncio
+    async def test_successful_token_exchange_async(self, httpx_mock):
+        """Test successful async authorization code exchange."""
+        # Mock successful response
+        httpx_mock.add_response(
+            url="https://www.esologs.com/oauth/token",
+            method="POST",
+            json={
+                "access_token": "async_access_token",
+                "token_type": "Bearer",
+                "expires_in": 3600,
+                "refresh_token": "async_refresh_token",
+                "scope": "view-user-profile",
+            },
+            status_code=200,
+        )
+
+        token = await exchange_authorization_code_async(
+            client_id="test_client",
+            client_secret="test_secret",
+            code="auth_code_123",
+            redirect_uri="http://localhost:8000/callback",
+        )
+
+        assert isinstance(token, UserToken)
+        assert token.access_token == "async_access_token"
+        assert token.refresh_token == "async_refresh_token"
+        assert token.scope == "view-user-profile"
+
+    @pytest.mark.asyncio
+    async def test_failed_token_exchange_async(self, httpx_mock):
+        """Test failed async authorization code exchange."""
+        # Mock error response
+        httpx_mock.add_response(
+            url="https://www.esologs.com/oauth/token",
+            method="POST",
+            text="Invalid client credentials",
+            status_code=401,
+        )
+
+        with pytest.raises(Exception, match="Authentication failed"):
+            await exchange_authorization_code_async(
+                client_id="bad_client",
+                client_secret="bad_secret",
+                code="auth_code",
+                redirect_uri="http://localhost:8000/callback",
+            )
+
+
+class TestAsyncTokenRefresh:
+    """Test async OAuth2 token refresh functionality."""
+
+    @pytest.mark.asyncio
+    async def test_successful_token_refresh_async(self, httpx_mock):
+        """Test successful async token refresh."""
+        # Mock successful response
+        httpx_mock.add_response(
+            url="https://www.esologs.com/oauth/token",
+            method="POST",
+            json={
+                "access_token": "async_refreshed_token",
+                "token_type": "Bearer",
+                "expires_in": 3600,
+                "refresh_token": "new_refresh_token",
+                "scope": "view-user-profile",
+            },
+            status_code=200,
+        )
+
+        token = await refresh_access_token_async(
+            client_id="test_client",
+            client_secret="test_secret",
+            refresh_token="old_refresh_token",
+        )
+
+        assert isinstance(token, UserToken)
+        assert token.access_token == "async_refreshed_token"
+        assert token.refresh_token == "new_refresh_token"
+
+    @pytest.mark.asyncio
+    async def test_failed_token_refresh_async(self, httpx_mock):
+        """Test failed async token refresh."""
+        # Mock error response
+        httpx_mock.add_response(
+            url="https://www.esologs.com/oauth/token",
+            method="POST",
+            text="Invalid refresh_token",
+            status_code=400,
+        )
+
+        with pytest.raises(Exception, match="Invalid or expired refresh token"):
+            await refresh_access_token_async(
+                client_id="test_client",
+                client_secret="test_secret",
+                refresh_token="bad_refresh_token",
+            )
+
+
+class TestAsyncTokenPersistence:
+    """Test async token file persistence."""
+
+    @pytest.mark.asyncio
+    async def test_save_and_load_token_async(self, tmp_path):
+        """Test async saving and loading token from file."""
+        # Create token
+        original_token = UserToken(
+            access_token="async_persist_token",
+            token_type="Bearer",
+            expires_in=3600,
+            refresh_token="async_persist_refresh",
+            scope="view-user-profile",
+        )
+
+        # Save to file
+        token_file = tmp_path / "async_test_token.json"
+        await save_token_to_file_async(original_token, str(token_file))
+
+        # Load from file
+        loaded_token = await load_token_from_file_async(str(token_file))
+
+        assert loaded_token is not None
+        assert loaded_token.access_token == original_token.access_token
+        assert loaded_token.refresh_token == original_token.refresh_token
+        assert loaded_token.scope == original_token.scope
+
+        # Check file permissions
+        import os
+
+        file_stats = os.stat(str(token_file))
+        assert file_stats.st_mode & 0o777 == 0o600
+
+    @pytest.mark.asyncio
+    async def test_load_nonexistent_token_file_async(self, tmp_path):
+        """Test async loading from non-existent file returns None."""
+        token_file = tmp_path / "async_nonexistent.json"
+        token = await load_token_from_file_async(str(token_file))
+        assert token is None

@@ -54,6 +54,36 @@ async def main():
 asyncio.run(main())
 ```
 
+### Async OAuth2 Implementation
+
+For async applications, use the `AsyncOAuth2Flow` class:
+
+```python
+from esologs import AsyncOAuth2Flow, Client
+import asyncio
+
+async def main():
+    # Create async OAuth2 handler
+    oauth_flow = AsyncOAuth2Flow(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        redirect_uri="http://localhost:8765/callback"
+    )
+
+    # Authorize asynchronously (still opens browser)
+    user_token = await oauth_flow.authorize(scopes=["view-user-profile"])
+
+    # Use the token
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
 ### Manual OAuth2 Implementation
 
 For custom implementations or web applications:
@@ -66,11 +96,14 @@ from esologs.user_auth import (
 )
 
 # Step 1: Generate authorization URL
+import secrets
+
+state = secrets.token_urlsafe(32)
 auth_url = generate_authorization_url(
     client_id="your_client_id",
     redirect_uri="http://localhost:8000/callback",
     scopes=["view-user-profile"],
-    state="random_state_string"  # CSRF protection
+    state=state  # CSRF protection
 )
 print(f"Visit this URL to authorize: {auth_url}")
 
@@ -79,6 +112,14 @@ print(f"Visit this URL to authorize: {auth_url}")
 
 # Step 3: Exchange authorization code for access token
 user_token = exchange_authorization_code(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    code="authorization_code_from_callback",
+    redirect_uri="http://localhost:8000/callback"
+)
+
+# Or use async variant for better performance
+user_token = await exchange_authorization_code_async(
     client_id="your_client_id",
     client_secret="your_client_secret",
     code="authorization_code_from_callback",
@@ -166,6 +207,31 @@ if saved_token and saved_token.is_expired:
         refresh_token=saved_token.refresh_token
     )
     save_token_to_file(new_token)
+```
+
+##### Async Token Persistence
+
+```python
+from esologs.user_auth import (
+    save_token_to_file_async,
+    load_token_from_file_async,
+    refresh_access_token_async
+)
+
+# Save asynchronously
+await save_token_to_file_async(user_token, ".esologs_token.json")
+
+# Load asynchronously
+saved_token = await load_token_from_file_async(".esologs_token.json")
+
+# Auto-refresh asynchronously if needed
+if saved_token and saved_token.is_expired:
+    new_token = await refresh_access_token_async(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        refresh_token=saved_token.refresh_token
+    )
+    await save_token_to_file_async(new_token)
 ```
 
 ### OAuth2 Scopes
@@ -440,6 +506,30 @@ if user_token and user_token.is_expired:
 
     # Save the new token
     save_token_to_file(new_token)
+```
+
+#### Async Token Refresh
+
+```python
+from esologs.user_auth import (
+    refresh_access_token_async,
+    load_token_from_file_async,
+    save_token_to_file_async
+)
+
+# Load and refresh asynchronously
+user_token = await load_token_from_file_async()
+
+if user_token and user_token.is_expired:
+    # Refresh asynchronously
+    new_token = await refresh_access_token_async(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        refresh_token=user_token.refresh_token
+    )
+
+    # Save asynchronously
+    await save_token_to_file_async(new_token)
 ```
 
 ## Important Notes

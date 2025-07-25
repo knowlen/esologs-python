@@ -4,6 +4,7 @@ This client provides comprehensive access to ESO Logs data including game data,
 character information, guild data, reports, rankings, and more.
 """
 
+import re
 import warnings
 from typing import Any, Optional, Union
 
@@ -16,6 +17,34 @@ from esologs.mixins.report import ReportMixin
 from esologs.mixins.user import UserMixin
 from esologs.mixins.world_data import WorldDataMixin
 from esologs.user_auth import UserToken
+
+# Bearer token validation pattern
+BEARER_TOKEN_PATTERN = re.compile(r"^Bearer\s+[\w\-\.~\+\/]+=*$")
+
+
+def validate_bearer_token_format(auth_header: str) -> None:
+    """Validate Bearer token format.
+
+    Args:
+        auth_header: Authorization header value
+
+    Raises:
+        ValueError: If the Bearer token format is invalid
+    """
+    if not auth_header:
+        return
+
+    if not BEARER_TOKEN_PATTERN.match(auth_header):
+        if not auth_header.startswith("Bearer "):
+            raise ValueError(
+                "Authorization header must start with 'Bearer '. "
+                f"Got: {auth_header[:20]}..."
+            )
+        raise ValueError(
+            "Invalid Bearer token format. Token should contain only "
+            "alphanumeric characters, hyphens, underscores, dots, tildes, "
+            "plus signs, forward slashes, and may end with equals signs."
+        )
 
 
 class Client(
@@ -74,11 +103,15 @@ class Client(
             if isinstance(user_token, str):
                 # If string, assume it's an access token
                 headers = headers or {}
-                headers["Authorization"] = f"Bearer {user_token}"
+                auth_header = f"Bearer {user_token}"
+                validate_bearer_token_format(auth_header)
+                headers["Authorization"] = auth_header
             elif isinstance(user_token, UserToken):
                 # If UserToken object, use its access token
                 headers = headers or {}
-                headers["Authorization"] = f"Bearer {user_token.access_token}"
+                auth_header = f"Bearer {user_token.access_token}"
+                validate_bearer_token_format(auth_header)
+                headers["Authorization"] = auth_header
 
                 # Check if token is expired
                 if user_token.is_expired:
@@ -87,6 +120,10 @@ class Client(
                         UserWarning,
                         stacklevel=2,
                     )
+
+        # Validate existing Authorization header if provided
+        if headers and "Authorization" in headers:
+            validate_bearer_token_format(headers["Authorization"])
 
         # Detect if using user endpoint and warn if no user token
         if "/api/v2/user" in url and not user_token:

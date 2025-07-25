@@ -116,3 +116,50 @@ class TestClientUserAuth:
         # Should not have any warnings
         mock_warnings.warn.assert_not_called()
         assert client.is_user_authenticated is False
+
+    def test_client_bearer_token_validation(self):
+        """Test Bearer token format validation."""
+        # Valid token formats
+        valid_tokens = [
+            "test_token_123",
+            "abc-def.ghi~jkl+mno/pqr=",
+            "base64encoded==",
+        ]
+
+        for token in valid_tokens:
+            client = Client(url="https://www.esologs.com/api/v2/user", user_token=token)
+            assert client.headers["Authorization"] == f"Bearer {token}"
+
+    def test_client_invalid_bearer_format(self):
+        """Test invalid Bearer token formats are rejected."""
+        # Token with invalid characters
+        with pytest.raises(ValueError, match="Invalid Bearer token format"):
+            Client(
+                url="https://www.esologs.com/api/v2/user",
+                user_token="token with spaces",
+            )
+
+    def test_client_validates_existing_auth_header(self):
+        """Test validation of existing Authorization header."""
+        # Valid header
+        client = Client(
+            url="https://www.esologs.com/api/v2/client",
+            headers={"Authorization": "Bearer valid_token_123"},
+        )
+        assert client.headers["Authorization"] == "Bearer valid_token_123"
+
+        # Invalid header format
+        with pytest.raises(
+            ValueError, match="Authorization header must start with 'Bearer '"
+        ):
+            Client(
+                url="https://www.esologs.com/api/v2/client",
+                headers={"Authorization": "Basic dXNlcjpwYXNz"},
+            )
+
+        # Invalid token characters
+        with pytest.raises(ValueError, match="Invalid Bearer token format"):
+            Client(
+                url="https://www.esologs.com/api/v2/client",
+                headers={"Authorization": "Bearer token!@#$%"},
+            )

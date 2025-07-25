@@ -254,6 +254,36 @@ asyncio.run(main())
     Make sure to add `http://localhost:8765/callback` to your ESO Logs app's redirect URLs.
     The OAuth2Flow class extracts the port from your redirect URI automatically.
 
+### Async OAuth2 Flow
+
+For async applications, use the `AsyncOAuth2Flow` class:
+
+```python
+from esologs import AsyncOAuth2Flow, Client
+import asyncio
+
+async def main():
+    # Create async OAuth2 flow handler
+    oauth_flow = AsyncOAuth2Flow(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        redirect_uri="http://localhost:8765/callback"
+    )
+
+    # Authorize asynchronously
+    user_token = await oauth_flow.authorize(scopes=["view-user-profile"])
+
+    # Use the token
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
 ### Manual OAuth2 Flow
 
 For more control or custom implementations, you can use the manual flow:
@@ -269,11 +299,14 @@ from esologs.user_auth import (
 )
 
 # Step 1: Generate authorization URL
+import secrets
+
+state = secrets.token_urlsafe(32)
 auth_url = generate_authorization_url(
     client_id="your_client_id",
     redirect_uri="http://localhost:8000/callback",
     scopes=["view-user-profile"],
-    state="random_state_string"  # Optional CSRF protection
+    state=state  # Optional CSRF protection
 )
 
 print(f"Please visit: {auth_url}")
@@ -300,6 +333,22 @@ user_token = exchange_authorization_code(
 # - access_token: Bearer token for API requests
 # - refresh_token: Token to refresh expired access
 # - expires_in: Token lifetime in seconds
+```
+
+#### Async Manual Flow
+
+Use async variants for better performance in async applications:
+
+```python
+from esologs.user_auth import exchange_authorization_code_async
+
+# Exchange code asynchronously
+user_token = await exchange_authorization_code_async(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    code=code,
+    redirect_uri="http://localhost:8000/callback"
+)
 ```
 
 ### Using User Authentication
@@ -347,6 +396,33 @@ if saved_token and saved_token.is_expired:
         refresh_token=saved_token.refresh_token
     )
     save_token_to_file(new_token)
+```
+
+#### Async Token Persistence
+
+For async applications, use the async variants:
+
+```python
+from esologs.user_auth import (
+    save_token_to_file_async,
+    load_token_from_file_async,
+    refresh_access_token_async
+)
+
+# Save token asynchronously
+await save_token_to_file_async(user_token, ".esologs_token.json")
+
+# Load token asynchronously
+saved_token = await load_token_from_file_async(".esologs_token.json")
+
+if saved_token and saved_token.is_expired:
+    # Refresh asynchronously
+    new_token = await refresh_access_token_async(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        refresh_token=saved_token.refresh_token
+    )
+    await save_token_to_file_async(new_token)
 ```
 
 ### Complete Flask Example
@@ -460,6 +536,127 @@ def logout():
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
+```
+
+### Complete FastAPI Async Example
+
+Here's a modern async example using FastAPI:
+
+```python
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import RedirectResponse
+from esologs.user_auth import (
+    generate_authorization_url,
+    exchange_authorization_code_async,
+    save_token_to_file_async,
+    load_token_from_file_async,
+    refresh_access_token_async
+)
+from esologs.client import Client
+import secrets
+
+app = FastAPI()
+
+CLIENT_ID = "your_client_id"
+CLIENT_SECRET = "your_client_secret"
+REDIRECT_URI = "http://localhost:8000/callback"
+
+# In-memory session store (use Redis in production)
+sessions = {}
+
+@app.get("/")
+async def home():
+    return {"message": "Visit /login to authenticate with ESO Logs"}
+
+@app.get("/login")
+async def login():
+    # Generate CSRF token
+    state = secrets.token_urlsafe(32)
+
+    # Generate authorization URL
+    auth_url = generate_authorization_url(
+        client_id=CLIENT_ID,
+        redirect_uri=REDIRECT_URI,
+        scopes=["view-user-profile"],
+        state=state
+    )
+
+    # Store state for verification (use Redis/database in production)
+    sessions[state] = {"status": "pending"}
+
+    return RedirectResponse(url=auth_url)
+
+@app.get("/callback")
+async def callback(code: str, state: str):
+    # Verify CSRF token
+    if state not in sessions:
+        raise HTTPException(status_code=400, detail="Invalid state parameter")
+
+    try:
+        # Exchange code for token asynchronously
+        user_token = await exchange_authorization_code_async(
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET,
+            code=code,
+            redirect_uri=REDIRECT_URI
+        )
+
+        # Save token asynchronously
+        await save_token_to_file_async(user_token, ".esologs_token.json")
+
+        # Store token in session
+        sessions[state] = {"status": "authenticated", "token": user_token.access_token}
+
+        return RedirectResponse(url="/profile?state=" + state)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/profile")
+async def profile(state: str):
+    if state not in sessions or sessions[state]["status"] != "authenticated":
+        return RedirectResponse(url="/login")
+
+    token = sessions[state]["token"]
+
+    # Get user info asynchronously
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=token
+    ) as client:
+        current_user = await client.get_current_user()
+        user = current_user.user_data.current_user
+
+        return {
+            "name": user.name,
+            "id": user.id,
+            "guilds": [g.name for g in user.guilds],
+            "characters": [c.name for c in user.characters]
+        }
+
+@app.get("/refresh")
+async def refresh_token():
+    # Load saved token
+    saved_token = await load_token_from_file_async(".esologs_token.json")
+
+    if not saved_token:
+        raise HTTPException(status_code=401, detail="No saved token found")
+
+    if saved_token.is_expired:
+        # Refresh asynchronously
+        new_token = await refresh_access_token_async(
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET,
+            refresh_token=saved_token.refresh_token
+        )
+        await save_token_to_file_async(new_token, ".esologs_token.json")
+        return {"message": "Token refreshed successfully"}
+
+    return {"message": "Token is still valid"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
 ### Important Notes

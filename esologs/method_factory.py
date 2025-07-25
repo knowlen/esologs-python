@@ -50,7 +50,8 @@ class ModelWithValidate(Protocol):
         ...
 
 
-T = TypeVar("T", bound=ModelWithValidate)
+# TypeVar for return types - bound to Any to handle Pydantic model classes
+T = TypeVar("T", bound=Any)
 
 # Cache compiled regex patterns for performance
 _CAMEL_TO_SNAKE_PATTERN = re.compile(r"([a-z0-9])([A-Z])")

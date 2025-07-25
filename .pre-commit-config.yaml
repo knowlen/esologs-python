@@ -35,7 +35,7 @@ repos:
     rev: v1.5.1
     hooks:
       - id: mypy
-        additional_dependencies: [types-requests]
+        additional_dependencies: [types-requests, types-aiofiles]
         args: [--ignore-missing-imports, --no-warn-return-any]
         exclude: ^(esologs/(get_.*\.py|input_types\.py|enums\.py|base_model\.py|exceptions\.py|async_base_client\.py)|tests/.*\.py|access_token\.py)$
 

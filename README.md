@@ -260,13 +260,69 @@ asyncio.run(main())
 
 ### OAuth2 User Authentication (NEW)
 
+ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
+
+#### Quick Start with OAuth2Flow
+```python
+from esologs import OAuth2Flow, Client
+import asyncio
+
+# Simplified OAuth2 flow
+oauth_flow = OAuth2Flow(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    redirect_uri="http://localhost:8765/callback"
+)
+
+# This opens your browser and handles the callback automatically
+user_token = oauth_flow.authorize(scopes=["view-user-profile"])
+
+# Use the token
+async def main():
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
+#### Async OAuth2 Flow
+```python
+from esologs import AsyncOAuth2Flow, Client
+import asyncio
+
+async def main():
+    # Use async OAuth2 flow for better performance
+    oauth_flow = AsyncOAuth2Flow(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        redirect_uri="http://localhost:8765/callback"
+    )
+
+    # Authorize asynchronously
+    user_token = await oauth_flow.authorize(scopes=["view-user-profile"])
+
+    # Use the token
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
+#### Manual Flow (for web apps)
 ```python
 from esologs.user_auth import (
     generate_authorization_url,
-    exchange_authorization_code,
-    UserToken
+    exchange_authorization_code_async,
+    refresh_access_token_async
 )
-from esologs.client import Client
 
 # Step 1: Generate authorization URL
 auth_url = generate_authorization_url(
@@ -274,35 +330,22 @@ auth_url = generate_authorization_url(
     redirect_uri="http://localhost:8000/callback",
     scopes=["view-user-profile"]
 )
-# Redirect user to auth_url
 
-# Step 2: After user authorizes, exchange code for token
-user_token = exchange_authorization_code(
+# Step 2: After callback, exchange code (async)
+user_token = await exchange_authorization_code_async(
     client_id="your_client_id",
     client_secret="your_client_secret",
     code="auth_code_from_callback",
     redirect_uri="http://localhost:8000/callback"
 )
 
-# Step 3: Use token with client
-async def get_user_info():
-    async with Client(
-        url="https://www.esologs.com/api/v2/user",  # Note: /user endpoint
-        user_token=user_token
-    ) as client:
-        # Get current user
-        current_user = await client.get_current_user()
-        print(f"Logged in as: {current_user.user_data.current_user.name}")
-
-        # Get user's guilds and characters
-        for guild in current_user.user_data.current_user.guilds:
-            print(f"Guild: {guild.name}")
-
-        # Get specific user by ID
-        user = await client.get_user_by_id(user_id=12345)
-        print(f"User: {user.user_data.user.name}")
-
-asyncio.run(get_user_info())
+# Step 3: Refresh when needed (async)
+if user_token.is_expired:
+    new_token = await refresh_access_token_async(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        refresh_token=user_token.refresh_token
+    )
 ```
 
 ### Advanced Report Search (NEW)
