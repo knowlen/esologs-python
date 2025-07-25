@@ -190,3 +190,8 @@ dmypy.json
 # Test files with API credentials (use environment variables instead)
 test_validation.py
 *_validation_test.py
+
+# OAuth tokens - NEVER commit these!
+.esologs_token.json
+*_token.json
+*.token.json
