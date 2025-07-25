@@ -13,7 +13,7 @@ import base64
 import logging
 import os
 import re
-from typing import Optional
+from typing import Optional, cast
 
 import requests
 
@@ -70,7 +70,7 @@ def get_access_token(
         if not access_token:
             raise Exception("Access token not found in response")
         logging.debug("Successfully obtained access token")
-        return access_token
+        return cast(str, access_token)
     else:
         logging.error(f"OAuth request failed with status {response.status_code}")
         # Sanitize response text to prevent credential exposure

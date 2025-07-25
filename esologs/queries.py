@@ -847,6 +847,91 @@ query getRateLimitData {
 }
 """
 
+# User Data Queries
+GET_USER_BY_ID = """
+query getUserById($userId: Int!) {
+  userData {
+    user(id: $userId) {
+      id
+      name
+      guilds {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+      }
+      characters {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+        gameData
+        classID
+        raceID
+        hidden
+      }
+      naDisplayName
+      euDisplayName
+    }
+  }
+}
+"""
+
+GET_CURRENT_USER = """
+query getCurrentUser {
+  userData {
+    currentUser {
+      id
+      name
+      guilds {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+      }
+      characters {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+        gameData
+        classID
+        raceID
+        hidden
+      }
+      naDisplayName
+      euDisplayName
+    }
+  }
+}
+"""
+
+GET_USER_DATA = """
+query getUserData {
+  userData {
+    user(id: 1) {
+      id
+    }
+  }
+}
+"""
+
 # Query mapping for easy access
 QUERIES = {
     # Game Data
@@ -892,4 +977,8 @@ QUERIES = {
     "getProgressRace": GET_PROGRESS_RACE,
     # Rate Limit
     "getRateLimitData": GET_RATE_LIMIT_DATA,
+    # User Data
+    "getUserById": GET_USER_BY_ID,
+    "getCurrentUser": GET_CURRENT_USER,
+    "getUserData": GET_USER_DATA,
 }

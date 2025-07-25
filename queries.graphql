@@ -917,3 +917,84 @@ query getProgressRace($guildID: Int, $zoneID: Int, $competitionID: Int, $difficu
     )
   }
 }
+
+# Get user by ID
+query getUserById($userId: Int!) {
+  userData {
+    user(id: $userId) {
+      id
+      name
+      guilds {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+      }
+      characters {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+        gameData
+        classID
+        raceID
+        hidden
+      }
+      naDisplayName
+      euDisplayName
+    }
+  }
+}
+
+# Get current authenticated user
+query getCurrentUser {
+  userData {
+    currentUser {
+      id
+      name
+      guilds {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+      }
+      characters {
+        id
+        name
+        server {
+          name
+          region {
+            name
+          }
+        }
+        gameData
+        classID
+        raceID
+        hidden
+      }
+      naDisplayName
+      euDisplayName
+    }
+  }
+}
+
+# Get user data root (for testing)
+query getUserData {
+  userData {
+    user(id: 1) {
+      id
+    }
+  }
+}

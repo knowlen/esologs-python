@@ -35,6 +35,7 @@ dependencies = [
     "ariadne-codegen>=0.6.0",
     "pydantic>=2.0.0",
     "httpx>=0.24.0",
+    "aiofiles>=23.0.0",
 ]
 
 [project.optional-dependencies]
@@ -44,12 +45,17 @@ dev = [
     "pytest-cov>=4.0.0",
     "pytest-timeout>=2.0.0",
     "pytest-rerunfailures>=13.0",
+    "pytest-xdist>=3.0.0",
+    "pytest-httpx>=0.21.0",
     "black>=22.0.0",
     "isort>=5.0.0",
     "ruff>=0.1.0",
     "mypy>=1.0.0",
     "pre-commit>=2.0.0",
     "types-requests>=2.25.0",
+    "types-aiofiles>=23.0.0",
+    "responses>=0.23.0",
+    "esologs-python[docs]",  # Include all docs dependencies for sitemap tests
 ]
 websockets = [
     "websockets>=11.0.0",
@@ -132,7 +138,7 @@ ignore = [
 ]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -169,6 +175,7 @@ markers = [
     "integration: marks tests as integration tests",
     "unit: marks tests as unit tests",
     "timeout: marks tests with timeout requirements",
+    "oauth2: marks tests that require OAuth2 configuration (deselect with '-m \"not oauth2\"')",
 ]
 asyncio_mode = "auto"
 filterwarnings = [

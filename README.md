@@ -20,28 +20,27 @@
 | Metric | Status |
 |--------|--------|
 | **Current Version** | 0.2.0a3 |
-| **API Coverage** | ~90% (38/42 methods implemented) |
+| **API Coverage** | **100%** (42/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
-| **Tests** | 369 tests across unit, integration, documentation, and sanity suites |
+| **Tests** | 404 tests across unit, integration, documentation, and sanity suites |
 
 ### Current API Coverage
-**Implemented (7/8 sections):**
-1. ✅ **gameData** - 13 methods (COMPLETE)
-2. ✅ **characterData** - 5 methods (COMPLETE)
-3. ✅ **reportData** - 10 methods (COMPLETE)
-4. ✅ **worldData** - 4 methods (COMPLETE)
-5. ✅ **rateLimitData** - 1 method (COMPLETE)
-6. ✅ **guildData** - 5 methods (COMPLETE)
-7. ✅ **progressRaceData** - 1 method (COMPLETE)
+**Complete Coverage (8/8 sections):**
+1. **gameData** - 13 methods
+2. **characterData** - 5 methods
+3. **reportData** - 10 methods
+4. **worldData** - 4 methods
+5. **rateLimitData** - 1 method
+6. **guildData** - 5 methods
+7. **progressRaceData** - 1 method
+8. **userData** - 3 methods (OAuth2 user authentication)
 
-**Missing (1/8 sections):**
-- ❌ **userData** - 0/3 methods (requires OAuth2 user authentication)
-
-### Roadmap
-- ✅ Progress race tracking (COMPLETE)
-- 🚧 User account integration (requires OAuth2 flow)
-- ✅ Client architecture refactor (COMPLETE - modular design with mixins)
+### Features Complete
+- Progress race tracking
+- User account integration with OAuth2 flow
+- Client architecture refactor (modular design with mixins)
+- **100% API Coverage** - All ESO Logs API methods implemented!
 
 ## Installation
 
@@ -121,6 +120,16 @@ async def main():
 asyncio.run(main())
 ```
 
+Output:
+```
+Character: ExamplePlayer
+Report: X7mLQ8kF - Dreadsail Reef
+Report: Y9nPR2jG - Rockgrove
+Ability: Elemental Weapon
+Ability: Barbed Trap
+Ability: Deadly Cloak
+```
+
 ### Authentication Only
 
 ```python
@@ -134,9 +143,18 @@ token = get_access_token(
     client_id="your_client_id",
     client_secret="your_client_secret"
 )
+
+print(f"Token: {token[:20]}...")
+print(f"Token length: {len(token)} characters")
 ```
 
-### Character Rankings (NEW)
+Output:
+```
+Token: eyJ0eXAiOiJKV1QiLCJh...
+Token length: 1087 characters
+```
+
+### Character Rankings
 
 ```python
 import asyncio
@@ -175,6 +193,12 @@ async def main():
             print(f"Total Kills: {rankings_data.get('totalKills', 0)}")
 
 asyncio.run(main())
+```
+
+Output:
+```
+Best DPS: 125483.7
+Total Kills: 47
 ```
 
 ### Guild Data
@@ -220,7 +244,14 @@ async def main():
 asyncio.run(main())
 ```
 
-### Progress Race Tracking (NEW)
+Output:
+```
+Guild: Legendary Raiders
+Server: PC-NA
+Faction: Aldmeri Dominion
+```
+
+### Progress Race Tracking
 
 ```python
 import asyncio
@@ -259,7 +290,127 @@ async def main():
 asyncio.run(main())
 ```
 
-### Advanced Report Search (NEW)
+Output:
+```
+No active race for Elder Scrolls Online
+```
+
+### OAuth2 User Authentication
+
+ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
+
+#### Quick Start with OAuth2Flow
+```python
+from esologs import OAuth2Flow, Client
+import asyncio
+
+# Simplified OAuth2 flow
+oauth_flow = OAuth2Flow(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    redirect_uri="http://localhost:8765/callback"
+)
+
+# This opens your browser and handles the callback automatically
+user_token = oauth_flow.authorize(scopes=["view-user-profile"])
+
+# Use the token
+async def main():
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
+Output:
+```
+Logged in as: YourPlayerName
+```
+
+#### Async OAuth2 Flow
+```python
+from esologs import AsyncOAuth2Flow, Client
+import asyncio
+
+async def main():
+    # Use async OAuth2 flow for better performance
+    oauth_flow = AsyncOAuth2Flow(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        redirect_uri="http://localhost:8765/callback"
+    )
+
+    # Authorize asynchronously
+    user_token = await oauth_flow.authorize(scopes=["view-user-profile"])
+
+    # Use the token
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+        current_user = await client.get_current_user()
+        print(f"Logged in as: {current_user.user_data.current_user.name}")
+
+asyncio.run(main())
+```
+
+Output:
+```
+Logged in as: YourPlayerName
+```
+
+#### Manual Flow (for web apps)
+```python
+from esologs.user_auth import (
+    generate_authorization_url,
+    exchange_authorization_code_async,
+    refresh_access_token_async
+)
+
+# Step 1: Generate authorization URL
+auth_url = generate_authorization_url(
+    client_id="your_client_id",
+    redirect_uri="http://localhost:8000/callback",
+    scopes=["view-user-profile"]
+)
+
+# Step 2: After callback, exchange code (async)
+user_token = await exchange_authorization_code_async(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    code="auth_code_from_callback",
+    redirect_uri="http://localhost:8000/callback"
+)
+
+# Step 3: Refresh when needed (async)
+if user_token.is_expired:
+    new_token = await refresh_access_token_async(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        refresh_token=user_token.refresh_token
+    )
+```
+
+Output:
+```python
+# auth_url will be:
+"https://www.esologs.com/oauth/authorize?client_id=your_client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&response_type=code&scope=view-user-profile&state=cN37P5g..."
+
+# user_token will contain:
+UserToken(
+    access_token="eyJ0eXAiOiJKV1QiLCJhbGc...",
+    token_type="Bearer",
+    expires_in=3600,
+    refresh_token="def50200a9bf924...",
+    scope="view-user-profile"
+)
+```
+
+### Advanced Report Search
 
 ```python
 import asyncio
@@ -305,6 +456,14 @@ async def main():
 asyncio.run(main())
 ```
 
+Output:
+```
+Report: a7K9mNpL - Sanity's Edge
+Duration: 3542000ms
+Report: b8L0nOqM - Rockgrove
+Duration: 2891000ms
+```
+
 ## Available API Methods
 
 ### Game Data
@@ -326,8 +485,8 @@ asyncio.run(main())
 - `get_character_by_id(id)` - Get character profile
 - `get_character_reports(character_id, limit)` - Get character's reports
 - `get_character_encounter_ranking(character_id, encounter_id)` - Get character rankings (legacy)
-- `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - **NEW**: Advanced encounter rankings with full filtering
-- `get_character_zone_rankings(character_id, zone_id, **kwargs)` - **NEW**: Zone-wide character leaderboards
+- `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - Advanced encounter rankings with full filtering
+- `get_character_zone_rankings(character_id, zone_id, **kwargs)` - Zone-wide character leaderboards
 
 ### Guild Data
 - `get_guild_by_id(guild_id)` - Get guild information by ID
@@ -344,10 +503,10 @@ asyncio.run(main())
 
 ### Report Data
 - `get_report_by_code(code)` - Get specific report by code
-- `get_reports(**kwargs)` - **NEW**: Advanced report search with comprehensive filtering
-- `search_reports(**kwargs)` - **NEW**: Flexible report search with multiple criteria
-- `get_guild_reports(guild_id, **kwargs)` - **NEW**: Convenience method for guild reports
-- `get_user_reports(user_id, **kwargs)` - **NEW**: Convenience method for user reports
+- `get_reports(**kwargs)` - Advanced report search with comprehensive filtering
+- `search_reports(**kwargs)` - Flexible report search with multiple criteria
+- `get_guild_reports(guild_id, **kwargs)` - Convenience method for guild reports
+- `get_user_reports(user_id, **kwargs)` - Convenience method for user reports
 - `get_report_events(code, **kwargs)` - Get event-by-event combat log data with comprehensive filtering
 - `get_report_graph(code, **kwargs)` - Get time-series performance graphs and metrics
 - `get_report_table(code, **kwargs)` - Get tabular analysis data with sorting and filtering
@@ -356,6 +515,11 @@ asyncio.run(main())
 
 ### Progress Race
 - `get_progress_race(**kwargs)` - Get world/realm first achievement race tracking data
+
+### User Data (OAuth2 Required)
+- `get_user_by_id(user_id)` - Get specific user information
+- `get_current_user()` - Get authenticated user (requires /api/v2/user endpoint)
+- `get_user_data()` - Get userData root object
 
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
@@ -403,23 +567,39 @@ esologs-python/
 │   ├── param_builders.py   # Parameter validation & builders (330 lines)
 │   ├── queries.py          # Centralized GraphQL queries (770 lines)
 │   ├── auth.py             # OAuth2 authentication module
+│   ├── user_auth.py        # User authentication (OAuth2 flow)
 │   ├── validators.py       # Parameter validation utilities
 │   ├── mixins/             # Modular API functionality
 │   │   ├── game_data.py    # Game data methods (abilities, items, etc.)
 │   │   ├── character.py    # Character methods (info, rankings)
 │   │   ├── world_data.py   # World data methods (zones, regions)
 │   │   ├── guild.py        # Guild methods
-│   │   └── report.py       # Report methods (search, analysis)
+│   │   ├── report.py       # Report methods (search, analysis)
+│   │   ├── progress_race.py # Progress race tracking
+│   │   └── user.py         # User data methods
 │   └── _generated/         # Auto-generated GraphQL modules
 │       ├── async_base_client.py  # Base async GraphQL client
 │       ├── exceptions.py         # Custom exceptions
 │       └── get_*.py             # Generated query/response models
-├── tests/                  # Test suite (369 tests)
-│   ├── unit/              # Unit tests (111 tests)
-│   ├── integration/       # Integration tests (93 tests)
-│   ├── docs/              # Documentation tests (106 tests)
-│   └── sanity/            # Sanity tests (19 tests)
+├── tests/                  # Test suite (404 tests)
+│   ├── unit/              # Unit tests
+│   ├── integration/       # Integration tests
+│   ├── docs/              # Documentation tests
+│   └── sanity/            # Sanity tests
 ├── docs/                  # Documentation source
+│   ├── assets/            # Images and static files
+│   ├── javascripts/       # Custom JavaScript (API status)
+│   └── *.md               # Documentation pages
+├── examples/              # Example applications
+│   ├── oauth2_sync.py     # Synchronous OAuth2 example
+│   ├── oauth2_async.py    # Asynchronous OAuth2 example
+│   ├── oauth2_flask_app.py # Flask web app example
+│   └── oauth2_fastapi_app.py # FastAPI async app example
+├── scripts/               # Development and utility scripts
+│   ├── generate_client.sh # GraphQL client generation
+│   ├── post_codegen.py    # Post-process generated code
+│   ├── optimize_images.py # Image optimization
+│   └── quick_api_check.py # API status checker
 ├── schema.graphql         # GraphQL schema
 ├── queries.graphql        # GraphQL queries
 ├── pyproject.toml         # Project configuration
@@ -456,15 +636,16 @@ We welcome contributions! Please see our contributing guidelines:
 ### Development Roadmap
 
 - **Phase 1** ✅: Security fixes and foundation improvements
-- **Phase 2** 🚧: Core architecture and missing API functionality
+- **Phase 2** ✅:Core architecture and missing API functionality
   - ✅ PR #1: Character Rankings Implementation (Merged)
   - ✅ PR #2: Report Analysis Implementation (Merged)
   - ✅ PR #3: Integration Test Suite (Merged)
   - ✅ PR #4: Advanced Report Search (Merged)
   - ✅ PR #5: Client Architecture Refactor (Merged)
-  - ✅ PR #28: Progress Race Implementation (In Review)
+  - ✅ PR #28: Progress Race Implementation (Merged)
+  - ✅ PR #29: User Data & OAuth2 Implementation (In Review)
 - **Phase 3** 🚧: Data transformation and pandas integration
-- **Phase 4** ✅: Comprehensive testing and documentation (369 tests)
+- **Phase 4** ✅: Comprehensive testing and documentation (400+ tests)
 - **Phase 5** 🚧: Performance optimization and caching
 
 ## License

@@ -5,7 +5,32 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0a3] - 2025-07-21
+## [0.2.0a4] - 2025-07-22 (Upcoming)
+
+### Added
+
+- **100% API Coverage Achieved!** All 42/42 ESO Logs API methods now implemented
+- **User Data Endpoints**: Implemented OAuth2 user authentication and 3 UserData methods:
+  - `get_user_by_id(user_id)` - Get specific user information
+  - `get_current_user()` - Get authenticated user (requires /api/v2/user endpoint)
+  - `get_user_data()` - Get userData root object
+- **OAuth2 Authentication Module** (`user_auth.py`):
+  - Full Authorization Code flow implementation
+  - Token management with expiration checking
+  - Helper functions for auth URL generation and token exchange
+  - Support for token persistence and refresh
+- **Dual Authentication Support**: Client now supports both client credentials and user tokens
+- Added 10 unit tests for OAuth2 functionality
+- Added 8 integration tests for UserData methods
+- Added comprehensive documentation examples for OAuth2 flow
+- Total test count increased from 369 to 404 tests
+
+### Changed
+
+- Updated Client to detect and warn about endpoint/authentication mismatches
+- Enhanced authentication documentation with OAuth2 examples
+
+## [0.2.0a3] - 2025-01-21
 
 ### Added
 
