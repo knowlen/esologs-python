@@ -120,7 +120,7 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 Character: ExamplePlayer
 Report: X7mLQ8kF - Dreadsail Reef
@@ -148,13 +148,13 @@ print(f"Token: {token[:20]}...")
 print(f"Token length: {len(token)} characters")
 ```
 
-**Output:**
+Output:
 ```
 Token: eyJ0eXAiOiJKV1QiLCJh...
 Token length: 1087 characters
 ```
 
-### Character Rankings (NEW)
+### Character Rankings
 
 ```python
 import asyncio
@@ -195,7 +195,7 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 Best DPS: 125483.7
 Total Kills: 47
@@ -244,14 +244,14 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 Guild: Legendary Raiders
 Server: PC-NA
 Faction: Aldmeri Dominion
 ```
 
-### Progress Race Tracking (NEW)
+### Progress Race Tracking
 
 ```python
 import asyncio
@@ -290,12 +290,12 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 No active race for Elder Scrolls Online
 ```
 
-### OAuth2 User Authentication (NEW)
+### OAuth2 User Authentication
 
 ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
 
@@ -326,7 +326,7 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 Logged in as: YourPlayerName
 ```
@@ -358,7 +358,7 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 Logged in as: YourPlayerName
 ```
@@ -395,7 +395,7 @@ if user_token.is_expired:
     )
 ```
 
-**Output:**
+Output:
 ```python
 # auth_url will be:
 "https://www.esologs.com/oauth/authorize?client_id=your_client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fcallback&response_type=code&scope=view-user-profile&state=cN37P5g..."
@@ -410,7 +410,7 @@ UserToken(
 )
 ```
 
-### Advanced Report Search (NEW)
+### Advanced Report Search
 
 ```python
 import asyncio
@@ -456,7 +456,7 @@ async def main():
 asyncio.run(main())
 ```
 
-**Output:**
+Output:
 ```
 Report: a7K9mNpL - Sanity's Edge
 Duration: 3542000ms
@@ -485,8 +485,8 @@ Duration: 2891000ms
 - `get_character_by_id(id)` - Get character profile
 - `get_character_reports(character_id, limit)` - Get character's reports
 - `get_character_encounter_ranking(character_id, encounter_id)` - Get character rankings (legacy)
-- `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - **NEW**: Advanced encounter rankings with full filtering
-- `get_character_zone_rankings(character_id, zone_id, **kwargs)` - **NEW**: Zone-wide character leaderboards
+- `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - Advanced encounter rankings with full filtering
+- `get_character_zone_rankings(character_id, zone_id, **kwargs)` - Zone-wide character leaderboards
 
 ### Guild Data
 - `get_guild_by_id(guild_id)` - Get guild information by ID
@@ -503,10 +503,10 @@ Duration: 2891000ms
 
 ### Report Data
 - `get_report_by_code(code)` - Get specific report by code
-- `get_reports(**kwargs)` - **NEW**: Advanced report search with comprehensive filtering
-- `search_reports(**kwargs)` - **NEW**: Flexible report search with multiple criteria
-- `get_guild_reports(guild_id, **kwargs)` - **NEW**: Convenience method for guild reports
-- `get_user_reports(user_id, **kwargs)` - **NEW**: Convenience method for user reports
+- `get_reports(**kwargs)` - Advanced report search with comprehensive filtering
+- `search_reports(**kwargs)` - Flexible report search with multiple criteria
+- `get_guild_reports(guild_id, **kwargs)` - Convenience method for guild reports
+- `get_user_reports(user_id, **kwargs)` - Convenience method for user reports
 - `get_report_events(code, **kwargs)` - Get event-by-event combat log data with comprehensive filtering
 - `get_report_graph(code, **kwargs)` - Get time-series performance graphs and metrics
 - `get_report_table(code, **kwargs)` - Get tabular analysis data with sorting and filtering
@@ -567,23 +567,39 @@ esologs-python/
 │   ├── param_builders.py   # Parameter validation & builders (330 lines)
 │   ├── queries.py          # Centralized GraphQL queries (770 lines)
 │   ├── auth.py             # OAuth2 authentication module
+│   ├── user_auth.py        # User authentication (OAuth2 flow)
 │   ├── validators.py       # Parameter validation utilities
 │   ├── mixins/             # Modular API functionality
 │   │   ├── game_data.py    # Game data methods (abilities, items, etc.)
 │   │   ├── character.py    # Character methods (info, rankings)
 │   │   ├── world_data.py   # World data methods (zones, regions)
 │   │   ├── guild.py        # Guild methods
-│   │   └── report.py       # Report methods (search, analysis)
+│   │   ├── report.py       # Report methods (search, analysis)
+│   │   ├── progress_race.py # Progress race tracking
+│   │   └── user.py         # User data methods
 │   └── _generated/         # Auto-generated GraphQL modules
 │       ├── async_base_client.py  # Base async GraphQL client
 │       ├── exceptions.py         # Custom exceptions
 │       └── get_*.py             # Generated query/response models
-├── tests/                  # Test suite (369 tests)
-│   ├── unit/              # Unit tests (111 tests)
-│   ├── integration/       # Integration tests (93 tests)
-│   ├── docs/              # Documentation tests (106 tests)
-│   └── sanity/            # Sanity tests (19 tests)
+├── tests/                  # Test suite (404 tests)
+│   ├── unit/              # Unit tests
+│   ├── integration/       # Integration tests
+│   ├── docs/              # Documentation tests
+│   └── sanity/            # Sanity tests
 ├── docs/                  # Documentation source
+│   ├── assets/            # Images and static files
+│   ├── javascripts/       # Custom JavaScript (API status)
+│   └── *.md               # Documentation pages
+├── examples/              # Example applications
+│   ├── oauth2_sync.py     # Synchronous OAuth2 example
+│   ├── oauth2_async.py    # Asynchronous OAuth2 example
+│   ├── oauth2_flask_app.py # Flask web app example
+│   └── oauth2_fastapi_app.py # FastAPI async app example
+├── scripts/               # Development and utility scripts
+│   ├── generate_client.sh # GraphQL client generation
+│   ├── post_codegen.py    # Post-process generated code
+│   ├── optimize_images.py # Image optimization
+│   └── quick_api_check.py # API status checker
 ├── schema.graphql         # GraphQL schema
 ├── queries.graphql        # GraphQL queries
 ├── pyproject.toml         # Project configuration
