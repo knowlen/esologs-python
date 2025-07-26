@@ -18,27 +18,27 @@ Before you can authenticate, you need:
 2. Click **"+ Create Client"** (top right corner)
 3. Fill out the application form:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **Application Name** | Your Application Name | e.g., "My ESO Analysis Tool" - be descriptive |
-   | **Redirect URLs** | See below | Required for OAuth2 user authentication flow |
-   | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
+    | Field | Value | Notes |
+    |-------|-------|-------|
+    | **Application Name** | Your Application Name | e.g., "My ESO Analysis Tool" - be descriptive |
+    | **Redirect URLs** | See below | Required for OAuth2 user authentication flow |
+    | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
 
-   **For Redirect URLs:**
-   - **Client Credentials Only**: Leave blank if you only need API access (no user data)
-   - **User Authentication**: Enter URLs for OAuth2 callbacks (comma-separated if multiple)
-     - Development: `http://localhost:8765/callback` (recommended port for this library)
-     - Production: `https://yourdomain.com/auth/callback`
-   - Multiple URLs supported, separated by commas
+    **For Redirect URLs:**
+    - **Client Credentials Only**: Leave blank if you only need API access (no user data)
+    - **User Authentication**: Enter URLs for OAuth2 callbacks (comma-separated if multiple)
+        - Development: `http://localhost:8765/callback` (recommended port for this library)
+        - Production: `https://yourdomain.com/auth/callback`
+    - Multiple URLs supported, separated by commas
 
-   !!! tip "Application Naming"
-       Be descriptive with your application name. As noted in the form: "If we can't understand what the application is, we're more likely to cancel the key."
+    !!! tip "Application Naming"
+        Be descriptive with your application name. As noted in the form: "If we can't understand what the application is, we're more likely to cancel the key."
 
-   !!! info "Public Client vs Private Client"
-       - **Private Client (Recommended)**: Can securely store client secret. Use for server-side applications, CLI tools, and scripts.
-       - **Public Client**: Cannot store client secret securely. Uses PKCE (Proof Key for Code Exchange) flow. Mainly for mobile apps or browser-based applications.
+    !!! info "Public Client vs Private Client"
+        - **Private Client (Recommended)**: Can securely store client secret. Use for server-side applications, CLI tools, and scripts.
+        - **Public Client**: Cannot store client secret securely. Uses PKCE (Proof Key for Code Exchange) flow. Mainly for mobile apps or browser-based applications.
 
-       For ESO Logs Python library usage, keep "Public Client" **unchecked** unless you have specific security constraints.
+        For ESO Logs Python library usage, keep "Public Client" **unchecked** unless you have specific security constraints.
 
 4. Click **"Create"**
 
