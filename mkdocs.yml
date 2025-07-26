@@ -64,9 +64,9 @@ theme:
 nav:
   - Home: index.md
   - Getting Started:
-    - Installation: installation.md
-    - Authentication: authentication.md
-    - Quickstart: quickstart.md
+    - Installation: getting-started/installation.md
+    - Authentication: getting-started/authentication.md
+    - Quickstart: getting-started/quickstart.md
     - Troubleshooting: getting-started/troubleshooting.md
   - API Reference:
     - Game Data: api-reference/game-data.md
@@ -83,7 +83,8 @@ nav:
     - Testing: development/testing.md
     - Contributing: development/contributing.md
     - Architecture: development/architecture.md
-    - Changelog: changelog.md
+    - Resilience & Retry: development/resilience-and-retry.md
+    - Changelog: development/changelog.md
 
 # Extensions
 markdown_extensions:
