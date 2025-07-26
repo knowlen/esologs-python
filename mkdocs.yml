@@ -67,6 +67,7 @@ nav:
     - Installation: installation.md
     - Authentication: authentication.md
     - Quickstart: quickstart.md
+    - Troubleshooting: getting-started/troubleshooting.md
   - API Reference:
     - Game Data: api-reference/game-data.md
     - Character Data: api-reference/character-data.md
@@ -83,7 +84,6 @@ nav:
     - Contributing: development/contributing.md
     - Architecture: development/architecture.md
     - Changelog: changelog.md
-  - Troubleshooting: troubleshooting.md
 
 # Extensions
 markdown_extensions:
