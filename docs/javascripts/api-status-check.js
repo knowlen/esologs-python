@@ -142,7 +142,7 @@
             };
 
             // Add timestamp to prevent caching
-            img.src = `https://www.esologs.com/favicon.ico?t=${Date.now()}`;
+            img.src = `https://assets.rpglogs.com/img/eso/favicon.png?t=${Date.now()}`;
         });
     }
 
