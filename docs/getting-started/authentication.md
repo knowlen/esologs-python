@@ -25,6 +25,7 @@ Before you can authenticate, you need:
     | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
 
     **For Redirect URLs:**
+
     - **Client Credentials Only**: Leave blank if you only need API access (no user data)
     - **User Authentication**: Enter URLs for OAuth2 callbacks (comma-separated if multiple)
         - Development: `http://localhost:8765/callback` (recommended port for this library)
