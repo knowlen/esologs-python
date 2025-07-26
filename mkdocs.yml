@@ -64,9 +64,10 @@ theme:
 nav:
   - Home: index.md
   - Getting Started:
-    - Installation: installation.md
-    - Authentication: authentication.md
-    - Quickstart: quickstart.md
+    - Installation: getting-started/installation.md
+    - Authentication: getting-started/authentication.md
+    - Quickstart: getting-started/quickstart.md
+    - Troubleshooting: getting-started/troubleshooting.md
   - API Reference:
     - Game Data: api-reference/game-data.md
     - Character Data: api-reference/character-data.md
@@ -82,7 +83,8 @@ nav:
     - Testing: development/testing.md
     - Contributing: development/contributing.md
     - Architecture: development/architecture.md
-    - Changelog: changelog.md
+    - Resilience & Retry: development/resilience-and-retry.md
+    - Changelog: development/changelog.md
 
 # Extensions
 markdown_extensions:
@@ -173,7 +175,6 @@ extra_javascript:
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
   - javascripts/mermaid-init.js
-  - javascripts/api-status-check.js
 
 # Additional configuration
 extra:

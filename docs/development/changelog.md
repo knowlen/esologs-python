@@ -5,7 +5,7 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0a4] - 2025-07-22 (Upcoming)
+## [0.2.0a3] - Unreleased
 
 ### Added
 
@@ -16,55 +16,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `get_user_data()` - Get userData root object
 - **OAuth2 Authentication Module** (`user_auth.py`):
   - Full Authorization Code flow implementation
+  - Both synchronous and asynchronous support (`OAuth2Flow` and `AsyncOAuth2Flow`)
   - Token management with expiration checking
   - Helper functions for auth URL generation and token exchange
   - Support for token persistence and refresh
-- **Dual Authentication Support**: Client now supports both client credentials and user tokens
-- Added 10 unit tests for OAuth2 functionality
-- Added 8 integration tests for UserData methods
-- Added comprehensive documentation examples for OAuth2 flow
-- Total test count increased from 369 to 404 tests
-
-### Changed
-
-- Updated Client to detect and warn about endpoint/authentication mismatches
-- Enhanced authentication documentation with OAuth2 examples
-
-## [0.2.0a3] - 2025-01-21
-
-### Added
-
+  - Security enhancements (CSRF protection, redirect URI validation)
 - **Progress Race Tracking**: Implemented `get_progress_race()` method for world/realm first achievement race tracking
   - Supports filtering by guild, zone, competition, difficulty, size, and server
   - Returns flexible JSON data that adapts to active race formats
-  - Added comprehensive documentation and examples
-- **API Coverage**: Increased from 88% to 90% (38/42 methods implemented)
-- Added 4 unit tests and 8 integration tests for progress race functionality
-- Created new `ProgressRaceMixin` following established architecture patterns
+- **Documentation Improvements**:
+  - Added comprehensive troubleshooting guide
+  - Added OAuth2 examples (sync, async, Flask, FastAPI)
+  - Reorganized docs structure (Getting Started and Development sections)
+- **Testing**: Total test count increased from 322 to 404+ tests
+  - Added 10 unit tests for OAuth2 functionality
+  - Added 8 integration tests for UserData methods
+  - Added 8 integration tests for progress race functionality
 
 ### Changed
 
-- **Major Refactoring**: Reduced `client.py` from 1,610 lines to 86 lines (95% reduction)
-- Implemented factory pattern with mixins for better code organization
-- Created modular architecture with clear separation of concerns:
+- **Major Client Refactoring**: Reduced `client.py` from 1,610 lines to 86 lines (95% reduction)
+  - Implemented factory pattern with mixins for better code organization
+  - Created modular architecture with clear separation of concerns
   - Method factory functions for dynamic method generation
   - Parameter builders for complex parameter handling
   - Mixins organizing methods by functional area
   - Centralized GraphQL queries storage
+- **Dual Authentication Support**: Client now supports both client credentials and user tokens
+- Updated Client to detect and warn about endpoint/authentication mismatches
+- Enhanced authentication documentation with OAuth2 examples
 - Moved all auto-generated code to `_generated/` subdirectory for cleaner structure
 - Improved error messages to show available parameters when missing
 - Added comprehensive documentation for method registration and naming conventions
 - Cached regex patterns for performance improvement
-- Fixed type safety issues with proper Protocol usage
-- Updated test suite from 278 to 322 tests (added 33 unit tests and 8 docs tests)
 
 ### Fixed
 
 - Type annotations now satisfy mypy without `# type: ignore` comments
 - Parameter validation errors now provide more helpful context
 - Fixed kwargs passthrough issue in report methods preventing HTTP client errors
+- Fixed markdown formatting issues in authentication documentation
 
-## [0.2.0a2] - 2025-07-16
+## [0.2.0a2] - 2024-07-16
 
 ### Fixed
 
@@ -72,23 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all imports to use `from esologs.auth import get_access_token` or `from esologs import get_access_token`
 - Authentication is now properly packaged and accessible when installing from PyPI
 
-## [0.2.0a1] - 2025-07-15
+## [0.2.0a1] - 2024-07-15
 
-### Added
-
-This is the first alpha release of version 0.2.0. See the [0.2.0] section below for full feature list.
-
-## [0.2.0] - 2024-01-XX (Upcoming Release)
-
-### Changed
-
-#### Architecture Improvements
-- **Client Refactoring**: Complete overhaul of client.py architecture
-  - Reduced from 1,600+ lines to 86 lines (95% reduction)
-  - Implemented factory pattern for method generation
-  - Organized methods into logical mixins by functional area
-  - Moved all generated code to `_generated/` subdirectory
-  - Maintained 100% backward compatibility
+This is the first alpha release of version 0.2.0, featuring major architectural improvements and new API methods.
 
 ### Added
 
