@@ -38,4 +38,4 @@ for name, url, method in endpoints:
 
 print("=" * 50)
 print("\nIf you see 502 errors, the API is experiencing issues.")
-print("Check https://status.esologs.com/ or https://twitter.com/esologs for updates.")
+print("Check https://status.esologs.com/ or https://twitter.com/LogsEso for updates.")

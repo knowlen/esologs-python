@@ -154,7 +154,7 @@ If you're experiencing API errors:
    ```
 
 2. If endpoints show as down (502 errors), the API may be experiencing issues
-3. Check https://twitter.com/esologs or https://status.esologs.com/ for updates
+3. Check https://twitter.com/LogsEso or https://status.esologs.com/ for updates
 
 ---
 
