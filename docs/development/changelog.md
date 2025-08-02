@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed kwargs passthrough issue in report methods preventing HTTP client errors
 - Fixed markdown formatting issues in authentication documentation
 
-## [0.2.0a2] - 2024-07-16
+## [0.2.0a2] - 2025-07-16
 
 ### Fixed
 
@@ -65,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all imports to use `from esologs.auth import get_access_token` or `from esologs import get_access_token`
 - Authentication is now properly packaged and accessible when installing from PyPI
 
-## [0.2.0a1] - 2024-07-15
+## [0.2.0a1] - 2025-07-15
 
 This is the first alpha release of version 0.2.0, featuring major architectural improvements and new API methods.
 
