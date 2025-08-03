@@ -440,18 +440,18 @@ Duration: 2891000ms
 
 ### Game Data
 - `get_ability(id)` - Get specific ability information
-- `get_abilities(limit, page)` - List abilities with pagination
+- `get_abilities(limit=None, page=None)` - List abilities with pagination
 - `get_class(id)` - Get character class information
-- `get_classes(faction_id, zone_id)` - List character classes
+- `get_classes(limit=None, page=None, faction_id=None, zone_id=None)` - List character classes with optional filtering
 - `get_factions()` - Get available factions
 - `get_item(id)` - Get specific item information
-- `get_items(limit, page)` - List items with pagination
+- `get_items(limit=None, page=None)` - List items with pagination
 - `get_item_set(id)` - Get item set information
-- `get_item_sets(limit, page)` - List item sets with pagination
+- `get_item_sets(limit=None, page=None)` - List item sets with pagination
 - `get_map(id)` - Get map information
-- `get_maps(limit, page)` - List maps with pagination
+- `get_maps(limit=None, page=None)` - List maps with pagination
 - `get_npc(id)` - Get NPC information
-- `get_npcs(limit, page)` - List NPCs with pagination
+- `get_npcs(limit=None, page=None)` - List NPCs with pagination
 
 ### Character Data
 - `get_character_by_id(id)` - Get character profile
