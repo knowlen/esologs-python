@@ -18,27 +18,28 @@ Before you can authenticate, you need:
 2. Click **"+ Create Client"** (top right corner)
 3. Fill out the application form:
 
-   | Field | Value | Notes |
-   |-------|-------|-------|
-   | **Application Name** | Your Application Name | e.g., "My ESO Analysis Tool" - be descriptive |
-   | **Redirect URLs** | See below | Required for OAuth2 user authentication flow |
-   | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
+    | Field | Value | Notes |
+    |-------|-------|-------|
+    | **Application Name** | Your Application Name | e.g., "My ESO Analysis Tool" - be descriptive |
+    | **Redirect URLs** | See below | Required for OAuth2 user authentication flow |
+    | **Public Client** | Leave unchecked | Only check if you cannot store client secret securely |
 
-   **For Redirect URLs:**
-   - **Client Credentials Only**: Leave blank if you only need API access (no user data)
-   - **User Authentication**: Enter URLs for OAuth2 callbacks (comma-separated if multiple)
-     - Development: `http://localhost:8765/callback` (recommended port for this library)
-     - Production: `https://yourdomain.com/auth/callback`
-   - Multiple URLs supported, separated by commas
+    **For Redirect URLs:**
 
-   !!! tip "Application Naming"
-       Be descriptive with your application name. As noted in the form: "If we can't understand what the application is, we're more likely to cancel the key."
+    - **Client Credentials Only**: Leave blank if you only need API access (no user data)
+    - **User Authentication**: Enter URLs for OAuth2 callbacks (comma-separated if multiple)
+        - Development: `http://localhost:8765/callback` (recommended port for this library)
+        - Production: `https://yourdomain.com/auth/callback`
+    - Multiple URLs supported, separated by commas
 
-   !!! info "Public Client vs Private Client"
-       - **Private Client (Recommended)**: Can securely store client secret. Use for server-side applications, CLI tools, and scripts.
-       - **Public Client**: Cannot store client secret securely. Uses PKCE (Proof Key for Code Exchange) flow. Mainly for mobile apps or browser-based applications.
+    !!! tip "Application Naming"
+        Be descriptive with your application name. As noted in the form: "If we can't understand what the application is, we're more likely to cancel the key."
 
-       For ESO Logs Python library usage, keep "Public Client" **unchecked** unless you have specific security constraints.
+    !!! info "Public Client vs Private Client"
+        - **Private Client (Recommended)**: Can securely store client secret. Use for server-side applications, CLI tools, and scripts.
+        - **Public Client**: Cannot store client secret securely. Uses PKCE (Proof Key for Code Exchange) flow. Mainly for mobile apps or browser-based applications.
+
+        For ESO Logs Python library usage, keep "Public Client" **unchecked** unless you have specific security constraints.
 
 4. Click **"Create"**
 
@@ -253,6 +254,109 @@ asyncio.run(main())
 !!! info "Redirect URI Configuration"
     Make sure to add `http://localhost:8765/callback` to your ESO Logs app's redirect URLs.
     The OAuth2Flow class extracts the port from your redirect URI automatically.
+
+### OAuth2 Error Handling
+
+Handle common OAuth2 errors gracefully:
+
+```python
+from esologs import OAuth2Flow, Client
+from esologs.exceptions import GraphQLClientHttpError
+import asyncio
+
+# Create OAuth2 flow handler
+oauth_flow = OAuth2Flow(
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+    redirect_uri="http://localhost:8765/callback"
+)
+
+try:
+    # Attempt authorization
+    user_token = oauth_flow.authorize(scopes=["view-user-profile"])
+
+    # Test the token
+    async def verify_token():
+        try:
+            async with Client(
+                url="https://www.esologs.com/api/v2/user",
+                user_token=user_token
+            ) as client:
+                user = await client.get_current_user()
+                print(f"✅ Successfully logged in as: {user.user_data.current_user.name}")
+                return True
+        except GraphQLClientHttpError as e:
+            if e.status_code == 401:
+                print("❌ Token is invalid or expired")
+            else:
+                print(f"❌ API error: {e}")
+            return False
+
+    asyncio.run(verify_token())
+
+except ValueError as e:
+    print(f"❌ Configuration error: {e}")
+    print("Check your redirect URI matches ESO Logs app settings")
+except KeyboardInterrupt:
+    print("\n⚠️  Authorization cancelled by user")
+except Exception as e:
+    print(f"❌ Unexpected error during OAuth2 flow: {e}")
+```
+
+### OAuth2 State Validation
+
+For enhanced security, validate the state parameter to prevent CSRF attacks:
+
+```python
+from esologs.user_auth import generate_authorization_url, exchange_authorization_code
+import secrets
+import webbrowser
+
+# Generate secure state
+state = secrets.token_urlsafe(32)
+
+# Store state in your session (web apps) or memory
+stored_state = state
+
+# Generate authorization URL with state
+auth_url = generate_authorization_url(
+    client_id="your_client_id",
+    redirect_uri="http://localhost:8000/callback",
+    scopes=["view-user-profile"],
+    state=state
+)
+
+# In your callback handler:
+def handle_callback(request):
+    # Get state from callback
+    returned_state = request.args.get('state')
+    code = request.args.get('code')
+    error = request.args.get('error')
+
+    # Validate state
+    if not returned_state or returned_state != stored_state:
+        raise ValueError("Invalid state parameter - possible CSRF attack")
+
+    # Check for errors
+    if error:
+        error_desc = request.args.get('error_description', 'Unknown error')
+        raise ValueError(f"Authorization failed: {error} - {error_desc}")
+
+    # Exchange code for token
+    try:
+        user_token = exchange_authorization_code(
+            client_id="your_client_id",
+            client_secret="your_client_secret",
+            code=code,
+            redirect_uri="http://localhost:8000/callback"
+        )
+        return user_token
+    except Exception as e:
+        raise ValueError(f"Token exchange failed: {e}")
+```
+
+!!! warning "State Parameter Security"
+    Always use and validate the state parameter in production applications to prevent CSRF attacks. The `OAuth2Flow` class handles this automatically, but manual implementations must include it.
 
 ### Async OAuth2 Flow
 
