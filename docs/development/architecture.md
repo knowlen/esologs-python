@@ -351,7 +351,7 @@ TEST_DATA = {
 ```toml
 [project]
 name = "esologs-python"
-version = "0.2.0a3"
+version = "0.2.0b1"
 dependencies = [
     "httpx>=0.24.0",
     "pydantic>=2.0.0",

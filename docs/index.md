@@ -73,7 +73,7 @@
 <div class="feature-grid">
   <div class="feature-card">
     <h3>Current Version</h3>
-    <p><strong>v0.2.0a3</strong><br>
+    <p><strong>v0.2.0b1</strong><br>
     <span class="status-badge status-badge--completed">100% API Coverage!</span></p>
     <p>All 42 ESO Logs API methods implemented with comprehensive testing and documentation.</p>
   </div>
@@ -113,6 +113,7 @@ graph TB
     end
 ```
 
-!!! note "Development Status"
-    This library is in active development. While the core functionality is stable and tested,
-    the API may change before the 1.0 release. See our [changelog](changelog.md) for the latest updates.
+!!! note "Beta Status"
+    This library is now in beta! With 100% API coverage and comprehensive testing, we're focusing on
+    stability and polish before the 1.0 release. The API is considered stable, though minor changes
+    may still occur. See our [changelog](development/changelog.md) for the latest updates.

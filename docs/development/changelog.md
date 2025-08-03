@@ -5,7 +5,9 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0a3] - Unreleased
+## [0.2.0b1] - 2025-08-03
+
+**First Beta Release!** This marks the transition from alpha to beta status with 100% API coverage.
 
 ### Added
 
@@ -57,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed kwargs passthrough issue in report methods preventing HTTP client errors
 - Fixed markdown formatting issues in authentication documentation
 
-## [0.2.0a2] - 2024-07-16
+## [0.2.0a2] - 2025-07-16
 
 ### Fixed
 
@@ -65,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated all imports to use `from esologs.auth import get_access_token` or `from esologs import get_access_token`
 - Authentication is now properly packaged and accessible when installing from PyPI
 
-## [0.2.0a1] - 2024-07-15
+## [0.2.0a1] - 2025-07-15
 
 This is the first alpha release of version 0.2.0, featuring major architectural improvements and new API methods.
 

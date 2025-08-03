@@ -10,7 +10,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/esologs-python.svg)](https://pypi.org/project/esologs-python/)
 [![Documentation](https://readthedocs.org/projects/esologs-python/badge/?version=latest)](https://esologs-python.readthedocs.io/)
-[![Development Status](https://img.shields.io/badge/status-alpha-orange.svg)](https://github.com/knowlen/esologs-python)
+[![Development Status](https://img.shields.io/badge/status-beta-yellow.svg)](https://github.com/knowlen/esologs-python)
 [![Tests](https://github.com/knowlen/esologs-python/actions/workflows/ci.yml/badge.svg)](https://github.com/knowlen/esologs-python/actions/workflows/ci.yml)
 
 **esologs-python** is a comprehensive Python client library for the [ESO Logs API v2](https://www.esologs.com/v2-api-docs/eso/), designed for Elder Scrolls Online (ESO) players and developers who want to analyze combat logs, track performance metrics, and build tools for the ESO community. This library provides both synchronous and asynchronous interfaces to access ESO Logs data, with built-in support for data transformation and analysis.
@@ -19,7 +19,7 @@
 
 | Metric | Status |
 |--------|--------|
-| **Current Version** | 0.2.0a3 |
+| **Current Version** | 0.2.0b1 |
 | **API Coverage** | **100%** (42/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
@@ -635,18 +635,20 @@ We welcome contributions! Please see our contributing guidelines:
 
 ### Development Roadmap
 
-- **Phase 1** ✅: Security fixes and foundation improvements
-- **Phase 2** ✅:Core architecture and missing API functionality
-  - ✅ PR #1: Character Rankings Implementation (Merged)
-  - ✅ PR #2: Report Analysis Implementation (Merged)
-  - ✅ PR #3: Integration Test Suite (Merged)
-  - ✅ PR #4: Advanced Report Search (Merged)
-  - ✅ PR #5: Client Architecture Refactor (Merged)
-  - ✅ PR #28: Progress Race Implementation (Merged)
-  - ✅ PR #29: User Data & OAuth2 Implementation (In Review)
-- **Phase 3** 🚧: Data transformation and pandas integration
-- **Phase 4** ✅: Comprehensive testing and documentation (400+ tests)
-- **Phase 5** 🚧: Performance optimization and caching
+**Current Status: Beta Release (v0.2.0b1)**
+
+✅ **Completed:**
+- 100% API Coverage (42/42 methods)
+- OAuth2 user authentication
+- Comprehensive test suite (400+ tests)
+- Full documentation with examples
+- Client architecture refactoring
+
+🚧 **Upcoming for v1.0:**
+- Data transformation and pandas integration
+- Performance optimization and caching
+- Additional convenience methods
+- Enhanced error recovery
 
 ## License
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "esologs-python"
-version = "0.2.0a3"
+version = "0.2.0b1"
 description = "A Python client library for the ESO Logs API v2"
 readme = "README.md"
 license = {text = "MIT"}
@@ -16,7 +16,7 @@ keywords = [
     "combat-logs", "mmorpg", "gaming", "api-client", "python"
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
