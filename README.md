@@ -25,40 +25,12 @@
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
 | **Tests** | 404 tests across unit, integration, documentation, and sanity suites |
 
-### Current API Coverage
-**Complete Coverage (8/8 sections):**
-1. **gameData** - 13 methods
-2. **characterData** - 5 methods
-3. **reportData** - 10 methods
-4. **worldData** - 4 methods
-5. **rateLimitData** - 1 method
-6. **guildData** - 5 methods
-7. **progressRaceData** - 1 method
-8. **userData** - 3 methods (OAuth2 user authentication)
-
-### Features Complete
-- Progress race tracking
-- User account integration with OAuth2 flow
-- Client architecture refactor (modular design with mixins)
-- **100% API Coverage** - All ESO Logs API methods implemented!
 
 ## Installation
 
 ```bash
 # Install from PyPI (recommended)
 pip install esologs-python
-
-# For development or latest features
-pip install git+https://github.com/knowlen/esologs-python.git@main
-```
-
-### Development Installation
-
-```bash
-# Clone for development
-git clone https://github.com/knowlen/esologs-python.git
-cd esologs-python
-pip install -e ".[dev]"
 ```
 
 ## API Setup
@@ -297,7 +269,7 @@ No active race for Elder Scrolls Online
 
 ### OAuth2 User Authentication
 
-ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
+To integrate with individual user accounts from the website, ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
 
 #### Quick Start with OAuth2Flow
 ```python
@@ -644,11 +616,12 @@ We welcome contributions! Please see our contributing guidelines:
 - Full documentation with examples
 - Client architecture refactoring
 
-🚧 **Upcoming for v1.0:**
-- Data transformation and pandas integration
+🚧 **Upcoming**
+- Data transformation layer
 - Performance optimization and caching
 - Additional convenience methods
 - Enhanced error recovery
+- ... and more (see open issues)
 
 ## License
 
@@ -656,9 +629,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Acknowledgments
 
-- [ESO Logs](https://www.esologs.com/) for providing the API
+- [ESO Logs](https://www.esologs.com/) team for providing the API
 - [ariadne-codegen](https://github.com/mirumee/ariadne-codegen) for GraphQL code generation
-- The Elder Scrolls Online community
+- The Elder Scrolls Online endgame community for sharing their combat logs
 
 ## Support
 
