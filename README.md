@@ -440,61 +440,103 @@ Duration: 2891000ms
 
 ### Game Data
 - `get_ability(id)` - Get specific ability information
+  - Returns: `GetAbility` with ability details (id, name, description, icon)
 - `get_abilities(limit=None, page=None)` - List abilities with pagination
+  - Returns: `GetAbilities` with paginated ability list
 - `get_class(id)` - Get character class information
+  - Returns: `GetClass` with class details (id, name, slug)
 - `get_classes(limit=None, page=None, faction_id=None, zone_id=None)` - List character classes with optional filtering
+  - Returns: `GetClasses` with paginated class list
 - `get_factions()` - Get available factions
+  - Returns: `GetFactions` with list of factions
 - `get_item(id)` - Get specific item information
+  - Returns: `GetItem` with item details (id, name, quality, icon)
 - `get_items(limit=None, page=None)` - List items with pagination
+  - Returns: `GetItems` with paginated item list
 - `get_item_set(id)` - Get item set information
+  - Returns: `GetItemSet` with set details and bonuses
 - `get_item_sets(limit=None, page=None)` - List item sets with pagination
+  - Returns: `GetItemSets` with paginated set list
 - `get_map(id)` - Get map information
+  - Returns: `GetMap` with map details (id, name, filename)
 - `get_maps(limit=None, page=None)` - List maps with pagination
+  - Returns: `GetMaps` with paginated map list
 - `get_npc(id)` - Get NPC information
+  - Returns: `GetNPC` with NPC details (id, name, classification)
 - `get_npcs(limit=None, page=None)` - List NPCs with pagination
+  - Returns: `GetNPCs` with paginated NPC list
 
 ### Character Data
 - `get_character_by_id(id)` - Get character profile
+  - Returns: `GetCharacterById` with character info (name, server, guild, hidden status)
 - `get_character_reports(character_id, limit)` - Get character's reports
+  - Returns: `GetCharacterReports` with recent reports list
 - `get_character_encounter_ranking(character_id, encounter_id)` - Get character rankings (legacy)
+  - Returns: `GetCharacterEncounterRanking` with ranking data
 - `get_character_encounter_rankings(character_id, encounter_id, **kwargs)` - Advanced encounter rankings with full filtering
+  - Returns: `GetCharacterEncounterRankings` with detailed performance metrics
 - `get_character_zone_rankings(character_id, zone_id, **kwargs)` - Zone-wide character leaderboards
+  - Returns: `GetCharacterZoneRankings` with zone-wide rankings
 
 ### Guild Data
 - `get_guild_by_id(guild_id)` - Get guild information by ID
+  - Returns: `GetGuildById` with guild details (name, server, faction, description)
 - `get_guild(guild_id=None, guild_name=None, guild_server_slug=None, guild_server_region=None)` - Flexible guild lookup
+  - Returns: `GetGuild` with guild information
 - `get_guilds(server_id=None, server_slug=None, server_region=None, limit=None, page=None)` - List/search guilds
+  - Returns: `GetGuilds` with paginated guild list
 - `get_guild_attendance(guild_id, zone_id=None, encounter_id=None, difficulty=None, ...)` - Get guild raid attendance
+  - Returns: `GetGuildAttendance` with attendance records
 - `get_guild_members(guild_id, limit=None, page=None)` - Get guild member list
+  - Returns: `GetGuildMembers` with paginated member list
 
 ### World Data
 - `get_world_data()` - Get comprehensive world information
+  - Returns: `GetWorldData` with zones, encounters, regions, servers
 - `get_regions()` - Get available regions
+  - Returns: `GetRegions` with list of regions
 - `get_zones()` - Get available zones
+  - Returns: `GetZones` with list of zones
 - `get_encounters_by_zone(zone_id)` - Get encounters in specific zone
+  - Returns: `GetEncountersByZone` with zone's encounter list
 
 ### Report Data
 - `get_report_by_code(code)` - Get specific report by code
+  - Returns: `GetReportByCode` with full report details
 - `get_reports(**kwargs)` - Advanced report search with comprehensive filtering
+  - Returns: `GetReports` with paginated report list
 - `search_reports(**kwargs)` - Flexible report search with multiple criteria
+  - Returns: `GetReports` with filtered results
 - `get_guild_reports(guild_id, **kwargs)` - Convenience method for guild reports
+  - Returns: `GetReports` filtered by guild
 - `get_user_reports(user_id, **kwargs)` - Convenience method for user reports
+  - Returns: `GetReports` filtered by user
 - `get_report_events(code, **kwargs)` - Get event-by-event combat log data with comprehensive filtering
+  - Returns: `GetReportEvents` with detailed event data
 - `get_report_graph(code, **kwargs)` - Get time-series performance graphs and metrics
+  - Returns: `GetReportGraph` with graph data points
 - `get_report_table(code, **kwargs)` - Get tabular analysis data with sorting and filtering
+  - Returns: `GetReportTable` with structured data
 - `get_report_rankings(code, **kwargs)` - Get report rankings and leaderboard data
+  - Returns: `GetReportRankings` with ranking information
 - `get_report_player_details(code, **kwargs)` - Get detailed player performance data from reports
+  - Returns: `GetReportPlayerDetails` with player metrics
 
 ### Progress Race
 - `get_progress_race(**kwargs)` - Get world/realm first achievement race tracking data
+  - Returns: `GetProgressRace` with race progress data (when active)
 
 ### User Data (OAuth2 Required)
 - `get_user_by_id(user_id)` - Get specific user information
+  - Returns: `GetUserById` with user profile data
 - `get_current_user()` - Get authenticated user (requires /api/v2/user endpoint)
+  - Returns: `GetCurrentUser` with authenticated user info
 - `get_user_data()` - Get userData root object
+  - Returns: `GetUserData` with comprehensive user data
 
 ### System
 - `get_rate_limit_data()` - Check API usage and rate limits
+  - Returns: `GetRateLimitData` with current usage and limits
 
 ## Development
 
