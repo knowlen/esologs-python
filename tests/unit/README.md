@@ -86,7 +86,7 @@ pytest tests/unit/ -n auto
 
 ## Test Coverage
 
-### Current Coverage (105 tests)
+### Current Coverage (164 tests)
 
 | Component | Tests | Coverage Focus |
 |-----------|-------|----------------|

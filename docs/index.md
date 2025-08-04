@@ -15,7 +15,7 @@
 		<li> <b>Async First</b>: Native async/await support with HTTP and WebSocket</li>
 		<li> <b>GraphQL Integration</b>: Code generation with `ariadne-codegen` + Claude</li>
 		<li> <b>Security</b>: OAuth2 authentication with parameter validation</li>
-		<li> <b>Testing</b>: 404 tests with comprehensive coverage</li>
+		<li> <b>Testing</b>: 428 tests with comprehensive coverage</li>
   </ul>
 </div>
 
