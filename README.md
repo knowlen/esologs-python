@@ -104,6 +104,9 @@ Ability: Deadly Cloak
 
 ## Available API Methods
 
+All API responses are validated using Pydantic models for type safety and data validation.
+The complete GraphQL schema of the v2 API is available at: https://www.esologs.com/v2-api-docs/eso/
+
 ### Game Data
 - [`get_ability`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_ability) - Get specific ability information
 - [`get_abilities`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_abilities) - List abilities with pagination
@@ -277,60 +280,6 @@ UserToken(
 )
 ```
 
-### Advanced Report Search
-
-```python
-import asyncio
-from esologs.client import Client
-from esologs.auth import get_access_token
-
-async def main():
-    token = get_access_token()
-
-    async with Client(
-        url="https://www.esologs.com/api/v2/client",
-        headers={"Authorization": f"Bearer {token}"}
-    ) as client:
-
-        # Search reports with flexible criteria
-        reports = await client.search_reports(
-            guild_id=123,
-            zone_id=456,
-            start_time=1672531200000,  # Jan 1, 2023
-            end_time=1672617600000,    # Jan 2, 2023
-            limit=25,
-            page=1
-        )
-
-        # Convenience methods for common searches
-        guild_reports = await client.get_guild_reports(
-            guild_id=123,
-            limit=50
-        )
-
-        user_reports = await client.get_user_reports(
-            user_id=789,
-            zone_id=456,
-            limit=20
-        )
-
-        # Process search results
-        if reports.report_data and reports.report_data.reports:
-            for report in reports.report_data.reports.data:
-                print(f"Report: {report.code} - {report.zone.name}")
-                print(f"Duration: {report.end_time - report.start_time}ms")
-
-asyncio.run(main())
-```
-
-Output:
-```
-Report: a7K9mNpL - Sanity's Edge
-Duration: 3542000ms
-Report: b8L0nOqM - Rockgrove
-Duration: 2891000ms
-```
-
 ## Development
 
 ### Setup Development Environment
@@ -413,50 +362,27 @@ esologs-python/
 └── README.md             # This file
 ```
 
-## API Reference
-
-### GraphQL Schema
-The complete GraphQL schema is available at: https://www.esologs.com/v2-api-docs/eso/
-
-### Rate Limiting
-- The ESO Logs API uses rate limiting based on points per hour
-- Use `get_rate_limit_data()` to check your current usage
-- The client includes automatic retry logic for rate limit errors
-
-### Data Models
-All API responses are validated using Pydantic models for type safety and data validation.
-
 ## Contributing
 
-We welcome contributions! Please see our contributing guidelines:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Install dependencies (`pip install -e ".[dev]"`)
-4. Make your changes
-5. Run tests (`pytest`)
-6. Run code quality checks (`pre-commit run --all-files`)
-7. Commit your changes (`git commit -m 'Add amazing feature'`)
-8. Push to the branch (`git push origin feature/amazing-feature`)
-9. Open a Pull Request
+We welcome contributions! Please see our [contributing guidelines](https://esologs-python.readthedocs.io/en/dev/development/contributing/):
 
 ### Development Roadmap
 
 **Current Status: Beta Release (v0.2.0b1)**
 
-✅ **Completed:**
+**Completed:**
 - 100% API Coverage (42/42 methods)
 - OAuth2 user authentication
 - Comprehensive test suite (400+ tests)
 - Full documentation with examples
 - Client architecture refactoring
 
-🚧 **Upcoming**
+**Upcoming**
 - Data transformation layer
 - Performance optimization and caching
 - Additional convenience methods
 - Enhanced error recovery
-- ... and more (see open issues)
+- ... and more - see open [issues](https://github.com/knowlen/esologs-python/issues)
 
 ## License
 
