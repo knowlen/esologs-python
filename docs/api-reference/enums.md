@@ -71,6 +71,7 @@ Metrics available for character rankings and leaderboards.
 - `playerspeed` - Clear time performance
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -98,6 +99,7 @@ Types of events that can be filtered when retrieving report events.
 - `Threat` - Threat/aggro events
 
 **Used by:**
+
 - [`get_report_events`](report-data.md#get_report_events)
 
 ---
@@ -113,6 +115,7 @@ Filter for rankings based on external buff usage.
 - `require` - Only show rankings with external buffs
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -135,6 +138,7 @@ Metrics available for fight-specific rankings.
 - `speed` - Clear speed
 
 **Used by:**
+
 - [`get_report_rankings`](report-data.md#get_report_rankings)
 
 ---
@@ -159,6 +163,7 @@ Types of data available for time-series graphs.
 - `Threat` - Threat over time
 
 **Used by:**
+
 - [`get_report_graph`](report-data.md#get_report_graph)
 
 ---
@@ -175,6 +180,7 @@ Guild member rank levels.
 - `GuildMaster` - Guild leader
 
 **Used by:**
+
 - [`get_guild_members`](guild-data.md#get_guild_members)
 
 ---
@@ -190,6 +196,7 @@ Filter for rankings based on hard mode completion.
 - `lowest` - Base difficulty only
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -205,6 +212,7 @@ Filter events by hostility relationship.
 - `Enemies` - Hostile targets
 
 **Used by:**
+
 - [`get_report_events`](report-data.md#get_report_events)
 - [`get_report_graph`](report-data.md#get_report_graph)
 - [`get_report_table`](report-data.md#get_report_table)
@@ -222,6 +230,7 @@ Filter data by encounter outcome.
 - `Wipes` - Failed attempts only
 
 **Used by:**
+
 - [`get_report_events`](report-data.md#get_report_events)
 - [`get_report_graph`](report-data.md#get_report_graph)
 - [`get_report_table`](report-data.md#get_report_table)
@@ -242,6 +251,7 @@ Leaderboard ranking tiers.
 - `Purple` - Purple rank (epic)
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -257,6 +267,7 @@ How to compare rankings.
 - `Parses` - Compare by performance percentile
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -272,6 +283,7 @@ Time period for rankings.
 - `Historical` - All-time historical
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -294,6 +306,7 @@ Metrics for report-level rankings.
 - `tankhps` - Tank healing per second
 
 **Used by:**
+
 - [`get_report_rankings`](report-data.md#get_report_rankings)
 - [`get_report_player_details`](report-data.md#get_report_player_details)
 
@@ -310,6 +323,7 @@ Character role classifications.
 - `DPS` - Damage dealer role
 
 **Used by:**
+
 - [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
 
@@ -329,6 +343,7 @@ User subscription status levels.
 - `LegacyPlatinum` - Legacy platinum status
 
 **Used by:**
+
 - [`get_current_user`](user-data.md#get_current_user)
 - [`get_user_by_id`](user-data.md#get_user_by_id)
 
@@ -354,6 +369,7 @@ Types of data available in tabular format.
 - `Threat` - Threat generation
 
 **Used by:**
+
 - [`get_report_table`](report-data.md#get_report_table)
 
 ---
@@ -370,6 +386,7 @@ Perspective for viewing data.
 - `Target` - Group by target
 
 **Used by:**
+
 - [`get_report_graph`](report-data.md#get_report_graph)
 - [`get_report_table`](report-data.md#get_report_table)
 
