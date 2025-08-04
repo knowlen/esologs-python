@@ -439,7 +439,7 @@ Duration: 2891000ms
 ## Available API Methods
 
 ### Game Data
-- `get_ability(id)` - Get specific ability information [[docs]](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_ability)
+- [`get_ability(id)`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_ability) - Get specific ability information [[docs]](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_ability)
 - `get_abilities(limit=None, page=None)` - List abilities with pagination [[docs]](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_abilities)
 - `get_class(id)` - Get character class information [[docs]](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_class)
 - `get_classes(limit=None, page=None, faction_id=None, zone_id=None)` - List character classes with optional filtering [[docs]](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_classes)
