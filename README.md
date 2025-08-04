@@ -3,9 +3,9 @@
     <source type="image/webp" srcset="docs/assets/logo.webp">
     <img src="docs/assets/logo.png" alt="ESO Logs Python" width="300">
   </picture>
-</div>
 
-<center><h1>ESO Logs Python Client</h1></center>
+<h1>ESO Logs Python Client</h1>
+</div>
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/esologs-python.svg)](https://pypi.org/project/esologs-python/)
