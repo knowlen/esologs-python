@@ -68,9 +68,8 @@ nav:
     - Authentication: getting-started/authentication.md
     - Quickstart: getting-started/quickstart.md
     - Advanced Usage: getting-started/advanced-usage.md
+    - Direct GraphQL Access: getting-started/graphql-escape-hatch.md
     - Troubleshooting: getting-started/troubleshooting.md
-  - Advanced Topics:
-    - Direct GraphQL Access: advanced/graphql-escape-hatch.md
   - API Reference:
     - Game Data: api-reference/game-data.md
     - Character Data: api-reference/character-data.md
