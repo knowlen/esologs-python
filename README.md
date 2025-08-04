@@ -5,7 +5,7 @@
   </picture>
 </div>
 
-<center><h1>ESO Logs Python</h1></center>
+<center><h1>ESO Logs Python Client</h1></center>
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI version](https://badge.fury.io/py/esologs-python.svg)](https://pypi.org/project/esologs-python/)
