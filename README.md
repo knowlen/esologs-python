@@ -162,7 +162,7 @@ Ability: Deadly Cloak
 ### System
 - [`get_rate_limit_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_rate_limit_data) - Check API usage and rate limits
 
-### OAuth2 User Authentication
+## OAuth2 User Authentication
 
 To integrate with individual user accounts from the website, ESO Logs Python now supports both synchronous and asynchronous OAuth2 authentication flows:
 
