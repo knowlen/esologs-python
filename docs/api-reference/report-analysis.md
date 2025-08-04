@@ -18,16 +18,16 @@ Access detailed (behavioral) combat log data including events, performance graph
 |-----------|------|----------|-------------|
 | `code` | *str* | Yes | The report code to analyze |
 | `ability_id` | *float* | No | Filter events by specific ability ID |
-| `data_type` | *EventDataType* | No | Type of events to retrieve (DamageDone, Healing, Deaths, etc.) |
+| `data_type` | [*EventDataType*](../enums/#eventdatatype) | No | Type of events to retrieve (DamageDone, Healing, Deaths, etc.) |
 | `death` | *int* | No | Filter to specific death number |
 | `difficulty` | *int* | No | Difficulty level filter |
 | `encounter_id` | *int* | No | Filter to specific encounter |
 | `end_time` | *float* | No | End time in milliseconds relative to report start |
 | `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
 | `filter_expression` | *str* | No | Advanced filter expression |
-| `hostility_type` | *HostilityType* | No | Filter by hostility type (Enemies, Friendlies) |
+| `hostility_type` | [*HostilityType*](../enums/#hostilitytype) | No | Filter by hostility type (Enemies, Friendlies) |
 | `include_resources` | *bool* | No | Include resource events |
-| `kill_type` | *KillType* | No | Filter by kill type |
+| `kill_type` | [*KillType*](../enums/#killtype) | No | Filter by kill type |
 | `limit` | *int* | No | Maximum number of events to return |
 | `source_auras_absent` | *str* | No | Filter events where source lacks specific auras |
 | `source_auras_present` | *str* | No | Filter events where source has specific auras |
@@ -109,15 +109,15 @@ More data available after: 264591.0
 |-----------|------|----------|-------------|
 | `code` | *str* | Yes | The report code to analyze |
 | `ability_id` | *float* | No | Filter by specific ability ID |
-| `data_type` | *GraphDataType* | No | Type of graph data (DamageDone, Healing, DamageTaken, etc.) |
+| `data_type` | [*GraphDataType*](../enums/#graphdatatype) | No | Type of graph data (DamageDone, Healing, DamageTaken, etc.) |
 | `death` | *int* | No | Filter to specific death number |
 | `difficulty` | *int* | No | Difficulty level filter |
 | `encounter_id` | *int* | No | Filter to specific encounter |
 | `end_time` | *float* | No | End time in milliseconds |
 | `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
 | `filter_expression` | *str* | No | Advanced filter expression |
-| `hostility_type` | *HostilityType* | No | Filter by hostility type |
-| `kill_type` | *KillType* | No | Filter by kill type |
+| `hostility_type` | [*HostilityType*](../enums/#hostilitytype) | No | Filter by hostility type |
+| `kill_type` | [*KillType*](../enums/#killtype) | No | Filter by kill type |
 | `source_auras_absent` | *str* | No | Filter where source lacks specific auras |
 | `source_auras_present` | *str* | No | Filter where source has specific auras |
 | `source_class` | *str* | No | Filter by source character class |
@@ -131,7 +131,7 @@ More data available after: 264591.0
 | `target_instance_id` | *int* | No | Filter by target instance ID |
 | `translate` | *bool* | No | Translate ability names |
 | `view_options` | *int* | No | View option flags |
-| `view_by` | *ViewType* | No | View aggregation method |
+| `view_by` | [*ViewType*](../enums/#viewtype) | No | View aggregation method |
 | `wipe_cutoff` | *int* | No | Wipe cutoff percentage |
 
 **Returns**: `GetReportGraph` object with the following structure:
@@ -192,15 +192,15 @@ Data points: 240
 |-----------|------|----------|-------------|
 | `code` | *str* | Yes | The report code to analyze |
 | `ability_id` | *float* | No | Filter by specific ability ID |
-| `data_type` | *TableDataType* | No | Type of table data (DamageDone, Healing, Deaths, etc.) |
+| `data_type` | [*TableDataType*](../enums/#tabledatatype) | No | Type of table data (DamageDone, Healing, Deaths, etc.) |
 | `death` | *int* | No | Filter to specific death number |
 | `difficulty` | *int* | No | Difficulty level filter |
 | `encounter_id` | *int* | No | Filter to specific encounter |
 | `end_time` | *float* | No | End time in milliseconds |
 | `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
 | `filter_expression` | *str* | No | Advanced filter expression |
-| `hostility_type` | *HostilityType* | No | Filter by hostility type |
-| `kill_type` | *KillType* | No | Filter by kill type |
+| `hostility_type` | [*HostilityType*](../enums/#hostilitytype) | No | Filter by hostility type |
+| `kill_type` | [*KillType*](../enums/#killtype) | No | Filter by kill type |
 | `source_auras_absent` | *str* | No | Filter where source lacks specific auras |
 | `source_auras_present` | *str* | No | Filter where source has specific auras |
 | `source_class` | *str* | No | Filter by source character class |
@@ -214,7 +214,7 @@ Data points: 240
 | `target_instance_id` | *int* | No | Filter by target instance ID |
 | `translate` | *bool* | No | Translate ability names |
 | `view_options` | *int* | No | View option flags |
-| `view_by` | *ViewType* | No | View aggregation method |
+| `view_by` | [*ViewType*](../enums/#viewtype) | No | View aggregation method |
 | `wipe_cutoff` | *int* | No | Wipe cutoff percentage |
 
 **Returns**: `GetReportTable` object with the following structure:
@@ -272,12 +272,12 @@ Number of players: 10
 | Parameters | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `code` | *str* | Yes | The report code to analyze |
-| `compare` | *RankingCompareType* | No | Comparison method for rankings |
+| `compare` | [*RankingCompareType*](../enums/#rankingcomparetype) | No | Comparison method for rankings |
 | `difficulty` | *int* | No | Difficulty level filter |
 | `encounter_id` | *int* | No | Filter to specific encounter |
 | `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
-| `player_metric` | *ReportRankingMetricType* | No | Ranking metric (dps, hps, playerscore, etc.) |
-| `timeframe` | *RankingTimeframeType* | No | Time frame for ranking comparison |
+| `player_metric` | [*ReportRankingMetricType*](../enums/#reportrankingmetrictype) | No | Ranking metric (dps, hps, playerscore, etc.) |
+| `timeframe` | [*RankingTimeframeType*](../enums/#rankingtimeframetype) | No | Time frame for ranking comparison |
 
 **Returns**: `GetReportRankings` object with the following structure:
 
@@ -343,7 +343,7 @@ Top DPS Players:
 | `encounter_id` | *int* | No | Filter to specific encounter |
 | `end_time` | *float* | No | End time in milliseconds |
 | `fight_i_ds` | *List[int]* | No | List of fight IDs to include |
-| `kill_type` | *KillType* | No | Filter by kill type |
+| `kill_type` | [*KillType*](../enums/#killtype) | No | Filter by kill type |
 | `start_time` | *float* | No | Start time in milliseconds |
 | `translate` | *bool* | No | Translate ability names |
 | `include_combatant_info` | *bool* | No | Include detailed combatant information |
