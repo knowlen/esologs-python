@@ -4,6 +4,9 @@
 
 Enums (Enumerations) in ESO Logs Python provide type-safe constants for various API parameters. They represent fixed sets of allowed values defined by the ESO Logs GraphQL schema, ensuring that your code uses valid options and catches errors at development time rather than runtime.
 
+!!! note "Advanced GraphQL Features"
+    Some enums in the GraphQL schema are only used by nested fields that aren't exposed through the Python client's convenience methods. See [Direct GraphQL Access](../../advanced/graphql-escape-hatch/) for how to use these advanced features.
+
 ### Why Use Enums?
 
 1. **Type Safety**: Your IDE and type checker will catch invalid values before you run your code
