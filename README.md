@@ -439,62 +439,62 @@ Duration: 2891000ms
 ## Available API Methods
 
 ### Game Data
-- [`get_ability`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_ability)`(id)` - Get specific ability information
-- [`get_abilities`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_abilities)`(limit=None, page=None)` - List abilities with pagination
-- [`get_class`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_class)`(id)` - Get character class information
-- [`get_classes`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_classes)`(limit=None, page=None, faction_id=None, zone_id=None)` - List character classes with optional filtering
-- [`get_factions`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_factions)`()` - Get available factions
-- [`get_item`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_item)`(id)` - Get specific item information
-- [`get_items`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_items)`(limit=None, page=None)` - List items with pagination
-- [`get_item_set`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_item_set)`(id)` - Get item set information
-- [`get_item_sets`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_item_sets)`(limit=None, page=None)` - List item sets with pagination
-- [`get_map`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_map)`(id)` - Get map information
-- [`get_maps`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_maps)`(limit=None, page=None)` - List maps with pagination
-- [`get_npc`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_npc)`(id)` - Get NPC information
-- [`get_npcs`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_npcs)`(limit=None, page=None)` - List NPCs with pagination
+- [`get_ability`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_ability) - Get specific ability information
+- [`get_abilities`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_abilities) - List abilities with pagination
+- [`get_class`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_class) - Get character class information
+- [`get_classes`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_classes) - List character classes with optional filtering
+- [`get_factions`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_factions) - Get available factions
+- [`get_item`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_item) - Get specific item information
+- [`get_items`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_items) - List items with pagination
+- [`get_item_set`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_item_set) - Get item set information
+- [`get_item_sets`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_item_sets) - List item sets with pagination
+- [`get_map`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_map) - Get map information
+- [`get_maps`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_maps) - List maps with pagination
+- [`get_npc`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_npc) - Get NPC information
+- [`get_npcs`](https://esologs-python.readthedocs.io/en/latest/api-reference/game-data/#get_npcs) - List NPCs with pagination
 
 ### Character Data
-- [`get_character_by_id`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_by_id)`(id)` - Get character profile
-- [`get_character_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_reports)`(character_id, limit)` - Get character's reports
-- [`get_character_encounter_ranking`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_encounter_ranking)`(character_id, encounter_id)` - Get character rankings (legacy)
-- [`get_character_encounter_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_encounter_rankings)`(character_id, encounter_id, **kwargs)` - Advanced encounter rankings with full filtering
-- [`get_character_zone_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_zone_rankings)`(character_id, zone_id, **kwargs)` - Zone-wide character leaderboards
+- [`get_character_by_id`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_by_id) - Get character profile
+- [`get_character_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_reports) - Get character's reports
+- [`get_character_encounter_ranking`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_encounter_ranking) - Get character rankings (legacy)
+- [`get_character_encounter_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_encounter_rankings) - Advanced encounter rankings with full filtering
+- [`get_character_zone_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/character-data/#get_character_zone_rankings) - Zone-wide character leaderboards
 
 ### Guild Data
-- [`get_guild_by_id`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild_by_id)`(guild_id)` - Get guild information by ID
-- [`get_guild`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild)`(guild_id=None, guild_name=None, guild_server_slug=None, guild_server_region=None)` - Flexible guild lookup
-- [`get_guilds`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guilds)`(server_id=None, server_slug=None, server_region=None, limit=None, page=None)` - List/search guilds
-- [`get_guild_attendance`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild_attendance)`(guild_id, zone_id=None, encounter_id=None, difficulty=None, ...)` - Get guild raid attendance
-- [`get_guild_members`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild_members)`(guild_id, limit=None, page=None)` - Get guild member list
+- [`get_guild_by_id`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild_by_id) - Get guild information by ID
+- [`get_guild`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild) - Flexible guild lookup
+- [`get_guilds`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guilds) - List/search guilds
+- [`get_guild_attendance`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild_attendance) - Get guild raid attendance
+- [`get_guild_members`](https://esologs-python.readthedocs.io/en/latest/api-reference/guild-data/#get_guild_members) - Get guild member list
 
 ### World Data
-- [`get_world_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_world_data)`()` - Get comprehensive world information
-- [`get_regions`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_regions)`()` - Get available regions
-- [`get_zones`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_zones)`()` - Get available zones
-- [`get_encounters_by_zone`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_encounters_by_zone)`(zone_id)` - Get encounters in specific zone
+- [`get_world_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_world_data) - Get comprehensive world information
+- [`get_regions`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_regions) - Get available regions
+- [`get_zones`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_zones) - Get available zones
+- [`get_encounters_by_zone`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_encounters_by_zone) - Get encounters in specific zone
 
 ### Report Data
-- [`get_report_by_code`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_by_code)`(code)` - Get specific report by code
-- [`get_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_reports)`(**kwargs)` - Advanced report search with comprehensive filtering
-- [`search_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#search_reports)`(**kwargs)` - Flexible report search with multiple criteria
-- [`get_guild_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_guild_reports)`(guild_id, **kwargs)` - Convenience method for guild reports
-- [`get_user_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_user_reports)`(user_id, **kwargs)` - Convenience method for user reports
-- [`get_report_events`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_events)`(code, **kwargs)` - Get event-by-event combat log data with comprehensive filtering
-- [`get_report_graph`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_graph)`(code, **kwargs)` - Get time-series performance graphs and metrics
-- [`get_report_table`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_table)`(code, **kwargs)` - Get tabular analysis data with sorting and filtering
-- [`get_report_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_rankings)`(code, **kwargs)` - Get report rankings and leaderboard data
-- [`get_report_player_details`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_player_details)`(code, **kwargs)` - Get detailed player performance data from reports
+- [`get_report_by_code`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_by_code) - Get specific report by code
+- [`get_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_reports) - Advanced report search with comprehensive filtering
+- [`search_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#search_reports) - Flexible report search with multiple criteria
+- [`get_guild_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_guild_reports) - Convenience method for guild reports
+- [`get_user_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_user_reports) - Convenience method for user reports
+- [`get_report_events`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_events) - Get event-by-event combat log data with comprehensive filtering
+- [`get_report_graph`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_graph) - Get time-series performance graphs and metrics
+- [`get_report_table`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_table) - Get tabular analysis data with sorting and filtering
+- [`get_report_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_rankings) - Get report rankings and leaderboard data
+- [`get_report_player_details`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_player_details) - Get detailed player performance data from reports
 
 ### Progress Race
-- [`get_progress_race`](https://esologs-python.readthedocs.io/en/latest/api-reference/progress-race-data/#get_progress_race)`(**kwargs)` - Get world/realm first achievement race tracking data
+- [`get_progress_race`](https://esologs-python.readthedocs.io/en/latest/api-reference/progress-race-data/#get_progress_race) - Get world/realm first achievement race tracking data
 
 ### User Data (OAuth2 Required)
-- [`get_user_by_id`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_user_by_id)`(user_id)` - Get specific user information
-- [`get_current_user`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_current_user)`()` - Get authenticated user (requires /api/v2/user endpoint)
-- [`get_user_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_user_data)`()` - Get userData root object
+- [`get_user_by_id`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_user_by_id) - Get specific user information
+- [`get_current_user`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_current_user) - Get authenticated user (requires /api/v2/user endpoint)
+- [`get_user_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_user_data) - Get userData root object
 
 ### System
-- [`get_rate_limit_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_rate_limit_data)`()` - Check API usage and rate limits
+- [`get_rate_limit_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_rate_limit_data) - Check API usage and rate limits
 
 ## Development
 
