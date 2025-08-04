@@ -116,8 +116,7 @@ Filter for rankings based on external buff usage.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](../character-data/#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](../character-data/#get_character_zone_rankings)
+*Note: This enum is defined in the GraphQL schema but is not currently exposed through any API methods in the Python client.*
 
 ---
 
@@ -197,8 +196,7 @@ Filter for rankings based on hard mode completion.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](../character-data/#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](../character-data/#get_character_zone_rankings)
+*Note: This enum is defined in the GraphQL schema but is not currently exposed through any API methods in the Python client.*
 
 ---
 
@@ -252,8 +250,7 @@ Leaderboard ranking tiers.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](../character-data/#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](../character-data/#get_character_zone_rankings)
+*Note: This enum is defined in the GraphQL schema but is not currently exposed through any API methods in the Python client.*
 
 ---
 
@@ -270,6 +267,7 @@ How to compare rankings.
 
 - [`get_character_encounter_rankings`](../character-data/#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](../character-data/#get_character_zone_rankings)
+- [`get_report_rankings`](../report-analysis/#get_report_rankings)
 
 ---
 
@@ -286,6 +284,7 @@ Time period for rankings.
 
 - [`get_character_encounter_rankings`](../character-data/#get_character_encounter_rankings)
 - [`get_character_zone_rankings`](../character-data/#get_character_zone_rankings)
+- [`get_report_rankings`](../report-analysis/#get_report_rankings)
 
 ---
 
@@ -344,8 +343,7 @@ User subscription status levels.
 
 **Used by:**
 
-- [`get_current_user`](../user-data/#get_current_user)
-- [`get_user_by_id`](../user-data/#get_user_by_id)
+*Note: This enum is defined in the GraphQL schema but is not currently exposed through any API methods in the Python client.*
 
 ---
 

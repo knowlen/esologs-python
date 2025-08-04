@@ -247,7 +247,19 @@ Players: 12
 | `limit` | *int \| None* | No | Members per page (default: 100, max: 100) |
 | `page` | *int \| None* | No | Page number (default: 1) |
 
-**Returns**: `GetGuildMembers` object with member list
+**Returns**: `GetGuildMembers` object with the following structure:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `guild_data.guild.members.data` | *List[Member]* | List of guild members |
+| `guild_data.guild.members.data[].id` | *int* | Member character ID |
+| `guild_data.guild.members.data[].name` | *str* | Member character name |
+| `guild_data.guild.members.data[].guild_rank` | *int* | Member rank (corresponds to [*GuildRank*](../enums/#guildrank) enum values) |
+| `guild_data.guild.members.data[].server` | *Server* | Member's server info |
+| `guild_data.guild.members.total` | *int* | Total number of members |
+| `guild_data.guild.members.per_page` | *int* | Members per page |
+| `guild_data.guild.members.current_page` | *int* | Current page number |
+| `guild_data.guild.members.has_more_pages` | *bool* | Whether more pages exist |
 
 **Note**: Member rosters may not be available for all games (e.g., Classic WoW)
 

@@ -64,21 +64,21 @@ Filter expressions use a SQL-like syntax with the following operators:
 Common fields you can filter on:
 
 - **Event Fields**
-  - `type` - Event type (damage, heal, applybuff, removebuff, death, etc.)
-  - `timestamp` - When the event occurred
+    - `type` - Event type (damage, heal, applybuff, removebuff, death, etc.)
+    - `timestamp` - When the event occurred
 
 - **Ability Fields**
-  - `ability.id` - Numeric ability ID
-  - `ability.name` - Ability name (string)
-  - `ability.type` - Ability type
+    - `ability.id` - Numeric ability ID
+    - `ability.name` - Ability name (string)
+    - `ability.type` - Ability type
 
 - **Actor Fields**
-  - `source.id` - Source actor ID
-  - `source.name` - Source actor name
-  - `source.type` - Actor type (Player, NPC, etc.)
-  - `target.id` - Target actor ID
-  - `target.name` - Target actor name
-  - `target.type` - Target actor type
+    - `source.id` - Source actor ID
+    - `source.name` - Source actor name
+    - `source.type` - Actor type (Player, NPC, etc.)
+    - `target.id` - Target actor ID
+    - `target.name` - Target actor name
+    - `target.type` - Target actor type
 
 ### Common Filter Expression Patterns
 
@@ -256,6 +256,20 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+```
+
+**Output**:
+```
+Fight Duration: 163.0s
+
+Player 66:
+  Ability 109966: 62.5s (38.3%)
+Player 17:
+  Ability 61737: 146.8s (90.0%)
+Player 22:
+  Ability 61737: 88.0s (54.0%)
+Player 67:
+  Ability 40225: 17.5s (10.7%)
 ```
 
 ### Performance Benefits
