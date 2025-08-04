@@ -392,7 +392,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - [ESO Logs](https://www.esologs.com/) team for providing the API
 - [ariadne-codegen](https://github.com/mirumee/ariadne-codegen) for GraphQL code generation
-- The Elder Scrolls Online endgame community for sharing their combat logs
+- The ESO endgame community for sharing their combat logs and keeping the website alive
 
 ## Support
 
