@@ -146,7 +146,7 @@ Filter for rankings based on external buff usage.
 
 **Used by:**
 
-*Note: This enum is defined in the GraphQL schema for use with `Zone.characterRankings`, which is not exposed as a top-level query method in the ESO Logs API. The Python client provides 100% coverage of available API methods.*
+*Note: This enum is defined in the GraphQL schema for use with `Encounter.characterRankings`, which is not exposed as a top-level query method in the ESO Logs API. The Python client provides 100% coverage of available API methods.*
 
 ---
 
@@ -232,7 +232,7 @@ Filter for rankings based on hard mode completion.
 
 **Used by:**
 
-*Note: This enum is defined in the GraphQL schema for use with `Zone.characterRankings`, which is not exposed as a top-level query method in the ESO Logs API. The Python client provides 100% coverage of available API methods.*
+*Note: This enum is defined in the GraphQL schema for use with `Encounter.characterRankings`, which is not exposed as a top-level query method in the ESO Logs API. The Python client provides 100% coverage of available API methods.*
 
 ---
 
@@ -284,7 +284,7 @@ Leaderboard ranking tiers.
 
 **Used by:**
 
-*Note: This enum is defined in the GraphQL schema for use with `Zone.characterRankings`, which is not exposed as a top-level query method in the ESO Logs API. The Python client provides 100% coverage of available API methods.*
+*Note: This enum is defined in the GraphQL schema for use with `Encounter.characterRankings`, which is not exposed as a top-level query method in the ESO Logs API. The Python client provides 100% coverage of available API methods.*
 
 ---
 
