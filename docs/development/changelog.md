@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added comprehensive troubleshooting guide
   - Added OAuth2 examples (sync, async, Flask, FastAPI)
   - Reorganized docs structure (Getting Started and Development sections)
-- **Testing**: Total test count increased from 322 to 404+ tests
+- **Testing**: Total test count increased from 322 to 428+ tests
   - Added 10 unit tests for OAuth2 functionality
   - Added 8 integration tests for UserData methods
   - Added 8 integration tests for progress race functionality
@@ -119,11 +119,11 @@ This is the first alpha release of version 0.2.0, featuring major architectural 
 ### Enhanced
 
 #### Code Quality & Testing
-- **Comprehensive Test Suite**: 278 tests with extensive coverage
-  - 76 unit tests covering core functionality
-  - 85 integration tests with real API validation
-  - 98 documentation tests validating all examples
-  - 19 sanity tests for quick verification
+- **Comprehensive Test Suite**: 428 tests with extensive coverage
+  - 164 unit tests covering core functionality
+  - 129 integration tests with real API validation
+  - 117 documentation tests validating all examples
+  - 18 sanity tests for quick verification
   - Test fixtures and shared utilities
 - **GitHub Actions Optimization**: 75% reduction in CI minutes
   - Parallel test execution

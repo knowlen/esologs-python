@@ -6,10 +6,10 @@ Comprehensive testing framework for the esologs-python library, providing three 
 
 | Test Suite | Purpose | API Required | Speed | Coverage | Test Count |
 |-----------|---------|--------------|-------|----------|------------|
-| **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 115 tests |
-| **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 93 tests |
-| **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 20 tests |
-| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 176 tests |
+| **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 164 tests |
+| **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 129 tests |
+| **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 18 tests |
+| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 117 tests |
 
 ## Quickstart
 
@@ -251,10 +251,10 @@ black . && isort . && ruff check --fix . && mypy .
 
 | Suite | Execution Time | Tests | Purpose |
 |-------|---------------|-------|---------|
-| Unit | < 5 seconds | 115 | Development feedback |
-| Integration | ~35 seconds | 93 | API validation |
-| Documentation | ~30 seconds | 176 | Examples validation |
-| Sanity | ~15 seconds | 20 | Health check |
-| **Total** | **~85 seconds** | **404** | **Complete validation** |
+| Unit | < 5 seconds | 164 | Development feedback |
+| Integration | ~35 seconds | 129 | API validation |
+| Documentation | ~30 seconds | 117 | Examples validation |
+| Sanity | ~15 seconds | 18 | Health check |
+| **Total** | **~85 seconds** | **428** | **Complete validation** |
 
 The test suite provides comprehensive coverage while maintaining fast execution times for efficient development workflows.

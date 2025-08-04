@@ -23,7 +23,7 @@
 | **API Coverage** | **100%** (42/42 methods implemented) |
 | **Development Stage** | Active development |
 | **Documentation** | [Read the Docs](https://esologs-python.readthedocs.io/) |
-| **Tests** | 404 tests across unit, integration, documentation, and sanity suites |
+| **Tests** | 428 tests across unit, integration, documentation, and sanity suites |
 
 
 ## Installation
@@ -337,7 +337,7 @@ esologs-python/
 │       ├── async_base_client.py  # Base async GraphQL client
 │       ├── exceptions.py         # Custom exceptions
 │       └── get_*.py             # Generated query/response models
-├── tests/                  # Test suite (404 tests)
+├── tests/                  # Test suite (428 tests)
 │   ├── unit/              # Unit tests
 │   ├── integration/       # Integration tests
 │   ├── docs/              # Documentation tests

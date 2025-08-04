@@ -1,15 +1,15 @@
 # Testing Guide
 
-ESO Logs Python uses a comprehensive testing framework with 278 tests across four test suites.
+ESO Logs Python uses a comprehensive testing framework with 428 tests across four test suites.
 
 ## Test Suite Overview
 
 | Test Suite | Tests | API Required | Purpose |
 |-----------|-------|--------------|---------|
-| **Unit** | 76 | ❌ No | Validation logic, no external dependencies |
-| **Integration** | 85 | ✅ Yes | Live API endpoint testing |
-| **Documentation** | 98 | ✅ Yes | Validate all code examples |
-| **Sanity** | 19 | ✅ Yes | Quick API health check |
+| **Unit** | 164 | ❌ No | Validation logic, no external dependencies |
+| **Integration** | 129 | ✅ Yes | Live API endpoint testing |
+| **Documentation** | 117 | ✅ Yes | Validate all code examples |
+| **Sanity** | 18 | ✅ Yes | Quick API health check |
 
 ## Running Tests
 

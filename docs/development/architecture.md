@@ -298,25 +298,25 @@ graph TB
 
 ### Test Categories
 
-1. **Unit Tests** (76 tests)
+1. **Unit Tests** (164 tests)
    - Parameter validation logic
    - Authentication token handling
    - Method signature verification
    - Error condition testing
 
-2. **Integration Tests** (85 tests)
+2. **Integration Tests** (129 tests)
    - Live API endpoint testing
    - Response data validation
    - Error scenario verification
    - Workflow testing
 
-3. **Documentation Tests** (98 tests)
+3. **Documentation Tests** (117 tests)
    - All code examples validated
    - Documentation accuracy verification
    - Copy-paste example testing
    - API reference validation
 
-4. **Sanity Tests** (19 tests)
+4. **Sanity Tests** (18 tests)
    - Broad API coverage check
    - System health verification
    - Smoke testing for CI/CD
