@@ -285,10 +285,10 @@ except ValidationError as e:
 
 ```mermaid
 graph TB
-    A[278 Total Tests] --> B[Unit Tests - 76]
-    A --> C[Integration Tests - 85]
-    A --> D[Documentation Tests - 98]
-    A --> E[Sanity Tests - 19]
+    A[428 Total Tests] --> B[Unit Tests - 164]
+    A --> C[Integration Tests - 129]
+    A --> D[Documentation Tests - 117]
+    A --> E[Sanity Tests - 18]
 
     B --> F[Fast, Isolated]
     C --> G[Live API, Comprehensive]
