@@ -65,10 +65,37 @@ Metrics available for character rankings and leaderboards.
 
 **Values:**
 
+- `bosscdps` - Boss conduit DPS
+- `bossdps` - Boss damage per second
+- `bossndps` - Boss normalized DPS
+- `bossrdps` - Boss rDPS (raid-contributing DPS)
+- `default` - Default metric
 - `dps` - Damage per second
 - `hps` - Healing per second
+- `krsi` - Kill speed index
 - `playerscore` - Overall performance score
 - `playerspeed` - Clear time performance
+- `cdps` - Conduit DPS
+- `ndps` - Normalized DPS
+- `rdps` - Raid-contributing DPS
+- `tankhps` - Tank healing per second
+- `wdps` - Weighted DPS
+- `healercombineddps` - Healer combined DPS
+- `healercombinedbossdps` - Healer combined boss DPS
+- `healercombinedcdps` - Healer combined conduit DPS
+- `healercombinedbosscdps` - Healer combined boss conduit DPS
+- `healercombinedndps` - Healer combined normalized DPS
+- `healercombinedbossndps` - Healer combined boss normalized DPS
+- `healercombinedrdps` - Healer combined rDPS
+- `healercombinedbossrdps` - Healer combined boss rDPS
+- `tankcombineddps` - Tank combined DPS
+- `tankcombinedbossdps` - Tank combined boss DPS
+- `tankcombinedcdps` - Tank combined conduit DPS
+- `tankcombinedbosscdps` - Tank combined boss conduit DPS
+- `tankcombinedndps` - Tank combined normalized DPS
+- `tankcombinedbossndps` - Tank combined boss normalized DPS
+- `tankcombinedrdps` - Tank combined rDPS
+- `tankcombinedbossrdps` - Tank combined boss rDPS
 
 **Used by:**
 
@@ -110,9 +137,9 @@ Filter for rankings based on external buff usage.
 
 **Values:**
 
-- `include` - Include rankings with external buffs
-- `exclude` - Exclude rankings with external buffs
-- `require` - Only show rankings with external buffs
+- `Any` - Any external buff usage
+- `Exclude` - Exclude rankings with external buffs
+- `Require` - Only show rankings with external buffs
 
 **Used by:**
 
@@ -127,14 +154,11 @@ Metrics available for fight-specific rankings.
 **Values:**
 
 - `default` - Default ranking metric
-- `bossdps` - Boss damage per second
-- `bossrdps` - Boss rDPS (raid-contributing DPS)
 - `execution` - Execution score
 - `feats` - Feats of strength
-- `krsi` - Kill speed index
-- `playerscore` - Player performance score
-- `playerspeed` - Clear time performance
+- `score` - Overall score
 - `speed` - Clear speed
+- `progress` - Progress metric
 
 **Used by:**
 
@@ -148,6 +172,7 @@ Types of data available for time-series graphs.
 
 **Values:**
 
+- `Summary` - Summary data
 - `Buffs` - Buff uptime over time
 - `Casts` - Cast timeline
 - `DamageDone` - Damage output graph
@@ -159,6 +184,7 @@ Types of data available for time-series graphs.
 - `Interrupts` - Interrupt timeline
 - `Resources` - Resource levels over time
 - `Summons` - Summon timeline
+- `Survivability` - Survivability metrics
 - `Threat` - Threat over time
 
 **Used by:**
@@ -173,6 +199,8 @@ Guild member rank levels.
 
 **Values:**
 
+- `NonMember` - Not a guild member
+- `Applicant` - Guild applicant
 - `Recruit` - New guild member
 - `Member` - Standard member
 - `Officer` - Guild officer
@@ -190,9 +218,14 @@ Filter for rankings based on hard mode completion.
 
 **Values:**
 
-- `any` - Any difficulty level
-- `highest` - Highest difficulty only
-- `lowest` - Base difficulty only
+- `Any` - Any difficulty level
+- `Highest` - Highest difficulty only
+- `NormalMode` - Normal mode (base difficulty)
+- `Level0` - Hard mode level 0
+- `Level1` - Hard mode level 1
+- `Level2` - Hard mode level 2
+- `Level3` - Hard mode level 3
+- `Level4` - Hard mode level 4
 
 **Used by:**
 
@@ -223,8 +256,10 @@ Filter data by encounter outcome.
 
 **Values:**
 
+- `All` - All fight data
 - `Encounters` - All encounter attempts
 - `Kills` - Successful kills only
+- `Trash` - Trash fights only
 - `Wipes` - Failed attempts only
 
 **Used by:**
@@ -242,11 +277,7 @@ Leaderboard ranking tiers.
 **Values:**
 
 - `Any` - Any rank
-- `Blue` - Blue rank (uncommon)
-- `Gold` - Gold rank (legendary)
-- `Green` - Green rank (common)
-- `Orange` - Orange rank (rare)
-- `Purple` - Purple rank (epic)
+- `LogsOnly` - Logs only (no rank restrictions)
 
 **Used by:**
 
@@ -277,7 +308,7 @@ Time period for rankings.
 
 **Values:**
 
-- `Current` - Current patch/season
+- `Today` - Today's rankings
 - `Historical` - All-time historical
 
 **Used by:**
@@ -317,9 +348,10 @@ Character role classifications.
 
 **Values:**
 
-- `Tank` - Tank role
-- `Healer` - Healer role
+- `Any` - Any role
 - `DPS` - Damage dealer role
+- `Healer` - Healer role
+- `Tank` - Tank role
 
 **Used by:**
 
@@ -334,12 +366,13 @@ User subscription status levels.
 
 **Values:**
 
-- `Free` - Free tier user
 - `Silver` - Silver subscription
 - `Gold` - Gold subscription
 - `Platinum` - Platinum subscription
+- `LegacySilver` - Legacy silver status
 - `LegacyGold` - Legacy gold status
 - `LegacyPlatinum` - Legacy platinum status
+- `AlchemicalSociety` - Alchemical Society membership
 
 **Used by:**
 
@@ -353,6 +386,7 @@ Types of data available in tabular format.
 
 **Values:**
 
+- `Summary` - Summary statistics
 - `Buffs` - Buff uptime statistics
 - `Casts` - Cast counts and timings
 - `DamageDone` - Damage dealt breakdown
@@ -364,6 +398,7 @@ Types of data available in tabular format.
 - `Interrupts` - Interrupt counts
 - `Resources` - Resource generation/usage
 - `Summons` - Summon statistics
+- `Survivability` - Survivability statistics
 - `Threat` - Threat generation
 
 **Used by:**
