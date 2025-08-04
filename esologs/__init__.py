@@ -1,10 +1,8 @@
-__version__ = "0.2.0a2"
+__version__ = "0.2.0b1"
 
-from .async_base_client import AsyncBaseClient
-from .auth import get_access_token
-from .base_model import BaseModel, Upload
-from .client import Client
-from .enums import (
+from ._generated.async_base_client import AsyncBaseClient
+from ._generated.base_model import BaseModel, Upload
+from ._generated.enums import (
     CharacterRankingMetricType,
     EventDataType,
     ExternalBuffRankFilter,
@@ -23,38 +21,42 @@ from .enums import (
     TableDataType,
     ViewType,
 )
-from .exceptions import (
+from ._generated.exceptions import (
     GraphQLClientError,
     GraphQLClientGraphQLError,
     GraphQLClientGraphQLMultiError,
     GraphQLClientHttpError,
     GraphQLClientInvalidResponseError,
 )
-from .get_abilities import (
+from ._generated.get_abilities import (
     GetAbilities,
     GetAbilitiesGameData,
     GetAbilitiesGameDataAbilities,
     GetAbilitiesGameDataAbilitiesData,
 )
-from .get_ability import GetAbility, GetAbilityGameData, GetAbilityGameDataAbility
-from .get_character_by_id import (
+from ._generated.get_ability import (
+    GetAbility,
+    GetAbilityGameData,
+    GetAbilityGameDataAbility,
+)
+from ._generated.get_character_by_id import (
     GetCharacterById,
     GetCharacterByIdCharacterData,
     GetCharacterByIdCharacterDataCharacter,
     GetCharacterByIdCharacterDataCharacterServer,
     GetCharacterByIdCharacterDataCharacterServerRegion,
 )
-from .get_character_encounter_ranking import (
+from ._generated.get_character_encounter_ranking import (
     GetCharacterEncounterRanking,
     GetCharacterEncounterRankingCharacterData,
     GetCharacterEncounterRankingCharacterDataCharacter,
 )
-from .get_character_encounter_rankings import (
+from ._generated.get_character_encounter_rankings import (
     GetCharacterEncounterRankings,
     GetCharacterEncounterRankingsCharacterData,
     GetCharacterEncounterRankingsCharacterDataCharacter,
 )
-from .get_character_reports import (
+from ._generated.get_character_reports import (
     GetCharacterReports,
     GetCharacterReportsCharacterData,
     GetCharacterReportsCharacterDataCharacter,
@@ -62,21 +64,48 @@ from .get_character_reports import (
     GetCharacterReportsCharacterDataCharacterRecentReportsData,
     GetCharacterReportsCharacterDataCharacterRecentReportsDataZone,
 )
-from .get_character_zone_rankings import (
+from ._generated.get_character_zone_rankings import (
     GetCharacterZoneRankings,
     GetCharacterZoneRankingsCharacterData,
     GetCharacterZoneRankingsCharacterDataCharacter,
 )
-from .get_class import GetClass, GetClassGameData, GetClassGameDataClass
-from .get_classes import GetClasses, GetClassesGameData, GetClassesGameDataClasses
-from .get_encounters_by_zone import (
+from ._generated.get_class import GetClass, GetClassGameData, GetClassGameDataClass
+from ._generated.get_classes import (
+    GetClasses,
+    GetClassesGameData,
+    GetClassesGameDataClasses,
+)
+from ._generated.get_current_user import (
+    GetCurrentUser,
+    GetCurrentUserUserData,
+    GetCurrentUserUserDataCurrentUser,
+    GetCurrentUserUserDataCurrentUserCharacters,
+    GetCurrentUserUserDataCurrentUserCharactersServer,
+    GetCurrentUserUserDataCurrentUserCharactersServerRegion,
+    GetCurrentUserUserDataCurrentUserGuilds,
+    GetCurrentUserUserDataCurrentUserGuildsServer,
+    GetCurrentUserUserDataCurrentUserGuildsServerRegion,
+)
+from ._generated.get_encounters_by_zone import (
     GetEncountersByZone,
     GetEncountersByZoneWorldData,
     GetEncountersByZoneWorldDataZone,
     GetEncountersByZoneWorldDataZoneEncounters,
 )
-from .get_factions import GetFactions, GetFactionsGameData, GetFactionsGameDataFactions
-from .get_guild_by_id import (
+from ._generated.get_factions import (
+    GetFactions,
+    GetFactionsGameData,
+    GetFactionsGameDataFactions,
+)
+from ._generated.get_guild_attendance import (
+    GetGuildAttendance,
+    GetGuildAttendanceGuildData,
+    GetGuildAttendanceGuildDataGuild,
+    GetGuildAttendanceGuildDataGuildAttendance,
+    GetGuildAttendanceGuildDataGuildAttendanceData,
+    GetGuildAttendanceGuildDataGuildAttendanceDataPlayers,
+)
+from ._generated.get_guild_by_id import (
     GetGuildById,
     GetGuildByIdGuildData,
     GetGuildByIdGuildDataGuild,
@@ -85,75 +114,113 @@ from .get_guild_by_id import (
     GetGuildByIdGuildDataGuildServerRegion,
     GetGuildByIdGuildDataGuildTags,
 )
-from .get_item import GetItem, GetItemGameData, GetItemGameDataItem
-from .get_item_set import GetItemSet, GetItemSetGameData, GetItemSetGameDataItemSet
-from .get_item_sets import (
+from ._generated.get_guild_by_name import (
+    GetGuildByName,
+    GetGuildByNameGuildData,
+    GetGuildByNameGuildDataGuild,
+    GetGuildByNameGuildDataGuildFaction,
+    GetGuildByNameGuildDataGuildServer,
+    GetGuildByNameGuildDataGuildServerRegion,
+    GetGuildByNameGuildDataGuildTags,
+)
+from ._generated.get_guild_members import (
+    GetGuildMembers,
+    GetGuildMembersGuildData,
+    GetGuildMembersGuildDataGuild,
+    GetGuildMembersGuildDataGuildMembers,
+    GetGuildMembersGuildDataGuildMembersData,
+    GetGuildMembersGuildDataGuildMembersDataServer,
+    GetGuildMembersGuildDataGuildMembersDataServerRegion,
+)
+from ._generated.get_guilds import (
+    GetGuilds,
+    GetGuildsGuildData,
+    GetGuildsGuildDataGuilds,
+    GetGuildsGuildDataGuildsData,
+    GetGuildsGuildDataGuildsDataFaction,
+    GetGuildsGuildDataGuildsDataServer,
+    GetGuildsGuildDataGuildsDataServerRegion,
+)
+from ._generated.get_item import GetItem, GetItemGameData, GetItemGameDataItem
+from ._generated.get_item_set import (
+    GetItemSet,
+    GetItemSetGameData,
+    GetItemSetGameDataItemSet,
+)
+from ._generated.get_item_sets import (
     GetItemSets,
     GetItemSetsGameData,
     GetItemSetsGameDataItemSets,
     GetItemSetsGameDataItemSetsData,
 )
-from .get_items import (
+from ._generated.get_items import (
     GetItems,
     GetItemsGameData,
     GetItemsGameDataItems,
     GetItemsGameDataItemsData,
 )
-from .get_map import GetMap, GetMapGameData, GetMapGameDataMap
-from .get_maps import (
+from ._generated.get_map import GetMap, GetMapGameData, GetMapGameDataMap
+from ._generated.get_maps import (
     GetMaps,
     GetMapsGameData,
     GetMapsGameDataMaps,
     GetMapsGameDataMapsData,
 )
-from .get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
-from .get_npcs import (
+from ._generated.get_np_cs import (
     GetNPCs,
     GetNPCsGameData,
     GetNPCsGameDataNpcs,
     GetNPCsGameDataNpcsData,
 )
-from .get_rate_limit_data import GetRateLimitData, GetRateLimitDataRateLimitData
-from .get_regions import (
+from ._generated.get_npc import GetNPC, GetNPCGameData, GetNPCGameDataNpc
+from ._generated.get_progress_race import (
+    GetProgressRace,
+    GetProgressRaceProgressRaceData,
+)
+from ._generated.get_rate_limit_data import (
+    GetRateLimitData,
+    GetRateLimitDataRateLimitData,
+)
+from ._generated.get_regions import (
     GetRegions,
     GetRegionsWorldData,
     GetRegionsWorldDataRegions,
     GetRegionsWorldDataRegionsSubregions,
 )
-from .get_report_by_code import (
+from ._generated.get_report_by_code import (
     GetReportByCode,
     GetReportByCodeReportData,
     GetReportByCodeReportDataReport,
     GetReportByCodeReportDataReportFights,
     GetReportByCodeReportDataReportZone,
 )
-from .get_report_events import (
+from ._generated.get_report_events import (
     GetReportEvents,
     GetReportEventsReportData,
     GetReportEventsReportDataReport,
     GetReportEventsReportDataReportEvents,
 )
-from .get_report_graph import (
+from ._generated.get_report_graph import (
     GetReportGraph,
     GetReportGraphReportData,
     GetReportGraphReportDataReport,
 )
-from .get_report_player_details import (
+from ._generated.get_report_player_details import (
     GetReportPlayerDetails,
     GetReportPlayerDetailsReportData,
     GetReportPlayerDetailsReportDataReport,
 )
-from .get_report_rankings import (
+from ._generated.get_report_rankings import (
     GetReportRankings,
     GetReportRankingsReportData,
     GetReportRankingsReportDataReport,
 )
-from .get_report_table import (
+from ._generated.get_report_table import (
     GetReportTable,
     GetReportTableReportData,
     GetReportTableReportDataReport,
 )
-from .get_reports import (
+from ._generated.get_reports import (
     GetReports,
     GetReportsReportData,
     GetReportsReportDataReports,
@@ -164,7 +231,23 @@ from .get_reports import (
     GetReportsReportDataReportsDataOwner,
     GetReportsReportDataReportsDataZone,
 )
-from .get_world_data import (
+from ._generated.get_user_by_id import (
+    GetUserById,
+    GetUserByIdUserData,
+    GetUserByIdUserDataUser,
+    GetUserByIdUserDataUserCharacters,
+    GetUserByIdUserDataUserCharactersServer,
+    GetUserByIdUserDataUserCharactersServerRegion,
+    GetUserByIdUserDataUserGuilds,
+    GetUserByIdUserDataUserGuildsServer,
+    GetUserByIdUserDataUserGuildsServerRegion,
+)
+from ._generated.get_user_data import (
+    GetUserData,
+    GetUserDataUserData,
+    GetUserDataUserDataUser,
+)
+from ._generated.get_world_data import (
     GetWorldData,
     GetWorldDataWorldData,
     GetWorldDataWorldDataEncounter,
@@ -186,7 +269,7 @@ from .get_world_data import (
     GetWorldDataWorldDataZonesExpansion,
     GetWorldDataWorldDataZonesPartitions,
 )
-from .get_zones import (
+from ._generated.get_zones import (
     GetZones,
     GetZonesWorldData,
     GetZonesWorldDataZones,
@@ -195,12 +278,27 @@ from .get_zones import (
     GetZonesWorldDataZonesEncounters,
     GetZonesWorldDataZonesExpansion,
 )
+from .auth import get_access_token
+from .client import Client
+from .user_auth import (
+    OAuth2Flow,
+    UserToken,
+    exchange_authorization_code,
+    generate_authorization_url,
+    refresh_access_token,
+)
 
 __all__ = [
     "AsyncBaseClient",
     "BaseModel",
     "CharacterRankingMetricType",
     "Client",
+    "OAuth2Flow",
+    "UserToken",
+    "exchange_authorization_code",
+    "generate_authorization_url",
+    "get_access_token",
+    "refresh_access_token",
     "EventDataType",
     "ExternalBuffRankFilter",
     "FightRankingMetricType",
@@ -237,6 +335,15 @@ __all__ = [
     "GetClasses",
     "GetClassesGameData",
     "GetClassesGameDataClasses",
+    "GetCurrentUser",
+    "GetCurrentUserUserData",
+    "GetCurrentUserUserDataCurrentUser",
+    "GetCurrentUserUserDataCurrentUserCharacters",
+    "GetCurrentUserUserDataCurrentUserCharactersServer",
+    "GetCurrentUserUserDataCurrentUserCharactersServerRegion",
+    "GetCurrentUserUserDataCurrentUserGuilds",
+    "GetCurrentUserUserDataCurrentUserGuildsServer",
+    "GetCurrentUserUserDataCurrentUserGuildsServerRegion",
     "GetEncountersByZone",
     "GetEncountersByZoneWorldData",
     "GetEncountersByZoneWorldDataZone",
@@ -244,6 +351,12 @@ __all__ = [
     "GetFactions",
     "GetFactionsGameData",
     "GetFactionsGameDataFactions",
+    "GetGuildAttendance",
+    "GetGuildAttendanceGuildData",
+    "GetGuildAttendanceGuildDataGuild",
+    "GetGuildAttendanceGuildDataGuildAttendance",
+    "GetGuildAttendanceGuildDataGuildAttendanceData",
+    "GetGuildAttendanceGuildDataGuildAttendanceDataPlayers",
     "GetGuildById",
     "GetGuildByIdGuildData",
     "GetGuildByIdGuildDataGuild",
@@ -251,6 +364,27 @@ __all__ = [
     "GetGuildByIdGuildDataGuildServer",
     "GetGuildByIdGuildDataGuildServerRegion",
     "GetGuildByIdGuildDataGuildTags",
+    "GetGuildByName",
+    "GetGuildByNameGuildData",
+    "GetGuildByNameGuildDataGuild",
+    "GetGuildByNameGuildDataGuildFaction",
+    "GetGuildByNameGuildDataGuildServer",
+    "GetGuildByNameGuildDataGuildServerRegion",
+    "GetGuildByNameGuildDataGuildTags",
+    "GetGuildMembers",
+    "GetGuildMembersGuildData",
+    "GetGuildMembersGuildDataGuild",
+    "GetGuildMembersGuildDataGuildMembers",
+    "GetGuildMembersGuildDataGuildMembersData",
+    "GetGuildMembersGuildDataGuildMembersDataServer",
+    "GetGuildMembersGuildDataGuildMembersDataServerRegion",
+    "GetGuilds",
+    "GetGuildsGuildData",
+    "GetGuildsGuildDataGuilds",
+    "GetGuildsGuildDataGuildsData",
+    "GetGuildsGuildDataGuildsDataFaction",
+    "GetGuildsGuildDataGuildsDataServer",
+    "GetGuildsGuildDataGuildsDataServerRegion",
     "GetItem",
     "GetItemGameData",
     "GetItemGameDataItem",
@@ -279,6 +413,8 @@ __all__ = [
     "GetNPCsGameData",
     "GetNPCsGameDataNpcs",
     "GetNPCsGameDataNpcsData",
+    "GetProgressRace",
+    "GetProgressRaceProgressRaceData",
     "GetRateLimitData",
     "GetRateLimitDataRateLimitData",
     "GetRegions",
@@ -315,6 +451,18 @@ __all__ = [
     "GetReportsReportDataReportsDataGuildServerRegion",
     "GetReportsReportDataReportsDataOwner",
     "GetReportsReportDataReportsDataZone",
+    "GetUserById",
+    "GetUserByIdUserData",
+    "GetUserByIdUserDataUser",
+    "GetUserByIdUserDataUserCharacters",
+    "GetUserByIdUserDataUserCharactersServer",
+    "GetUserByIdUserDataUserCharactersServerRegion",
+    "GetUserByIdUserDataUserGuilds",
+    "GetUserByIdUserDataUserGuildsServer",
+    "GetUserByIdUserDataUserGuildsServerRegion",
+    "GetUserData",
+    "GetUserDataUserData",
+    "GetUserDataUserDataUser",
     "GetWorldData",
     "GetWorldDataWorldData",
     "GetWorldDataWorldDataEncounter",
@@ -361,5 +509,4 @@ __all__ = [
     "TableDataType",
     "Upload",
     "ViewType",
-    "get_access_token",
 ]

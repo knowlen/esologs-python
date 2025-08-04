@@ -4,10 +4,16 @@ from unittest.mock import AsyncMock, Mock
 
 import pytest
 
+from esologs._generated.enums import (
+    CharacterRankingMetricType,
+    RankingTimeframeType,
+    RoleType,
+)
+from esologs._generated.get_character_encounter_rankings import (
+    GetCharacterEncounterRankings,
+)
+from esologs._generated.get_character_zone_rankings import GetCharacterZoneRankings
 from esologs.client import Client
-from esologs.enums import CharacterRankingMetricType, RankingTimeframeType, RoleType
-from esologs.get_character_encounter_rankings import GetCharacterEncounterRankings
-from esologs.get_character_zone_rankings import GetCharacterZoneRankings
 
 
 class TestCharacterRankings:
@@ -222,7 +228,7 @@ class TestCharacterRankings:
         assert variables["characterId"] == 12345
         assert variables["metric"] == CharacterRankingMetricType.playerscore
         # zoneId should be UNSET, not None
-        from esologs.client import UNSET
+        from esologs._generated.base_model import UNSET
 
         assert variables["zoneId"] == UNSET
 

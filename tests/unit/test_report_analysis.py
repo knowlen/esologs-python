@@ -4,8 +4,7 @@ from unittest.mock import AsyncMock, Mock
 
 import pytest
 
-from esologs.client import Client
-from esologs.enums import (
+from esologs._generated.enums import (
     EventDataType,
     GraphDataType,
     HostilityType,
@@ -16,11 +15,12 @@ from esologs.enums import (
     TableDataType,
     ViewType,
 )
-from esologs.get_report_events import GetReportEvents
-from esologs.get_report_graph import GetReportGraph
-from esologs.get_report_player_details import GetReportPlayerDetails
-from esologs.get_report_rankings import GetReportRankings
-from esologs.get_report_table import GetReportTable
+from esologs._generated.get_report_events import GetReportEvents
+from esologs._generated.get_report_graph import GetReportGraph
+from esologs._generated.get_report_player_details import GetReportPlayerDetails
+from esologs._generated.get_report_rankings import GetReportRankings
+from esologs._generated.get_report_table import GetReportTable
+from esologs.client import Client
 
 
 class TestReportAnalysis:

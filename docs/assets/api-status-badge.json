@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "label": "ESO Logs API",
+  "message": "offline",
+  "color": "red"
+}

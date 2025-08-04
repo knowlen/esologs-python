@@ -6,6 +6,8 @@ import pytest
 from esologs.auth import get_access_token
 from esologs.client import Client
 
+from .retry_utils import RetryClient
+
 
 @pytest.fixture(scope="session")
 def api_credentials():
@@ -49,20 +51,6 @@ def integration_test_marker():
     return pytest.mark.integration
 
 
-def pytest_configure(config):
-    """Configure pytest with custom markers."""
-    config.addinivalue_line(
-        "markers", "integration: mark test as integration test requiring real API calls"
-    )
-
-
-def pytest_collection_modifyitems(config, items):
-    """Modify test collection to handle integration test markers."""
-    for item in items:
-        if "integration" in item.nodeid:
-            item.add_marker(pytest.mark.integration)
-
-
 @pytest.fixture(autouse=True)
 def check_credentials():
     """Ensure API credentials are available for integration tests."""
@@ -78,3 +66,28 @@ def check_credentials():
 def slow_test_marker():
     """Marker for slow integration tests."""
     return pytest.mark.slow
+
+
+@pytest.fixture
+def api_client_config(api_credentials):
+    """Configuration for creating API client instances."""
+    return {
+        "url": api_credentials["endpoint"],
+        "headers": {"Authorization": f"Bearer {api_credentials['access_token']}"},
+    }
+
+
+@pytest.fixture
+def retry_client(api_credentials):
+    """Create a test client with retry logic for handling transient failures."""
+    base_client = Client(
+        url=api_credentials["endpoint"],
+        headers={"Authorization": f"Bearer {api_credentials['access_token']}"},
+    )
+    return RetryClient(
+        base_client,
+        max_attempts=3,
+        initial_delay=2.0,
+        backoff_factor=2.0,
+        max_delay=10.0,
+    )

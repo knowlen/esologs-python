@@ -15,7 +15,7 @@
 		<li> <b>Async First</b>: Native async/await support with HTTP and WebSocket</li>
 		<li> <b>GraphQL Integration</b>: Code generation with `ariadne-codegen` + Claude</li>
 		<li> <b>Security</b>: OAuth2 authentication with parameter validation</li>
-		<li> <b>Testing</b>: 278 tests with comprehensive coverage</li>
+		<li> <b>Testing</b>: 404 tests with comprehensive coverage</li>
   </ul>
 </div>
 
@@ -73,20 +73,19 @@
 <div class="feature-grid">
   <div class="feature-card">
     <h3>Current Version</h3>
-    <p><strong>v0.2.0a2</strong><br>
-    <span class="status-badge status-badge--completed">83% API Coverage</span></p>
-    <p>Active development with comprehensive testing and documentation.</p>
+    <p><strong>v0.2.0b1</strong><br>
+    <span class="status-badge status-badge--completed">100% API Coverage!</span></p>
+    <p>All 42 ESO Logs API methods implemented with comprehensive testing and documentation.</p>
   </div>
 </div>
 
 <div class="feature-grid">
   <div class="feature-card">
-    <h3>Coming Soon (17%)</h3>
+    <h3>Completed Features</h3>
     <ul>
-      <li><span class="status-badge status-badge--planned">User Accounts</span> Account management & settings </li>
-      <li><span class="status-badge status-badge--planned">Progress Tracking</span> Race & achievement tracking</li>
-      <li><span class="status-badge status-badge--planned">Enhanced Guilds</span> Advanced guild management</li>
-      <li><span class="status-badge status-badge--planned">Caching</span> Performance optimization</li>
+      <li><span class="status-badge status-badge--completed">User Accounts</span> OAuth2 authentication & user data access</li>
+      <li><span class="status-badge status-badge--completed">Progress Race</span> World/realm first tracking</li>
+      <li><span class="status-badge status-badge--completed">Full API Coverage</span> All 42 methods implemented</li>
     </ul>
   </div>
 </div>
@@ -114,6 +113,7 @@ graph TB
     end
 ```
 
-!!! note "Development Status"
-    This library is in active development. While the core functionality is stable and tested,
-    the API may change before the 1.0 release. See our [changelog](changelog.md) for the latest updates.
+!!! note "Beta Status"
+    This library is now in beta! With 100% API coverage and comprehensive testing, we're focusing on
+    stability and polish before the 1.0 release. The API is considered stable, though minor changes
+    may still occur. See our [changelog](development/changelog.md) for the latest updates.

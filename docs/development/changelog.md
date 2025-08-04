@@ -5,6 +5,60 @@ All notable changes to ESO Logs Python will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0b1] - 2025-08-03
+
+**First Beta Release!** This marks the transition from alpha to beta status with 100% API coverage.
+
+### Added
+
+- **100% API Coverage Achieved!** All 42/42 ESO Logs API methods now implemented
+- **User Data Endpoints**: Implemented OAuth2 user authentication and 3 UserData methods:
+  - `get_user_by_id(user_id)` - Get specific user information
+  - `get_current_user()` - Get authenticated user (requires /api/v2/user endpoint)
+  - `get_user_data()` - Get userData root object
+- **OAuth2 Authentication Module** (`user_auth.py`):
+  - Full Authorization Code flow implementation
+  - Both synchronous and asynchronous support (`OAuth2Flow` and `AsyncOAuth2Flow`)
+  - Token management with expiration checking
+  - Helper functions for auth URL generation and token exchange
+  - Support for token persistence and refresh
+  - Security enhancements (CSRF protection, redirect URI validation)
+- **Progress Race Tracking**: Implemented `get_progress_race()` method for world/realm first achievement race tracking
+  - Supports filtering by guild, zone, competition, difficulty, size, and server
+  - Returns flexible JSON data that adapts to active race formats
+- **Documentation Improvements**:
+  - Added comprehensive troubleshooting guide
+  - Added OAuth2 examples (sync, async, Flask, FastAPI)
+  - Reorganized docs structure (Getting Started and Development sections)
+- **Testing**: Total test count increased from 322 to 404+ tests
+  - Added 10 unit tests for OAuth2 functionality
+  - Added 8 integration tests for UserData methods
+  - Added 8 integration tests for progress race functionality
+
+### Changed
+
+- **Major Client Refactoring**: Reduced `client.py` from 1,610 lines to 86 lines (95% reduction)
+  - Implemented factory pattern with mixins for better code organization
+  - Created modular architecture with clear separation of concerns
+  - Method factory functions for dynamic method generation
+  - Parameter builders for complex parameter handling
+  - Mixins organizing methods by functional area
+  - Centralized GraphQL queries storage
+- **Dual Authentication Support**: Client now supports both client credentials and user tokens
+- Updated Client to detect and warn about endpoint/authentication mismatches
+- Enhanced authentication documentation with OAuth2 examples
+- Moved all auto-generated code to `_generated/` subdirectory for cleaner structure
+- Improved error messages to show available parameters when missing
+- Added comprehensive documentation for method registration and naming conventions
+- Cached regex patterns for performance improvement
+
+### Fixed
+
+- Type annotations now satisfy mypy without `# type: ignore` comments
+- Parameter validation errors now provide more helpful context
+- Fixed kwargs passthrough issue in report methods preventing HTTP client errors
+- Fixed markdown formatting issues in authentication documentation
+
 ## [0.2.0a2] - 2025-07-16
 
 ### Fixed
@@ -15,11 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0a1] - 2025-07-15
 
-### Added
-
-This is the first alpha release of version 0.2.0. See the [0.2.0] section below for full feature list.
-
-## [0.2.0] - 2024-01-XX (Upcoming Release)
+This is the first alpha release of version 0.2.0, featuring major architectural improvements and new API methods.
 
 ### Added
 

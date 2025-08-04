@@ -7,10 +7,6 @@ class GraphQLClientError(Exception):
     """Base exception."""
 
 
-class ValidationError(Exception):
-    """Raised when parameter validation fails."""
-
-
 class GraphQLClientHttpError(GraphQLClientError):
     def __init__(self, status_code: int, response: httpx.Response) -> None:
         self.status_code = status_code
@@ -35,13 +31,13 @@ class GraphQLClientGraphQLError(GraphQLClientError):
         locations: Optional[List[Dict[str, int]]] = None,
         path: Optional[List[str]] = None,
         extensions: Optional[Dict[str, object]] = None,
-        original: Optional[Dict[str, object]] = None,
+        orginal: Optional[Dict[str, object]] = None,
     ):
         self.message = message
         self.locations = locations
         self.path = path
         self.extensions = extensions
-        self.original = original
+        self.orginal = orginal
 
     def __str__(self) -> str:
         return self.message
@@ -53,7 +49,7 @@ class GraphQLClientGraphQLError(GraphQLClientError):
             locations=error.get("locations"),
             path=error.get("path"),
             extensions=error.get("extensions"),
-            original=error,
+            orginal=error,
         )
 
 

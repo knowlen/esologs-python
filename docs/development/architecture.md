@@ -27,7 +27,41 @@ graph TB
 
 ## Core Components
 
-### 1. GraphQL Client Layer
+### 1. Refactored Client Architecture
+
+**Purpose**: Modular, maintainable client implementation using factory patterns and mixins
+
+The client has been refactored from a monolithic 1,600+ line file to a clean, modular architecture:
+
+```python
+# esologs/client.py (86 lines)
+class Client(
+    AsyncBaseClient,
+    GameDataMixin,
+    CharacterMixin,
+    WorldDataMixin,
+    GuildMixin,
+    ReportMixin,
+):
+    """ESO Logs API client with comprehensive validation and security features."""
+```
+
+**Architecture Components**:
+
+* **Factory Methods** (`method_factory.py`): Dynamic method generation
+    - `create_simple_getter()`: For single ID parameter methods
+    - `create_complex_method()`: For methods with multiple parameters
+    - `create_method_with_builder()`: For methods using parameter builders
+* **Mixins** (`mixins/`): Methods organized by functional area
+    - `GameDataMixin`: Abilities, items, NPCs, classes, factions, maps
+    - `CharacterMixin`: Character info, reports, rankings
+    - `WorldDataMixin`: World data, zones, regions, encounters
+    - `GuildMixin`: Guild information
+    - `ReportMixin`: Combat reports, events, graphs, rankings
+* **Parameter Builders** (`param_builders.py`): Complex parameter handling
+* **GraphQL Queries** (`queries.py`): Centralized query storage
+
+### 2. GraphQL Client Layer
 
 **Purpose**: Auto-generated client for type-safe API communication
 
@@ -159,7 +193,8 @@ graph LR
    ```
 
 4. **Generated Output**
-   - `esologs/client.py`: GraphQL client with typed methods
+   - `esologs/_generated/`: All generated code in subdirectory
+   - `esologs/client.py`: Refactored client using mixins and factory patterns
    - `esologs/models/`: Pydantic models for all types
    - `esologs/exceptions.py`: Custom exception classes
 
@@ -316,7 +351,7 @@ TEST_DATA = {
 ```toml
 [project]
 name = "esologs-python"
-version = "0.2.0a2"
+version = "0.2.0b1"
 dependencies = [
     "httpx>=0.24.0",
     "pydantic>=2.0.0",

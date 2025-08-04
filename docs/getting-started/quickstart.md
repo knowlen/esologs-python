@@ -545,6 +545,87 @@ Server: NA
   • N2vLXpT4WqGRmDzJ: Dreadsail Reef (3421s)
 ```
 
+### User Profile with OAuth2
+
+For user-specific data, you need OAuth2 authentication:
+
+```python
+import asyncio
+from esologs.client import Client
+from esologs.user_auth import (
+    generate_authorization_url,
+    exchange_authorization_code
+)
+
+# Step 1: Generate authorization URL
+def get_auth_url():
+    """Generate URL for user to authorize."""
+    return generate_authorization_url(
+        client_id="your_client_id",
+        redirect_uri="http://localhost:8000/callback",
+        scopes=["view-user-profile"]
+    )
+
+# Step 2: After user authorizes, exchange code for token
+async def get_user_profile(auth_code: str):
+    """Get user profile after OAuth2 authorization."""
+
+    # Exchange code for token
+    user_token = exchange_authorization_code(
+        client_id="your_client_id",
+        client_secret="your_client_secret",
+        code=auth_code,
+        redirect_uri="http://localhost:8000/callback"
+    )
+
+    # Use user endpoint (not client endpoint)
+    async with Client(
+        url="https://www.esologs.com/api/v2/user",
+        user_token=user_token
+    ) as client:
+
+        # Get current user info
+        current_user = await client.get_current_user()
+        user = current_user.user_data.current_user
+
+        print(f"👤 User: {user.name}")
+        print(f"ID: {user.id}")
+
+        if user.guilds:
+            print(f"\n🏰 Guilds ({len(user.guilds)}):")
+            for guild in user.guilds[:3]:  # Show first 3
+                print(f"  • {guild.name} on {guild.server.name}")
+
+        if user.characters:
+            print(f"\n⚔️ Characters ({len(user.characters)}):")
+            for char in user.characters[:3]:  # Show first 3
+                print(f"  • {char.name}")
+
+# Example usage:
+# 1. Direct user to: get_auth_url()
+# 2. After callback: asyncio.run(get_user_profile("auth_code_from_callback"))
+```
+
+**Output:**
+```
+👤 User: ExamplePlayer
+ID: 12345
+
+🏰 Guilds (3):
+  • The Shadow Court on NA Megaserver
+  • Tamriel Trading Co on EU Megaserver
+  • Daggerfall Elite on NA Megaserver
+
+⚔️ Characters (5):
+  • Khajiit Nightblade
+  • Argonian Templar
+  • Dark Elf Sorcerer
+```
+
+!!! info "OAuth2 Setup Required"
+    User authentication requires implementing OAuth2 flow with a callback URL.
+    See [Authentication](authentication.md#oauth2-user-authentication) for complete examples.
+
 ## Next Steps
 
 Now that you're familiar with the basics:
@@ -553,8 +634,10 @@ Now that you're familiar with the basics:
 
 - **[Game Data API](api-reference/game-data.md)** - Abilities, items, classes with examples
 - **[Character Data API](api-reference/character-data.md)** - Profiles, reports, and rankings with examples
+- **[Guild Data API](api-reference/guild-data.md)** - Guild info, members, and attendance with examples
 - **[Report Analysis API](api-reference/report-analysis.md)** - Combat log deep-dives with examples
 - **[Report Search API](api-reference/report-search.md)** - Advanced filtering with examples
+- **[User Data API](api-reference/user-data.md)** - OAuth2 user authentication and profiles with examples
 - **[System APIs](api-reference/system.md)** - Rate limiting and error handling with examples
 
 ### Development

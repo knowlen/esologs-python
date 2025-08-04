@@ -23,7 +23,7 @@ This directory contains tests that validate code examples from:
 - `test_authentication_examples.py` - Tests all code blocks from authentication guide
 - `test_game_data_examples.py` - Tests all examples from game data API reference
 - `test_character_data_examples.py` - Tests all examples from character data API reference
-- `test_guild_data_examples.py` - Tests all examples from guild data API reference
+- `test_guild_data_examples.py` - Tests all examples from guild data API reference (all 5 guild endpoints)
 - `test_world_data_examples.py` - Tests all examples from world data API reference
 - `test_report_analysis_examples.py` - Tests all examples from report analysis API reference
 - `test_report_search_examples.py` - Tests all examples from report search API reference
@@ -32,7 +32,7 @@ This directory contains tests that validate code examples from:
 - `test_sitemap_generation.py` - Tests sitemap.xml generation and validation
 - `conftest.py` - Shared test fixtures and configuration
 
-**Total: 108 tests** across all documentation files
+**Total: 98 tests** across all documentation files
 
 ## Running Tests
 

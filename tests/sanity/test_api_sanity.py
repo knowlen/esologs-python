@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from esologs.enums import (
+from esologs._generated.enums import (
     CharacterRankingMetricType,
     EventDataType,
     ReportRankingMetricType,

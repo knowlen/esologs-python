@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "esologs-python"
-version = "0.2.0a2"
+version = "0.2.0b1"
 description = "A Python client library for the ESO Logs API v2"
 readme = "README.md"
 license = {text = "MIT"}
@@ -16,7 +16,7 @@ keywords = [
     "combat-logs", "mmorpg", "gaming", "api-client", "python"
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -35,6 +35,7 @@ dependencies = [
     "ariadne-codegen>=0.6.0",
     "pydantic>=2.0.0",
     "httpx>=0.24.0",
+    "aiofiles>=23.0.0",
 ]
 
 [project.optional-dependencies]
@@ -43,12 +44,18 @@ dev = [
     "pytest-asyncio>=0.21.0",
     "pytest-cov>=4.0.0",
     "pytest-timeout>=2.0.0",
+    "pytest-rerunfailures>=13.0",
+    "pytest-xdist>=3.0.0",
+    "pytest-httpx>=0.21.0",
     "black>=22.0.0",
     "isort>=5.0.0",
     "ruff>=0.1.0",
     "mypy>=1.0.0",
     "pre-commit>=2.0.0",
     "types-requests>=2.25.0",
+    "types-aiofiles>=23.0.0",
+    "responses>=0.23.0",
+    "esologs-python[docs]",  # Include all docs dependencies for sitemap tests
 ]
 websockets = [
     "websockets>=11.0.0",
@@ -95,7 +102,7 @@ extend-exclude = '''
   | buck-out
   | build
   | dist
-  | esologs/get_.*\.py  # Exclude generated files
+  | esologs/_generated  # Exclude all generated files
 )/
 '''
 
@@ -107,18 +114,13 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 ensure_newline_before_comments = true
-extend_skip_glob = ["esologs/get_*.py"]
+extend_skip_glob = ["esologs/_generated/**"]
 
 [tool.ruff]
 line-length = 88
 target-version = "py38"
 extend-exclude = [
-    "esologs/get_*.py",  # Exclude generated files
-    "esologs/input_types.py",
-    "esologs/enums.py",
-    "esologs/base_model.py",
-    "esologs/exceptions.py",
-    "esologs/async_base_client.py",
+    "esologs/_generated/**",  # Exclude all generated files
 ]
 select = [
     "E",  # pycodestyle errors
@@ -136,7 +138,7 @@ ignore = [
 ]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -151,17 +153,7 @@ warn_unreachable = true
 strict_equality = true
 
 [[tool.mypy.overrides]]
-module = "esologs.get_*"
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = [
-    "esologs.input_types",
-    "esologs.enums",
-    "esologs.base_model",
-    "esologs.exceptions",
-    "esologs.async_base_client",
-]
+module = "esologs._generated.*"
 ignore_errors = true
 
 [tool.pytest.ini_options]
@@ -183,20 +175,22 @@ markers = [
     "integration: marks tests as integration tests",
     "unit: marks tests as unit tests",
     "timeout: marks tests with timeout requirements",
+    "oauth2: marks tests that require OAuth2 configuration (deselect with '-m \"not oauth2\"')",
 ]
 asyncio_mode = "auto"
+filterwarnings = [
+    # Ignore deprecation warnings from generated websockets code
+    "ignore:websockets.client.WebSocketClientProtocol is deprecated:DeprecationWarning",
+    "ignore:websockets.legacy is deprecated:DeprecationWarning",
+    "ignore:websockets.client.connect is deprecated:DeprecationWarning",
+]
 
 [tool.coverage.run]
 source = ["esologs"]
 omit = [
     "*/tests/*",
     "*/test_*",
-    "esologs/get_*.py",
-    "esologs/input_types.py",
-    "esologs/enums.py",
-    "esologs/base_model.py",
-    "esologs/exceptions.py",
-    "esologs/async_base_client.py",
+    "esologs/_generated/**",
 ]
 
 [tool.coverage.report]

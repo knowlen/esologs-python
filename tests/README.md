@@ -6,10 +6,10 @@ Comprehensive testing framework for the esologs-python library, providing three 
 
 | Test Suite | Purpose | API Required | Speed | Coverage | Test Count |
 |-----------|---------|--------------|-------|----------|------------|
-| **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 76 tests |
-| **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 85 tests |
-| **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 19 tests |
-| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 98 tests |
+| **[Unit Tests](unit/)** | Logic validation | ❌ No | Very Fast | Deep, Narrow | 115 tests |
+| **[Integration Tests](integration/)** | API functionality | ✅ Yes | Medium | Focused, Thorough | 93 tests |
+| **[Sanity Tests](sanity/)** | API health check | ✅ Yes | Medium | Broad, Shallow | 20 tests |
+| **[Documentation Tests](docs/)** | Code examples validation | ✅ Yes | Fast | Examples, Accuracy | 176 tests |
 
 ## Quickstart
 
@@ -54,10 +54,11 @@ pytest tests/ --cov=esologs --cov-report=html
 
 **Key Areas**:
 - Parameter validation (49 tests)
-- OAuth2 authentication logic (8 tests)
-- Method signatures and logic (24 tests)
+- OAuth2 authentication logic (12 tests)
+- Method signatures and logic (30 tests)
 - Date parsing and transformation
 - Input sanitization and error handling
+- User authentication flows (8 tests)
 
 [→ View Unit Test Details](unit/README.md)
 
@@ -90,9 +91,11 @@ pytest tests/ --cov=esologs --cov-report=html
 - Game Data: abilities, classes, factions, items, NPCs (5 features)
 - World Data: zones, regions (2 features)
 - Character Data: profiles, rankings (2 features)
-- Guild Data: basic info (1 feature)
+- Guild Data: all 5 guild endpoints (5 features)
 - Report Data: reports, analysis, search (3 features)
 - System Data: rate limiting (1 feature)
+- Progress Race: world/realm first tracking (1 feature)
+- User Data: OAuth2 authenticated endpoints (1 feature)
 
 [→ View Sanity Test Details](sanity/README.md)
 
@@ -180,9 +183,9 @@ echo "ESOLOGS_SECRET=your_client_secret" >> .env
 
 ### Current Coverage
 - **Unit Tests**: 100% coverage of validation logic
-- **Integration Tests**: ~75% API endpoint coverage
-- **Sanity Tests**: 13+ major API features validated
-- **Overall**: 70% code coverage with high-quality tests
+- **Integration Tests**: ~85% API endpoint coverage (39/42 methods)
+- **Sanity Tests**: 20 major API features validated (includes progress race and user data)
+- **Overall**: 100% API coverage achieved! All 42/42 methods implemented
 
 ### Target Coverage
 - **Unit Tests**: Maintain 100% validation coverage
@@ -248,10 +251,10 @@ black . && isort . && ruff check --fix . && mypy .
 
 | Suite | Execution Time | Tests | Purpose |
 |-------|---------------|-------|---------|
-| Unit | < 5 seconds | 76 | Development feedback |
-| Integration | ~30 seconds | 85 | API validation |
-| Documentation | ~25 seconds | 98 | Examples validation |
-| Sanity | ~15 seconds | 19 | Health check |
-| **Total** | **~75 seconds** | **278** | **Complete validation** |
+| Unit | < 5 seconds | 115 | Development feedback |
+| Integration | ~35 seconds | 93 | API validation |
+| Documentation | ~30 seconds | 176 | Examples validation |
+| Sanity | ~15 seconds | 20 | Health check |
+| **Total** | **~85 seconds** | **404** | **Complete validation** |
 
 The test suite provides comprehensive coverage while maintaining fast execution times for efficient development workflows.
