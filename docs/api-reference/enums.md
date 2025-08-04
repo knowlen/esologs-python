@@ -72,8 +72,8 @@ Metrics available for character rankings and leaderboards.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -100,7 +100,7 @@ Types of events that can be filtered when retrieving report events.
 
 **Used by:**
 
-- [`get_report_events`](report-data.md#get_report_events)
+- [`get_report_events`](../api-reference/report-data/#get_report_events)
 
 ---
 
@@ -116,8 +116,8 @@ Filter for rankings based on external buff usage.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -139,7 +139,7 @@ Metrics available for fight-specific rankings.
 
 **Used by:**
 
-- [`get_report_rankings`](report-data.md#get_report_rankings)
+- [`get_report_rankings`](../api-reference/report-data/#get_report_rankings)
 
 ---
 
@@ -164,7 +164,7 @@ Types of data available for time-series graphs.
 
 **Used by:**
 
-- [`get_report_graph`](report-data.md#get_report_graph)
+- [`get_report_graph`](../api-reference/report-data/#get_report_graph)
 
 ---
 
@@ -181,7 +181,7 @@ Guild member rank levels.
 
 **Used by:**
 
-- [`get_guild_members`](guild-data.md#get_guild_members)
+- [`get_guild_members`](../api-reference/guild-data/#get_guild_members)
 
 ---
 
@@ -197,8 +197,8 @@ Filter for rankings based on hard mode completion.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -213,9 +213,9 @@ Filter events by hostility relationship.
 
 **Used by:**
 
-- [`get_report_events`](report-data.md#get_report_events)
-- [`get_report_graph`](report-data.md#get_report_graph)
-- [`get_report_table`](report-data.md#get_report_table)
+- [`get_report_events`](../api-reference/report-data/#get_report_events)
+- [`get_report_graph`](../api-reference/report-data/#get_report_graph)
+- [`get_report_table`](../api-reference/report-data/#get_report_table)
 
 ---
 
@@ -231,9 +231,9 @@ Filter data by encounter outcome.
 
 **Used by:**
 
-- [`get_report_events`](report-data.md#get_report_events)
-- [`get_report_graph`](report-data.md#get_report_graph)
-- [`get_report_table`](report-data.md#get_report_table)
+- [`get_report_events`](../api-reference/report-data/#get_report_events)
+- [`get_report_graph`](../api-reference/report-data/#get_report_graph)
+- [`get_report_table`](../api-reference/report-data/#get_report_table)
 
 ---
 
@@ -252,8 +252,8 @@ Leaderboard ranking tiers.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -268,8 +268,8 @@ How to compare rankings.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -284,8 +284,8 @@ Time period for rankings.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -307,8 +307,8 @@ Metrics for report-level rankings.
 
 **Used by:**
 
-- [`get_report_rankings`](report-data.md#get_report_rankings)
-- [`get_report_player_details`](report-data.md#get_report_player_details)
+- [`get_report_rankings`](../api-reference/report-data/#get_report_rankings)
+- [`get_report_player_details`](../api-reference/report-data/#get_report_player_details)
 
 ---
 
@@ -324,8 +324,8 @@ Character role classifications.
 
 **Used by:**
 
-- [`get_character_encounter_rankings`](character-data.md#get_character_encounter_rankings)
-- [`get_character_zone_rankings`](character-data.md#get_character_zone_rankings)
+- [`get_character_encounter_rankings`](../api-reference/character-data/#get_character_encounter_rankings)
+- [`get_character_zone_rankings`](../api-reference/character-data/#get_character_zone_rankings)
 
 ---
 
@@ -344,8 +344,8 @@ User subscription status levels.
 
 **Used by:**
 
-- [`get_current_user`](user-data.md#get_current_user)
-- [`get_user_by_id`](user-data.md#get_user_by_id)
+- [`get_current_user`](../api-reference/user-data/#get_current_user)
+- [`get_user_by_id`](../api-reference/user-data/#get_user_by_id)
 
 ---
 
@@ -370,7 +370,7 @@ Types of data available in tabular format.
 
 **Used by:**
 
-- [`get_report_table`](report-data.md#get_report_table)
+- [`get_report_table`](../api-reference/report-data/#get_report_table)
 
 ---
 
@@ -387,8 +387,8 @@ Perspective for viewing data.
 
 **Used by:**
 
-- [`get_report_graph`](report-data.md#get_report_graph)
-- [`get_report_table`](report-data.md#get_report_table)
+- [`get_report_graph`](../api-reference/report-data/#get_report_graph)
+- [`get_report_table`](../api-reference/report-data/#get_report_table)
 
 ---
 
