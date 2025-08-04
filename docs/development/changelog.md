@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added comprehensive troubleshooting guide
   - Added OAuth2 examples (sync, async, Flask, FastAPI)
   - Reorganized docs structure (Getting Started and Development sections)
-- **Testing**: Total test count increased from 322 to 428+ tests
+- **Testing**: Total test count increased from 322 to 428 tests
   - Added 10 unit tests for OAuth2 functionality
   - Added 8 integration tests for UserData methods
   - Added 8 integration tests for progress race functionality
