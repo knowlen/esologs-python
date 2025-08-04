@@ -195,3 +195,7 @@ test_validation.py
 .esologs_token.json
 *_token.json
 *.token.json
+
+# Serena MCP cache files
+.serena/cache/
+.serena/memories/
