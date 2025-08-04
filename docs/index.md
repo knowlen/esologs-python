@@ -69,28 +69,6 @@
     asyncio.run(main())
     ```
 
-## Status
-<div class="feature-grid">
-  <div class="feature-card">
-    <h3>Current Version</h3>
-    <p><strong>v0.2.0b1</strong><br>
-    <span class="status-badge status-badge--completed">100% API Coverage!</span></p>
-    <p>All 42 ESO Logs API methods implemented with comprehensive testing and documentation.</p>
-  </div>
-</div>
-
-<div class="feature-grid">
-  <div class="feature-card">
-    <h3>Completed Features</h3>
-    <ul>
-      <li><span class="status-badge status-badge--completed">User Accounts</span> OAuth2 authentication & user data access</li>
-      <li><span class="status-badge status-badge--completed">Progress Race</span> World/realm first tracking</li>
-      <li><span class="status-badge status-badge--completed">Full API Coverage</span> All 42 methods implemented</li>
-    </ul>
-  </div>
-</div>
-
-
 ## Architecture
 ```mermaid
 graph TB
