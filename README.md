@@ -373,7 +373,7 @@ We welcome contributions! Please see our [contributing guidelines](https://esolo
 **Completed:**
 - 100% API Coverage (42/42 methods)
 - OAuth2 user authentication
-- Comprehensive test suite (400+ tests)
+- Comprehensive test suite (428 tests)
 - Full documentation with examples
 - Client architecture refactoring
 

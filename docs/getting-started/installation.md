@@ -14,10 +14,10 @@ Get ESO Logs Python up and running in your environment.
 
 ESO Logs Python is available on PyPI:
 
-=== "Latest Alpha"
+=== "Latest Beta"
 
     ```bash
-    # Install the latest alpha release
+    # Install the latest beta release
     pip install esologs-python
     ```
 
