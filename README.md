@@ -143,16 +143,16 @@ The complete GraphQL schema of the v2 API is available at: https://www.esologs.c
 - [`get_encounters_by_zone`](https://esologs-python.readthedocs.io/en/latest/api-reference/world-data/#get_encounters_by_zone) - Get encounters in specific zone
 
 ### Report Data
-- [`get_report_by_code`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_by_code) - Get specific report by code
-- [`get_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_reports) - Advanced report search with comprehensive filtering
-- [`search_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#search_reports) - Flexible report search with multiple criteria
-- [`get_guild_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_guild_reports) - Convenience method for guild reports
-- [`get_user_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_user_reports) - Convenience method for user reports
-- [`get_report_events`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_events) - Get event-by-event combat log data with comprehensive filtering
-- [`get_report_graph`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_graph) - Get time-series performance graphs and metrics
-- [`get_report_table`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_table) - Get tabular analysis data with sorting and filtering
-- [`get_report_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_rankings) - Get report rankings and leaderboard data
-- [`get_report_player_details`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_report_player_details) - Get detailed player performance data from reports
+- [`get_report_by_code`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-search/#get_report_by_code) - Get specific report by code
+- [`get_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-search/#get_reports) - Advanced report search with comprehensive filtering
+- [`search_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-search/#search_reports) - Flexible report search with multiple criteria
+- [`get_guild_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-search/#get_guild_reports) - Convenience method for guild reports
+- [`get_user_reports`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-search/#get_user_reports) - Convenience method for user reports
+- [`get_report_events`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-analysis/#get_report_events) - Get event-by-event combat log data with comprehensive filtering
+- [`get_report_graph`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-analysis/#get_report_graph) - Get time-series performance graphs and metrics
+- [`get_report_table`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-analysis/#get_report_table) - Get tabular analysis data with sorting and filtering
+- [`get_report_rankings`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-analysis/#get_report_rankings) - Get report rankings and leaderboard data
+- [`get_report_player_details`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-analysis/#get_report_player_details) - Get detailed player performance data from reports
 
 ### Progress Race
 - [`get_progress_race`](https://esologs-python.readthedocs.io/en/latest/api-reference/progress-race-data/#get_progress_race) - Get world/realm first achievement race tracking data
@@ -163,7 +163,7 @@ The complete GraphQL schema of the v2 API is available at: https://www.esologs.c
 - [`get_user_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/user-data/#get_user_data) - Get userData root object
 
 ### System
-- [`get_rate_limit_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/report-data/#get_rate_limit_data) - Check API usage and rate limits
+- [`get_rate_limit_data`](https://esologs-python.readthedocs.io/en/latest/api-reference/system/#get_rate_limit_data) - Check API usage and rate limits
 
 ## OAuth2 User Authentication
 
