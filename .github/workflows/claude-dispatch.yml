@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write 
+      pull-requests: write
       issues: write
       id-token: write
     steps:
@@ -31,7 +31,6 @@ jobs:
         uses: anthropics/claude-code-action@eap
         with:
           mode: 'remote-agent'
-          
           # Optional: Specify an API key, otherwise we'll use your Claude account automatically
           # anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
