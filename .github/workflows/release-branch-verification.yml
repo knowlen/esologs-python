@@ -1,0 +1,30 @@
+name: Release Branch Verification
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-release-branch:
+    name: Validate Source Branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch naming convention
+        run: |
+          echo "Source branch: ${{ github.head_ref }}"
+          echo "Target branch: ${{ github.base_ref }}"
+
+          if [[ "${{ github.base_ref }}" == "main" ]]; then
+            if [[ "${{ github.head_ref }}" =~ ^release/.* ]]; then
+              echo "✅ Valid release branch format"
+              echo "Branch '${{ github.head_ref }}' follows the release/* naming convention"
+            else
+              echo "❌ Invalid branch name for main"
+              echo "PRs to main must come from release/* branches"
+              echo "Current branch: ${{ github.head_ref }}"
+              echo "Expected format: release/v*.*.*"
+              exit 1
+            fi
+          else
+            echo "✅ No validation needed for non-main target"
+          fi

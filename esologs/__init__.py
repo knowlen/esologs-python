@@ -1,3 +1,5 @@
+__version__ = "0.2.0b1"
+
 from ._generated.async_base_client import AsyncBaseClient
 from ._generated.base_model import BaseModel, Upload
 from ._generated.enums import (

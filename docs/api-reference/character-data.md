@@ -192,16 +192,16 @@ Available data: ['bestAmount', 'medianPerformance', 'averagePerformance', 'total
 | `encounter_id` | *int* | Yes | The encounter ID to get rankings for |
 | `by_bracket` | *bool* | No | Group rankings by bracket |
 | `class_name` | *str* | No | Filter by class name |
-| `compare` | *RankingCompareType* | No | Comparison type for rankings |
+| `compare` | [*RankingCompareType*](../enums/#rankingcomparetype) | No | Comparison type for rankings |
 | `difficulty` | *int* | No | Difficulty level filter |
 | `include_combatant_info` | *bool* | No | Include combatant information |
 | `include_private_logs` | *bool* | No | Include private logs in rankings |
-| `metric` | *CharacterRankingMetricType* | No | Ranking metric type |
+| `metric` | [*CharacterRankingMetricType*](../enums/#characterrankingmetrictype) | No | Ranking metric type |
 | `partition` | *int* | No | Partition number |
-| `role` | *RoleType* | No | Role filter (Tank, Healer, DPS) |
+| `role` | [*RoleType*](../enums/#roletype) | No | Role filter (Tank, Healer, DPS) |
 | `size` | *int* | No | Number of results to return |
 | `spec_name` | *str* | No | Specialization name filter |
-| `timeframe` | *RankingTimeframeType* | No | Time period for rankings |
+| `timeframe` | [*RankingTimeframeType*](../enums/#rankingtimeframetype) | No | Time period for rankings |
 
 **Returns**: `GetCharacterEncounterRankings` object with the following structure:
 
@@ -265,15 +265,15 @@ Rank percentile: 68.0%
 | `zone_id` | *int* | No | The zone ID to get rankings for |
 | `by_bracket` | *bool* | No | Group rankings by bracket |
 | `class_name` | *str* | No | Filter by class name |
-| `compare` | *RankingCompareType* | No | Comparison type for rankings |
+| `compare` | [*RankingCompareType*](../enums/#rankingcomparetype) | No | Comparison type for rankings |
 | `difficulty` | *int* | No | Difficulty level filter |
 | `include_private_logs` | *bool* | No | Include private logs in rankings |
-| `metric` | *CharacterRankingMetricType* | No | Ranking metric type |
+| `metric` | [*CharacterRankingMetricType*](../enums/#characterrankingmetrictype) | No | Ranking metric type |
 | `partition` | *int* | No | Partition number |
-| `role` | *RoleType* | No | Role filter (Tank, Healer, DPS) |
+| `role` | [*RoleType*](../enums/#roletype) | No | Role filter (Tank, Healer, DPS) |
 | `size` | *int* | No | Number of results to return |
 | `spec_name` | *str* | No | Specialization name filter |
-| `timeframe` | *RankingTimeframeType* | No | Time period for rankings |
+| `timeframe` | [*RankingTimeframeType*](../enums/#rankingtimeframetype) | No | Time period for rankings |
 
 **Returns**: `GetCharacterZoneRankings` object with the following structure:
 

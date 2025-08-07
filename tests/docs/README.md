@@ -32,7 +32,7 @@ This directory contains tests that validate code examples from:
 - `test_sitemap_generation.py` - Tests sitemap.xml generation and validation
 - `conftest.py` - Shared test fixtures and configuration
 
-**Total: 98 tests** across all documentation files
+**Total: 117 tests** across all documentation files
 
 ## Running Tests
 
